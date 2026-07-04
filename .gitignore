@@ -1,0 +1,21 @@
+# ⚠️ CORPUS SOUS DROIT D'AUTEUR — ne JAMAIS committer (voir README §Légal)
+corpus/
+extracted/
+index/
+data/
+
+# secrets
+.env
+*.key
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.python-version
+
+# caches d'éval (les réponses LLM cachées ; le jeu de questions eval/*.jsonl EST versionné)
+eval/cache/
+
+# macOS
+.DS_Store
