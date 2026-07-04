@@ -1,10 +1,11 @@
-"""Phase 1 bis - OCR du seul livre scanne du corpus via Apple Vision (gratuit, local).
+"""Phase 1 bis - OCR d'un livre du corpus via Apple Vision (gratuit, local).
 
-sociology-philosophy-connection-1999.pdf : 266 pages image, aucune couche texte.
+Sert pour les scans sans couche texte (sociology-philosophy-connection) ET pour
+les PDF dont la couche texte est cassee a la source (political-philosophy).
 Chaine : PyMuPDF rend chaque page en image 300 dpi -> ocrmac (framework Vision
 de macOS) la lit -> memes fichiers de sortie que extract.py (.jsonl + .md).
 
-Usage : .venv/bin/python src/ocr_scan.py [debut] [fin]   (pages PDF, 1-based)
+Usage : .venv/bin/python src/ocr_scan.py [fichier.pdf] [debut] [fin]
         sans argument : tout le livre.
 """
 
@@ -13,13 +14,19 @@ import sys
 import time
 from pathlib import Path
 
+import csv
+
 import pymupdf
 from ocrmac import ocrmac
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "corpus" / "sociology-philosophy-connection-1999.pdf"
 OUT = ROOT / "extracted"
-META = {"book": SRC.stem, "title": "The Sociology-Philosophy Connection", "year": "1999"}
+
+BOOK = sys.argv[1] if len(sys.argv) > 1 else "sociology-philosophy-connection-1999.pdf"
+SRC = ROOT / "corpus" / BOOK
+with open(ROOT / "manifest.csv", newline="") as f:
+    row = next(r for r in csv.DictReader(f) if r["fichier"] == BOOK)
+META = {"book": SRC.stem, "title": row["titre"], "year": row["annee"]}
 
 def ocr_page(page):
     """Rend la page en image puis la fait lire par Apple Vision."""
@@ -33,8 +40,8 @@ def ocr_page(page):
     return "\n".join(r[0] for r in result).strip()
 
 def main():
-    first = int(sys.argv[1]) if len(sys.argv) > 1 else 1
-    last = int(sys.argv[2]) if len(sys.argv) > 2 else None
+    first = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+    last = int(sys.argv[3]) if len(sys.argv) > 3 else None
     doc = pymupdf.open(SRC)
     last = last or doc.page_count
     suffix = "" if (first, last) == (1, doc.page_count) else f".p{first}-{last}"
