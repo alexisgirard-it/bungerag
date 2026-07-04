@@ -52,7 +52,10 @@ def find_furniture(pages):
             top[normalize(l)] += 1
         for l in lines[-EDGE:]:
             bottom[normalize(l)] += 1
-    threshold = max(3, len(pages) // 4)
+    # Seuil bas : les titres courants de CHAPITRE ne se repetent que sur
+    # 10-30 pages ; aucune vraie ligne de contenu ne revient en tete de
+    # plus de quelques pages, le risque de faux positif est negligeable.
+    threshold = max(4, len(pages) // 50)
     keep = lambda c: {sig for sig, n in c.items() if n >= threshold and sig}
     return keep(top), keep(bottom)
 
