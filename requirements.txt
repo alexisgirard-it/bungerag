@@ -11,3 +11,8 @@ ocrmac          # OCR Apple Vision (macOS uniquement, utilise par ocr_scan.py)
 # Phase 2 - chunking
 llama-index-core==0.14.23
 tiktoken==0.13.0
+
+# Phase 3 - embeddings + index
+sentence-transformers==5.6.0
+torch==2.12.1
+lancedb==0.34.0

@@ -27,3 +27,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** le chunking est un compromis sans optimum absolu (petit = précis mais sans contexte, gros = l'inverse) — on garde DEUX tailles et l'éval de la Phase 6 tranchera aux chiffres.
 
 **Surprise :** un chunk moyen de « 512 tokens » en fait 468 : le découpeur sacrifie du remplissage pour respecter les fins de phrases.
+
+## 2026-07-05 — Phase 3 : embeddings + index
+
+**Fait :** 11 249 chunks → vecteurs Qwen3-Embedding-0.6B (local, GPU M3, float16) → LanceDB + index BM25. 3 h de calcul unique, index final : 64 Mo. Vérifié : auto-retrouvage 20/20, requêtes-témoins 7/7 dont 3 posées EN FRANÇAIS sur le corpus anglais, latence de recherche 0,04 s.
+
+**Appris :** l'asymétrie fondamentale du RAG — indexer coûte des heures (une fois), chercher coûte 40 millisecondes (à chaque fois). Et le cross-lingue marche : « Qu'est-ce que l'émergence ? » trouve la définition anglaise du Philosophical Dictionary sans traduction.
+
+**Surprise :** float16 n'a rien accéléré (le goulot était la puissance GPU brute, pas la précision) ; et sur « systemism », BM25 bat le dense — il trouve la définition exacte dans le Treatise là où le dense remonte des réminiscences des mémoires. Chaque mode a ses victoires : d'où l'hybride.
