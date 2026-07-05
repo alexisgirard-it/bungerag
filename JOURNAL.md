@@ -19,3 +19,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** avoir une couche texte ≠ avoir une BONNE couche texte. Political Philosophy avait du texte… découpé en morceaux (« thi », « ocial ») par une police mal encodée : 460 pages re-OCRisées en 5 min. La vérification s'échantillonne et se chiffre (alignement page↔PDF, taux de vrais mots), elle ne se fait pas « à l'œil ».
 
 **Surprise :** le thermomètre aussi peut être faux — le dictionnaire macOS n'a pas les pluriels, ce qui faisait paniquer le contrôle sur TOUS les livres ; et les flèches de renvoi ↑ du Philosophical Dictionary étaient encodées comme des « i » collés (2 002 réparées par regex). Deux vraies anomalies, un faux positif : enquêter avant de corriger.
+
+## 2026-07-05 — Phase 2 : chunking
+
+**Fait :** 8 200 pages → 11 249 chunks de ~512 tokens (+ variante 5 707 × ~1024 pour l'éval), 5,3 M tokens. Pages recollées avant découpe (75 % des chunks chevauchent 2 pages — une frontière de page n'est pas une frontière d'idée), césures réparées, EPUB découpé par essai. Vérifié : traçabilité chunk→pages 100/100, 96 % des chunks finissent en fin de phrase.
+
+**Appris :** le chunking est un compromis sans optimum absolu (petit = précis mais sans contexte, gros = l'inverse) — on garde DEUX tailles et l'éval de la Phase 6 tranchera aux chiffres.
+
+**Surprise :** un chunk moyen de « 512 tokens » en fait 468 : le découpeur sacrifie du remplissage pour respecter les fins de phrases.

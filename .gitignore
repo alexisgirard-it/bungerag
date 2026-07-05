@@ -19,3 +19,4 @@ eval/cache/
 
 # macOS
 .DS_Store
+chunks/

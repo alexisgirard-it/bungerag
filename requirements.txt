@@ -7,3 +7,7 @@ ocrmac          # OCR Apple Vision (macOS uniquement, utilise par ocr_scan.py)
 
 # Les phases suivantes ajouteront leurs dependances ici, versions epinglees.
 # Deja tranche : ragas==0.4.3 (phase 6 - NE PAS deverrouiller, la 1.0 casse l'API)
+
+# Phase 2 - chunking
+llama-index-core==0.14.23
+tiktoken==0.13.0
