@@ -43,3 +43,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** la boucle centrale du métier — mesurer → inspecter les échecs → corriger les DONNÉES → re-mesurer. Les premiers chiffres étaient médiocres (60-70 %) non pas à cause de l'algorithme mais parce que l'index était pollué par 835 chunks d'annexes (bibliographies, index, pages de garde, intro de l'éditeur de l'anthologie). La page « About the author » sortait 1re sur la question sur l'esprit. Deux passes de filtrage plus tard : +25 points.
 
 **Surprise :** BM25 perd des points quand on nettoie — ses « bons » résultats d'avant étaient des pages de biblio des bons livres, des faux positifs. Et ses 5 échecs restants sont TOUS des questions au vocabulaire très français : il ne peut pas matcher « démocratie intégrale » sur un corpus anglais. La reformulation FR→EN de la phase 5 est déjà justifiée par les chiffres.
+
+## 2026-07-06 — Phase 5 : génération citée + abstention
+
+**Fait :** pipeline complet question → réponse française citée [n] ou « Absent du corpus ». generate() unique commutable par variable d'env (anti lock-in), Gemini 2.5 Flash temp 0, reformulation FR→EN (BM25 : 50 → 95 % hit@5 !), abstention à deux étages. Fidélité vérifiée en lecture : la définition citée de l'émergence est mot pour mot dans E&C p.25-26.
+
+**Appris :** le seuil pré-génération sur le score du reranker ne suffit PAS pour l'abstention — le piège « recette préférée de Bunge » score 0,966 (les mémoires parlent de repas !) : le reranker mesure la proximité de SUJET, pas « ça répond vraiment ». C'est la règle stricte du prompt qui a refusé les 3 pièges. Deux filets valent mieux qu'un, et c'est le 2e qui travaille.
+
+**Surprise :** les réponses tronquées à 3 lignes — les tokens de « réflexion » de Gemini 2.5 se décomptent silencieusement de max_output_tokens. thinking_budget=0 et tout est rentré dans l'ordre.
