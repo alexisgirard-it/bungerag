@@ -35,3 +35,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** l'asymétrie fondamentale du RAG — indexer coûte des heures (une fois), chercher coûte 40 millisecondes (à chaque fois). Et le cross-lingue marche : « Qu'est-ce que l'émergence ? » trouve la définition anglaise du Philosophical Dictionary sans traduction.
 
 **Surprise :** float16 n'a rien accéléré (le goulot était la puissance GPU brute, pas la précision) ; et sur « systemism », BM25 bat le dense — il trouve la définition exacte dans le Treatise là où le dense remonte des réminiscences des mémoires. Chaque mode a ses victoires : d'où l'hybride.
+
+## 2026-07-05 — Phase 4 : retrieval sérieux + première éval chiffrée
+
+**Fait :** reranker Qwen3-0.6B (cross-encodeur) + retriever 2 étages (hybride k=40 → top-10) + jeu de 20 questions FR avec livres attendus. Résultat final : rerank 95 % hit@5, 100 % hit@10, rang moyen 2,1.
+
+**Appris :** la boucle centrale du métier — mesurer → inspecter les échecs → corriger les DONNÉES → re-mesurer. Les premiers chiffres étaient médiocres (60-70 %) non pas à cause de l'algorithme mais parce que l'index était pollué par 835 chunks d'annexes (bibliographies, index, pages de garde, intro de l'éditeur de l'anthologie). La page « About the author » sortait 1re sur la question sur l'esprit. Deux passes de filtrage plus tard : +25 points.
+
+**Surprise :** BM25 perd des points quand on nettoie — ses « bons » résultats d'avant étaient des pages de biblio des bons livres, des faux positifs. Et ses 5 échecs restants sont TOUS des questions au vocabulaire très français : il ne peut pas matcher « démocratie intégrale » sur un corpus anglais. La reformulation FR→EN de la phase 5 est déjà justifiée par les chiffres.
