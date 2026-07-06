@@ -20,3 +20,8 @@ lancedb==0.34.0
 # Phase 5 - generation
 google-genai==2.10.0
 python-dotenv==1.2.2
+
+# Phase 6 - harnais d'eval
+ragas==0.4.3                  # NE PAS deverrouiller : la 1.0 supprime cette API
+langchain-community==0.3.31   # >=0.4 casse l'import ragas 0.4.3
+openai==2.44.0                # client Cerebras (API compatible OpenAI)

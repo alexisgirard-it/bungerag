@@ -51,3 +51,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** le seuil pré-génération sur le score du reranker ne suffit PAS pour l'abstention — le piège « recette préférée de Bunge » score 0,966 (les mémoires parlent de repas !) : le reranker mesure la proximité de SUJET, pas « ça répond vraiment ». C'est la règle stricte du prompt qui a refusé les 3 pièges. Deux filets valent mieux qu'un, et c'est le 2e qui travaille.
 
 **Surprise :** les réponses tronquées à 3 lignes — les tokens de « réflexion » de Gemini 2.5 se décomptent silencieusement de max_output_tokens. thinking_budget=0 et tout est rentré dans l'ordre.
+
+## 2026-07-06 — Phase 6 : LE harnais d'éval
+
+**Fait :** 40 questions (30 contenu avec références + 10 pièges), réponses par le pipeline complet, notation RAGAS par Cerebras gpt-oss-120b. **Faithfulness 0,935 · precision 0,893 · recall 0,903 · abstention 8/10 strict** — toutes les cibles dépassées. Résultats dans eval/RESULTS.md.
+
+**Appris :** le quota Gemini réel = ~20 req/JOUR par modèle (pas ~1500) → rotation multi-modèles implémentée en plein vol. Un score d'éval anormal se DÉBOGUE : q05 basse → une PRÉFACE d'éditeur avait survécu au filtre (v3) ; q28 recall 0,00 avec une bonne réponse → référence mal écrite, pas pipeline cassé. L'éval juge aussi le jeu d'éval.
+
+**Surprise :** les 2 pièges « ratés » ont donné les réponses les plus intelligentes du lot — dont la découverte de la « recette du gâteau du Bonheur » que Bunge utilise ironiquement. Un piège bien conçu doit être vraiment absent du corpus, pas juste improbable.

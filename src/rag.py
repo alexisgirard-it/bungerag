@@ -42,7 +42,7 @@ def reformulate_en(question):
     return generate(
         f"Translate this French question into concise academic English "
         f"(philosophy of science context). Reply with the translation only.\n\n{question}",
-        max_tokens=200)
+        max_tokens=400, backend="cerebras")  # preserve le quota Gemini
 
 def format_pages(h):
     if h["page_start"] == h["page_end"]:
@@ -83,6 +83,7 @@ def ask(question, verbose=False):
                      "score": round(h["rerank_score"], 3),
                      "extrait": " ".join(h["text"].split())[:200]} for h in hits],
         "abstained": abstained,
+        "contexts": [h["text"] for h in hits],  # textes complets (pour l'eval)
         "question_en": question_en,
         "top_score": round(hits[0]["rerank_score"], 3),
         "timings": {k: round(v, 1) for k, v in

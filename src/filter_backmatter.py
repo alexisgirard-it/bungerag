@@ -29,7 +29,7 @@ FRONT = ("library of congress", "isbn", "all rights reserved",
 BIBLIOMARK = ("pp.", "vol.", " ed.", "eds.", "in:", "journal")
 # appareil editorial de l'anthologie EPUB (introduction de Mahner, biblio...) :
 # pas la voix de Bunge -> exclu, meme logique que les volumes collectifs
-EPUB_EDITORIAL = ("INTRODUCTION", "BIBLIOGRAPHY", "CONTENTS", "ACKNOWLEDG")
+EPUB_EDITORIAL = ("INTRODUCTION", "BIBLIOGRAPHY", "CONTENTS", "ACKNOWLEDG", "PREFACE", "FOREWORD")
 
 def is_backmatter(text, book="", page=""):
     t = text.lower()
