@@ -59,3 +59,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** le quota Gemini réel = ~20 req/JOUR par modèle (pas ~1500) → rotation multi-modèles implémentée en plein vol. Un score d'éval anormal se DÉBOGUE : q05 basse → une PRÉFACE d'éditeur avait survécu au filtre (v3) ; q28 recall 0,00 avec une bonne réponse → référence mal écrite, pas pipeline cassé. L'éval juge aussi le jeu d'éval.
 
 **Surprise :** les 2 pièges « ratés » ont donné les réponses les plus intelligentes du lot — dont la découverte de la « recette du gâteau du Bonheur » que Bunge utilise ironiquement. Un piège bien conçu doit être vraiment absent du corpus, pas juste improbable.
+
+## 2026-07-06 — Phase 7 (1/2) : la démo est construite
+
+**Fait :** app Gradio (space/app.py) : cache des réponses, quotas global + par visiteur avec messages clairs, extraits courts seulement (légal), bandeau avec la faithfulness mesurée. Pipeline rendu portable (device auto MPS→CPU, float32 sur CPU, k réglables par env). Script de publication (push_space.py) : dataset privé pour l'index, Space public en liste blanche stricte, secrets configurés par API. Testé localement en config Space exacte : 35 s/réponse à k=12, cache et rate-limit vérifiés.
+
+**Appris :** une démo publique gratuite, c'est 20 % de pipeline et 80 % de garde-fous — le quota est partagé entre tous les visiteurs, donc cache + limites + message honnête quand c'est épuisé.
+
+**Surprise :** mon propre script de publication copiait « tout le dossier » — un .env qui y aurait traîné serait parti sur un Space public. Liste blanche stricte désormais : en sécurité, on énumère ce qui part, jamais ce qui reste.

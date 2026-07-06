@@ -15,6 +15,7 @@ Etapes :
 Usage : .venv/bin/python src/rag.py "ta question"
 """
 
+import os
 import re
 import sys
 import time
@@ -26,7 +27,9 @@ from retrieve import retrieve  # noqa: E402
 from search import search  # noqa: E402
 
 SEUIL_ABSTENTION = 0.10  # P(yes) max du reranker sous lequel on ne genere pas
-K_FINAL = 6
+# reglables par env : le Space HF (2 vCPU) reranke moins de candidats que le M3
+K_CANDIDATES = int(os.environ.get("RAG_K_CANDIDATES", "40"))
+K_FINAL = int(os.environ.get("RAG_K_FINAL", "6"))
 
 SYSTEM = """Tu es BungeRAG, un assistant qui restitue fidelement la philosophie de Mario Bunge.
 
@@ -55,7 +58,7 @@ def ask(question, verbose=False):
     t_translate = time.time() - t0
 
     # hybride : jambe dense = FR (le cross-lingue marche), jambe BM25 = EN
-    hits = search(question_en, "hybrid", 40)
+    hits = search(question_en, "hybrid", K_CANDIDATES)
     from retrieve import get_reranker
     scores = get_reranker().score(question, [h["text"] for h in hits])
     for h, s in zip(hits, scores):

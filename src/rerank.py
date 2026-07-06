@@ -22,10 +22,13 @@ PREFIX = ('<|im_start|>system\nJudge whether the Document meets the requirements
 SUFFIX = '<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n'
 
 class Reranker:
-    def __init__(self, device="mps"):
+    def __init__(self, device=None):
+        if device is None:
+            device = "mps" if torch.backends.mps.is_available() else "cpu"
+        dtype = torch.float16 if device == "mps" else torch.float32
         self.tok = AutoTokenizer.from_pretrained(MODEL, padding_side="left")
         self.model = (AutoModelForCausalLM
-                      .from_pretrained(MODEL, dtype=torch.float16)
+                      .from_pretrained(MODEL, dtype=dtype)
                       .to(device).eval())
         self.device = device
         self.yes = self.tok.convert_tokens_to_ids("yes")

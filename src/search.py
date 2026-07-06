@@ -19,10 +19,14 @@ _model = None
 def get_model():
     global _model
     if _model is None:
+        import torch
         from sentence_transformers import SentenceTransformer
-        _model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B", device="mps",
+        dev = "mps" if torch.backends.mps.is_available() else "cpu"
+        # float16 seulement sur GPU ; un CPU (HF Space) veut du float32
+        dtype = "float16" if dev == "mps" else "float32"
+        _model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B", device=dev,
                                      processor_kwargs={"padding_side": "left"},
-                                model_kwargs={"torch_dtype": "float16"})
+                                     model_kwargs={"torch_dtype": dtype})
         _model.max_seq_length = 1024
     return _model
 
