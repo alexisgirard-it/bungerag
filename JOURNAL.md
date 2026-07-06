@@ -67,3 +67,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** une démo publique gratuite, c'est 20 % de pipeline et 80 % de garde-fous — le quota est partagé entre tous les visiteurs, donc cache + limites + message honnête quand c'est épuisé.
 
 **Surprise :** mon propre script de publication copiait « tout le dossier » — un .env qui y aurait traîné serait parti sur un Space public. Liste blanche stricte désormais : en sécurité, on énumère ce qui part, jamais ce qui reste.
+
+## 2026-07-06 — Phase 7 (2/2) : EN LIGNE
+
+**Fait :** https://huggingface.co/spaces/alexisgirard/bungerag — déployé, testé en visiteur réel : 96 s à froid, ~70 s à chaud pour une question inédite (2 vCPU gratuits), 0,7 s depuis le cache. Index dans le dataset privé alexisgirard/bungerag-index. Secrets configurés par API.
+
+**Appris :** un déploiement se teste depuis l'extérieur (gradio_client), pas en se croyant sur parole ; et la latence du gratuit s'assume en l'affichant (« ~1-2 min ») plutôt qu'en la cachant.
+
+**Surprise :** le validateur HF refuse une description de 62 caractères (max 60) — les plateformes valident tout, et c'est tant mieux.

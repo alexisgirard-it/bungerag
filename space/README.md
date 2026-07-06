@@ -8,7 +8,7 @@ sdk_version: 6.19.0
 app_file: app.py
 pinned: false
 license: mit
-short_description: Interroge l'œuvre de Mario Bunge, réponses citées page à page
+short_description: L'œuvre de Mario Bunge en Q&R, cité page à page
 ---
 
 # BungeRAG
