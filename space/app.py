@@ -12,6 +12,7 @@ Specificites demo vs pipeline local :
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
@@ -31,6 +32,7 @@ if not INDEX.exists():
 
 from rag import ask  # noqa: E402
 
+POOL = ThreadPoolExecutor(max_workers=2)
 CACHE = {}
 USAGE = {"day": None, "total": 0, "ips": {}}
 DAILY_LIMIT = int(os.environ.get("DAILY_LIMIT", "80"))
@@ -64,30 +66,44 @@ def format_result(r, cached, elapsed):
     return out
 
 def answer(question, request: gr.Request):
+    """Generateur : Gradio affiche chaque yield -> retour visuel immediat,
+    puis compteur de secondes en direct pendant le calcul."""
     q = " ".join((question or "").lower().split())
     if len(q) < 4:
-        return "Pose une vraie question sur la philosophie de Mario Bunge."
+        yield "Pose une vraie question sur la philosophie de Mario Bunge."
+        return
     if q in CACHE:
-        return format_result(CACHE[q], cached=True, elapsed=0)
+        yield format_result(CACHE[q], cached=True, elapsed=0)
+        return
 
     ip = getattr(getattr(request, "client", None), "host", "?")
     blocked = check_quota(ip)
     if blocked == "ip":
-        return ("🐢 **Limite par visiteur atteinte** (" + str(IP_LIMIT)
-                + " questions/jour) — le quota gratuit est partagé, "
-                  "chacun sa part. Reviens demain !")
+        yield ("🐢 **Limite par visiteur atteinte** (" + str(IP_LIMIT)
+               + " questions/jour) — le quota gratuit est partagé, "
+                 "chacun sa part. Reviens demain !")
+        return
     if blocked == "global":
-        return MSG_QUOTA
+        yield MSG_QUOTA
+        return
 
+    fut = POOL.submit(ask, question)
     t0 = time.time()
+    while not fut.done():
+        yield (f"⏳ **{time.time()-t0:.0f} s** — recherche dans les 25 ouvrages, "
+               "reranking des passages puis génération citée…\n\n"
+               "*Serveur CPU gratuit : compte ~1 à 2 minutes. Les questions "
+               "déjà posées par quelqu'un sont instantanées (cache).*")
+        time.sleep(2)
     try:
-        r = ask(question)
+        r = fut.result()
     except Exception:
-        return MSG_QUOTA  # quota LLM epuise en cours de route ou API down
+        yield MSG_QUOTA  # quota LLM epuise en cours de route ou API down
+        return
     USAGE["total"] += 1
     USAGE["ips"][ip] = USAGE["ips"].get(ip, 0) + 1
     CACHE[q] = r
-    return format_result(r, cached=False, elapsed=time.time() - t0)
+    yield format_result(r, cached=False, elapsed=time.time() - t0)
 
 DESCRIPTION = """# 🔎 BungeRAG
 **Interroge l'œuvre de Mario Bunge (25 ouvrages) en français.**
