@@ -138,9 +138,11 @@ puis `LLM_BACKEND=ollama`.
 ## Limites assumées
 
 - La faithfulness mesure la fidélité aux extraits **récupérés** — pas la vérité, ni
-  l'exhaustivité du retrieval. Les questions panoramiques restent le point faible connu.
-- Les références du jeu d'éval sont des brouillons (validation humaine en cours) ;
-  le juge n'a fait qu'une passe (variance non mesurée).
+  l'exhaustivité du retrieval. (Le point faible panoramique a été traité par la
+  décomposition, mesures à l'appui — voir ci-dessus.)
+- Les références du jeu d'éval ont été vérifiées contre le corpus par agents (23
+  confirmées, 7 corrigées avec preuves — voir eval/REVUE-REFERENCES.md) ; la validation
+  humaine finale est en cours et le juge n'a fait qu'une passe (variance non mesurée).
 - La notation formelle (∀, ∃) des volumes anciens est corrompue par leur couche texte.
 - La démo gratuite répond en ~1 min (reranking sur 2 vCPU) — chiffré, expliqué, assumé.
 
