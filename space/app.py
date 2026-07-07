@@ -30,7 +30,7 @@ if not INDEX.exists():
     snapshot_download("alexisgirard/bungerag-index", repo_type="dataset",
                       local_dir=ROOT / "index", token=os.environ["HF_TOKEN"])
 
-from rag import ask  # noqa: E402
+from rag import ask_smart  # noqa: E402
 
 POOL = ThreadPoolExecutor(max_workers=2)
 CACHE = {}
@@ -87,7 +87,7 @@ def answer(question, request: gr.Request):
         yield MSG_QUOTA
         return
 
-    fut = POOL.submit(ask, question)
+    fut = POOL.submit(ask_smart, question)
     t0 = time.time()
     while not fut.done():
         yield (f"⏳ **{time.time()-t0:.0f} s** — recherche dans les 25 ouvrages, "

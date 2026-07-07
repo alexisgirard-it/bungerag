@@ -69,3 +69,26 @@ pourraient les départager — au niveau livre, la différence est indétectable
 *(Note : le 512 affiche ici 100 % contre 95 % en phase 4 — entre-temps, la vérité-terrain a
 été élargie sur justification bibliographique et l'index a reçu la passe de filtrage v3.
 Les chiffres d'une éval vivent avec leur jeu d'éval.)*
+
+## Décomposition des questions panoramiques (07/07/2026 — extension b)
+
+Routeur (Cerebras, 1 appel : classe + décompose + traduit) → questions larges éclatées en
+3-5 sous-questions → retrieval par sous-question → synthèse unique (toujours 1 seul appel
+Gemini). A/B sur 8 questions panoramiques :
+
+| Métrique (moyenne / 8 questions) | Pipeline direct | Décomposé |
+|---|:---:|:---:|
+| Livres distincts cités | 4,5 | **6,2** (+38 %) |
+| Extraits mobilisés | 6 (fixe) | 9,6 |
+| Citations [n] dans la réponse | 3,6 | **8,8** |
+
+Cas emblématique : « Présente les grandes lignes de la philosophie de Bunge » — le pipeline
+direct répondait **« Absent du corpus »** (6 extraits épars jugés insuffisants pour une
+synthèse → abstention à tort) ; le décomposé répond par une synthèse en 5 sections,
+8 livres, 11 citations. La décomposition ne corrige pas qu'une couverture faible : elle
+corrige des refus injustifiés ET une discipline de citation qui s'effondrait sur les
+questions larges (2 réponses baseline sur 8 sans aucun [n]).
+
+Coût : +1 appel Cerebras par question (routeur) ; latence panoramique sur le Space CPU
+gratuit ~6 min (compteur affiché, réponse cachée à vie ensuite). Questions directes :
+strictement inchangées.

@@ -67,6 +67,14 @@ réellement une « recette du gâteau du Bonheur » comme métaphore ironique).
 | Dense seul (cross-lingue) | 85 % | 100 % |
 | **Hybride 40 → reranker → 10** | **95 %** | **100 %** |
 
+### Questions panoramiques : la décomposition mesurée
+
+Les questions larges (« présente la philosophie de Bunge ») sont le point faible connu des
+RAG. Un routeur décompose ces questions en sous-questions (retrieval chacune, synthèse
+unique) : **4,5 → 6,2 livres cités** en moyenne, citations inline 3,6 → 8,8, et plus
+aucune abstention abusive — le pipeline direct refusait la question la plus naturelle
+du corpus. Coût API identique (1 appel de génération).
+
 ### Local vs API : l'arbitrage chiffré
 
 | | Gemini Flash (API) | Qwen 3.5 9B (100 % local) |

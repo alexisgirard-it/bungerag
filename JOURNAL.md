@@ -99,3 +99,11 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 **Appris :** l'outil qui mesure doit être vérifié aussi durement que l'outil mesuré — l'éval a ses propres hallucinations. Et un test peut saturer : au niveau livre sur 20 questions, 512 et 1024 sont indiscernables ; conclure « pareil » serait abusif, la bonne conclusion est « indétectable à cette granularité ».
 
 **Surprise :** le crash machine de la veille venait de MOI (embedding + 30 agents + juge en parallèle sur 16 Go). Règle adoptée : une seule charge lourde à la fois. La fiabilité, ça vaut aussi pour l'orchestrateur.
+
+## 2026-07-07 — Extension (b) : décomposition des panoramiques
+
+**Fait :** routeur + décomposition (1 appel Cerebras : classer, éclater en sous-questions, traduire) → retrieval par sous-question → synthèse unique. A/B sur 8 panoramiques : 4,5 → 6,2 livres cités, citations [n] 3,6 → 8,8. Déployé sur la démo (questions directes inchangées), testé en visiteur réel.
+
+**Appris :** la faiblesse panoramique était pire que « couverture faible » — le pipeline refusait carrément (« Absent du corpus ») la question la plus naturelle du monde : l'abstention, vertu sur les pièges, devient un défaut quand le retrieval sous-alimente la synthèse. Corriger le retrieval a corrigé l'abstention abusive ET la discipline de citation, sans toucher au prompt.
+
+**Surprise :** le coût quota du chemin décomposé est identique au direct (1 appel Gemini) — tout le surcoût est local. Les bonnes architectures déplacent les coûts là où ils sont gratuits.

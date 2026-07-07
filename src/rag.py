@@ -103,6 +103,68 @@ def ask(question, verbose=False):
                      "generate": t_generate}.items()},
     }
 
+def ask_decomposed(question, sous_questions):
+    """Chemin panoramique : retrieval par sous-question, synthese unique.
+    Cout API identique au chemin direct (1 seul appel Gemini) ; le surcout
+    est local (N petits rerankings au lieu d'un gros)."""
+    from retrieve import get_reranker
+    t0 = time.time()
+    k_pano = int(os.environ.get("RAG_PANO_K", "20"))
+    pool, seen = [], set()
+    for sq in sous_questions:
+        hits = search(sq["en"], "hybrid", k_pano)
+        scores = get_reranker().score(sq["fr"], [h["text"] for h in hits])
+        for h, sc in zip(hits, scores):
+            h["rerank_score"] = sc
+        hits.sort(key=lambda h: h["rerank_score"], reverse=True)
+        for h in hits[:3]:
+            if h["chunk_id"] not in seen:
+                seen.add(h["chunk_id"])
+                pool.append(h)
+    pool.sort(key=lambda h: h["rerank_score"], reverse=True)
+    pool = pool[:12]
+    t_retrieve = time.time() - t0
+
+    if not pool or pool[0]["rerank_score"] < SEUIL_ABSTENTION:
+        return {"answer": "Absent du corpus.", "sources": [], "abstained": "pre-generation",
+                "mode": "panoramique", "top_score": 0, "contexts": [],
+                "timings": {"retrieve": t_retrieve, "generate": 0}}
+
+    extraits = "\n\n".join(
+        f"[{i}] ({h['title']}, {format_pages(h)})\n{h['text']}"
+        for i, h in enumerate(pool, 1))
+    aspects = "\n".join(f"- {sq['fr']}" for sq in sous_questions)
+    prompt = (f"QUESTION D'ENSEMBLE : {question}\n\n"
+              f"Cette question a ete decomposee en sous-aspects :\n{aspects}\n\n"
+              f"EXTRAITS DU CORPUS (couvrant ces aspects) :\n\n{extraits}\n\n"
+              f"Redige une synthese ORGANISEE qui repond a la question d'ensemble "
+              f"en articulant les aspects couverts. Memes regles : chaque "
+              f"affirmation citee [n], signale ce que les extraits ne couvrent pas.")
+    answer = generate(prompt, system=SYSTEM, max_tokens=3000)
+    t_generate = time.time() - t0 - t_retrieve
+    return {
+        "answer": answer,
+        "sources": [{"titre": h["title"], "pages": format_pages(h),
+                     "score": round(h["rerank_score"], 3),
+                     "extrait": " ".join(h["text"].split())[:200]} for h in pool],
+        "abstained": None, "mode": "panoramique",
+        "contexts": [h["text"] for h in pool],
+        "sous_questions": [sq["fr"] for sq in sous_questions],
+        "top_score": round(pool[0]["rerank_score"], 3),
+        "timings": {k: round(v, 1) for k, v in
+                    {"retrieve": t_retrieve, "generate": t_generate}.items()},
+    }
+
+def ask_smart(question):
+    """Routeur : direct -> pipeline classique ; panoramique -> decompose."""
+    from decompose import analyse
+    d = analyse(question)
+    if d["mode"] == "panoramique":
+        return ask_decomposed(question, d["sous_questions"])
+    r = ask(question)
+    r["mode"] = "direct"
+    return r
+
 if __name__ == "__main__":
     r = ask(sys.argv[1])
     print(r["answer"])

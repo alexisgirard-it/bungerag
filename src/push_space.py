@@ -26,7 +26,7 @@ load_dotenv(ROOT / ".env")
 USER = "alexisgirard"
 DATASET = f"{USER}/bungerag-index"
 SPACE = f"{USER}/bungerag"
-MODULES = ["search.py", "rerank.py", "retrieve.py", "rag.py", "generate.py"]
+MODULES = ["search.py", "rerank.py", "retrieve.py", "rag.py", "generate.py", "decompose.py"]
 
 def main():
     api = HfApi(token=os.environ["HF_TOKEN"])
@@ -60,6 +60,7 @@ def main():
         "GEMINI_MODELS", "gemini-3.5-flash,gemini-2.5-flash,"
         "gemini-3-flash-preview,gemini-2.5-flash-lite,gemini-3.1-flash-lite"))
     api.add_space_variable(SPACE, "RAG_K_CANDIDATES", "12")
+    api.add_space_variable(SPACE, "RAG_PANO_K", "8")  # 2 vCPU
     print("secrets + variables configures ; le Space build (~5-10 min)")
 
 if __name__ == "__main__":
