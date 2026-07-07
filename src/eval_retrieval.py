@@ -15,6 +15,7 @@ Usage : .venv/bin/python src/eval_retrieval.py
 """
 
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -41,7 +42,8 @@ def main():
         "hybrid": lambda q: search(q, "hybrid", K),
         "rerank": lambda q: retrieve(q, k_candidates=40, k_final=K),
     }
-    cache_path = ROOT / "eval" / "cache" / "hits.json"
+    table = os.environ.get("BUNGE_TABLE", "bunge_512")
+    cache_path = ROOT / "eval" / "cache" / f"hits-{table}.json"
     if cache_path.exists():
         hits_all = json.loads(cache_path.read_text())
         print("hits recharges depuis le cache (re-scoring seul)")

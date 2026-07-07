@@ -91,3 +91,11 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 **Appris :** publier, c'est d'abord auditer — on vérifie ce que contient l'historique git AVANT de le rendre public, pas après. Et un README pro se structure pour deux lecteurs à la fois : le recruteur qui scanne 10 secondes (chiffres en haut) et l'ingénieur qui lit 3 minutes (architecture, ablations, limites).
 
 **Fin du build initial.** 9 phases, ~4 jours, 0 €. Le projet vit : démo en ligne, code public, chiffres défendables.
+
+## 2026-07-07 — Vérification des références + comparatif 512/1024
+
+**Fait :** 30 agents vérificateurs ont confronté chaque référence du jeu d'éval au corpus (preuves livre+page) : 23 confirmées, 7 corrigées — dont un terme que j'avais inventé (« psychonisme ») et une confusion sur la sémantique technique sens/signification. REVUE-REFERENCES.md pour validation humaine. Puis : index 1024 construit (2h24), filtré, et comparé au 512 sur les 4 configs — égalité parfaite en config complète (100 %/100 % des deux côtés) → on reste en 512 (citations plus précises, prompts plus courts).
+
+**Appris :** l'outil qui mesure doit être vérifié aussi durement que l'outil mesuré — l'éval a ses propres hallucinations. Et un test peut saturer : au niveau livre sur 20 questions, 512 et 1024 sont indiscernables ; conclure « pareil » serait abusif, la bonne conclusion est « indétectable à cette granularité ».
+
+**Surprise :** le crash machine de la veille venait de MOI (embedding + 30 agents + juge en parallèle sur 16 Go). Règle adoptée : une seule charge lourde à la fois. La fiabilité, ça vaut aussi pour l'orchestrateur.

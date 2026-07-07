@@ -47,3 +47,25 @@ Même pipeline, même jeu de 40 questions, même juge (Cerebras). Seul le géné
 **Verdict nuancé** : le 9B local est étonnamment fidèle (0,91 vs 0,94 — l'écart est faible), plus strict sur l'abstention, comparable sur le retrieval (normal : le retrieval est identique). Il paie en discipline de citation (13 % de réponses sans [n]) et surtout en latence (10×). Le choix local vs API n'est donc PAS qualitatif d'abord : c'est un arbitrage confidentialité/latence/coût — et il est désormais chiffré.
 
 **Le prix de la fiabilité du gratuit, vécu pendant cette éval** : 3 processus tués (mémoire 16 Go saturée par le 9B + reranker → déchargement du modèle entre appels), congestion serveur Cerebras (retries + dégradation gracieuse : sans traducteur, la question FR continue seule), 2 épuisements du quota journalier (sonde de retour + reprise auto). Architecture finale : boucles auto-réparantes + caches par question/métrique + supervision.
+
+## Chunks 512 vs 1024 tokens (07/07/2026 — extension a)
+
+Mêmes 20 questions, mêmes conditions (re-passe fraîche des deux index, filtrage annexes identique).
+
+| Config | 512 : hit@5 / @10 | 1024 : hit@5 / @10 |
+|---|:---:|:---:|
+| BM25 seul | 50 % / 75 % | 60 % / 70 % |
+| Dense seul | 85 % / 100 % | 90 % / 95 % |
+| Hybride | 85 % / 95 % | 85 % / 95 % |
+| **Hybride + reranker** | **100 % / 100 %** | **100 % / 100 %** |
+
+**Verdict : égalité au niveau qui compte** (config complète : plafond des deux côtés — le
+test au niveau livre sur 20 questions ne peut plus les séparer). **On reste en 512**, pour
+trois raisons pratiques : citations plus précises (plage de pages ~2× plus étroite), prompts
+de génération ~2× plus courts à nombre d'extraits égal (quota Gemini ménagé), et index déjà
+en production. Limite honnête : un jeu plus grand et une vérité-terrain au niveau page
+pourraient les départager — au niveau livre, la différence est indétectable.
+
+*(Note : le 512 affiche ici 100 % contre 95 % en phase 4 — entre-temps, la vérité-terrain a
+été élargie sur justification bibliographique et l'index a reçu la passe de filtrage v3.
+Les chiffres d'une éval vivent avec leur jeu d'éval.)*

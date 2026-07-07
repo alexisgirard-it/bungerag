@@ -7,6 +7,7 @@ hybrid : fusion des deux par RRF (Reciprocal Rank Fusion)
 Usage : .venv/bin/python src/search.py "ta question" [dense|bm25|hybrid] [k]
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -36,7 +37,9 @@ def embed_query(q):
     return get_model().encode(q, prompt_name="query",
                               normalize_embeddings=True).tolist()
 
-def search(query, mode="hybrid", k=5, table="bunge_512"):
+def search(query, mode="hybrid", k=5, table=None):
+    # BUNGE_TABLE permet de basculer 512 <-> 1024 sans toucher au code
+    table = table or os.environ.get("BUNGE_TABLE", "bunge_512")
     tbl = lancedb.connect(ROOT / "index" / "lancedb").open_table(table)
     if mode == "dense":
         q = tbl.search(embed_query(query)).limit(k)
