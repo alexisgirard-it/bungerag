@@ -83,3 +83,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** la fiabilité est le vrai sujet du gratuit. Cette éval a survécu à : 3 kills mémoire (→ keep_alive=0, le 9B se décharge entre les appels), la congestion Cerebras (→ retries + dégradation gracieuse), 2 épuisements de quota journalier (→ sonde + reprise auto). Boucles auto-réparantes + cache = rien ne se perd jamais.
 
 **Surprise :** le petit modèle local est PLUS strict sur l'abstention que le grand modèle cloud (10/10 vs 8/10) — mais moins nuancé : il refuse aussi ce qui méritait une réponse partielle. La rigueur et l'intelligence de la nuance ne sont pas la même chose.
+
+## 2026-07-07 — Phase 9 : publication
+
+**Fait :** README professionnel (chiffres en tête, schéma mermaid, 3 tableaux de résultats, mode « bring your own corpus », leçons de terrain, limites assumées), LICENSE MIT, keep-alive GitHub Actions quotidien pour la démo, repo public https://github.com/alexisgirard-it/bungerag (audit de sécurité de l'historique : zéro clé, zéro corpus), carte projet ajoutée au portfolio avec métriques et liens.
+
+**Appris :** publier, c'est d'abord auditer — on vérifie ce que contient l'historique git AVANT de le rendre public, pas après. Et un README pro se structure pour deux lecteurs à la fois : le recruteur qui scanne 10 secondes (chiffres en haut) et l'ingénieur qui lit 3 minutes (architecture, ablations, limites).
+
+**Fin du build initial.** 9 phases, ~4 jours, 0 €. Le projet vit : démo en ligne, code public, chiffres défendables.
