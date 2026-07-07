@@ -22,3 +22,5 @@ Gemini Flash (rotation multi-modèles, température 0).
 
 Le corpus (sous droits) vit dans un dataset privé : cette démo n'affiche que de
 courtes citations sourcées.
+
+Code source complet : https://github.com/alexisgirard-it/bungerag

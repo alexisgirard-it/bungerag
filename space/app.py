@@ -109,7 +109,7 @@ DESCRIPTION = """# 🔎 BungeRAG
 **Interroge l'œuvre de Mario Bunge (25 ouvrages) en français.**
 Chaque affirmation est citée **[livre, page]** ; si la réponse n'est pas dans le corpus, le système répond « Absent du corpus » plutôt que d'inventer.
 
-*Projet étudiant (RAG : retrieval hybride + reranking + génération contrainte). Fidélité mesurée : **93,5 %** (RAGAS, juge indépendant, [méthodo](https://github.com/alexisgirard/bungerag)). Le corpus n'est pas redistribué : seules de courtes citations sont affichées. Première réponse parfois lente (démarrage à froid + CPU gratuit : ~1-2 min).*
+*Projet étudiant (RAG : retrieval hybride + reranking + génération contrainte). Fidélité mesurée : **93,5 %** (RAGAS, juge indépendant, [méthodo](https://github.com/alexisgirard-it/bungerag)). Le corpus n'est pas redistribué : seules de courtes citations sont affichées. Première réponse parfois lente (démarrage à froid + CPU gratuit : ~1-2 min).*
 """
 
 EXAMPLES = [

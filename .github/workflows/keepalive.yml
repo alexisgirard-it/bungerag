@@ -1,0 +1,12 @@
+# Ping quotidien de la demo HF Spaces : le hardware gratuit s'endort apres
+# ~48h sans visite ; un ping/jour la garde chaude pour les visiteurs reels.
+name: keep-space-alive
+on:
+  schedule:
+    - cron: "17 8 * * *"   # tous les jours a 08h17 UTC
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -sSf -o /dev/null https://alexisgirard-bungerag.hf.space || true
