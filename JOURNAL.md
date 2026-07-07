@@ -1,6 +1,6 @@
 # Journal de bord — BungeRAG
 
-Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pour le README et les entretiens.
+Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fait / Appris / Surprise.
 
 ---
 

@@ -22,7 +22,7 @@ la « recette du Bonheur » métaphorique) — pièges mal conçus plus que déf
 - Générateur hétérogène (rotation de 5 modèles Gemini imposée par le quota réel : ~20 req/jour/modèle).
 - Notation en une passe par un seul juge ; non re-testé en re-run (variance du juge non mesurée).
 
-## Trouvailles du build (matière à entretien)
+## Trouvailles du build
 1. +25 pts de hit@5 en nettoyant 837 chunks d'annexes (biblios, index, voix éditoriale de l'anthologie) — les points sont dans les données.
 2. Le score du reranker mesure la proximité de sujet, PAS « ça répond » : piège « recette » à 0,966 → l'abstention doit vivre dans le prompt, pas dans un seuil.
 3. Reformulation FR→EN : BM25 passe de 50 % à 95 % hit@5 sur corpus anglais interrogé en français.
