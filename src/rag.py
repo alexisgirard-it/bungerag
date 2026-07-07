@@ -42,10 +42,19 @@ REGLES ABSOLUES :
 6. Ne romance pas, n'extrapole pas : restitue ce que disent les extraits."""
 
 def reformulate_en(question):
-    return generate(
-        f"Translate this French question into concise academic English "
-        f"(philosophy of science context). Reply with the translation only.\n\n{question}",
-        max_tokens=400, backend="cerebras")  # preserve le quota Gemini
+    """Traduction EN pour la jambe BM25. Degradation gracieuse : si le
+    traducteur est indisponible, on continue avec la question FR telle
+    quelle (le dense cross-lingue assure, seul BM25 se degrade) plutot
+    que de faire tomber tout le pipeline pour un service tiers."""
+    try:
+        return generate(
+            f"Translate this French question into concise academic English "
+            f"(philosophy of science context). Reply with the translation only.\n\n{question}",
+            max_tokens=400, backend="cerebras")  # preserve le quota Gemini
+    except Exception as e:
+        print(f"  [traduction indisponible ({type(e).__name__}), question FR gardee]",
+              flush=True)
+        return question
 
 def format_pages(h):
     if h["page_start"] == h["page_end"]:

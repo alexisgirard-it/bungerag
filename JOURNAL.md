@@ -75,3 +75,11 @@ Tenu par l'IA, relu par Alexis. Fait / Appris / Surprise. Banque d'anecdotes pou
 **Appris :** un déploiement se teste depuis l'extérieur (gradio_client), pas en se croyant sur parole ; et la latence du gratuit s'assume en l'affichant (« ~1-2 min ») plutôt qu'en la cachant.
 
 **Surprise :** le validateur HF refuse une description de 62 caractères (max 60) — les plateformes valident tout, et c'est tant mieux.
+
+## 2026-07-07 — Phase 8 : le mode local et son vrai prix
+
+**Fait :** Ollama/Qwen3.5-9B branché derrière generate() (une variable d'env, zéro autre changement — l'abstraction de la phase 5 paie). Harnais complet rejoué en local. Tableau final : faithfulness 0,91 local vs 0,94 API, abstention 10/10 vs 8/10, citations 26/30 vs 28/30, génération 146 s vs 15 s.
+
+**Appris :** la fiabilité est le vrai sujet du gratuit. Cette éval a survécu à : 3 kills mémoire (→ keep_alive=0, le 9B se décharge entre les appels), la congestion Cerebras (→ retries + dégradation gracieuse), 2 épuisements de quota journalier (→ sonde + reprise auto). Boucles auto-réparantes + cache = rien ne se perd jamais.
+
+**Surprise :** le petit modèle local est PLUS strict sur l'abstention que le grand modèle cloud (10/10 vs 8/10) — mais moins nuancé : il refuse aussi ce qui méritait une réponse partielle. La rigueur et l'intelligence de la nuance ne sont pas la même chose.

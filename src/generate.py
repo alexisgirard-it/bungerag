@@ -83,10 +83,40 @@ def _cerebras(prompt, system, max_tokens):
                             max_retries=8, timeout=120)
     msgs = ([{"role": "system", "content": system}] if system else []) \
         + [{"role": "user", "content": prompt}]
-    r = _oa_client.chat.completions.create(
-        model=os.environ.get("CEREBRAS_MODEL", "gpt-oss-120b"),
-        messages=msgs, max_completion_tokens=max_tokens, temperature=0)
-    return (r.choices[0].message.content or "").strip()
+    from openai import RateLimitError
+    for attempt in range(4):  # en plus des retries internes du client
+        try:
+            r = _oa_client.chat.completions.create(
+                model=os.environ.get("CEREBRAS_MODEL", "gpt-oss-120b"),
+                messages=msgs, max_completion_tokens=max_tokens, temperature=0)
+            return (r.choices[0].message.content or "").strip()
+        except RateLimitError:
+            if attempt == 3:
+                raise
+            wait = 60 * (attempt + 1)
+            print(f"  [cerebras sature, retry dans {wait}s]", flush=True)
+            time.sleep(wait)
+
+def _ollama(prompt, system, max_tokens):
+    """Backend 100% local via l'API native Ollama.
+    num_ctx=8192 obligatoire : nos prompts RAG font ~4-5k tokens et le
+    defaut d'Ollama (4096) TRONQUERAIT silencieusement les extraits.
+    think=False : pas de mode reflexion, on veut du deterministe rapide."""
+    import requests
+    msgs = ([{"role": "system", "content": system}] if system else []) \
+        + [{"role": "user", "content": prompt}]
+    r = requests.post("http://localhost:11434/api/chat", json={
+        "model": os.environ.get("OLLAMA_MODEL", "qwen3:8b"),
+        "messages": msgs, "stream": False, "think": False,
+        # keep_alive 0 : decharge le modele apres chaque generation ->
+        # libere ses ~7 Go pendant la phase de retrieval (sinon macOS
+        # tue le processus python sous pression memoire sur 16 Go)
+        "keep_alive": os.environ.get("OLLAMA_KEEP_ALIVE", "0"),
+        "options": {"temperature": 0, "num_ctx": 8192,
+                    "num_predict": max_tokens},
+    }, timeout=600)
+    r.raise_for_status()
+    return r.json()["message"]["content"].strip()
 
 def generate(prompt, system=None, max_tokens=2048, backend=None):
     backend = backend or os.environ.get("LLM_BACKEND", "gemini")
@@ -94,4 +124,6 @@ def generate(prompt, system=None, max_tokens=2048, backend=None):
         return _gemini(prompt, system, max_tokens)
     if backend == "cerebras":
         return _cerebras(prompt, system, max_tokens)
+    if backend == "ollama":
+        return _ollama(prompt, system, max_tokens)
     raise NotImplementedError(f"backend '{backend}' : prevu pour une phase future")

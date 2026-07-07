@@ -31,6 +31,9 @@ CACHE = ROOT / "eval" / "cache"
 sys.path.insert(0, str(ROOT / "src"))
 
 QUESTIONS = [json.loads(l) for l in open(ROOT / "eval" / "questions-eval.jsonl")]
+# un jeu de caches par backend de generation -> comparatif local vs API
+SUFFIX = "" if os.environ.get("LLM_BACKEND", "gemini") == "gemini" else \
+    "-" + os.environ["LLM_BACKEND"]
 
 def load(name):
     p = CACHE / name
@@ -44,7 +47,7 @@ def save(name, obj):
 
 def run_answers():
     from rag import ask
-    answers = load("answers.json")
+    answers = load(f"answers{SUFFIX}.json")
     t0 = time.time()
     for q in QUESTIONS:
         key = str(q["id"])
@@ -54,8 +57,9 @@ def run_answers():
         import generate as gen
         answers[key] = {"answer": r["answer"], "contexts": r["contexts"],
                         "abstained": r["abstained"], "top_score": r["top_score"],
-                        "question_en": r["question_en"], "model": gen.GEMINI_LAST_MODEL}
-        save("answers.json", answers)
+                        "question_en": r["question_en"], "model": gen.GEMINI_LAST_MODEL,
+                        "timings": r.get("timings")}
+        save(f"answers{SUFFIX}.json", answers)
         print(f"  q{q['id']:02d} [{q['type']}] "
               f"{'ABSTENTION' if r['abstained'] else 'reponse':10} "
               f"({time.time()-t0:.0f}s)", flush=True)
@@ -81,8 +85,8 @@ async def run_judge():
         "context_precision": ContextPrecisionWithoutReference(llm=llm),
         "context_recall": ContextRecall(llm=llm),
     }
-    answers = load("answers.json")
-    scores = load("ragas-scores.json")
+    answers = load(f"answers{SUFFIX}.json")
+    scores = load(f"ragas-scores{SUFFIX}.json")
     t0 = time.time()
     for q in QUESTIONS:
         if q["type"] != "contenu":
@@ -112,7 +116,7 @@ async def run_judge():
                         print(f"  q{q['id']:02d} {name} ECHEC : {str(e)[:80]}", flush=True)
                     else:
                         await asyncio.sleep(60 * (attempt + 1))
-            save("ragas-scores.json", scores)
+            save(f"ragas-scores{SUFFIX}.json", scores)
         vals = {k: (f"{v:.2f}" if v is not None else "err")
                 for k, v in scores[key].items()}
         print(f"  q{q['id']:02d} {vals} ({time.time()-t0:.0f}s)", flush=True)
@@ -120,9 +124,10 @@ async def run_judge():
 
 # ---------------------------------------------------------------- rapport
 
-def report():
-    answers = load("answers.json")
-    scores = load("ragas-scores.json")
+def report(suffix=None):
+    suffix = SUFFIX if suffix is None else suffix
+    answers = load(f"answers{suffix}.json")
+    scores = load(f"ragas-scores{suffix}.json")
     contenu = [q for q in QUESTIONS if q["type"] == "contenu"]
     pieges = [q for q in QUESTIONS if q["type"] == "piege"]
 
@@ -151,7 +156,11 @@ def report():
 if __name__ == "__main__":
     from dotenv import load_dotenv
     load_dotenv(ROOT / ".env")
-    if "--answers" in sys.argv:
+    if "--compare" in sys.argv:
+        for suffix, nom in (("", "GEMINI (API)"), ("-ollama", "OLLAMA (local)")):
+            print(f"\n########## {nom} ##########")
+            report(suffix)
+    elif "--answers" in sys.argv:
         run_answers()
     elif "--judge" in sys.argv:
         asyncio.run(run_judge())

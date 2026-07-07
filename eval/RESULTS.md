@@ -27,3 +27,23 @@ la « recette du Bonheur » métaphorique) — pièges mal conçus plus que déf
 2. Le score du reranker mesure la proximité de sujet, PAS « ça répond » : piège « recette » à 0,966 → l'abstention doit vivre dans le prompt, pas dans un seuil.
 3. Reformulation FR→EN : BM25 passe de 50 % à 95 % hit@5 sur corpus anglais interrogé en français.
 4. Les tokens de « réflexion » (Gemini 2.5, gpt-oss-120b) se décomptent silencieusement des budgets de sortie : 2 bugs distincts, même cause.
+
+## Comparatif local vs API (07/07/2026 — phase 8)
+
+Même pipeline, même jeu de 40 questions, même juge (Cerebras). Seul le générateur change (`LLM_BACKEND`).
+
+| Métrique | Gemini Flash (API) | Qwen 3.5 9B Q4 (100 % local, M3 16 Go) |
+|---|---|---|
+| Faithfulness | **0,935** | 0,912 *(n=25)* |
+| Context precision | 0,893 | **0,902** *(n=24)* |
+| Context recall | 0,903 | **0,928** |
+| Abstention pièges (strict) | 8/10 | **10/10** |
+| Réponses avec citations [n] | **28/30** | 26/30 |
+| Génération médiane | **~15 s** | 146 s |
+| Confidentialité | question envoyée à Google | **rien ne quitte la machine** |
+
+*(n<30 : 11 notes juge perdues sur épuisement du quota journalier Cerebras, complétées dès son retour — les moyennes sont stables entre n=13, 25 et 30.)*
+
+**Verdict nuancé** : le 9B local est étonnamment fidèle (0,91 vs 0,94 — l'écart est faible), plus strict sur l'abstention, comparable sur le retrieval (normal : le retrieval est identique). Il paie en discipline de citation (13 % de réponses sans [n]) et surtout en latence (10×). Le choix local vs API n'est donc PAS qualitatif d'abord : c'est un arbitrage confidentialité/latence/coût — et il est désormais chiffré.
+
+**Le prix de la fiabilité du gratuit, vécu pendant cette éval** : 3 processus tués (mémoire 16 Go saturée par le 9B + reranker → déchargement du modèle entre appels), congestion serveur Cerebras (retries + dégradation gracieuse : sans traducteur, la question FR continue seule), 2 épuisements du quota journalier (sonde de retour + reprise auto). Architecture finale : boucles auto-réparantes + caches par question/métrique + supervision.

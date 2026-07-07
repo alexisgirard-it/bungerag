@@ -34,8 +34,10 @@ class Reranker:
         self.yes = self.tok.convert_tokens_to_ids("yes")
         self.no = self.tok.convert_tokens_to_ids("no")
 
-    def score(self, query, docs, batch_size=8):
+    def score(self, query, docs, batch_size=None):
         """Probabilite P(yes) pour chaque (query, doc)."""
+        import os
+        batch_size = batch_size or int(os.environ.get("RERANK_BATCH", "8"))
         prompts = [f"{PREFIX}<Instruct>: {INSTRUCTION}\n<Query>: {query}\n"
                    f"<Document>: {d}{SUFFIX}" for d in docs]
         scores = []
