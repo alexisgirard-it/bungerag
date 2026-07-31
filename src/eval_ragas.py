@@ -32,8 +32,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 QUESTIONS = [json.loads(l) for l in open(ROOT / "eval" / "questions-eval.jsonl")]
 # un jeu de caches par backend de generation -> comparatif local vs API
-SUFFIX = "" if os.environ.get("LLM_BACKEND", "gemini") == "gemini" else \
-    "-" + os.environ["LLM_BACKEND"]
+SUFFIX = os.environ.get("EVAL_SUFFIX",
+    "" if os.environ.get("LLM_BACKEND", "gemini") == "gemini"
+    else "-" + os.environ["LLM_BACKEND"])
 
 def load(name):
     p = CACHE / name

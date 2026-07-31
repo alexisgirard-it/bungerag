@@ -74,6 +74,11 @@ def ask(question, verbose=False):
         h["rerank_score"] = s
     hits.sort(key=lambda h: h["rerank_score"], reverse=True)
     hits = hits[:K_FINAL]
+    # extension (c) : RAG_WINDOW=1 etend chaque chunk retenu a ses voisins
+    # (fusion des chevauchements) au moment de la generation seulement
+    if int(os.environ.get("RAG_WINDOW", "0")) and hits:
+        from window import expand
+        hits = expand(hits, radius=int(os.environ["RAG_WINDOW"]))
     t_retrieve = time.time() - t0 - t_translate
 
     if not hits or hits[0]["rerank_score"] < SEUIL_ABSTENTION:
