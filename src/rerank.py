@@ -12,6 +12,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 MODEL = "Qwen/Qwen3-Reranker-0.6B"
+MODEL_REVISION = "e61197ed45024b0ed8a2d74b80b4d909f1255473"
 INSTRUCTION = ("Given a question about Mario Bunge's philosophy, judge whether "
                "the passage answers it")
 
@@ -24,11 +25,18 @@ SUFFIX = '<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n'
 class Reranker:
     def __init__(self, device=None):
         if device is None:
-            device = "mps" if torch.backends.mps.is_available() else "cpu"
-        dtype = torch.float16 if device == "mps" else torch.float32
-        self.tok = AutoTokenizer.from_pretrained(MODEL, padding_side="left")
+            if torch.backends.mps.is_available():
+                device = "mps"
+            elif torch.cuda.is_available():
+                device = "cuda"
+            else:
+                device = "cpu"
+        dtype = torch.float16 if device in ("mps", "cuda") else torch.float32
+        self.tok = AutoTokenizer.from_pretrained(
+            MODEL, revision=MODEL_REVISION, padding_side="left"
+        )
         self.model = (AutoModelForCausalLM
-                      .from_pretrained(MODEL, dtype=dtype)
+                      .from_pretrained(MODEL, revision=MODEL_REVISION, dtype=dtype)
                       .to(device).eval())
         self.device = device
         self.yes = self.tok.convert_tokens_to_ids("yes")

@@ -1,0 +1,37 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Install lightweight quality dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+      - name: Compile every Python module
+        run: python -m compileall -q src space tests
+      - name: Static checks
+        run: ruff check src space tests
+      - name: Unit tests without corpus, model or API
+        run: pytest -q
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

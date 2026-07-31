@@ -19,9 +19,14 @@ import os
 import time
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+# Le chargement de .env est un confort local, pas une condition d'import. Cela
+# permet aux tests unitaires purs d'importer le pipeline avec le seul stdlib.
+try:
+    from dotenv import load_dotenv
+except ImportError:  # pragma: no cover - depend de l'environnement d'execution
+    load_dotenv = None
+if load_dotenv is not None:
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 GEMINI_MODELS = os.environ.get(
     "GEMINI_MODELS",
@@ -106,7 +111,7 @@ def _ollama(prompt, system, max_tokens):
     msgs = ([{"role": "system", "content": system}] if system else []) \
         + [{"role": "user", "content": prompt}]
     r = requests.post("http://localhost:11434/api/chat", json={
-        "model": os.environ.get("OLLAMA_MODEL", "qwen3:8b"),
+        "model": os.environ.get("OLLAMA_MODEL", "qwen3.5:9b"),
         "messages": msgs, "stream": False, "think": False,
         # keep_alive 0 : decharge le modele apres chaque generation ->
         # libere ses ~7 Go pendant la phase de retrieval (sinon macOS

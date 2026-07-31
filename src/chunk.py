@@ -27,6 +27,8 @@ from pathlib import Path
 import tiktoken
 from llama_index.core.node_parser import SentenceSplitter
 
+from page_map import locate_chunks
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "chunks"
 ENC = tiktoken.get_encoding("cl100k_base")
@@ -63,20 +65,17 @@ def page_at(bounds, offset):
 
 def chunk_text(text, bounds, splitter):
     """Decoupe un texte et localise chaque chunk dans ses pages d'origine."""
-    chunks, cursor = [], 0
-    for ch in splitter.split_text(text):
-        # retrouve la position du chunk (le chevauchement impose de chercher
-        # un peu en arriere du curseur)
-        idx = text.find(ch[:60], max(0, cursor - 4000))
-        if idx < 0:
-            idx = text.find(ch[:60])
+    chunks = []
+    split = splitter.split_text(text)
+    for ch, (idx, end) in zip(split, locate_chunks(text, split)):
         chunks.append({
             "page_start": page_at(bounds, idx),
-            "page_end": page_at(bounds, idx + len(ch) - 1),
+            "page_end": page_at(bounds, end - 1),
+            "char_start": idx,
+            "char_end": end,
             "n_tokens": len(ENC.encode(ch)),
             "text": ch,
         })
-        cursor = idx + len(ch)
     return chunks
 
 def process(size, overlap):
@@ -87,7 +86,7 @@ def process(size, overlap):
 
     with open(out_path, "w") as out:
         for jf in sorted(glob.glob(str(ROOT / "extracted" / "*.jsonl"))):
-            records = [json.loads(l) for l in open(jf)]
+            records = [json.loads(line) for line in open(jf)]
             meta = {k: records[0][k] for k in ("book", "title", "year")}
             is_epub = isinstance(records[0]["page"], str)
 

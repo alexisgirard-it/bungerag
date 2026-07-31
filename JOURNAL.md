@@ -54,7 +54,7 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 
 ## 2026-07-06 — Phase 6 : LE harnais d'éval
 
-**Fait :** 40 questions (30 contenu avec références + 10 pièges), réponses par le pipeline complet, notation RAGAS par Cerebras gpt-oss-120b. **Faithfulness 0,935 · precision 0,893 · recall 0,903 · abstention 8/10 strict** — toutes les cibles dépassées. Résultats dans eval/RESULTS.md.
+**Fait :** 40 questions (30 contenu avec références + 10 pièges), réponses par le pipeline complet, notation RAGAS par Cerebras gpt-oss-120b. La première passe donnait **faithfulness 0,935 · precision 0,893 · recall 0,903 · abstention 8/10 strict**. Après correction et re-notation des références, les valeurs finales du même bras sont **0,935 · 0,893 · 0,848 · 8/10**. Toutes les cibles restent dépassées ; `eval/RESULTS.md` porte désormais uniquement les résultats finaux.
 
 **Appris :** le quota Gemini réel = ~20 req/JOUR par modèle (pas ~1500) → rotation multi-modèles implémentée en plein vol. Un score d'éval anormal se DÉBOGUE : q05 basse → une PRÉFACE d'éditeur avait survécu au filtre (v3) ; q28 recall 0,00 avec une bonne réponse → référence mal écrite, pas pipeline cassé. L'éval juge aussi le jeu d'éval.
 
@@ -76,13 +76,13 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 
 **Surprise :** le validateur HF refuse une description de 62 caractères (max 60) — les plateformes valident tout, et c'est tant mieux.
 
-## 2026-07-07 — Phase 8 : le mode local et son vrai prix
+## 2026-07-07 — Phase 8 : la génération locale et son vrai prix
 
-**Fait :** Ollama/Qwen3.5-9B branché derrière generate() (une variable d'env, zéro autre changement — l'abstraction de la phase 5 paie). Harnais complet rejoué en local. Tableau final : faithfulness 0,91 local vs 0,94 API, abstention 10/10 vs 8/10, citations 26/30 vs 28/30, génération 146 s vs 15 s.
+**Fait :** Ollama/Qwen3.5-9B branché derrière `generate()` (une variable d'environnement, zéro autre changement — l'abstraction de la phase 5 paie). Harnais complet rejoué avec ce backend de réponse. Résultats finaux n=30 : **faithfulness 0,904 · precision 0,903 · recall 0,885 · abstention 10/10**, contre **0,935 · 0,893 · 0,848 · 8/10** pour Gemini.
 
 **Appris :** la fiabilité est le vrai sujet du gratuit. Cette éval a survécu à : 3 kills mémoire (→ keep_alive=0, le 9B se décharge entre les appels), la congestion Cerebras (→ retries + dégradation gracieuse), 2 épuisements de quota journalier (→ sonde + reprise auto). Boucles auto-réparantes + cache = rien ne se perd jamais.
 
-**Surprise :** le petit modèle local est PLUS strict sur l'abstention que le grand modèle cloud (10/10 vs 8/10) — mais moins nuancé : il refuse aussi ce qui méritait une réponse partielle. La rigueur et l'intelligence de la nuance ne sont pas la même chose.
+**Surprise :** le petit modèle local est PLUS strict sur l'abstention que le grand modèle cloud (10/10 vs 8/10) — mais moins nuancé : il refuse aussi ce qui méritait une réponse partielle. La rigueur et l'intelligence de la nuance ne sont pas la même chose. « Local » désigne ici le retrieval et la génération de réponse : la reformulation FR→EN utilise encore Cerebras lorsqu'il est disponible, et le juge d'évaluation est externe.
 
 ## 2026-07-07 — Phase 9 : publication
 
@@ -94,7 +94,7 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 
 ## 2026-07-07 — Vérification des références + comparatif 512/1024
 
-**Fait :** 30 agents vérificateurs ont confronté chaque référence du jeu d'éval au corpus (preuves livre+page) : 23 confirmées, 7 corrigées — dont un terme que j'avais inventé (« psychonisme ») et une confusion sur la sémantique technique sens/signification. REVUE-REFERENCES.md pour validation humaine. Puis : index 1024 construit (2h24), filtré, et comparé au 512 sur les 4 configs — égalité parfaite en config complète (100 %/100 % des deux côtés) → on reste en 512 (citations plus précises, prompts plus courts).
+**Fait :** 30 agents vérificateurs ont confronté chaque référence du jeu d'éval au corpus (preuves livre+page) : 23 confirmées, 7 corrigées — dont un terme que j'avais inventé (« psychonisme ») et une confusion sur la sémantique technique sens/signification. À cette date, `REVUE-REFERENCES.md` préparait encore la validation humaine. Puis : index 1024 construit (2h24), filtré, et comparé au 512 sur les 4 configs — égalité parfaite en config complète (100 %/100 % des deux côtés) → on reste en 512 (citations plus précises, prompts plus courts).
 
 **Appris :** l'outil qui mesure doit être vérifié aussi durement que l'outil mesuré — l'éval a ses propres hallucinations. Et un test peut saturer : au niveau livre sur 20 questions, 512 et 1024 sont indiscernables ; conclure « pareil » serait abusif, la bonne conclusion est « indétectable à cette granularité ».
 
@@ -106,4 +106,45 @@ Journal de bord du build, en binôme humain-IA. Trois entrées par session : Fai
 
 **Appris :** la faiblesse panoramique était pire que « couverture faible » — le pipeline refusait carrément (« Absent du corpus ») la question la plus naturelle du monde : l'abstention, vertu sur les pièges, devient un défaut quand le retrieval sous-alimente la synthèse. Corriger le retrieval a corrigé l'abstention abusive ET la discipline de citation, sans toucher au prompt.
 
-**Surprise :** le coût quota du chemin décomposé est identique au direct (1 appel Gemini) — tout le surcoût est local. Les bonnes architectures déplacent les coûts là où ils sont gratuits.
+**Surprise :** le chemin décomposé conserve un seul appel Gemini de génération, mais ajoute un appel Cerebras pour router, décomposer et traduire. Le surcoût n'est donc pas entièrement local, même s'il n'ajoute pas d'appel au générateur principal.
+
+## 2026-07-31 — Clôture de l'évaluation V1
+
+**Fait :** les sept références corrigées (q05, q12, q13, q16, q17, q20, q30) ont été relues et approuvées humainement sans nouvelle modification ; la décision canonique est consignée dans `eval/VALIDATION-HUMAINE.md` et les sept statuts ne sont plus provisoires. Les caches re-notés après correction sont complets (n=30 par métrique). Résultats finaux : Gemini **0,935 / 0,893 / 0,848, 8/10** ; Ollama **0,904 / 0,903 / 0,885, 10/10**. Le sentence-window reste un bras expérimental séparé : **0,969 / 0,873 / 0,922, 9/10**.
+
+**Appris :** corriger la vérité-terrain peut faire baisser un score — ici le context recall passe de 0,903 à 0,848 — sans que le pipeline ait régressé. Un chiffre plus bas mais calculé contre des références validées vaut davantage qu'un meilleur chiffre fondé sur des brouillons erronés.
+
+**Surprise :** l'écart était plus profond qu'un simple k différent. Le benchmark legacy
+passait la reformulation anglaise à la recherche hybride entière, donc aux jambes dense et
+BM25, alors que l'architecture annoncée visait dense FR + BM25 EN. Il utilisait aussi le
+chemin direct sans le routeur panoramique. Les résultats ci-dessus restent une trace utile
+du pipeline historique 40 → 6, mais ne sont attribués ni aux profils V1 actuels ni au Space.
+
+## 2026-07-31 — Fermeture technique V1
+
+**Fait :** le sentence-window a été gelé sur la branche séparée
+`experiment/sentence-window-v1.1`. La branche stable reçoit deux profils explicites
+(`public_v1` 12 → 5 et `research_40x6` 40 → 6), un schéma de résultat commun aux chemins
+direct et panoramique, la validation structurelle des citations, des caches d'évaluation
+fingerprintés et une CI sans corpus ni API. La démo Gradio a été reconstruite comme une
+édition critique sobre inspirée de Bunge, avec cache borné, quotas atomiques, surface API
+réduite et exposition minimale des sources. Le prompt interdit la restitution du corpus ;
+un garde-fou retire en plus toute réponse recopiant plus de 20 mots consécutifs d'un
+contexte, et les extraits publics sont bornés à 20 mots. Le déploiement sépare désormais
+le jeton d'écriture local du jeton de lecture limité au dataset privé et supprime les
+anciens fichiers distants hors liste blanche.
+
+**Appris :** une page de citation ne se déduit pas d'un préfixe de chunk. Le nouveau
+mapping recherche le texte intégral dans le texte recollé et échoue explicitement si
+l'alignement est impossible. Sur 11 249 chunks, textes et identifiants sont restés
+strictement identiques ; seules 38 plages de pages ont changé. Parmi elles, 37 existaient
+dans l'index 512 filtré, la dernière appartenant aux chunks exclus. Une migration de
+métadonnées vérifiée suffit donc : aucun embedding n'a été recalculé.
+
+**Surprise :** l'interface était lisible en thème clair mais perdait son contraste lorsque
+Gradio héritait du mode sombre du navigateur. Le test visuel réel, puis mobile à 390 px,
+a permis de corriger ce défaut que les tests Python ne pouvaient pas voir. Autres limites
+rendues explicites : la « traçabilité 100/100 » initiale était un échantillon qui n'avait
+pas détecté ces 38 erreurs de plage ; et les scores publiés restent ceux du pipeline
+legacy 40 → 6. Le sentence-window (commit `aec4846`) est lui aussi une mesure historique
+dont les caches bruts ne sont pas versionnés, pas un résultat du commit de durcissement.

@@ -35,7 +35,10 @@ def hit_rank(hits, expected):
     return None
 
 def main():
-    questions = [json.loads(l) for l in open(ROOT / "eval" / "questions-retrieval.jsonl")]
+    questions = [
+        json.loads(line)
+        for line in open(ROOT / "eval" / "questions-retrieval.jsonl")
+    ]
     configs = {
         "bm25":   lambda q: search(q, "bm25", K),
         "dense":  lambda q: search(q, "dense", K),

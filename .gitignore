@@ -12,7 +12,6 @@ data/
 .venv/
 __pycache__/
 *.pyc
-.python-version
 
 # caches d'éval (les réponses LLM cachées ; le jeu de questions eval/*.jsonl EST versionné)
 eval/cache/

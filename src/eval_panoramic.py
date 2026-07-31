@@ -65,7 +65,8 @@ def main():
     for i in range(1, len(QUESTIONS) + 1):
         d = data[str(i)]
         b, c = d["baseline"], d["decompose"]
-        tb += b["livres"]; td += c["livres"]
+        tb += b["livres"]
+        td += c["livres"]
         print(f"q{i:<3} {b['livres']:>10} {c['livres']:>11} {b['extraits']:>7} "
               f"{c['extraits']:>8} {b['citations']:>7} {c['citations']:>8}")
         L += [f"## q{i} — {d['question']}", "",

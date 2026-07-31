@@ -1,5 +1,6 @@
 #!/bin/zsh
-cd ~/BungeRAG
+ROOT=${0:A:h:h}
+cd "$ROOT"
 LOG=eval/cache/run-panoramic.log
 echo "=== demarrage $(date) ===" >> $LOG
 for i in 1 2 3 4; do

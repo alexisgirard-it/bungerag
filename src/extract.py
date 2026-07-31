@@ -47,21 +47,24 @@ def normalize(line):
 def find_furniture(pages):
     top, bottom = Counter(), Counter()
     for text in pages:
-        lines = [l for l in text.splitlines() if l.strip()]
-        for l in lines[:EDGE]:
-            top[normalize(l)] += 1
-        for l in lines[-EDGE:]:
-            bottom[normalize(l)] += 1
+        lines = [line for line in text.splitlines() if line.strip()]
+        for line in lines[:EDGE]:
+            top[normalize(line)] += 1
+        for line in lines[-EDGE:]:
+            bottom[normalize(line)] += 1
     # Seuil bas : les titres courants de CHAPITRE ne se repetent que sur
     # 10-30 pages ; aucune vraie ligne de contenu ne revient en tete de
     # plus de quelques pages, le risque de faux positif est negligeable.
     threshold = max(4, len(pages) // 50)
-    keep = lambda c: {sig for sig, n in c.items() if n >= threshold and sig}
+    def keep(counter):
+        return {sig for sig, count in counter.items()
+                if count >= threshold and sig}
+
     return keep(top), keep(bottom)
 
 def strip_furniture(text, top_sigs, bottom_sigs):
     lines = text.splitlines()
-    n_stripped = [i for i, l in enumerate(lines) if l.strip()]
+    n_stripped = [i for i, line in enumerate(lines) if line.strip()]
     drop = set()
     for rank, i in enumerate(n_stripped[:EDGE]):
         if PAGENUM.match(lines[i]) or normalize(lines[i]) in top_sigs:
@@ -69,7 +72,9 @@ def strip_furniture(text, top_sigs, bottom_sigs):
     for rank, i in enumerate(n_stripped[-EDGE:]):
         if PAGENUM.match(lines[i]) or normalize(lines[i]) in bottom_sigs:
             drop.add(i)
-    return "\n".join(l for i, l in enumerate(lines) if i not in drop).strip()
+    return "\n".join(
+        line for i, line in enumerate(lines) if i not in drop
+    ).strip()
 
 # ------------------------------------------------------------- extracteurs
 

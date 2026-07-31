@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Extension (a) : comparaison chunks 512 vs 1024, sequentielle et auto-reparante.
-cd ~/BungeRAG
+ROOT=${0:A:h:h}
+cd "$ROOT"
 LOG=eval/cache/compare-chunks.log
 echo "=== demarrage $(date) ===" >> $LOG
 .venv/bin/python src/filter_backmatter.py 1024 >> $LOG 2>&1

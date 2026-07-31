@@ -13,6 +13,7 @@ Usage : .venv/bin/python src/filter_backmatter.py [512|1024] [--dry-run]
 """
 
 import json
+import hashlib
 import re
 import sys
 from collections import Counter
@@ -44,8 +45,10 @@ def is_backmatter(text, book="", page=""):
     if len(AUTHORLINE.findall(text)) >= 6 or \
             (len(BAREYEAR.findall(text)) >= 12 and any(m in t for m in BIBLIOMARK)):
         return "bibliographie"
-    lines = [l for l in text.splitlines() if l.strip()]
-    if len(lines) >= 15 and sum(bool(INDEXLINE.match(l)) for l in lines) / len(lines) > 0.5:
+    lines = [line for line in text.splitlines() if line.strip()]
+    if len(lines) >= 15 and sum(
+        bool(INDEXLINE.match(line)) for line in lines
+    ) / len(lines) > 0.5:
         return "index"
     return None
 
@@ -53,7 +56,10 @@ def main():
     size = next((a for a in sys.argv[1:] if a in ("512", "1024")), "512")
     dry = "--dry-run" in sys.argv
 
-    chunks = [json.loads(l) for l in open(ROOT / "chunks" / f"chunks-{size}.jsonl")]
+    chunks = [
+        json.loads(line)
+        for line in open(ROOT / "chunks" / f"chunks-{size}.jsonl")
+    ]
     flagged = [(c["chunk_id"], why) for c in chunks
                if (why := is_backmatter(c["text"], c["book"], c["page_start"]))]
     print(f"{len(flagged)}/{len(chunks)} chunks annexes ({Counter(w for _, w in flagged)})")
@@ -71,6 +77,17 @@ def main():
     ids = ", ".join(f"'{cid}'" for cid, _ in flagged)
     tbl.delete(f"chunk_id IN ({ids})")
     print(f"table bunge_{size} : {tbl.count_rows()} lignes restantes")
+
+    manifest_path = ROOT / "index" / f"manifest-bunge_{size}.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text())
+        manifest.update({
+            "filtered": True,
+            "rows_after_filtering": tbl.count_rows(),
+            "excluded_chunks": len(flagged),
+            "exclusions_sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+        })
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
 
 if __name__ == "__main__":
     main()

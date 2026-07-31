@@ -1,0 +1,56 @@
+"""Theme Gradio local : edition critique, papier / encre / bleu scientifique."""
+
+from __future__ import annotations
+
+import gradio as gr
+
+
+def build_theme() -> gr.Theme:
+    """Construit un theme sans police ni ressource distante."""
+    return gr.themes.Base(
+        primary_hue=gr.themes.colors.blue,
+        neutral_hue=gr.themes.colors.stone,
+        font=[
+            "Inter",
+            "ui-sans-serif",
+            "system-ui",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            "Segoe UI",
+            "sans-serif",
+        ],
+        font_mono=[
+            "IBM Plex Mono",
+            "SFMono-Regular",
+            "Consolas",
+            "Liberation Mono",
+            "monospace",
+        ],
+    ).set(
+        body_background_fill="#F3EFE6",
+        body_text_color="#171714",
+        background_fill_primary="#FFFDF8",
+        background_fill_secondary="#F3EFE6",
+        border_color_primary="#D7CFC0",
+        block_background_fill="#FFFDF8",
+        block_border_color="#D7CFC0",
+        block_label_background_fill="#FFFDF8",
+        block_label_text_color="#504E47",
+        block_title_text_color="#171714",
+        input_background_fill="#FFFEFA",
+        input_border_color="#BEB5A6",
+        button_primary_background_fill="#2852C7",
+        button_primary_background_fill_hover="#183786",
+        button_primary_text_color="#FFFFFF",
+        button_secondary_background_fill="#FFFDF8",
+        button_secondary_background_fill_hover="#E9EDF8",
+        button_secondary_text_color="#183786",
+        shadow_drop="0 8px 28px rgba(23, 23, 20, 0.06)",
+        shadow_drop_lg="0 18px 50px rgba(23, 23, 20, 0.08)",
+        input_radius="7px",
+        block_radius="10px",
+        container_radius="10px",
+        button_small_radius="6px",
+        button_medium_radius="7px",
+        button_large_radius="8px",
+    )

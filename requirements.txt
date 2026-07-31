@@ -1,12 +1,11 @@
+# Runtime de référence : Python 3.12 (voir .python-version).
+
 # Phase 1 - extraction
 pymupdf==1.28.0
 pymupdf4llm==1.28.0
-ebooklib
-beautifulsoup4
-ocrmac          # OCR Apple Vision (macOS uniquement, utilise par ocr_scan.py)
-
-# Les phases suivantes ajouteront leurs dependances ici, versions epinglees.
-# Deja tranche : ragas==0.4.3 (phase 6 - NE PAS deverrouiller, la 1.0 casse l'API)
+ebooklib==0.20
+beautifulsoup4==4.15.0
+ocrmac==1.0.1; sys_platform == "darwin"  # Apple Vision, OCR local macOS
 
 # Phase 2 - chunking
 llama-index-core==0.14.23
@@ -14,14 +13,19 @@ tiktoken==0.13.0
 
 # Phase 3 - embeddings + index
 sentence-transformers==5.6.0
+transformers==5.13.0
 torch==2.12.1
 lancedb==0.34.0
 
-# Phase 5 - generation
+# Phase 5 - génération et fournisseurs
 google-genai==2.10.0
+openai==2.44.0
+requests==2.34.2
 python-dotenv==1.2.2
 
-# Phase 6 - harnais d'eval
-ragas==0.4.3                  # NE PAS deverrouiller : la 1.0 supprime cette API
-langchain-community==0.3.31   # >=0.4 casse l'import ragas 0.4.3
-openai==2.44.0                # client Cerebras (API compatible OpenAI)
+# Phase 6 - harnais d'évaluation
+ragas==0.4.3                  # ne pas déverrouiller : API incompatible en 1.x
+langchain-community==0.3.31   # >=0.4 casse l'import de ragas 0.4.3
+
+# Déploiement de l'index privé et du Space
+huggingface_hub==1.22.0

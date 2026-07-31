@@ -9,4 +9,5 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -sSf -o /dev/null https://alexisgirard-bungerag.hf.space || true
+      - name: Vérifier que la démo répond
+        run: curl --fail --silent --show-error --output /dev/null --retry 2 https://alexisgirard-bungerag.hf.space
