@@ -89,84 +89,41 @@ QUOTAS = QuotaGuard(daily_limit=DAILY_LIMIT, per_client_limit=CLIENT_LIMIT)
 
 MASTHEAD = """
 <header id="masthead">
-  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Édition numérique expérimentale</span></div>
-  <div class="masthead-status">Démo publique · corpus privé</div>
+  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Lecture assistée de Mario Bunge</span></div>
+  <div class="masthead-status">En ligne</div>
 </header>
 """
 
 HERO = """
 <section id="hero" aria-labelledby="hero-title">
-  <div>
-    <div class="hero-kicker">Philosophie scientifique · corpus documenté</div>
-    <h1 id="hero-title">Interroger une œuvre.<br>Vérifier chaque réponse.</h1>
-    <p>Une lecture assistée de Mario Bunge, pas une imitation. Chaque réponse s'appuie
-    sur des extraits identifiés par ouvrage et page PDF ou section EPUB — ou reconnaît ce que le corpus
-    ne permet pas d'affirmer.</p>
-  </div>
-  <div class="hero-folio">Corpus 25 ouvrages<br>≈ 8 200 pages<br>Question FR · textes EN</div>
+  <div class="hero-kicker">Une question · une réponse · ses sources</div>
+  <h1 id="hero-title">Questionner les textes.<br>Remonter aux sources.</h1>
+  <p>Posez votre question en français. BungeRAG répond à partir des textes de Mario Bunge
+  et affiche les passages utilisés — ou indique simplement que le corpus ne permet pas de répondre.</p>
 </section>
-"""
-
-EVIDENCE = """
-<section aria-label="Résultats globaux de l'évaluation">
-  <div id="evidence-grid">
-    <article class="evidence-card"><small>Fidélité historique</small><strong>0,935</strong>
-      <p>Faithfulness RAGAS · run legacy pré-clôture · 30 questions · juge distinct.</p></article>
-    <article class="evidence-card"><small>Couverture du contexte</small><strong>0,848</strong>
-      <p>Context recall sur le jeu d'évaluation documenté, et non sur cette réponse individuelle.</p></article>
-    <article class="evidence-card"><small>Abstention stricte</small><strong>8 / 10</strong>
-      <p>Questions-pièges hors corpus ; les deux autres réponses sont partielles et explicitement cadrées.</p></article>
-  </div>
-  <p class="evidence-context">BENCHMARK LEGACY PRÉ-CLÔTURE · DIRECT 40→6 · requête EN commune aux deux jambes · la V1 actuelle n’hérite pas de ces scores · aucune confiance individuelle</p>
-</section>
-"""
-
-LAB_HEADING = """
-<div id="lab-heading"><span class="section-index">Interface de consultation</span>
-<h2>Le laboratoire de lecture</h2></div>
 """
 
 QUESTION_HEADING = """
-<div class="panel-title"><span class="panel-index">01 / Question</span>
-<h3>Formuler une recherche</h3><p>Une notion précise donne généralement une réponse plus rapide et mieux ciblée.</p></div>
+<div class="panel-title"><span class="panel-index">Votre question</span>
+<p>Une notion ou une question précise fonctionne généralement mieux.</p></div>
 """
 
 ANSWER_HEADING = """
-<div class="panel-title"><span class="panel-index">02 / Réponse documentée</span>
-<h3>Lire avec les preuves</h3><p>Les renvois [n] conduisent à l'appareil critique sous la réponse.</p></div>
+<div class="answer-heading"><span class="panel-index">Réponse</span>
+<p>Les renvois [n] ouvrent les sources correspondantes.</p></div>
 """
 
 APPARATUS_HEADING = """
-<div class="apparatus-heading"><strong>Appareil critique</strong>
-<p>Courts extraits affichés pour vérification ; les ouvrages complets ne sont pas redistribués.</p></div>
-"""
-
-METHOD = """
-<section id="method-section" aria-labelledby="method-title">
-  <div class="method-heading"><div><span class="section-index">03 / Méthode</span>
-    <h2 id="method-title">Du texte à l'affirmation</h2></div>
-    <p>La démonstration privilégie la traçabilité : chaque brique répond à une faiblesse mesurée,
-    et les limites restent visibles.</p></div>
-  <div class="method-grid">
-    <article class="method-card"><span>01</span><h3>Recherche bilingue</h3>
-      <p>Dense cross-lingue et BM25 après reformulation anglaise.</p></article>
-    <article class="method-card"><span>02</span><h3>Fusion hybride</h3>
-      <p>Les candidats lexicaux et sémantiques sont réunis avant classement.</p></article>
-    <article class="method-card"><span>03</span><h3>Reranking</h3>
-      <p>Un cross-encodeur sélectionne les passages transmis au générateur.</p></article>
-    <article class="method-card"><span>04</span><h3>Réponse contrainte</h3>
-      <p>Chaque affirmation doit citer [n], sinon le système doit s'abstenir.</p></article>
-  </div>
-  <div class="limits-box"><strong>Ce que la mesure ne prouve pas</strong>
-    <p>La fidélité mesure si la réponse découle des extraits récupérés. Elle ne garantit ni la vérité
-    philosophique, ni l'exhaustivité du corpus, ni la pertinence parfaite du retrieval.</p></div>
-</section>
+<div class="apparatus-heading"><strong>Sources citées</strong>
+<p>Ouvrez une source pour lire le court extrait associé.</p></div>
 """
 
 FOOTER = """
-<footer id="custom-footer"><p>Projet étudiant et reproductible. Code MIT ; les œuvres de Mario Bunge
-restent la propriété de leurs ayants droit.</p>
-<a href="https://github.com/alexisgirard-it/bungerag" target="_blank" rel="noopener noreferrer">CODE · MÉTHODE · RÉSULTATS ↗</a></footer>
+<footer id="custom-footer"><p>Lecture assistée, pas imitation. Les œuvres restent la propriété de leurs ayants droit.</p>
+<nav aria-label="En savoir plus">
+  <a href="https://alexis-girard-ai-portfolio.alexis-girard709451.chatgpt.site/work/bungerag" target="_blank" rel="noopener noreferrer">ÉTUDE DE CAS ↗</a>
+  <a href="https://github.com/alexisgirard-it/bungerag" target="_blank" rel="noopener noreferrer">CODE ↗</a>
+</nav></footer>
 """
 
 EXAMPLES = (
@@ -178,7 +135,7 @@ EXAMPLES = (
 
 EMPTY_ANSWER = """> **Aucune réponse ouverte.**
 
-Posez une question ou choisissez un exemple. La première question libre peut prendre environ une minute sur le serveur CPU de démonstration."""
+Posez une question ou choisissez un exemple."""
 
 
 def normalize_question(question: object) -> tuple[str, str]:
@@ -342,17 +299,15 @@ with gr.Blocks(
     with gr.Column(elem_id="page-shell"):
         gr.HTML(MASTHEAD)
         gr.HTML(HERO)
-        gr.HTML(EVIDENCE)
-        gr.HTML(LAB_HEADING)
 
-        with gr.Row(elem_id="lab-grid"):
-            with gr.Column(scale=4, min_width=300, elem_id="question-panel"):
+        with gr.Column(elem_id="chat-shell"):
+            with gr.Column(elem_id="question-panel"):
                 gr.HTML(QUESTION_HEADING)
                 question = gr.Textbox(
-                    label="Votre question",
+                    label="Question à BungeRAG",
                     placeholder="Par exemple : qu'est-ce que le systémisme ?",
-                    lines=4,
-                    max_lines=7,
+                    lines=3,
+                    max_lines=6,
                     elem_id="question-box",
                 )
                 gr.HTML(
@@ -360,11 +315,11 @@ with gr.Blocks(
                     "ne saisissez aucune donnée personnelle.</p>"
                 )
                 submit_button = gr.Button(
-                    "Interroger le corpus",
+                    "Envoyer la question",
                     variant="primary",
                     elem_id="submit-button",
                 )
-                gr.HTML('<p class="example-heading">Questions d’exemple</p>')
+                gr.HTML('<p class="example-heading">Essayer une question</p>')
                 example_buttons = []
                 with gr.Row(elem_id="example-buttons"):
                     for example in EXAMPLES:
@@ -372,7 +327,7 @@ with gr.Blocks(
                             gr.Button(example, variant="secondary", elem_classes=["example-chip"])
                         )
 
-            with gr.Column(scale=8, min_width=360, elem_id="answer-panel"):
+            with gr.Column(elem_id="answer-panel"):
                 gr.HTML(ANSWER_HEADING)
                 status_output = gr.HTML(render_status("ready"), elem_id="status-output")
                 meta_output = gr.HTML("", elem_id="meta-output")
@@ -386,7 +341,6 @@ with gr.Blocks(
                 # Premier output de /answer : contrat JSON public, jamais les contexts.
                 api_payload = gr.JSON(value=None, visible=False)
 
-        gr.HTML(METHOD)
         gr.HTML(FOOTER)
 
     outputs = [

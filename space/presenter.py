@@ -246,11 +246,11 @@ def link_citations(markdown: str, source_count: int) -> str:
 
 def render_status(state: str, elapsed_seconds: float = 0.0, detail: str = "") -> str:
     labels = {
-        "ready": ("Pret", "Une question libre prend environ une minute sur le CPU de demonstration."),
-        "working": ("Traitement en cours", "Recherche, classement et synthese sont en cours."),
-        "complete": ("Reponse produite", "La reponse et son appareil critique sont disponibles."),
-        "cached": ("Exemple instantane", "Cette reponse a ete servie depuis le cache, sans nouvel appel API."),
-        "error": ("Requete interrompue", detail or "Aucun resultat n'a ete produit."),
+        "ready": ("Prêt", "Une question libre peut prendre environ une minute sur le serveur de démonstration."),
+        "working": ("Traitement en cours", "Recherche des passages et rédaction de la réponse."),
+        "complete": ("Réponse produite", "La réponse et ses sources sont disponibles."),
+        "cached": ("Réponse en cache", "Cette réponse a été retrouvée sans nouveau calcul."),
+        "error": ("Requête interrompue", detail or "Aucun résultat n'a été produit."),
     }
     label, message = labels.get(state, labels["ready"])
     elapsed = f"<span class=\"status-time\">{elapsed_seconds:.0f} s</span>" if elapsed_seconds else ""
@@ -267,12 +267,12 @@ def render_meta(view: AnswerView) -> str:
     mode_label = "PANORAMIQUE" if view.mode == "panoramique" else "DIRECT"
     citation_label = {
         "valid": "CITATIONS STRUCTURELLES VALIDES",
-        "warning": "CITATIONS A VERIFIER",
+        "warning": "CITATIONS À VÉRIFIER",
         "not_applicable": "ABSTENTION",
     }[view.citation_status]
     citation_class = "meta-ok" if view.citation_status == "valid" else "meta-warn"
     return (
-        '<div class="answer-meta" aria-label="Metadonnees de la reponse">'
+        '<div class="answer-meta" aria-label="Métadonnées de la réponse">'
         f'<span>{mode_label}</span><span>{len(view.sources)} SOURCES</span>'
         f'<span>{view.elapsed_seconds:.1f} S</span><span>{cache_label}</span>'
         f'<span class="{citation_class}">{citation_label}</span></div>'
@@ -281,7 +281,7 @@ def render_meta(view: AnswerView) -> str:
 
 def render_sources(view: AnswerView) -> str:
     if not view.sources:
-        return '<div class="sources-empty">Aucune source affichee pour cette reponse.</div>'
+        return '<div class="sources-empty">Aucune source affichée pour cette réponse.</div>'
     cards = []
     for source in view.sources:
         excerpt = html.escape(source.excerpt) or "Extrait court non disponible."
