@@ -135,7 +135,7 @@ def main() -> None:
             path_in_repo=".",
             repo_id=DATASET,
             repo_type="dataset",
-            ignore_patterns=("*.lock", "*.tmp"),
+            ignore_patterns=["*.lock", "*.tmp"],
         )
         index_revision = api.repo_info(DATASET, repo_type="dataset").sha
         read_api = HfApi(token=read_token)
@@ -150,7 +150,10 @@ def main() -> None:
 
         # 2. L'application publique est synchronisée exactement avec la liste
         # blanche : les anciens fichiers distants hors bundle sont supprimés.
-        api.create_repo(SPACE, repo_type="space", space_sdk="gradio", exist_ok=True)
+        # Le jeton d'écriture est volontairement limité aux dépôts existants.
+        # Vérifier le Space évite aussi l'endpoint de création, qui peut exiger
+        # un abonnement même lorsque le dépôt cible existe déjà.
+        api.repo_info(SPACE, repo_type="space")
         remote_before = api.list_repo_files(SPACE, repo_type="space")
         stale = stale_remote_files(remote_before, copied)
         if stale:
