@@ -13,3 +13,12 @@ def test_custom_properties_are_namespaced_for_gradio() -> None:
     assert all(name.startswith("--bunge-") for name in declarations)
     assert "var(--muted)" not in CSS
 
+
+def test_editorial_text_colors_override_gradio_dark_mode() -> None:
+    color_rules = re.findall(
+        r"(?<!-)color:\s*var\(--bunge-[^)]+\)([^;]*)",
+        CSS,
+    )
+
+    assert color_rules
+    assert all("!important" in suffix for suffix in color_rules)
