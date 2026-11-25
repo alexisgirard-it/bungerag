@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, TypedDict
+from typing import Literal, NotRequired, TypedDict
 
 from citations import CitationValidation
 
@@ -18,6 +18,7 @@ class Source(TypedDict):
     pages: str
     score: float
     extrait: str
+    locator: NotRequired[dict]
 
 
 class RAGResult(TypedDict):

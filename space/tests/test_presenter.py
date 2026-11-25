@@ -121,3 +121,16 @@ class PresenterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_group_links_and_local_reader(tmp_path):
+    (tmp_path/'book.pdf').touch()
+    result={'answer':'Une affirmation [1, 2].','sources':[{'titre':'Book','pages':'PDF p. 7',
+            'extrait':'short exact quote','locator':{'file':'book.pdf','pdf_page':7}},
+            {'titre':'Other','pages':'PDF p. 8','extrait':'another short quote'}]}
+    v=present_result(result,1)
+    assert v.cited_numbers==(1,2)
+    assert '#source-2' in link_citations(v.answer_markdown,2)
+    assert '#page=7' in render_sources(v,tmp_path)
+    assert 'gradio_api/file=' not in render_sources(v)
+    assert str(tmp_path) not in json.dumps(v.public_payload())

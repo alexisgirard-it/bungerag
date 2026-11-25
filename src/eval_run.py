@@ -119,6 +119,8 @@ def build_metadata(
         "src/eval_run.py",
         "src/eval_ragas.py",
     )
+    if config.name == "public_v2":
+        code_paths += ("src/definitions.py","src/evidence.py")
     stable = {
         "schema_version": 1,
         "git_commit": git_commit(root),
@@ -135,6 +137,8 @@ def build_metadata(
             question.get("type") == "contenu" for question in questions
         ),
     }
+    if config.name == "public_v2":
+        stable["index"]["provenance_sha256"] = file_sha256(index_manifest_path.parent / f"provenance-{config.table.removeprefix('bunge_')}.sqlite")
     run_id = hashlib.sha256(
         json.dumps(stable, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()[:16]

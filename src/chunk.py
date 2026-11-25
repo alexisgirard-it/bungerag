@@ -20,43 +20,18 @@ Usage : .venv/bin/python src/chunk.py
 
 import glob
 import json
-import re
 from bisect import bisect_right
 from pathlib import Path
 
 import tiktoken
 from llama_index.core.node_parser import SentenceSplitter
 
-from page_map import locate_chunks
+from page_map import build_text, locate_chunks
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "chunks"
 ENC = tiktoken.get_encoding("cl100k_base")
 VARIANTS = [(512, 64), (1024, 128)]  # (taille, chevauchement) en tokens
-
-CESURE = re.compile(r"(?<=\w)-\n(?=[a-z])")  # tiret + saut de ligne + minuscule
-
-def build_text(records):
-    """Recolle les pages d'un livre en un seul texte.
-
-    Renvoie (texte, bornes) ou bornes = [(offset_debut, page), ...] pour
-    savoir a quelle page correspond n'importe quelle position du texte.
-    """
-    parts, bounds, pos = [], [], 0
-    for r in records:
-        t = CESURE.sub("", r["text"])
-        if parts:
-            # cesure a cheval sur deux pages : "explana-" / "tion"
-            if re.search(r"\w-$", parts[-1]) and re.match(r"[a-z]", t):
-                parts[-1] = parts[-1][:-1]
-                pos -= 1
-            else:
-                parts.append("\n\n")
-                pos += 2
-        bounds.append((pos, r["page"]))
-        parts.append(t)
-        pos += len(t)
-    return "".join(parts), bounds
 
 def page_at(bounds, offset):
     """Page correspondant a une position dans le texte recolle."""

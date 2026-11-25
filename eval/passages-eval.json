@@ -1,0 +1,526 @@
+{
+  "pool": [
+    "between-two-worlds-memoirs-2016:00063",
+    "between-two-worlds-memoirs-2016:00079",
+    "between-two-worlds-memoirs-2016:00132",
+    "between-two-worlds-memoirs-2016:00139",
+    "between-two-worlds-memoirs-2016:00188",
+    "between-two-worlds-memoirs-2016:00218",
+    "between-two-worlds-memoirs-2016:00369",
+    "between-two-worlds-memoirs-2016:00376",
+    "between-two-worlds-memoirs-2016:00397",
+    "between-two-worlds-memoirs-2016:00404",
+    "between-two-worlds-memoirs-2016:00448",
+    "between-two-worlds-memoirs-2016:00450",
+    "between-two-worlds-memoirs-2016:00453",
+    "between-two-worlds-memoirs-2016:00460",
+    "between-two-worlds-memoirs-2016:00481",
+    "between-two-worlds-memoirs-2016:00552",
+    "between-two-worlds-memoirs-2016:00557",
+    "between-two-worlds-memoirs-2016:00636",
+    "between-two-worlds-memoirs-2016:00640",
+    "between-two-worlds-memoirs-2016:00641",
+    "between-two-worlds-memoirs-2016:00647",
+    "between-two-worlds-memoirs-2016:00653",
+    "between-two-worlds-memoirs-2016:00677",
+    "between-two-worlds-memoirs-2016:00680",
+    "between-two-worlds-memoirs-2016:00698",
+    "causality-and-modern-science-1959:00020",
+    "causality-and-modern-science-1959:00023",
+    "causality-and-modern-science-1959:00036",
+    "causality-and-modern-science-1959:00040",
+    "causality-and-modern-science-1959:00043",
+    "causality-and-modern-science-1959:00045",
+    "causality-and-modern-science-1959:00152",
+    "causality-and-modern-science-1959:00292",
+    "causality-and-modern-science-1959:00299",
+    "causality-and-modern-science-1959:00334",
+    "causality-and-modern-science-1959:00406",
+    "causality-and-modern-science-1959:00411",
+    "chasing-reality-2006:00004",
+    "chasing-reality-2006:00011",
+    "chasing-reality-2006:00012",
+    "chasing-reality-2006:00013",
+    "chasing-reality-2006:00023",
+    "chasing-reality-2006:00040",
+    "chasing-reality-2006:00045",
+    "chasing-reality-2006:00092",
+    "chasing-reality-2006:00140",
+    "chasing-reality-2006:00143",
+    "chasing-reality-2006:00328",
+    "chasing-reality-2006:00353",
+    "chasing-reality-2006:00375",
+    "chasing-reality-2006:00396",
+    "chasing-reality-2006:00406",
+    "emergence-and-convergence-2003:00019",
+    "emergence-and-convergence-2003:00045",
+    "emergence-and-convergence-2003:00048",
+    "emergence-and-convergence-2003:00050",
+    "emergence-and-convergence-2003:00051",
+    "emergence-and-convergence-2003:00059",
+    "emergence-and-convergence-2003:00060",
+    "emergence-and-convergence-2003:00080",
+    "emergence-and-convergence-2003:00131",
+    "emergence-and-convergence-2003:00139",
+    "emergence-and-convergence-2003:00141",
+    "emergence-and-convergence-2003:00186",
+    "emergence-and-convergence-2003:00258",
+    "emergence-and-convergence-2003:00305",
+    "foundations-of-biophilosophy-1997:00052",
+    "foundations-of-biophilosophy-1997:00056",
+    "foundations-of-biophilosophy-1997:00061",
+    "foundations-of-biophilosophy-1997:00075",
+    "foundations-of-biophilosophy-1997:00081",
+    "foundations-of-biophilosophy-1997:00083",
+    "foundations-of-biophilosophy-1997:00105",
+    "foundations-of-biophilosophy-1997:00134",
+    "foundations-of-biophilosophy-1997:00135",
+    "foundations-of-biophilosophy-1997:00167",
+    "foundations-of-biophilosophy-1997:00185",
+    "foundations-of-biophilosophy-1997:00204",
+    "foundations-of-biophilosophy-1997:00219",
+    "foundations-of-biophilosophy-1997:00232",
+    "foundations-of-biophilosophy-1997:00235",
+    "foundations-of-biophilosophy-1997:00237",
+    "foundations-of-biophilosophy-1997:00240",
+    "foundations-of-biophilosophy-1997:00289",
+    "foundations-of-biophilosophy-1997:00317",
+    "foundations-of-biophilosophy-1997:00327",
+    "from-a-scientific-point-of-view-2018:00007",
+    "from-a-scientific-point-of-view-2018:00078",
+    "from-a-scientific-point-of-view-2018:00084",
+    "from-a-scientific-point-of-view-2018:00159",
+    "from-a-scientific-point-of-view-2018:00160",
+    "from-a-scientific-point-of-view-2018:00174",
+    "mind-body-problem-1980:00000",
+    "mind-body-problem-1980:00004",
+    "mind-body-problem-1980:00025",
+    "mind-body-problem-1980:00027",
+    "mind-body-problem-1980:00028",
+    "mind-body-problem-1980:00240",
+    "mind-body-problem-1980:00247",
+    "philosophical-dictionary-2003:00010",
+    "philosophical-dictionary-2003:00034",
+    "philosophical-dictionary-2003:00075",
+    "philosophical-dictionary-2003:00080",
+    "philosophical-dictionary-2003:00130",
+    "philosophical-dictionary-2003:00131",
+    "philosophical-dictionary-2003:00162",
+    "philosophical-dictionary-2003:00213",
+    "philosophical-dictionary-2003:00283",
+    "philosophical-dictionary-2003:00294",
+    "philosophical-dictionary-2003:00381",
+    "philosophical-dictionary-2003:00410",
+    "philosophical-dictionary-2003:00411",
+    "philosophical-dictionary-2003:00424",
+    "philosophical-dictionary-2003:00426",
+    "philosophical-dictionary-2003:00428",
+    "philosophical-dictionary-2003:00461",
+    "philosophical-dictionary-2003:00462",
+    "philosophical-dictionary-2003:00474",
+    "philosophical-dictionary-2003:00480",
+    "philosophy-of-physics-1973:00070",
+    "philosophy-of-physics-1973:00103",
+    "philosophy-of-physics-1973:00145",
+    "philosophy-of-physics-1973:00235",
+    "philosophy-of-psychology-1987:00027",
+    "philosophy-of-psychology-1987:00096",
+    "philosophy-of-psychology-1987:00131",
+    "philosophy-of-psychology-1987:00157",
+    "philosophy-of-psychology-1987:00158",
+    "philosophy-of-psychology-1987:00159",
+    "philosophy-of-psychology-1987:00160",
+    "philosophy-of-psychology-1987:00371",
+    "political-philosophy-2009:00013",
+    "political-philosophy-2009:00032",
+    "political-philosophy-2009:00042",
+    "political-philosophy-2009:00198",
+    "political-philosophy-2009:00199",
+    "political-philosophy-2009:00218",
+    "political-philosophy-2009:00226",
+    "political-philosophy-2009:00266",
+    "political-philosophy-2009:00268",
+    "political-philosophy-2009:00305",
+    "political-philosophy-2009:00446",
+    "political-philosophy-2009:00488",
+    "political-philosophy-2009:00489",
+    "political-philosophy-2009:00566",
+    "scientific-materialism-1981:00007",
+    "scientific-materialism-1981:00012",
+    "scientific-materialism-1981:00024",
+    "scientific-materialism-1981:00028",
+    "scientific-materialism-1981:00066",
+    "scientific-materialism-1981:00082",
+    "scientific-realism-selected-essays-2001:00081",
+    "scientific-realism-selected-essays-2001:00083",
+    "scientific-realism-selected-essays-2001:00185",
+    "scientific-realism-selected-essays-2001:00190",
+    "scientific-realism-selected-essays-2001:00356",
+    "scientific-realism-selected-essays-2001:00364",
+    "scientific-realism-selected-essays-2001:00404",
+    "scientific-realism-selected-essays-2001:00420",
+    "scientific-realism-selected-essays-2001:00423",
+    "scientific-realism-selected-essays-2001:00457",
+    "scientific-research-1-search-for-system-1967:00009",
+    "scientific-research-1-search-for-system-1967:00015",
+    "scientific-research-1-search-for-system-1967:00306",
+    "scientific-research-1-search-for-system-1967:00314",
+    "scientific-research-1-search-for-system-1967:00346",
+    "scientific-research-1-search-for-system-1967:00377",
+    "scientific-research-1-search-for-system-1967:00379",
+    "scientific-research-1-search-for-system-1967:00472",
+    "scientific-research-1-search-for-system-1967:00484",
+    "scientific-research-1-search-for-system-1967:00523",
+    "scientific-research-1-search-for-system-1967:00597",
+    "scientific-research-1-search-for-system-1967:00625",
+    "scientific-research-2-search-for-truth-1967:00019",
+    "scientific-research-2-search-for-truth-1967:00038",
+    "scientific-research-2-search-for-truth-1967:00089",
+    "scientific-research-2-search-for-truth-1967:00414",
+    "sociology-philosophy-connection-1999:00006",
+    "sociology-philosophy-connection-1999:00016",
+    "sociology-philosophy-connection-1999:00039",
+    "sociology-philosophy-connection-1999:00156",
+    "sociology-philosophy-connection-1999:00220",
+    "sociology-philosophy-connection-1999:00233",
+    "sociology-philosophy-connection-1999:00234",
+    "sociology-philosophy-connection-1999:00241",
+    "treatise-1-semantics-1-sense-and-reference-1974:00049",
+    "treatise-1-semantics-1-sense-and-reference-1974:00210",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00057",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00058",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00068",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00100",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00116",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00117",
+    "treatise-2-semantics-2-interpretation-and-truth-1974:00119",
+    "treatise-3-ontology-1-furniture-of-the-world-1977:00107",
+    "treatise-3-ontology-1-furniture-of-the-world-1977:00252",
+    "treatise-3-ontology-1-furniture-of-the-world-1977:00354",
+    "treatise-3-ontology-1-furniture-of-the-world-1977:00356",
+    "treatise-4-ontology-2-world-of-systems-1979:00016",
+    "treatise-4-ontology-2-world-of-systems-1979:00020",
+    "treatise-4-ontology-2-world-of-systems-1979:00158",
+    "treatise-4-ontology-2-world-of-systems-1979:00162",
+    "treatise-4-ontology-2-world-of-systems-1979:00238",
+    "treatise-5-epistemology-1-exploring-the-world-1983:00028",
+    "treatise-5-epistemology-1-exploring-the-world-1983:00392",
+    "treatise-6-epistemology-2-understanding-the-world-1983:00198",
+    "treatise-6-epistemology-2-understanding-the-world-1983:00264",
+    "treatise-6-epistemology-2-understanding-the-world-1983:00278",
+    "treatise-6-epistemology-2-understanding-the-world-1983:00288",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00124",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00125",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00130",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00220",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00231",
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00235",
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00013",
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00106",
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00113",
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00315",
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00316",
+    "treatise-8-ethics-the-good-and-the-right-1989:00120",
+    "treatise-8-ethics-the-good-and-the-right-1989:00123",
+    "treatise-8-ethics-the-good-and-the-right-1989:00128",
+    "treatise-8-ethics-the-good-and-the-right-1989:00150",
+    "treatise-8-ethics-the-good-and-the-right-1989:00295",
+    "treatise-8-ethics-the-good-and-the-right-1989:00308",
+    "treatise-8-ethics-the-good-and-the-right-1989:00473"
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Qu'est-ce que l'émergence pour Bunge ?",
+      "en": "What is emergence for Bunge?",
+      "targets": [
+        "emergence-and-convergence-2003:00019",
+        "philosophical-dictionary-2003:00130",
+        "philosophical-dictionary-2003:00131"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "Qu'est-ce qu'un système ? De quoi est-il composé (composition, environnement, structure) ?",
+      "en": "What is a system? Of what is it constituted (its composition, environment, and structure)?",
+      "targets": [
+        "emergence-and-convergence-2003:00045",
+        "philosophical-dictionary-2003:00461",
+        "treatise-4-ontology-2-world-of-systems-1979:00016"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Qu'est-ce que le systémisme et en quoi s'oppose-t-il à l'individualisme et au holisme ?",
+      "en": "What is systemism, and in what way does it oppose individualism and holism?",
+      "targets": [
+        "emergence-and-convergence-2003:00050",
+        "emergence-and-convergence-2003:00051"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "Comment Bunge définit-il la matière et un objet matériel ?",
+      "en": "How does Bunge define matter and a material object?",
+      "targets": [
+        "philosophical-dictionary-2003:00283",
+        "scientific-materialism-1981:00024"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "Quelle est la conception de l'esprit défendue par Bunge ?",
+      "en": "What conception of the mind does Bunge defend?",
+      "targets": [
+        "scientific-materialism-1981:00066",
+        "scientific-materialism-1981:00082"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "Pourquoi Bunge rejette-t-il le dualisme corps-esprit ?",
+      "en": "Why does Bunge reject mind–body dualism?",
+      "targets": [
+        "mind-body-problem-1980:00027",
+        "mind-body-problem-1980:00028"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "Quelle différence Bunge fait-il entre causalité et déterminisme ?",
+      "en": "What distinction does Bunge draw between causality and determinism?",
+      "targets": [
+        "causality-and-modern-science-1959:00023",
+        "causality-and-modern-science-1959:00036",
+        "causality-and-modern-science-1959:00043"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "Comment distinguer une science d'une pseudoscience selon Bunge ?",
+      "en": "How does Bunge distinguish science from pseudoscience?",
+      "targets": [
+        "philosophical-dictionary-2003:00381",
+        "philosophical-dictionary-2003:00424"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "Que reproche Bunge à la psychanalyse ?",
+      "en": "What does Bunge criticize about psychoanalysis?",
+      "targets": [
+        "philosophy-of-psychology-1987:00157",
+        "philosophy-of-psychology-1987:00158",
+        "philosophy-of-psychology-1987:00159",
+        "philosophy-of-psychology-1987:00160"
+      ]
+    },
+    {
+      "id": 10,
+      "question": "Qu'est-ce que le réalisme scientifique pour Bunge ?",
+      "en": "What is scientific realism according to Bunge?",
+      "targets": [
+        "chasing-reality-2006:00004",
+        "chasing-reality-2006:00012",
+        "chasing-reality-2006:00013",
+        "chasing-reality-2006:00045"
+      ]
+    },
+    {
+      "id": 11,
+      "question": "Comment Bunge critique-t-il l'interprétation de Copenhague de la mécanique quantique ?",
+      "en": "How does Bunge critique the Copenhagen interpretation of quantum mechanics?",
+      "targets": [
+        "philosophy-of-physics-1973:00070",
+        "philosophy-of-physics-1973:00103",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00235"
+      ]
+    },
+    {
+      "id": 12,
+      "question": "Qu'est-ce que la vérité partielle et comment Bunge conçoit-il la vérité ?",
+      "en": "What is partial truth, and how does Bunge conceive of truth?",
+      "targets": [
+        "scientific-research-2-search-for-truth-1967:00414",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00116",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00117",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00119"
+      ]
+    },
+    {
+      "id": 13,
+      "question": "Quelle distinction Bunge fait-il entre le sens et la référence d'un concept ?",
+      "en": "What distinction does Bunge make between the sense and the reference of a concept?",
+      "targets": [
+        "philosophical-dictionary-2003:00075",
+        "treatise-1-semantics-1-sense-and-reference-1974:00049",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00057"
+      ]
+    },
+    {
+      "id": 14,
+      "question": "En quoi consiste l'éthique de Bunge, fondée sur les besoins et les droits-devoirs ?",
+      "en": "What is the nature of Bunge’s ethics, grounded in needs and rights‑duties?",
+      "targets": [
+        "philosophical-dictionary-2003:00010",
+        "treatise-8-ethics-the-good-and-the-right-1989:00123",
+        "treatise-8-ethics-the-good-and-the-right-1989:00295"
+      ]
+    },
+    {
+      "id": 15,
+      "question": "Que pense Bunge du néolibéralisme et du marché libre ?",
+      "en": "What is Bunge’s view on neoliberalism and the free market?",
+      "targets": [
+        "political-philosophy-2009:00198",
+        "political-philosophy-2009:00266"
+      ]
+    },
+    {
+      "id": 16,
+      "question": "Qu'est-ce que la démocratie intégrale que défend Bunge ?",
+      "en": "What is the “integral democracy” defended by Bunge?",
+      "targets": [
+        "political-philosophy-2009:00218",
+        "political-philosophy-2009:00489"
+      ]
+    },
+    {
+      "id": 17,
+      "question": "Qu'est-ce qu'un organisme vivant, un biosystème, pour Bunge et Mahner ?",
+      "en": "What is a living organism, a biosystem, according to Bunge and Mahner?",
+      "targets": [
+        "emergence-and-convergence-2003:00060",
+        "foundations-of-biophilosophy-1997:00237"
+      ]
+    },
+    {
+      "id": 18,
+      "question": "En quoi consiste la méthode scientifique selon Bunge ?",
+      "en": "What does Bunge’s account of the scientific method entail?",
+      "targets": [
+        "philosophical-dictionary-2003:00294",
+        "scientific-research-1-search-for-system-1967:00009",
+        "scientific-research-1-search-for-system-1967:00015"
+      ]
+    },
+    {
+      "id": 19,
+      "question": "Qu'est-ce qu'une hypothèse scientifique et qu'est-ce qui la rend testable ?",
+      "en": "What constitutes a scientific hypothesis, and what renders it testable?",
+      "targets": [
+        "philosophical-dictionary-2003:00213",
+        "scientific-research-1-search-for-system-1967:00306",
+        "scientific-research-1-search-for-system-1967:00314"
+      ]
+    },
+    {
+      "id": 20,
+      "question": "Dans quel pays Bunge est-il né et comment est-il venu à la philosophie ?",
+      "en": "In which country was Bunge born, and how did he come to philosophy?",
+      "targets": [
+        "between-two-worlds-memoirs-2016:00079",
+        "between-two-worlds-memoirs-2016:00132",
+        "between-two-worlds-memoirs-2016:00218"
+      ]
+    },
+    {
+      "id": 21,
+      "question": "Qu'est-ce que le modèle CESM d'analyse des systèmes ?",
+      "en": "What is the CESM model of systems analysis?",
+      "targets": [
+        "emergence-and-convergence-2003:00045",
+        "political-philosophy-2009:00305"
+      ]
+    },
+    {
+      "id": 22,
+      "question": "Comment Bunge conçoit-il l'espace et le temps ?",
+      "en": "How does Bunge conceive of space and time?",
+      "targets": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00354",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00356"
+      ]
+    },
+    {
+      "id": 23,
+      "question": "Quelle est la conception bungéenne du hasard et de la probabilité ?",
+      "en": "What is Bunge’s conception of chance and probability?",
+      "targets": [
+        "causality-and-modern-science-1959:00045",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00252",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00124",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00125"
+      ]
+    },
+    {
+      "id": 24,
+      "question": "Quelle différence Bunge fait-il entre science et technologie ?",
+      "en": "What distinction does Bunge draw between science and technology?",
+      "targets": [
+        "philosophical-dictionary-2003:00474",
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00315",
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00316"
+      ]
+    },
+    {
+      "id": 25,
+      "question": "Comment Bunge critique-t-il le constructivisme social et le relativisme ?",
+      "en": "How does Bunge critique social constructivism and relativism?",
+      "targets": [
+        "chasing-reality-2006:00011",
+        "chasing-reality-2006:00012",
+        "chasing-reality-2006:00092"
+      ]
+    },
+    {
+      "id": 26,
+      "question": "Quelle est la position de Bunge sur la religion et l'existence de Dieu ?",
+      "en": "What is Bunge’s position on religion and the existence of God?",
+      "targets": [
+        "philosophical-dictionary-2003:00034",
+        "philosophical-dictionary-2003:00410",
+        "philosophical-dictionary-2003:00411"
+      ]
+    },
+    {
+      "id": 27,
+      "question": "Qu'est-ce qu'une théorie scientifique pour Bunge ?",
+      "en": "What is a scientific theory according to Bunge?",
+      "targets": [
+        "philosophical-dictionary-2003:00480",
+        "scientific-research-1-search-for-system-1967:00523",
+        "scientific-research-1-search-for-system-1967:00625"
+      ]
+    },
+    {
+      "id": 28,
+      "question": "Quelle différence entre les lois de la nature et les énoncés de lois ?",
+      "en": "What is the distinction between natural laws and law statements?",
+      "targets": [
+        "scientific-research-1-search-for-system-1967:00472",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00107"
+      ]
+    },
+    {
+      "id": 29,
+      "question": "Qu'est-ce qu'une explication scientifique selon Bunge ?",
+      "en": "What constitutes a scientific explanation according to Bunge?",
+      "targets": [
+        "emergence-and-convergence-2003:00258",
+        "philosophical-dictionary-2003:00162",
+        "scientific-research-2-search-for-truth-1967:00038"
+      ]
+    },
+    {
+      "id": 30,
+      "question": "Que signifie le scientisme que Bunge revendique ?",
+      "en": "What is meant by the scientism that Bunge espouses?",
+      "targets": [
+        "chasing-reality-2006:00353",
+        "philosophical-dictionary-2003:00428",
+        "political-philosophy-2009:00042"
+      ]
+    }
+  ]
+}

@@ -162,7 +162,7 @@ def test_ollama_profile_is_used_for_translation_and_router(monkeypatch):
     config = get_config()
     assert rag.reformulate_en("Question", config=config) == "English"
 
-    def fake_analyse(question, backend=None):
+    def fake_analyse(question, backend=None, **kwargs):
         seen["router"] = backend
         return {"mode": "direct"}
 

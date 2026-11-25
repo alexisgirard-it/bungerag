@@ -40,6 +40,8 @@ SPACE_FILES = (
 )
 MODULES = (
     "search.py",
+    "definitions.py",
+    "evidence.py",
     "rerank.py",
     "retrieve.py",
     "rag.py",
@@ -93,6 +95,8 @@ def validate_local_index() -> None:
     manifest_path = index_dir / "manifest-bunge_512.json"
     if not (index_dir / "lancedb").is_dir() or not manifest_path.is_file():
         raise RuntimeError("index 512 ou manifeste vérifié absent")
+    if not (index_dir / "provenance-512.sqlite").is_file():
+        raise RuntimeError("Construire la concordance avec src/build_provenance.py")
     manifest = json.loads(manifest_path.read_text())
     required = {"table", "filtered", "exclusions_sha256", "embedding_revision"}
     missing = sorted(required - manifest.keys())
@@ -170,7 +174,7 @@ def main() -> None:
         for name in ("GEMINI_API_KEY", "CEREBRAS_API_KEY"):
             api.add_space_secret(SPACE, name, secrets[name])
         api.add_space_variable(SPACE, "INDEX_REVISION", index_revision)
-        api.add_space_variable(SPACE, "RAG_PROFILE", "public_v1")
+        api.add_space_variable(SPACE, "RAG_PROFILE", "public_v2")
         api.add_space_variable(
             SPACE,
             "GEMINI_MODELS",

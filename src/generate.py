@@ -123,8 +123,33 @@ def _ollama(prompt, system, max_tokens):
     r.raise_for_status()
     return r.json()["message"]["content"].strip()
 
+def named_gemini(prompt, system, backend, max_tokens, *, structured):
+    """Une requête bornée vers le modèle choisi, identifié dans les évaluations."""
+    global GEMINI_LAST_MODEL
+    from google import genai
+    from google.genai import types
+
+    model = backend.split("/", 1)[1]
+    options = types.HttpOptions(timeout=60_000, retry_options=types.HttpRetryOptions(attempts=2))
+    config = types.GenerateContentConfig(system_instruction=system, temperature=0,
+                                         max_output_tokens=max_tokens,
+                                         response_mime_type="application/json" if structured else "text/plain")
+    with genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=options) as client:
+        response = client.models.generate_content(model=model, contents=prompt, config=config)
+    GEMINI_LAST_MODEL = response.model_version or model
+    return response.text or ""
+
+
+def generate_json(prompt, system, backend, max_tokens):
+    if backend.startswith("gemini/"):
+        return named_gemini(prompt, system, backend, max_tokens, structured=True)
+    return generate(prompt, system=system, backend=backend, max_tokens=max_tokens)
+
+
 def generate(prompt, system=None, max_tokens=2048, backend=None):
     backend = backend or os.environ.get("LLM_BACKEND", "gemini")
+    if backend.startswith("gemini/"):
+        return named_gemini(prompt, system, backend, max_tokens, structured=False)
     if backend == "gemini":
         return _gemini(prompt, system, max_tokens)
     if backend == "cerebras":

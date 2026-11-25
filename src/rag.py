@@ -16,7 +16,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from citations import CITATION_FAILURE_ANSWER, validate_citations  # noqa: E402
 from config import RAGConfig, get_config  # noqa: E402
-from generate import generate  # noqa: E402
+from definitions import candidates, strength, terms_for
+from evidence import answer_with_evidence
+from generate import generate, generate_json  # noqa: E402
 from output_guard import has_long_verbatim_overlap, short_excerpt  # noqa: E402
 from schemas import RAGResult, Source, make_result  # noqa: E402
 from search import search  # noqa: E402
@@ -114,27 +116,47 @@ def _validate_generated_answer(answer, contexts):
     return answer, None, validation
 
 
-def ask(question, verbose=False, config: str | RAGConfig | None = None) -> RAGResult:
+def ranked_hits(question, english, cfg, k, keep):
+    hits = search(mode="hybrid", k=k, table=cfg.table, dense_query=question,
+                  text_query=english)
+    preferred = []
+    if cfg.name == "public_v2":
+        hits, preferred = candidates(question, english, hits, search, cfg.table)
+    if not hits:
+        return []
+    scores = get_reranker().score(question, [h["text"] for h in hits])
+    for hit, score in zip(hits, scores):
+        hit["rerank_score"] = float(score)
+    hits.sort(key=lambda h: h["rerank_score"], reverse=True)
+    selected = hits[:keep]
+    # Réserver un seul siège au meilleur candidat définitionnel pertinent.
+    indexed = {h["chunk_id"]: h for h in hits}
+    best = next((indexed[i] for i in preferred if indexed[i]["rerank_score"] >= cfg.abstention_threshold or strength(indexed[i], terms_for(question, english)) == 3), None)
+    if best and keep > 1 and best not in selected:
+        selected[-1] = best
+    return selected
+
+
+def grounded_result(question, hits, cfg, started, translate, mode, **kwargs):
+    elapsed = time.time() - started
+    answer, sources, reason = answer_with_evidence(question, hits, cfg, generate_json)
+    validation = validate_citations(answer, len(sources), abstained=(reason == "llm"))
+    return make_result(answer=answer, sources=sources, contexts=[h["text"] for h in hits],
+                       abstained=reason, mode=mode, top_score=hits[0]["rerank_score"],
+                       timings=_timings(translate=translate, retrieve=elapsed-translate,
+                                        generate_time=time.time()-started-elapsed),
+                       citation_validation=validation, config_id=cfg.config_id, **kwargs)
+
+
+def ask(question, verbose=False, config: str | RAGConfig | None = None, *, question_en=None) -> RAGResult:
     """Chemin direct du pipeline, conserve comme primitive publique."""
     del verbose  # compatibilite avec l'ancienne signature
     cfg = get_config(config)
     started = time.time()
-    question_en = reformulate_en(question, config=cfg)
+    question_en = question_en or reformulate_en(question, config=cfg)
     translate_time = time.time() - started
 
-    hits = search(
-        mode="hybrid",
-        k=cfg.k_candidates,
-        table=cfg.table,
-        dense_query=question,
-        text_query=question_en,
-    )
-    if hits:
-        scores = get_reranker().score(question, [hit["text"] for hit in hits])
-        for hit, score in zip(hits, scores):
-            hit["rerank_score"] = float(score)
-        hits.sort(key=lambda hit: hit["rerank_score"], reverse=True)
-        hits = hits[:cfg.k_final]
+    hits = ranked_hits(question, question_en, cfg, cfg.k_candidates, cfg.k_final)
     retrieve_time = time.time() - started - translate_time
 
     top_score = float(hits[0]["rerank_score"]) if hits else 0.0
@@ -155,6 +177,10 @@ def ask(question, verbose=False, config: str | RAGConfig | None = None) -> RAGRe
             ),
             config_id=cfg.config_id,
         )
+
+    if cfg.name == "public_v2":
+        return grounded_result(question, hits, cfg, started, translate_time, "direct",
+                               question_en=question_en, sous_questions=[])
 
     excerpts = "\n\n".join(
         f"[{index}] ({hit['title']}, {format_pages(hit)})\n{hit['text']}"
@@ -196,23 +222,8 @@ def ask_decomposed(
     cfg = get_config(config)
     started = time.time()
     pool, seen = [], set()
-    reranker = get_reranker()
-
     for subquestion in sous_questions:
-        hits = search(
-            mode="hybrid",
-            k=cfg.pano_k,
-            table=cfg.table,
-            dense_query=subquestion["fr"],
-            text_query=subquestion["en"],
-        )
-        scores = reranker.score(
-            subquestion["fr"], [hit["text"] for hit in hits]
-        )
-        for hit, score in zip(hits, scores):
-            hit["rerank_score"] = float(score)
-        hits.sort(key=lambda hit: hit["rerank_score"], reverse=True)
-        for hit in hits[:cfg.pano_per_question]:
+        for hit in ranked_hits(subquestion["fr"], subquestion["en"], cfg, cfg.pano_k, cfg.pano_per_question):
             if hit["chunk_id"] not in seen:
                 seen.add(hit["chunk_id"])
                 pool.append(hit)
@@ -239,6 +250,10 @@ def ask_decomposed(
             ),
             config_id=cfg.config_id,
         )
+
+    if cfg.name == "public_v2":
+        return grounded_result(question, pool, cfg, started, 0, "panoramique",
+                               question_en=None, sous_questions=[x["fr"] for x in sous_questions])
 
     excerpts = "\n\n".join(
         f"[{index}] ({hit['title']}, {format_pages(hit)})\n{hit['text']}"
@@ -288,7 +303,12 @@ def ask_smart(
     from decompose import analyse
 
     cfg = get_config(config)
-    decision = analyse(question, backend=cfg.router_backend)
+    if cfg.name == "public_v2":
+        decision = analyse(question, backend=cfg.router_backend, translate_direct=True)
+        if decision.get("mode") == "direct" and decision.get("en"):
+            return ask(question, config=cfg, question_en=decision["en"])
+    else:
+        decision = analyse(question, backend=cfg.router_backend)
     if decision["mode"] == "panoramique":
         return ask_decomposed(question, decision["sous_questions"], config=cfg)
     return ask(question, config=cfg)

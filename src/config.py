@@ -28,6 +28,7 @@ class RAGConfig:
     generation_backend: str
     translator_backend: str
     router_backend: str
+    verification_backend: str | None = None
 
     def __post_init__(self) -> None:
         if not self.name.strip():
@@ -48,7 +49,10 @@ class RAGConfig:
 
     def public_dict(self) -> dict:
         """Representation stable et sans secret, utilisable dans les rapports."""
-        return asdict(self)
+        data = asdict(self)
+        if self.verification_backend is None:
+            data.pop("verification_backend")
+        return data
 
     @property
     def config_id(self) -> str:
@@ -86,7 +90,11 @@ RESEARCH_40X6 = RAGConfig(
     router_backend="cerebras",
 )
 
+PUBLIC_V2 = replace(PUBLIC_V1, name="public_v2", generation_backend="gemini/gemini-3.1-flash-lite",
+                    router_backend="gemini/gemini-3.1-flash-lite", translator_backend="gemini/gemini-3.1-flash-lite", verification_backend="gemini/gemini-3.1-flash-lite")
+
 PROFILES = {
+    PUBLIC_V2.name: PUBLIC_V2,
     PUBLIC_V1.name: PUBLIC_V1,
     RESEARCH_40X6.name: RESEARCH_40X6,
 }
@@ -105,7 +113,7 @@ def get_config(profile: str | RAGConfig | None = None) -> RAGConfig:
         # pour qu'une evaluation canonique ne soit pas alteree par le shell.
         return profile
     else:
-        name = profile or os.environ.get("RAG_PROFILE", PUBLIC_V1.name)
+        name = profile or os.environ.get("RAG_PROFILE", PUBLIC_V2.name)
         try:
             base = PROFILES[name]
         except KeyError as exc:
@@ -127,6 +135,7 @@ def get_config(profile: str | RAGConfig | None = None) -> RAGConfig:
         abstention_threshold=float(os.environ.get(
             "RAG_ABSTENTION_THRESHOLD", base.abstention_threshold)),
         generation_backend=generation_backend,
+        verification_backend=os.environ.get("RAG_VERIFIER_BACKEND", utility_default or base.verification_backend) if base.verification_backend else None,
         translator_backend=os.environ.get(
             "RAG_TRANSLATOR_BACKEND", utility_default or base.translator_backend),
         router_backend=os.environ.get(

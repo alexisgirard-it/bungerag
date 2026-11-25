@@ -10,7 +10,7 @@ Usage :
   .venv/bin/python src/eval_ragas.py --report
   .venv/bin/python src/eval_ragas.py --status
 
-Le profil évalué est ``public_v1`` par défaut. Une expérience doit annoncer
+Le profil évalué est ``public_v2`` par défaut. Une expérience doit annoncer
 explicitement ``EVAL_PROFILE=research_40x6`` ou un autre profil versionné.
 """
 
@@ -40,13 +40,16 @@ except ImportError:
 from config import get_config  # noqa: E402
 from eval_run import is_strict_abstention, prepare_run  # noqa: E402
 from rag import SYSTEM  # noqa: E402
+from evidence import CHECK, DRAFT  # noqa: E402
 
 
 QUESTIONS = [json.loads(line) for line in QUESTIONS_PATH.open()]
-CONFIG = get_config(os.environ.get("EVAL_PROFILE", "public_v1"))
+CONFIG = get_config(os.environ.get("EVAL_PROFILE", "public_v2"))
 
 
 def backend_identity(backend: str) -> dict:
+    if backend.startswith("gemini/"):
+        return {"backend": "gemini", "model": backend.split("/",1)[1]}
     if backend == "gemini":
         from generate import GEMINI_MODELS
 
@@ -79,12 +82,14 @@ RUNTIME_IDENTITY = {
         "metrics": ["faithfulness", "context_precision", "context_recall"],
     },
 }
+if CONFIG.verification_backend:
+    RUNTIME_IDENTITY["verification"] = backend_identity(CONFIG.verification_backend)
 RUN_DIR, RUN_METADATA = prepare_run(
     root=ROOT,
     cache_root=CACHE,
     config=CONFIG,
     questions_path=QUESTIONS_PATH,
-    system_prompt=SYSTEM,
+    system_prompt=(DRAFT + "\n" + CHECK) if CONFIG.name == "public_v2" else SYSTEM,
     index_manifest_path=ROOT / "index" / f"manifest-{CONFIG.table}.json",
     runtime_identity=RUNTIME_IDENTITY,
 )
@@ -105,6 +110,8 @@ def save(name, value):
 def generation_model():
     import generate
 
+    if CONFIG.generation_backend.startswith("gemini/"):
+        return CONFIG.generation_backend.split("/", 1)[1]
     if CONFIG.generation_backend == "gemini":
         return generate.GEMINI_LAST_MODEL
     if CONFIG.generation_backend == "ollama":

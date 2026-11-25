@@ -54,7 +54,7 @@ class Reranker:
                 enc = self.tok(prompts[i:i + batch_size], padding=True,
                                truncation=True, max_length=1024,
                                return_tensors="pt").to(self.device)
-                logits = self.model(**enc).logits[:, -1, :]
+                logits = self.model(**enc, logits_to_keep=1).logits[:, -1, :]
                 pair = logits[:, [self.no, self.yes]].float().log_softmax(dim=1)
                 scores.extend(pair[:, 1].exp().tolist())
         return scores

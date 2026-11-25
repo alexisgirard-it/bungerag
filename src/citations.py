@@ -25,6 +25,12 @@ CITATION_FAILURE_ANSWER = (
 )
 
 
+def normalize_groups(answer: str) -> str:
+    """Développe les groupes numériques, y compris les indices invalides."""
+    return re.sub(r"\[\s*(-?\d+(?:\s*,\s*-?\d+)+)\s*\]",
+                  lambda m: " ".join(f"[{i.strip()}]" for i in m[1].split(",")), answer)
+
+
 def validate_citations(
     answer: str,
     source_count: int,
@@ -35,7 +41,7 @@ def validate_citations(
     if source_count < 0:
         raise ValueError("source_count ne peut pas etre negatif")
 
-    indices = [int(raw) for raw in CITATION_RE.findall(answer or "")]
+    indices = [int(raw) for raw in CITATION_RE.findall(normalize_groups(answer or ""))]
     invalid = sorted({i for i in indices if i < 1 or i > source_count})
 
     if invalid:

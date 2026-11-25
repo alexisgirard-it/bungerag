@@ -20,6 +20,28 @@ attribués ni au code V1 actuel, ni au Space CPU sans nouveau run fingerprinté.
 
 ---
 
+## Utiliser la version locale avec citations vérifiables
+
+Le profil par défaut dans cette branche est `public_v2`. Il relie chaque affirmation conservée
+à un court extrait anglais. Pour les PDF, la carte indique la position dans le fichier et
+le folio imprimé lorsqu’il a été identifié. Une citation qui franchit une page conserve les
+deux repères. Pour l’EPUB, la carte donne la section et la position dans le texte extrait.
+L’API fournit également l’empreinte SHA-256 de l’exemplaire consulté.
+
+Depuis le dépôt, lancer `.venv/bin/python space/app.py` pour consulter la bibliothèque sur
+cette machine. Les cartes permettent d’ouvrir le PDF à la page indiquée. En mode local,
+l’interface écoute sur la boucle locale. Le profil utilise Gemini pour la rédaction,
+la traduction et la relecture. Pour faire aussi l’inférence sur le Mac, démarrer Ollama,
+installer `qwen3.5:9b`, puis lancer `LLM_BACKEND=ollama .venv/bin/python space/app.py`.
+
+Sur une copie de la V1 avec les fichiers source et les chunks, exécuter
+`.venv/bin/python src/build_provenance.py 512` une fois. Cette étape crée la concordance
+privée et réutilise les vecteurs existants. La reconstruction des deux livres scannés
+emploie Apple Vision sur macOS.
+
+Les comparaisons de novembre sont documentées dans [l’évaluation V2](eval/RESULTATS-V2.md).
+Les sections historiques ci-dessous décrivent les versions évaluées en juillet.
+
 ## Pourquoi ce projet
 
 Un RAG (Retrieval-Augmented Generation) de bout en bout — ingestion, chunking, retrieval

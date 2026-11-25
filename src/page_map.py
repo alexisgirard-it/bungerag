@@ -10,6 +10,8 @@ Il ne dépend d'aucune bibliothèque du pipeline afin de rester testable en CI.
 
 from __future__ import annotations
 
+import re
+
 
 class ChunkLocationError(ValueError):
     """Le texte exact d'un chunk est introuvable dans le document recollé."""
@@ -93,3 +95,28 @@ def locate_chunks(text: str, chunks: list[str]) -> list[tuple[int, int]]:
         previous, previous_start, previous_end = chunk, start, end
 
     return offsets
+
+
+CESURE = re.compile(r"(?<=\w)-\n(?=[a-z])")  # tiret + saut de ligne + minuscule
+
+def build_text(records):
+    """Recolle les pages d'un livre en un seul texte.
+
+    Renvoie (texte, bornes) ou bornes = [(offset_debut, page), ...] pour
+    savoir a quelle page correspond n'importe quelle position du texte.
+    """
+    parts, bounds, pos = [], [], 0
+    for r in records:
+        t = CESURE.sub("", r["text"])
+        if parts:
+            # cesure a cheval sur deux pages : "explana-" / "tion"
+            if re.search(r"\w-$", parts[-1]) and re.match(r"[a-z]", t):
+                parts[-1] = parts[-1][:-1]
+                pos -= 1
+            else:
+                parts.append("\n\n")
+                pos += 2
+        bounds.append((pos, r["page"]))
+        parts.append(t)
+        pos += len(t)
+    return "".join(parts), bounds

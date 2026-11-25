@@ -27,7 +27,7 @@ def clear_rag_env(monkeypatch):
 
 def test_profiles_are_explicit_and_distinct(monkeypatch):
     clear_rag_env(monkeypatch)
-    assert get_config().name == "public_v1"
+    assert get_config().name == "public_v2"
     assert get_config("research_40x6") == RESEARCH_40X6
     assert PUBLIC_V1.config_id != RESEARCH_40X6.config_id
 

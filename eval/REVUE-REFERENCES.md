@@ -94,7 +94,10 @@ statut `corrigee-a-valider`) ; les confirmées se survolent.
 
 **✏️ Correction appliquée :** Un organisme est un biosystème : un système matériel semi-ouvert, loin de l'équilibre thermodynamique, composé de systèmes physico-chimiques, dont la vie est une propriété (un niveau) émergente enracinée dans le niveau chimique — ni substance ni « élan vital » (rejet du vitalisme, du mécanisme et du machinisme). Ses propriétés émergentes caractéristiques sont d'abord le métabolisme et l'auto-entretien/autoréparation. En revanche, il faut retirer « reproduction » : Bunge et Mahner l'excluent explicitement de la caractérisation du biosystème (« la reproductibilité n'a pas été incluse, puisque tous les organismes ne se reproduisent pas » — tissus, organes, hybrides stériles, castes d'insectes), la reproductibilité n'étant « ni nécessaire ni suffisante » pour qu'un système soit vivant.
 
-> *philosophical-dictionary-2003, p.165* : « Organicism ( or biosystemism) regards life as an emergent property of some extremely complex systems whose remote ancestors, about four billion years ago, were abiotic. »
+> *philosophical-dictionary-2003, p.165-166* : « Organicism ( or biosystemism) regards life as an emergent property of some extremely complex systems whose remote ancestors, about four billion years ago, were abiotic. »
+
+Vérification sur l’exemplaire du corpus en novembre 2026. Le mot final « abiotic » ouvre la seconde page. La plage imprimée est 163–164.
+
 > *emergence-and-convergence-2003, p.58* : « Reproducibility has not been included either, because not all organisms reproduce. »
 > *foundations-of-biophilosophy-1997, p.166* : « there are several reasons why we think that reproducibility is not a necessary property of a system to qualify as a biosystem. »
 

@@ -107,6 +107,7 @@ def main() -> None:
     run("embed_index.py", args.size)
     run("filter_backmatter.py", args.size)
 
+    run("build_provenance.py", args.size)
     manifest = validate_index(args.size)
     print(
         "BUILD OK — "

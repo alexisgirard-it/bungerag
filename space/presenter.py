@@ -11,13 +11,17 @@ import html
 import re
 from dataclasses import dataclass, replace
 from typing import Any, Iterable, Mapping
+from pathlib import Path
+from urllib.parse import quote
+
+from citations import normalize_groups
 
 
 MAX_ANSWER_CHARS = 24_000
 MAX_EXCERPT_CHARS = 220
 MAX_EXCERPT_WORDS = 20
 MAX_SOURCES = 12
-CITATION_RE = re.compile(r"\[([1-9]\d*)\]")
+CITATION_RE = re.compile(r"\[\s*(-?\d+)\s*\]")
 
 
 def _get(value: Any, key: str, default: Any = None) -> Any:
@@ -52,14 +56,17 @@ class SourceView:
     title: str
     pages: str
     excerpt: str
+    file: str = ""
+    pdf_page: int = 0
+    edition: str = ""
 
     def public_payload(self) -> dict[str, object]:
-        return {
-            "index": self.index,
-            "title": self.title,
-            "pages": self.pages,
-            "excerpt": self.excerpt,
-        }
+        report = {"index": self.index, "title": self.title, "pages": self.pages, "excerpt": self.excerpt}
+        if self.edition:
+            report["edition_sha256"] = self.edition
+        if self.pdf_page:
+            report["pdf_page"] = self.pdf_page
+        return report
 
 
 @dataclass(frozen=True)
@@ -81,6 +88,8 @@ class AnswerView:
     def public_payload(self) -> dict[str, object]:
         """Contrat public en liste blanche : aucun contexte integral."""
         status = "abstained" if self.abstained else "partial" if self.partial else "ok"
+        if self.citation_status == "warning" and not self.sources:
+            status = "unverified"
         return {
             "schema_version": "1.0",
             "status": status,
@@ -125,7 +134,13 @@ def _source_view(raw: Any, index: int) -> SourceView:
     excerpt = " ".join(excerpt_words[:MAX_EXCERPT_WORDS])[:MAX_EXCERPT_CHARS]
     if len(excerpt_words) > MAX_EXCERPT_WORDS:
         excerpt += "…"
-    return SourceView(index=index, title=title[:240], pages=pages[:100], excerpt=excerpt)
+    locator = _get(raw, "locator", {})
+    name = _get(locator, "file", "")
+    physical = _get(locator, "pdf_page", 0)
+    edition = _get(locator,"edition","")
+    return SourceView(edition=edition if isinstance(edition,str) and re.fullmatch("[0-9a-f]{64}",edition) else "", index=index, title=title[:240], pages=pages[:220], excerpt=excerpt,
+                      file=name if isinstance(name,str) and re.fullmatch(r"[a-z0-9-]+\.pdf",name) else "",
+                      pdf_page=physical if type(physical) is int and physical>0 else 0)
 
 
 def _citation_validation(answer: str, source_count: int, abstained: bool) -> tuple[str, str, tuple[int, ...]]:
@@ -138,7 +153,7 @@ def _citation_validation(answer: str, source_count: int, abstained: bool) -> tup
         return "warning", "La reponse ne comporte aucune source publique.", cited
     if not cited:
         return "warning", "Aucun renvoi [n] n'apparait dans la reponse.", cited
-    invalid = tuple(number for number in cited if number > source_count)
+    invalid = tuple(number for number in cited if not 1 <= number <= source_count)
     if invalid:
         labels = ", ".join(f"[{number}]" for number in invalid)
         return "warning", f"Renvoi(s) sans source correspondante : {labels}.", cited
@@ -164,7 +179,7 @@ def present_result(result: Any, elapsed_seconds: float, cached: bool = False) ->
         "",
     )
     # Echappe le HTML brut tout en conservant listes, titres et citations Markdown.
-    answer = str(raw_answer or "")[:MAX_ANSWER_CHARS].replace("<", "&lt;").replace(">", "&gt;")
+    answer = normalize_groups(str(raw_answer or "")[:MAX_ANSWER_CHARS]).replace("<", "&lt;").replace(">", "&gt;")
 
     raw_sources = _first(
         (
@@ -237,11 +252,11 @@ def link_citations(markdown: str, source_count: int) -> str:
     """Transforme uniquement les renvois valides en ancres vers les sources."""
     def replacement(match: re.Match[str]) -> str:
         number = int(match.group(1))
-        if number > source_count:
+        if not 1 <= number <= source_count:
             return match.group(0)
         return f"[{number}](#source-{number})"
 
-    return CITATION_RE.sub(replacement, markdown)
+    return CITATION_RE.sub(replacement, normalize_groups(markdown))
 
 
 def render_status(state: str, elapsed_seconds: float = 0.0, detail: str = "") -> str:
@@ -279,19 +294,26 @@ def render_meta(view: AnswerView) -> str:
     )
 
 
-def render_sources(view: AnswerView) -> str:
+def render_sources(view: AnswerView, local_books: Path | None = None) -> str:
     if not view.sources:
         return '<div class="sources-empty">Aucune source affichée pour cette réponse.</div>'
     cards = []
     for source in view.sources:
         excerpt = html.escape(source.excerpt) or "Extrait court non disponible."
+        reader = ""
+        if local_books and source.file and source.pdf_page:
+            pdf = (local_books / source.file).resolve()
+            if pdf.parent == local_books.resolve() and pdf.is_file():
+                href = "/gradio_api/file=" + quote(str(pdf)) + "#page=" + str(source.pdf_page)
+                reader = f'<a href="{html.escape(href)}" target="_blank" rel="noopener">Ouvrir la page du PDF</a>'
+        expanded = " open" if source.pdf_page or source.pages.startswith("ch") else ""
         cards.append(
-            f'<details class="source-card" id="source-{source.index}">'
+            f'<details class="source-card" id="source-{source.index}"{expanded}>'
             f'<summary><span class="source-number">[{source.index}]</span>'
             f'<span class="source-heading"><strong>{html.escape(source.title)}</strong>'
             f'<small>{html.escape(source.pages)}</small></span>'
             '<span class="source-toggle" aria-hidden="true">+</span></summary>'
-            f'<blockquote>« {excerpt} »</blockquote></details>'
+            f'<blockquote>« {excerpt} »</blockquote>{reader}</details>'
         )
     return '<div class="source-list">' + "".join(cards) + "</div>"
 

@@ -18,7 +18,13 @@ from uuid import uuid4
 
 import gradio as gr
 
-from presenter import (
+APP_DIR = Path(__file__).resolve().parent
+# En local, app.py vit dans space/. Sur HF, son contenu est publie a la racine.
+RUNTIME_ROOT = APP_DIR if (APP_DIR / "src").exists() else APP_DIR.parent
+SRC_DIR = RUNTIME_ROOT / "src"
+sys.path.insert(0, str(SRC_DIR))
+
+from presenter import (  # noqa: E402
     AnswerView,
     link_citations,
     present_result,
@@ -27,17 +33,11 @@ from presenter import (
     render_sources,
     render_status,
 )
-from runtime import BoundedLRUCache, QuotaExceeded, QuotaGuard, classify_exception
-from theme import build_theme
+from runtime import BoundedLRUCache, QuotaExceeded, QuotaGuard, classify_exception  # noqa: E402
+from theme import build_theme  # noqa: E402
 
 
-APP_DIR = Path(__file__).resolve().parent
-# En local, app.py vit dans space/. Sur HF, son contenu est publie a la racine.
-RUNTIME_ROOT = APP_DIR if (APP_DIR / "src").exists() else APP_DIR.parent
-SRC_DIR = RUNTIME_ROOT / "src"
-sys.path.insert(0, str(SRC_DIR))
-
-os.environ.setdefault("RAG_PROFILE", "public_v1")
+os.environ.setdefault("RAG_PROFILE", "public_v2")
 
 
 def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
@@ -77,6 +77,8 @@ if not INDEX.exists():
         revision=index_revision,
     )
     LOGGER.info("index_download_complete")
+
+LOCAL_BOOKS = (RUNTIME_ROOT / "corpus") if (__name__ == "__main__" and APP_DIR.name == "space" and (RUNTIME_ROOT / "corpus").is_dir() and not os.environ.get("SPACE_ID")) else None
 
 from rag import ask_smart  # noqa: E402
 
@@ -192,7 +194,7 @@ def view_outputs(view: AnswerView):
         render_status(status_name, view.elapsed_seconds),
         render_meta(view),
         answer,
-        render_sources(view),
+        render_sources(view, LOCAL_BOOKS),
         render_notice(view),
     )
 
@@ -380,4 +382,8 @@ with gr.Blocks(
 demo.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 
 if __name__ == "__main__":
-    demo.launch(theme=THEME, css=CSS)
+    if LOCAL_BOOKS:
+        demo.launch(theme=THEME, css=CSS, server_name="127.0.0.1", share=False,
+                    allowed_paths=[str(p) for p in LOCAL_BOOKS.glob("*.pdf")])
+    else:
+        demo.launch(theme=THEME, css=CSS)

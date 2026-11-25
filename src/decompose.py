@@ -37,7 +37,8 @@ def _validated_route(value):
         raise ValueError("la sortie du routeur doit etre un objet JSON")
     mode = value.get("mode")
     if mode == "direct":
-        return {"mode": "direct"}
+        english = value.get("en")
+        return {"mode": "direct", "en": english.strip()} if isinstance(english,str) and english.strip() else {"mode": "direct"}
     if mode != "panoramique":
         raise ValueError("mode de routage invalide")
 
@@ -57,11 +58,14 @@ def _validated_route(value):
     return {"mode": "panoramique", "sous_questions": normalized}
 
 
-def analyse(question, backend=None):
+def analyse(question, backend=None, translate_direct=False):
     """Route la question, avec repli direct couvrant appel, parsing et schema."""
     backend = backend or get_config().router_backend
     try:
-        raw = generate(PROMPT.format(question=question), max_tokens=1200,
+        prompt = PROMPT.format(question=question)
+        if translate_direct:
+            prompt += '\nPour le mode direct, ajoute aussi "en", la traduction anglaise fidèle de la question.'
+        raw = generate(prompt, max_tokens=1200,
                        backend=backend)
         match = re.search(r"\{.*\}", raw, re.S)
         if match is None:
