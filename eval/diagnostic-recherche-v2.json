@@ -1,0 +1,820 @@
+[
+  {
+    "id": 1,
+    "candidats": [
+      "foundations-of-biophilosophy-1997:00066",
+      "between-two-worlds-memoirs-2016:00448",
+      "emergence-and-convergence-2003:00019",
+      "between-two-worlds-memoirs-2016:00450",
+      "philosophy-of-psychology-1987:00143",
+      "between-two-worlds-memoirs-2016:00073",
+      "philosophy-of-psychology-1987:00371",
+      "treatise-8-ethics-the-good-and-the-right-1989:00020",
+      "emergence-and-convergence-2003:00030",
+      "foundations-of-biophilosophy-1997:00067",
+      "philosophy-of-psychology-1987:00144",
+      "scientific-realism-selected-essays-2001:00208",
+      "treatise-4-ontology-2-world-of-systems-1979:00246",
+      "foundations-of-biophilosophy-1997:00065",
+      "philosophical-dictionary-2003:00131"
+    ],
+    "top5": [
+      "emergence-and-convergence-2003:00019",
+      "between-two-worlds-memoirs-2016:00448",
+      "philosophy-of-psychology-1987:00143",
+      "between-two-worlds-memoirs-2016:00450",
+      "foundations-of-biophilosophy-1997:00065"
+    ],
+    "rang_initial": 3,
+    "rang_final": 1,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 2,
+    "candidats": [
+      "philosophical-dictionary-2003:00462",
+      "philosophy-of-psychology-1987:00072",
+      "treatise-4-ontology-2-world-of-systems-1979:00017",
+      "treatise-4-ontology-2-world-of-systems-1979:00020",
+      "scientific-realism-selected-essays-2001:00206",
+      "philosophy-of-psychology-1987:00073",
+      "mind-body-problem-1980:00247",
+      "foundations-of-biophilosophy-1997:00062",
+      "chasing-reality-2006:00171",
+      "scientific-realism-selected-essays-2001:00357",
+      "treatise-4-ontology-2-world-of-systems-1979:00021",
+      "emergence-and-convergence-2003:00110"
+    ],
+    "top5": [
+      "treatise-4-ontology-2-world-of-systems-1979:00020",
+      "philosophical-dictionary-2003:00462",
+      "mind-body-problem-1980:00247",
+      "treatise-4-ontology-2-world-of-systems-1979:00017",
+      "philosophy-of-psychology-1987:00072"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 3,
+    "candidats": [
+      "scientific-realism-selected-essays-2001:00356",
+      "foundations-of-biophilosophy-1997:00289",
+      "treatise-4-ontology-2-world-of-systems-1979:00250",
+      "emergence-and-convergence-2003:00142",
+      "scientific-realism-selected-essays-2001:00355",
+      "political-philosophy-2009:00031",
+      "emergence-and-convergence-2003:00107",
+      "treatise-4-ontology-2-world-of-systems-1979:00062",
+      "from-a-scientific-point-of-view-2018:00170",
+      "emergence-and-convergence-2003:00124",
+      "between-two-worlds-memoirs-2016:00445",
+      "political-philosophy-2009:00013"
+    ],
+    "top5": [
+      "foundations-of-biophilosophy-1997:00289",
+      "scientific-realism-selected-essays-2001:00356",
+      "emergence-and-convergence-2003:00142",
+      "political-philosophy-2009:00031",
+      "between-two-worlds-memoirs-2016:00445"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 4,
+    "candidats": [
+      "scientific-materialism-1981:00024",
+      "foundations-of-biophilosophy-1997:00051",
+      "scientific-materialism-1981:00007",
+      "philosophical-dictionary-2003:00281",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00091",
+      "philosophical-dictionary-2003:00325",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00018",
+      "chasing-reality-2006:00017",
+      "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00149",
+      "from-a-scientific-point-of-view-2018:00159",
+      "scientific-materialism-1981:00012",
+      "chasing-reality-2006:00018",
+      "scientific-materialism-1981:00022"
+    ],
+    "top5": [
+      "from-a-scientific-point-of-view-2018:00159",
+      "scientific-materialism-1981:00007",
+      "foundations-of-biophilosophy-1997:00051",
+      "philosophical-dictionary-2003:00281",
+      "scientific-materialism-1981:00022"
+    ],
+    "rang_initial": 1,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 5,
+    "candidats": [
+      "political-philosophy-2009:00566",
+      "scientific-realism-selected-essays-2001:00123",
+      "causality-and-modern-science-1959:00486",
+      "mind-body-problem-1980:00240",
+      "between-two-worlds-memoirs-2016:00450",
+      "scientific-materialism-1981:00123",
+      "between-two-worlds-memoirs-2016:00679",
+      "between-two-worlds-memoirs-2016:00521",
+      "between-two-worlds-memoirs-2016:00680",
+      "foundations-of-biophilosophy-1997:00330",
+      "between-two-worlds-memoirs-2016:00744",
+      "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00304"
+    ],
+    "top5": [
+      "mind-body-problem-1980:00240",
+      "political-philosophy-2009:00566",
+      "between-two-worlds-memoirs-2016:00680",
+      "between-two-worlds-memoirs-2016:00450",
+      "between-two-worlds-memoirs-2016:00679"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 6,
+    "candidats": [
+      "scientific-materialism-1981:00123",
+      "scientific-materialism-1981:00015",
+      "scientific-realism-selected-essays-2001:00123",
+      "mind-body-problem-1980:00025",
+      "between-two-worlds-memoirs-2016:00450",
+      "mind-body-problem-1980:00018",
+      "between-two-worlds-memoirs-2016:00556",
+      "mind-body-problem-1980:00237",
+      "scientific-materialism-1981:00007",
+      "foundations-of-biophilosophy-1997:00327",
+      "treatise-4-ontology-2-world-of-systems-1979:00238",
+      "between-two-worlds-memoirs-2016:00519"
+    ],
+    "top5": [
+      "treatise-4-ontology-2-world-of-systems-1979:00238",
+      "mind-body-problem-1980:00025",
+      "foundations-of-biophilosophy-1997:00327",
+      "scientific-realism-selected-essays-2001:00123",
+      "mind-body-problem-1980:00018"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 7,
+    "candidats": [
+      "causality-and-modern-science-1959:00023",
+      "scientific-realism-selected-essays-2001:00083",
+      "scientific-realism-selected-essays-2001:00072",
+      "treatise-5-epistemology-1-exploring-the-world-1983:00385",
+      "political-philosophy-2009:00566",
+      "causality-and-modern-science-1959:00083",
+      "causality-and-modern-science-1959:00020",
+      "sociology-philosophy-connection-1999:00255",
+      "causality-and-modern-science-1959:00441",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00130",
+      "causality-and-modern-science-1959:00442",
+      "causality-and-modern-science-1959:00409"
+    ],
+    "top5": [
+      "causality-and-modern-science-1959:00023",
+      "causality-and-modern-science-1959:00020",
+      "scientific-realism-selected-essays-2001:00083",
+      "political-philosophy-2009:00566",
+      "causality-and-modern-science-1959:00409"
+    ],
+    "rang_initial": 1,
+    "rang_final": 1,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 8,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00480",
+      "between-two-worlds-memoirs-2016:00481",
+      "philosophical-dictionary-2003:00426",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00289",
+      "scientific-research-1-search-for-system-1967:00051",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00287",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00288",
+      "treatise-5-epistemology-1-exploring-the-world-1983:00020",
+      "scientific-realism-selected-essays-2001:00408",
+      "between-two-worlds-memoirs-2016:00218",
+      "treatise-5-epistemology-1-exploring-the-world-1983:00078",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00293"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00481",
+      "between-two-worlds-memoirs-2016:00218",
+      "philosophical-dictionary-2003:00426",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00288",
+      "scientific-realism-selected-essays-2001:00408"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 9,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00552",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00110",
+      "philosophy-of-psychology-1987:00160",
+      "scientific-research-1-search-for-system-1967:00056",
+      "philosophy-of-psychology-1987:00158",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00112",
+      "philosophy-of-psychology-1987:00157",
+      "philosophy-of-psychology-1987:00159",
+      "scientific-materialism-1981:00124",
+      "scientific-research-1-search-for-system-1967:00565",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00108",
+      "scientific-realism-selected-essays-2001:00123"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00552",
+      "philosophy-of-psychology-1987:00158",
+      "philosophy-of-psychology-1987:00159",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00110",
+      "philosophy-of-psychology-1987:00157"
+    ],
+    "rang_initial": 3,
+    "rang_final": 2,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 10,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00375",
+      "chasing-reality-2006:00376",
+      "political-philosophy-2009:00038",
+      "between-two-worlds-memoirs-2016:00218",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00328",
+      "political-philosophy-2009:00174",
+      "philosophy-of-psychology-1987:00036",
+      "treatise-1-semantics-1-sense-and-reference-1974:00199",
+      "between-two-worlds-memoirs-2016:00035",
+      "scientific-realism-selected-essays-2001:00423",
+      "chasing-reality-2006:00253",
+      "political-philosophy-2009:00013",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00336",
+      "chasing-reality-2006:00044"
+    ],
+    "top5": [
+      "political-philosophy-2009:00013",
+      "scientific-realism-selected-essays-2001:00423",
+      "chasing-reality-2006:00376",
+      "political-philosophy-2009:00174",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00328"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 11,
+    "candidats": [
+      "causality-and-modern-science-1959:00112",
+      "philosophy-of-physics-1973:00097",
+      "sociology-philosophy-connection-1999:00207",
+      "between-two-worlds-memoirs-2016:00460",
+      "scientific-realism-selected-essays-2001:00028",
+      "between-two-worlds-memoirs-2016:00188",
+      "philosophical-dictionary-2003:00388",
+      "scientific-realism-selected-essays-2001:00320",
+      "philosophy-of-physics-1973:00102",
+      "philosophy-of-physics-1973:00073",
+      "between-two-worlds-memoirs-2016:00204",
+      "philosophy-of-physics-1973:00242"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00460",
+      "between-two-worlds-memoirs-2016:00188",
+      "scientific-realism-selected-essays-2001:00028",
+      "philosophy-of-physics-1973:00242",
+      "philosophy-of-physics-1973:00073"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 12,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00404",
+      "emergence-and-convergence-2003:00304",
+      "between-two-worlds-memoirs-2016:00397",
+      "scientific-realism-selected-essays-2001:00346",
+      "between-two-worlds-memoirs-2016:00290",
+      "chasing-reality-2006:00045",
+      "philosophical-dictionary-2003:00491",
+      "scientific-research-1-search-for-system-1967:00361",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00347",
+      "treatise-5-epistemology-1-exploring-the-world-1983:00011",
+      "foundations-of-biophilosophy-1997:00218",
+      "sociology-philosophy-connection-1999:00234"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00404",
+      "sociology-philosophy-connection-1999:00234",
+      "between-two-worlds-memoirs-2016:00397",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00347",
+      "foundations-of-biophilosophy-1997:00218"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 13,
+    "candidats": [
+      "treatise-1-semantics-1-sense-and-reference-1974:00145",
+      "foundations-of-biophilosophy-1997:00106",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00079",
+      "scientific-research-1-search-for-system-1967:00203",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00068",
+      "foundations-of-biophilosophy-1997:00105",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00060",
+      "sociology-philosophy-connection-1999:00219",
+      "treatise-5-epistemology-1-exploring-the-world-1983:00229",
+      "treatise-1-semantics-1-sense-and-reference-1974:00146",
+      "foundations-of-biophilosophy-1997:00463",
+      "treatise-1-semantics-1-sense-and-reference-1974:00210"
+    ],
+    "top5": [
+      "foundations-of-biophilosophy-1997:00105",
+      "treatise-1-semantics-1-sense-and-reference-1974:00210",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00068",
+      "foundations-of-biophilosophy-1997:00106",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00079"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 14,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00653",
+      "treatise-8-ethics-the-good-and-the-right-1989:00295",
+      "treatise-8-ethics-the-good-and-the-right-1989:00296",
+      "treatise-8-ethics-the-good-and-the-right-1989:00361",
+      "treatise-8-ethics-the-good-and-the-right-1989:00522",
+      "political-philosophy-2009:00151",
+      "treatise-8-ethics-the-good-and-the-right-1989:00003",
+      "treatise-8-ethics-the-good-and-the-right-1989:00294",
+      "treatise-8-ethics-the-good-and-the-right-1989:00353",
+      "treatise-8-ethics-the-good-and-the-right-1989:00150",
+      "political-philosophy-2009:00145",
+      "philosophical-dictionary-2003:00416"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00653",
+      "treatise-8-ethics-the-good-and-the-right-1989:00150",
+      "political-philosophy-2009:00145",
+      "treatise-8-ethics-the-good-and-the-right-1989:00295",
+      "political-philosophy-2009:00151"
+    ],
+    "rang_initial": 2,
+    "rang_final": 4,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 15,
+    "candidats": [
+      "political-philosophy-2009:00268",
+      "political-philosophy-2009:00226",
+      "political-philosophy-2009:00446",
+      "political-philosophy-2009:00199",
+      "political-philosophy-2009:00566",
+      "political-philosophy-2009:00266",
+      "between-two-worlds-memoirs-2016:00744",
+      "between-two-worlds-memoirs-2016:00073",
+      "between-two-worlds-memoirs-2016:00078",
+      "political-philosophy-2009:00445",
+      "between-two-worlds-memoirs-2016:00569",
+      "from-a-scientific-point-of-view-2018:00109"
+    ],
+    "top5": [
+      "political-philosophy-2009:00268",
+      "political-philosophy-2009:00226",
+      "political-philosophy-2009:00199",
+      "political-philosophy-2009:00446",
+      "political-philosophy-2009:00566"
+    ],
+    "rang_initial": 6,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 16,
+    "candidats": [
+      "treatise-8-ethics-the-good-and-the-right-1989:00236",
+      "treatise-8-ethics-the-good-and-the-right-1989:00237",
+      "treatise-8-ethics-the-good-and-the-right-1989:00475",
+      "political-philosophy-2009:00488",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00233",
+      "treatise-8-ethics-the-good-and-the-right-1989:00454",
+      "political-philosophy-2009:00489",
+      "scientific-realism-selected-essays-2001:00492",
+      "political-philosophy-2009:00213",
+      "from-a-scientific-point-of-view-2018:00106",
+      "between-two-worlds-memoirs-2016:00569",
+      "treatise-8-ethics-the-good-and-the-right-1989:00464"
+    ],
+    "top5": [
+      "political-philosophy-2009:00488",
+      "treatise-8-ethics-the-good-and-the-right-1989:00236",
+      "treatise-8-ethics-the-good-and-the-right-1989:00464",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00233",
+      "from-a-scientific-point-of-view-2018:00106"
+    ],
+    "rang_initial": 7,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 17,
+    "candidats": [
+      "foundations-of-biophilosophy-1997:00234",
+      "foundations-of-biophilosophy-1997:00244",
+      "emergence-and-convergence-2003:00060",
+      "foundations-of-biophilosophy-1997:00232",
+      "foundations-of-biophilosophy-1997:00235",
+      "treatise-4-ontology-2-world-of-systems-1979:00112",
+      "foundations-of-biophilosophy-1997:00240",
+      "foundations-of-biophilosophy-1997:00242",
+      "treatise-4-ontology-2-world-of-systems-1979:00158",
+      "treatise-4-ontology-2-world-of-systems-1979:00114",
+      "foundations-of-biophilosophy-1997:00237",
+      "foundations-of-biophilosophy-1997:00439"
+    ],
+    "top5": [
+      "treatise-4-ontology-2-world-of-systems-1979:00158",
+      "foundations-of-biophilosophy-1997:00240",
+      "foundations-of-biophilosophy-1997:00235",
+      "foundations-of-biophilosophy-1997:00232",
+      "emergence-and-convergence-2003:00060"
+    ],
+    "rang_initial": 3,
+    "rang_final": 5,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 18,
+    "candidats": [
+      "foundations-of-biophilosophy-1997:00135",
+      "foundations-of-biophilosophy-1997:00134",
+      "scientific-research-1-search-for-system-1967:00002",
+      "treatise-4-ontology-2-world-of-systems-1979:00193",
+      "scientific-research-1-search-for-system-1967:00020",
+      "emergence-and-convergence-2003:00357",
+      "scientific-research-1-search-for-system-1967:00019",
+      "mind-body-problem-1980:00106",
+      "philosophy-of-psychology-1987:00096",
+      "treatise-4-ontology-2-world-of-systems-1979:00014",
+      "scientific-research-1-search-for-system-1967:00021",
+      "sociology-philosophy-connection-1999:00051"
+    ],
+    "top5": [
+      "foundations-of-biophilosophy-1997:00134",
+      "philosophy-of-psychology-1987:00096",
+      "foundations-of-biophilosophy-1997:00135",
+      "emergence-and-convergence-2003:00357",
+      "mind-body-problem-1980:00106"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 19,
+    "candidats": [
+      "scientific-realism-selected-essays-2001:00185",
+      "scientific-research-1-search-for-system-1967:00368",
+      "scientific-research-1-search-for-system-1967:00369",
+      "scientific-research-1-search-for-system-1967:00314",
+      "scientific-research-1-search-for-system-1967:00377",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00102",
+      "scientific-research-2-search-for-truth-1967:00434",
+      "scientific-research-2-search-for-truth-1967:00423",
+      "scientific-research-1-search-for-system-1967:00346",
+      "scientific-research-1-search-for-system-1967:00391",
+      "scientific-research-1-search-for-system-1967:00357",
+      "scientific-research-1-search-for-system-1967:00390"
+    ],
+    "top5": [
+      "scientific-realism-selected-essays-2001:00185",
+      "scientific-research-1-search-for-system-1967:00377",
+      "scientific-research-1-search-for-system-1967:00346",
+      "scientific-research-1-search-for-system-1967:00314",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00102"
+    ],
+    "rang_initial": 4,
+    "rang_final": 4,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 20,
+    "candidats": [
+      "between-two-worlds-memoirs-2016:00078",
+      "between-two-worlds-memoirs-2016:00073",
+      "between-two-worlds-memoirs-2016:00388",
+      "between-two-worlds-memoirs-2016:00680",
+      "between-two-worlds-memoirs-2016:00744",
+      "between-two-worlds-memoirs-2016:00079",
+      "between-two-worlds-memoirs-2016:00074",
+      "between-two-worlds-memoirs-2016:00208",
+      "between-two-worlds-memoirs-2016:00258",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00218",
+      "causality-and-modern-science-1959:00486",
+      "between-two-worlds-memoirs-2016:00175"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00680",
+      "causality-and-modern-science-1959:00486",
+      "between-two-worlds-memoirs-2016:00258",
+      "between-two-worlds-memoirs-2016:00078",
+      "between-two-worlds-memoirs-2016:00073"
+    ],
+    "rang_initial": 6,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 21,
+    "candidats": [
+      "emergence-and-convergence-2003:00048",
+      "emergence-and-convergence-2003:00044",
+      "emergence-and-convergence-2003:00047",
+      "emergence-and-convergence-2003:00045",
+      "emergence-and-convergence-2003:00414",
+      "foundations-of-biophilosophy-1997:00061",
+      "chasing-reality-2006:00462",
+      "foundations-of-biophilosophy-1997:00060",
+      "philosophical-dictionary-2003:00054",
+      "scientific-realism-selected-essays-2001:00207",
+      "emergence-and-convergence-2003:00080",
+      "emergence-and-convergence-2003:00413"
+    ],
+    "top5": [
+      "emergence-and-convergence-2003:00045",
+      "emergence-and-convergence-2003:00080",
+      "emergence-and-convergence-2003:00048",
+      "foundations-of-biophilosophy-1997:00061",
+      "foundations-of-biophilosophy-1997:00060"
+    ],
+    "rang_initial": 4,
+    "rang_final": 1,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 22,
+    "candidats": [
+      "foundations-of-biophilosophy-1997:00052",
+      "chasing-reality-2006:00328",
+      "foundations-of-biophilosophy-1997:00045",
+      "between-two-worlds-memoirs-2016:00415",
+      "scientific-research-1-search-for-system-1967:00252",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00007",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00299",
+      "chasing-reality-2006:00327",
+      "from-a-scientific-point-of-view-2018:00158",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00352",
+      "scientific-realism-selected-essays-2001:00081",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00357"
+    ],
+    "top5": [
+      "chasing-reality-2006:00328",
+      "scientific-realism-selected-essays-2001:00081",
+      "foundations-of-biophilosophy-1997:00052",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00352",
+      "between-two-worlds-memoirs-2016:00415"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 23,
+    "candidats": [
+      "chasing-reality-2006:00140",
+      "chasing-reality-2006:00136",
+      "chasing-reality-2006:00141",
+      "emergence-and-convergence-2003:00294",
+      "treatise-1-semantics-1-sense-and-reference-1974:00116",
+      "foundations-of-biophilosophy-1997:00085",
+      "foundations-of-biophilosophy-1997:00082",
+      "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00130",
+      "philosophical-dictionary-2003:00367",
+      "chasing-reality-2006:00138",
+      "scientific-research-1-search-for-system-1967:00597",
+      "emergence-and-convergence-2003:00291"
+    ],
+    "top5": [
+      "scientific-research-1-search-for-system-1967:00597",
+      "chasing-reality-2006:00140",
+      "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00130",
+      "emergence-and-convergence-2003:00294",
+      "foundations-of-biophilosophy-1997:00082"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 24,
+    "candidats": [
+      "treatise-6-epistemology-2-understanding-the-world-1983:00252",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00315",
+      "sociology-philosophy-connection-1999:00209",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00316",
+      "sociology-philosophy-connection-1999:00255",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00314",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00021",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00278",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00207",
+      "foundations-of-biophilosophy-1997:00317",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00311",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00307"
+    ],
+    "top5": [
+      "treatise-6-epistemology-2-understanding-the-world-1983:00278",
+      "foundations-of-biophilosophy-1997:00317",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00314",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00316",
+      "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00315"
+    ],
+    "rang_initial": 2,
+    "rang_final": 4,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 25,
+    "candidats": [
+      "emergence-and-convergence-2003:00131",
+      "chasing-reality-2006:00091",
+      "scientific-realism-selected-essays-2001:00404",
+      "philosophical-dictionary-2003:00080",
+      "philosophical-dictionary-2003:00455",
+      "between-two-worlds-memoirs-2016:00569",
+      "chasing-reality-2006:00090",
+      "chasing-reality-2006:00012",
+      "sociology-philosophy-connection-1999:00233",
+      "philosophical-dictionary-2003:00454",
+      "scientific-realism-selected-essays-2001:00406",
+      "political-philosophy-2009:00025"
+    ],
+    "top5": [
+      "scientific-realism-selected-essays-2001:00404",
+      "chasing-reality-2006:00012",
+      "sociology-philosophy-connection-1999:00233",
+      "emergence-and-convergence-2003:00131",
+      "philosophical-dictionary-2003:00080"
+    ],
+    "rang_initial": 8,
+    "rang_final": 2,
+    "étape": "retrouvée"
+  },
+  {
+    "id": 26,
+    "candidats": [
+      "philosophical-dictionary-2003:00410",
+      "political-philosophy-2009:00182",
+      "between-two-worlds-memoirs-2016:00063",
+      "philosophical-dictionary-2003:00409",
+      "philosophical-dictionary-2003:00196",
+      "political-philosophy-2009:00270",
+      "between-two-worlds-memoirs-2016:00679",
+      "philosophical-dictionary-2003:00195",
+      "political-philosophy-2009:00566",
+      "treatise-8-ethics-the-good-and-the-right-1989:00243",
+      "between-two-worlds-memoirs-2016:00680",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00060"
+    ],
+    "top5": [
+      "between-two-worlds-memoirs-2016:00063",
+      "political-philosophy-2009:00566",
+      "between-two-worlds-memoirs-2016:00680",
+      "between-two-worlds-memoirs-2016:00679",
+      "philosophical-dictionary-2003:00196"
+    ],
+    "rang_initial": 1,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 27,
+    "candidats": [
+      "scientific-materialism-1981:00007",
+      "sociology-philosophy-connection-1999:00006",
+      "sociology-philosophy-connection-1999:00255",
+      "between-two-worlds-memoirs-2016:00365",
+      "political-philosophy-2009:00566",
+      "scientific-materialism-1981:00134",
+      "between-two-worlds-memoirs-2016:00774",
+      "scientific-realism-selected-essays-2001:00134",
+      "scientific-research-2-search-for-truth-1967:00177",
+      "foundations-of-biophilosophy-1997:00167",
+      "scientific-realism-selected-essays-2001:00190",
+      "treatise-8-ethics-the-good-and-the-right-1989:00020",
+      "foundations-of-biophilosophy-1997:00394",
+      "scientific-realism-selected-essays-2001:00185"
+    ],
+    "top5": [
+      "sociology-philosophy-connection-1999:00006",
+      "scientific-realism-selected-essays-2001:00190",
+      "political-philosophy-2009:00566",
+      "foundations-of-biophilosophy-1997:00167",
+      "scientific-realism-selected-essays-2001:00185"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 28,
+    "candidats": [
+      "causality-and-modern-science-1959:00292",
+      "philosophical-dictionary-2003:00261",
+      "foundations-of-biophilosophy-1997:00179",
+      "scientific-research-1-search-for-system-1967:00636",
+      "causality-and-modern-science-1959:00299",
+      "philosophy-of-physics-1973:00034",
+      "foundations-of-biophilosophy-1997:00039",
+      "causality-and-modern-science-1959:00357",
+      "scientific-research-2-search-for-truth-1967:00193",
+      "treatise-2-semantics-2-interpretation-and-truth-1974:00084",
+      "chasing-reality-2006:00399",
+      "scientific-research-1-search-for-system-1967:00429"
+    ],
+    "top5": [
+      "causality-and-modern-science-1959:00292",
+      "causality-and-modern-science-1959:00299",
+      "foundations-of-biophilosophy-1997:00039",
+      "philosophical-dictionary-2003:00261",
+      "foundations-of-biophilosophy-1997:00179"
+    ],
+    "rang_initial": null,
+    "rang_final": null,
+    "étape": "récupération"
+  },
+  {
+    "id": 29,
+    "candidats": [
+      "scientific-research-2-search-for-truth-1967:00013",
+      "scientific-research-2-search-for-truth-1967:00038",
+      "foundations-of-biophilosophy-1997:00591",
+      "causality-and-modern-science-1959:00334",
+      "philosophy-of-physics-1973:00145",
+      "scientific-research-2-search-for-truth-1967:00014",
+      "emergence-and-convergence-2003:00030",
+      "scientific-research-2-search-for-truth-1967:00019",
+      "foundations-of-biophilosophy-1997:00185",
+      "political-philosophy-2009:00566",
+      "causality-and-modern-science-1959:00327",
+      "scientific-research-2-search-for-truth-1967:00023"
+    ],
+    "top5": [
+      "causality-and-modern-science-1959:00334",
+      "political-philosophy-2009:00566",
+      "philosophy-of-physics-1973:00145",
+      "foundations-of-biophilosophy-1997:00185",
+      "scientific-research-2-search-for-truth-1967:00019"
+    ],
+    "rang_initial": 2,
+    "rang_final": null,
+    "étape": "reclassement"
+  },
+  {
+    "id": 30,
+    "candidats": [
+      "from-a-scientific-point-of-view-2018:00078",
+      "chasing-reality-2006:00353",
+      "treatise-3-ontology-1-furniture-of-the-world-1977:00416",
+      "between-two-worlds-memoirs-2016:00480",
+      "chasing-reality-2006:00374",
+      "between-two-worlds-memoirs-2016:00218",
+      "between-two-worlds-memoirs-2016:00506",
+      "between-two-worlds-memoirs-2016:00481",
+      "chasing-reality-2006:00375",
+      "treatise-6-epistemology-2-understanding-the-world-1983:00289",
+      "scientific-realism-selected-essays-2001:00423",
+      "political-philosophy-2009:00566"
+    ],
+    "top5": [
+      "chasing-reality-2006:00375",
+      "scientific-realism-selected-essays-2001:00423",
+      "from-a-scientific-point-of-view-2018:00078",
+      "chasing-reality-2006:00353",
+      "political-philosophy-2009:00566"
+    ],
+    "rang_initial": 2,
+    "rang_final": 4,
+    "étape": "retrouvée"
+  }
+]
