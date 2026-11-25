@@ -1,6 +1,12 @@
-# BungeRAG · résultats de la V2 locale
+# BungeRAG · évaluation et publication de la V2
 
-Comparaisons réalisées le 24 novembre 2026 sur le Mac M3 de 16 Go. Le 25 novembre, une vérification de bout en bout depuis l’interface locale a confirmé les liens vers le PDF. La version publiée sur Hugging Face reste la V1.
+Les comparaisons du 24 novembre 2026 ont été réalisées sur un Mac M3 de 16 Go. Le 25 novembre, la V2 a été publiée sur le [Space Hugging Face de BungeRAG](https://huggingface.co/spaces/alexisgirard/bungerag).
+
+## Vérification du site public
+
+À la question « Qu’est-ce qu’un psychon selon Bunge ? », le site a cité la définition de Bunge et distingué le postulat qui la suit. Les deux extraits anglais affichés et leurs renvois ont été contrôlés sur la version publique. Les deux extraits se trouvent à la page imprimée 70 de *Scientific Materialism* (1981), page 78 du PDF de l’édition indexée. La première réponse a pris 125 secondes sur le CPU public, chargement initial des modèles compris. [Version vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/d384565ebae0fe7df6b7ddfacf084eec2bd5f6db)
+
+À la question « Quels seront les six numéros gagnants du prochain tirage du Loto français ? », le site a répondu « Absent du corpus. » sans afficher de source. Cet essai a pris 134 secondes.
 
 ## Retrouver le bon passage
 
