@@ -1,0 +1,54 @@
+# BungeRAG · feuille de route du projet
+
+**Révision du 25 novembre 2026.** La V2 publique est le point de départ. Les trois volets ci-dessous sont la direction retenue. La prochaine étape est le lot 1 du [plan de recherche](PLAN-RECHERCHE.md). Les mesures acquises figurent dans le [bilan de la V2](eval/RESULTATS-V2.md).
+
+## À qui sert le site
+
+Un lecteur de Mario Bunge se souvient d’une distinction ou d’une formule, veut rouvrir le bon livre, puis reprendre le raisonnement dans son contexte. Un seul site et une seule bibliothèque lui permettent de chercher, de parcourir les concepts et de mettre une prémisse à l’épreuve. La recherche de passages reste l’entrée principale. Chaque vue conserve la question, la notion et les références lorsqu’on passe à la suivante.
+
+## Un cadre philosophique disponible dès la première question
+
+Construire en amont un **référentiel versionné du système philosophique de Bunge**. Le matérialisme et le systémisme sont des points d’entrée demandés par le lecteur. Leur contenu, leur portée et leurs rapports doivent être établis par des textes datés. Commencer par les huit tomes du *Treatise on Basic Philosophy*, dont le VII comprend deux parties, puis intégrer les autres ouvrages du [corpus](manifest.csv). Distinguer la voix de Bunge, une position qu’il expose pour la critiquer et un ouvrage cosigné.
+
+| Élément à construire | Usage dans les trois volets |
+|---|---|
+| Un noyau court de principes relus, datés et sourcés | Le charger systématiquement pour interpréter, formuler ou contester une thèse, y compris à la première question. La recherche littérale d’un extrait reste accessible indépendamment du modèle. |
+| Des fiches par domaine et des relations entre propositions | Identifier chaque concept, définition, postulat, hypothèse, règle ou conclusion. Relier les prémisses à la conclusion, avec le type de lien, sa direction, le domaine d’application, l’ouvrage, l’édition et le passage. Conserver la notation et ses définitions. |
+| Un inventaire par tome et chapitre | Indiquer les sections indexées, les arguments relus, les liens proposés par l’IA en attente de lecture et les lacunes. Enregistrer les formulations concurrentes ou plus tardives avec leurs dates. Suivre cette couverture jusqu’à l’ensemble du *Traité*. |
+
+À chaque question de fond, partir du noyau, suivre les dépendances dans les domaines concernés, puis consulter les sources, y compris les restrictions et objections. Contrôler chaque étape avant de l’attribuer à Bunge. Si des textes divergent, les présenter dans leur contexte. Si le lien manque, indiquer ce qui manque. Une recherche infructueuse justifie « passage non retrouvé » et laisse ouverte la question de son existence. Les synthèses automatiques peuvent guider la recherche. Seules les sources permettent d’attribuer un énoncé ou une déduction à l’auteur.
+
+Le test de fidélité portera aussi sur des formulations orientées et des conversations longues. Changer la suggestion de l’utilisateur doit préserver les engagements documentés. Une prémisse retirée par le lecteur devient une hypothèse de travail propre à cette conversation. Les sources et le référentiel conservent leur version. La correction d’une erreur du référentiel, en revanche, donne lieu à une nouvelle révision et à la revérification des arguments qui en dépendent.
+
+## Trois volets, dans l’ordre de réalisation
+
+### 1. Rechercher et déplier un argument
+
+Un champ accepte question, formule, expression originale ou souvenir approximatif en français. Les premiers résultats montrent les courts extraits, l’édition et la localisation. « Déplier l’argument » ouvre la chaîne de prémisses sous la réponse. Une demande explicite de démonstration l’ouvre directement. « Situer cette idée dans le système » conduit à la fiche de la notion quand elle existe. L’explication des symboles conserve les références où Bunge les introduit.
+
+**Livraison.** Recherche de passages sur toute la bibliothèque et première reconstruction relue en éthique. Le lecteur doit pouvoir retrouver la page, identifier la nature de chaque étape et en suivre la source. [Plan d’exécution détaillé](PLAN-RECHERCHE.md)
+
+### 2. Atlas des concepts
+
+1. Alimenter l’atlas avec les fiches et les relations validées au volet 1. Commencer par l’éthique et ses dépendances vers d’autres tomes. Attribuer des identifiants stables aux passages, propositions et relations.
+2. Ouvrir la carte autour du concept consulté, avec un petit nombre de voisins. Chaque lien porte un verbe précis, par exemple « est défini par » ou « Bunge invoque cette prémisse pour conclure ». Un clic ouvre la justification. Proposer une liste équivalente utilisable au clavier.
+3. Ajouter la vue d’ensemble par domaine et « Comparer dans plusieurs ouvrages ». Montrer les extraits côte à côte, datés et ordonnés. Signaler les variantes de vocabulaire, la différence entre définition et exemple, et les changements que les textes permettent d’établir.
+
+**Critère de livraison.** Depuis un résultat, traverser deux liens, consulter la preuve textuelle de chacun et revenir à la recherche initiale. Comparer deux formulations datées sans confondre un commentaire éditorial avec une affirmation de Bunge. La vue d’ensemble indique sa couverture réelle.
+
+### 3. Atelier philosophique
+
+1. Ouvrir un dossier depuis une thèse de l’atlas ou une question libre, par exemple « Un modèle de langage peut-il comprendre ? ». Réunir le cadre sourcé et rechercher les passages qui en limitent l’application. Présenter les faits contemporains nécessaires avec leurs propres sources datées.
+2. Séparer à l’écran les propositions attestées chez Bunge, les données sur le cas actuel, les hypothèses de transposition et les conclusions conditionnelles. Afficher les interprétations rivales défendables et l’élément qui permettrait de les départager. L’outil peut dire ce qui suivrait de prémisses données. L’avis personnel qu’aurait eu Bunge sur une technique postérieure demeure inconnaissable.
+3. Avec « Contester cette prémisse », permettre d’accepter, de suspendre ou de remplacer une étape. Recalculer seulement les conclusions qui en dépendent, montrer les autres justifications éventuelles et permettre le retour à l’argument initial.
+4. Pour les démonstrations effectivement formalisables, relier les symboles au texte et vérifier les inférences avec un outil de logique adapté. Une formalisation éditoriale, une preuve vérifiée et une démonstration reproduite de l’auteur ont chacune une étiquette distincte.
+
+**Critère de livraison.** Sur le cas d’éthique relu, retirer un postulat et reconnaître la justification qui en dépend. Sur un cas d’IA contemporaine, formuler une objection et montrer ses conséquences sans attribuer à Bunge un jugement posthume. Tester aussi un désaccord apparent entre deux livres et une hypothèse impossible à départager avec les textes disponibles.
+
+## Comment maintenir la mémoire du projet
+
+Relire cette feuille et le plan du volet actif à chaque reprise. Lorsqu’un choix évolue, modifier le passage concerné et inscrire ci-dessous la date, l’ancien et le nouveau choix, le motif et l’effet sur les autres volets. Mettre à jour l’étape suivante et joindre le résultat d’essai ou la référence qui justifie la décision. Versionner ces changements avec le travail correspondant. Les scores et journaux d’expérience restent dans `eval/`.
+
+| Date | Décision et raison | Conséquence |
+|---|---|---|
+| 25 novembre 2026 | Vision retenue avec le porteur du projet. Un site en trois volets, un cadre philosophique commun et une priorité à la recherche de passages. | Le volet 1 fournit la première chaîne documentaire réutilisable par l’atlas puis par l’atelier. Comparer les options gratuites sur le corpus avant de remplacer les modèles de la V2. |

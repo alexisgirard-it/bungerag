@@ -7,6 +7,8 @@
 
 **[🚀 Démo en ligne](https://huggingface.co/spaces/alexisgirard/bungerag)** · [📊 Résultats d'évaluation complets](eval/RESULTS.md) · [📓 Journal de bord](JOURNAL.md)
 
+[Feuille de route du projet](FEUILLE-DE-ROUTE.md) · [Plan du volet Rechercher](PLAN-RECHERCHE.md)
+
 | Faithfulness | Context precision | Context recall | Abstention (pièges) |
 |:---:|:---:|:---:|:---:|
 | **0,935** | **0,893** | **0,848** | **8 / 10** |
