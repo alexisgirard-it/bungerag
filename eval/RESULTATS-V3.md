@@ -107,6 +107,33 @@ Le référentiel `2026-11-26.17` passe à **103 fiches et 96 liens vérifiés** 
 
 Le script `src/audit_workshop.py` (appelé aussi avant toute publication par `src/push_space.py`) contrôle désormais les **conditions nécessaires des transpositions** : chaque conclusion conditionnelle doit dépendre à la fois d’un fait contemporain daté avec source HTTPS, d’une hypothèse explicite de transposition (et d’un appui textuel de Bunge pour les transpositions issues du système), et la suspension de chacune de ces conditions doit effectivement suspendre la conclusion. La recette locale valide **11 dossiers, 45 appuis, 6 conditions de transposition, 5 formalisations booléennes et 41 modifications** réparties sur huit séquences, ainsi que les deux cas libres documentés. La publication sur le Space confirme 11 dossiers d’Atelier, 103 notions dans l’Atlas et l’affichage en direct des trois nouvelles chaînes avec leurs pages PDF et leurs fragments formels (`S → L, ¬L ⊨ ¬S` et `E ⊭ V`). [Couverture du Traité](COUVERTURE-TRAITE.md) · [Séquences](recette-atelier.json) · [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/6a7070c306b5e6317a9137c22c12f113484d5828)
 
+### Comparatif du reclasseur Horizon Labs (`small` vs `base`)
+
+Sur les mêmes pools de 24 candidats hybrides (30 questions historiques et 25 questions réservées documentées), `Horizon-Labs/multilingual-reranker-base` (308 M, 1,23 Go) est comparé à `Horizon-Labs/multilingual-reranker-small` (141 M) :
+
+| Reclasseur (24 candidats → 5) | Historique Hit@1 / Hit@5 / MRR | Réservée Hit@1 / Hit@5 / MRR / Args | Médiane CPU (5 q. sous charge Mac) |
+|---|---|---|---|
+| `Horizon-Labs/multilingual-reranker-small` | **4/30 · 13/30 · 0,230** | 15/25 · **23/25** · 0,727 · **3/5** | **35,4 s** |
+| `Horizon-Labs/multilingual-reranker-base` | 3/30 · 10/30 · 0,188 | **18/25** · **23/25** · **0,810** · **3/5** | 52,8 s (+49 %) |
+
+`base` améliore le rang 1 sur la série réservée (18/25 contre 15/25) sans augmenter le rappel au top 5 (23/25 pour les deux, 3/5 arguments complets), mais régresse de trois cas sur le jeu historique (10/30 contre 13/30 : perte des questions 4, 12, 22 et 24 pour un seul gain sur la 14) tout en doublant l’empreinte mémoire et en alourdissant la latence CPU de 49 %. **`Horizon-Labs/multilingual-reranker-small` est donc conservé.** [Protocole](../src/compare_rerankers.py) · [Mesures](mesures-v3.json)
+
+### Cascade LLM gratuite et budget de réflexion
+
+Dans `src/generate.py` et `src/config.py`, `PUBLIC_V3` remplace le modèle unique `gemini-3.1-flash-lite` par deux cascades avec bascule automatique sur erreurs transitoires (`429`, `500`, `503`, `504`) ou réponse vide :
+
+- **Rédaction, vérification et Atelier :** `gemini-2.5-flash` → `gemini-3.1-flash-lite` → `gemini-4-hydrogen` → `gemini-3.8-flash` → `gemini-3.5-flash-lite` (avec `thinking_budget=512` ajouté à `max_output_tokens` sur les modèles pensants pour éviter toute troncature JSON).
+- **Traduction et routage :** `gemini-3.5-flash-lite` → `gemini-3.1-flash-lite` → `gemini-2.5-flash` (sans `thinking_config` sur les variantes `flash-lite`).
+
+Un premier essai plaçant `gemini-4-hydrogen` et `gemini-3.8-flash` en tête sans `thinking_budget` borné a montré des `503`/`504` fréquents (+30 à +45 s d’attente) et une troncature JSON sur `gemini-2.5-flash`. Avec `gemini-2.5-flash` en tête et le budget de réflexion borné, sur les deux cas libres de l’Atelier (`prévision-explication` et `algorithme-efficace-et-norme`) :
+
+| Profil | `prévision-explication` | `algorithme-efficace-et-norme` | Suspension de prémisse |
+|---|---|---|---|
+| `gemini-3.1-flash-lite` seul | 15,10 s · 2 branches (principale + rivale) | 14,05 s · 1 branche | OK |
+| Cascade `PUBLIC_V3` (`gemini-2.5-flash` en tête) | **13,60 s** · 2 branches (principale + rivale) | **12,97 s** · **2 branches (principale + rivale)** | OK |
+
+La cascade améliore simultanément la rapidité, la couverture des interprétations rivales et la résilience aux quotas journaliers par modèle gratuit. [Mesures](mesures-v3.json)
+
 ## Titres et pages voisines
 
 Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.

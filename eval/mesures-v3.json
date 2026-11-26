@@ -7264,5 +7264,836 @@
         ]
       }
     ]
+  },
+  "compare_rerankers": {
+    "device": "mps",
+    "models": {
+      "horizon-small": {
+        "repo": "Horizon-Labs/multilingual-reranker-small",
+        "revision": "23139fec6f1f448cdf89a5ac2d2c6bf5e8c7b398",
+        "historique": {
+          "hit1": 4,
+          "hit5": 13,
+          "total": 30,
+          "mrr": 0.23
+        },
+        "reserve": {
+          "hit1": 15,
+          "hit5": 23,
+          "total": 25,
+          "mrr": 0.7267,
+          "arguments_complets": 3
+        },
+        "cpu_median_seconds": 35.372,
+        "cpu_times": [
+          35.975,
+          35.372,
+          18.167,
+          10.917,
+          45.023
+        ],
+        "hist_rows": [
+          {
+            "id": 1,
+            "rank": 2,
+            "seconds": 25.138
+          },
+          {
+            "id": 2,
+            "rank": null,
+            "seconds": 17.055
+          },
+          {
+            "id": 3,
+            "rank": null,
+            "seconds": 9.687
+          },
+          {
+            "id": 4,
+            "rank": 5,
+            "seconds": 24.509
+          },
+          {
+            "id": 5,
+            "rank": null,
+            "seconds": 19.051
+          },
+          {
+            "id": 6,
+            "rank": null,
+            "seconds": 33.206
+          },
+          {
+            "id": 7,
+            "rank": 3,
+            "seconds": 33.775
+          },
+          {
+            "id": 8,
+            "rank": null,
+            "seconds": 26.813
+          },
+          {
+            "id": 9,
+            "rank": 1,
+            "seconds": 14.732
+          },
+          {
+            "id": 10,
+            "rank": null,
+            "seconds": 9.38
+          },
+          {
+            "id": 11,
+            "rank": null,
+            "seconds": 16.355
+          },
+          {
+            "id": 12,
+            "rank": 4,
+            "seconds": 13.958
+          },
+          {
+            "id": 13,
+            "rank": null,
+            "seconds": 16.93
+          },
+          {
+            "id": 14,
+            "rank": null,
+            "seconds": 13.869
+          },
+          {
+            "id": 15,
+            "rank": 4,
+            "seconds": 14.53
+          },
+          {
+            "id": 16,
+            "rank": 2,
+            "seconds": 4.77
+          },
+          {
+            "id": 17,
+            "rank": 1,
+            "seconds": 25.29
+          },
+          {
+            "id": 18,
+            "rank": null,
+            "seconds": 17.908
+          },
+          {
+            "id": 19,
+            "rank": null,
+            "seconds": 18.547
+          },
+          {
+            "id": 20,
+            "rank": null,
+            "seconds": 7.616
+          },
+          {
+            "id": 21,
+            "rank": 1,
+            "seconds": 15.028
+          },
+          {
+            "id": 22,
+            "rank": 3,
+            "seconds": 12.509
+          },
+          {
+            "id": 23,
+            "rank": null,
+            "seconds": 12.214
+          },
+          {
+            "id": 24,
+            "rank": 3,
+            "seconds": 16.389
+          },
+          {
+            "id": 25,
+            "rank": 1,
+            "seconds": 12.428
+          },
+          {
+            "id": 26,
+            "rank": null,
+            "seconds": 12.894
+          },
+          {
+            "id": 27,
+            "rank": null,
+            "seconds": 12.495
+          },
+          {
+            "id": 28,
+            "rank": null,
+            "seconds": 10.252
+          },
+          {
+            "id": 29,
+            "rank": null,
+            "seconds": 16.326
+          },
+          {
+            "id": 30,
+            "rank": 5,
+            "seconds": 10.882
+          }
+        ],
+        "res_rows": [
+          {
+            "id": "citation-1",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 13.366
+          },
+          {
+            "id": "citation-2",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 14.515
+          },
+          {
+            "id": "citation-3",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 14.856
+          },
+          {
+            "id": "citation-4",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 12.117
+          },
+          {
+            "id": "citation-5",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 10.055
+          },
+          {
+            "id": "souvenir-1",
+            "family": "souvenir",
+            "ranks": [
+              3
+            ],
+            "seconds": 8.871
+          },
+          {
+            "id": "souvenir-2",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 7.079
+          },
+          {
+            "id": "souvenir-3",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 11.323
+          },
+          {
+            "id": "souvenir-4",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 9.191
+          },
+          {
+            "id": "souvenir-5",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 8.217
+          },
+          {
+            "id": "définition-1",
+            "family": "définition",
+            "ranks": [
+              3
+            ],
+            "seconds": 15.48
+          },
+          {
+            "id": "définition-2",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 13.317
+          },
+          {
+            "id": "définition-3",
+            "family": "définition",
+            "ranks": [
+              2
+            ],
+            "seconds": 12.008
+          },
+          {
+            "id": "définition-4",
+            "family": "définition",
+            "ranks": [
+              2
+            ],
+            "seconds": 7.116
+          },
+          {
+            "id": "définition-5",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 7.411
+          },
+          {
+            "id": "symbole-1",
+            "family": "symbole",
+            "ranks": [
+              3
+            ],
+            "seconds": 10.059
+          },
+          {
+            "id": "symbole-2",
+            "family": "symbole",
+            "ranks": [
+              3
+            ],
+            "seconds": 12.373
+          },
+          {
+            "id": "symbole-3",
+            "family": "symbole",
+            "ranks": [
+              3
+            ],
+            "seconds": 11.896
+          },
+          {
+            "id": "symbole-4",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 6.637
+          },
+          {
+            "id": "symbole-5",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 7.552
+          },
+          {
+            "id": "argument-1",
+            "family": "argument",
+            "ranks": [
+              2,
+              2,
+              1
+            ],
+            "seconds": 18.962
+          },
+          {
+            "id": "argument-2",
+            "family": "argument",
+            "ranks": [
+              null,
+              null
+            ],
+            "seconds": 14.578
+          },
+          {
+            "id": "argument-3",
+            "family": "argument",
+            "ranks": [
+              2,
+              2
+            ],
+            "seconds": 11.924
+          },
+          {
+            "id": "argument-4",
+            "family": "argument",
+            "ranks": [
+              null,
+              null
+            ],
+            "seconds": 14.794
+          },
+          {
+            "id": "argument-5",
+            "family": "argument",
+            "ranks": [
+              1,
+              1
+            ],
+            "seconds": 17.037
+          }
+        ]
+      },
+      "horizon-base": {
+        "repo": "Horizon-Labs/multilingual-reranker-base",
+        "revision": "7330f6d0b3f560af0c2b9a63820ea299a45fd91b",
+        "historique": {
+          "hit1": 3,
+          "hit5": 10,
+          "total": 30,
+          "mrr": 0.1883
+        },
+        "reserve": {
+          "hit1": 18,
+          "hit5": 23,
+          "total": 25,
+          "mrr": 0.81,
+          "arguments_complets": 3
+        },
+        "cpu_median_seconds": 52.79,
+        "cpu_times": [
+          35.282,
+          65.22,
+          56.437,
+          51.651,
+          52.79
+        ],
+        "hist_rows": [
+          {
+            "id": 1,
+            "rank": 4,
+            "seconds": 18.747
+          },
+          {
+            "id": 2,
+            "rank": null,
+            "seconds": 19.19
+          },
+          {
+            "id": 3,
+            "rank": null,
+            "seconds": 17.971
+          },
+          {
+            "id": 4,
+            "rank": null,
+            "seconds": 20.004
+          },
+          {
+            "id": 5,
+            "rank": null,
+            "seconds": 13.32
+          },
+          {
+            "id": 6,
+            "rank": null,
+            "seconds": 22.154
+          },
+          {
+            "id": 7,
+            "rank": 1,
+            "seconds": 21.201
+          },
+          {
+            "id": 8,
+            "rank": null,
+            "seconds": 18.991
+          },
+          {
+            "id": 9,
+            "rank": 1,
+            "seconds": 17.031
+          },
+          {
+            "id": 10,
+            "rank": null,
+            "seconds": 23.767
+          },
+          {
+            "id": 11,
+            "rank": null,
+            "seconds": 15.31
+          },
+          {
+            "id": 12,
+            "rank": null,
+            "seconds": 14.233
+          },
+          {
+            "id": 13,
+            "rank": null,
+            "seconds": 15.598
+          },
+          {
+            "id": 14,
+            "rank": 2,
+            "seconds": 18.264
+          },
+          {
+            "id": 15,
+            "rank": 5,
+            "seconds": 18.357
+          },
+          {
+            "id": 16,
+            "rank": 2,
+            "seconds": 19.161
+          },
+          {
+            "id": 17,
+            "rank": 2,
+            "seconds": 19.699
+          },
+          {
+            "id": 18,
+            "rank": null,
+            "seconds": 15.135
+          },
+          {
+            "id": 19,
+            "rank": null,
+            "seconds": 14.451
+          },
+          {
+            "id": 20,
+            "rank": null,
+            "seconds": 16.398
+          },
+          {
+            "id": 21,
+            "rank": 1,
+            "seconds": 16.632
+          },
+          {
+            "id": 22,
+            "rank": null,
+            "seconds": 13.376
+          },
+          {
+            "id": 23,
+            "rank": null,
+            "seconds": 18.118
+          },
+          {
+            "id": 24,
+            "rank": null,
+            "seconds": 20.036
+          },
+          {
+            "id": 25,
+            "rank": 2,
+            "seconds": 20.549
+          },
+          {
+            "id": 26,
+            "rank": null,
+            "seconds": 15.45
+          },
+          {
+            "id": 27,
+            "rank": null,
+            "seconds": 20.091
+          },
+          {
+            "id": 28,
+            "rank": null,
+            "seconds": 12.606
+          },
+          {
+            "id": 29,
+            "rank": null,
+            "seconds": 18.806
+          },
+          {
+            "id": 30,
+            "rank": 5,
+            "seconds": 14.471
+          }
+        ],
+        "res_rows": [
+          {
+            "id": "citation-1",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 16.979
+          },
+          {
+            "id": "citation-2",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 18.279
+          },
+          {
+            "id": "citation-3",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 17.851
+          },
+          {
+            "id": "citation-4",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 19.189
+          },
+          {
+            "id": "citation-5",
+            "family": "citation",
+            "ranks": [
+              1
+            ],
+            "seconds": 18.459
+          },
+          {
+            "id": "souvenir-1",
+            "family": "souvenir",
+            "ranks": [
+              2
+            ],
+            "seconds": 20.824
+          },
+          {
+            "id": "souvenir-2",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 19.808
+          },
+          {
+            "id": "souvenir-3",
+            "family": "souvenir",
+            "ranks": [
+              4
+            ],
+            "seconds": 15.992
+          },
+          {
+            "id": "souvenir-4",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 14.961
+          },
+          {
+            "id": "souvenir-5",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ],
+            "seconds": 16.717
+          },
+          {
+            "id": "définition-1",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 18.299
+          },
+          {
+            "id": "définition-2",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 11.983
+          },
+          {
+            "id": "définition-3",
+            "family": "définition",
+            "ranks": [
+              2
+            ],
+            "seconds": 19.125
+          },
+          {
+            "id": "définition-4",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 25.093
+          },
+          {
+            "id": "définition-5",
+            "family": "définition",
+            "ranks": [
+              1
+            ],
+            "seconds": 20.592
+          },
+          {
+            "id": "symbole-1",
+            "family": "symbole",
+            "ranks": [
+              2
+            ],
+            "seconds": 14.7
+          },
+          {
+            "id": "symbole-2",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 16.192
+          },
+          {
+            "id": "symbole-3",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 16.963
+          },
+          {
+            "id": "symbole-4",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 18.72
+          },
+          {
+            "id": "symbole-5",
+            "family": "symbole",
+            "ranks": [
+              1
+            ],
+            "seconds": 15.717
+          },
+          {
+            "id": "argument-1",
+            "family": "argument",
+            "ranks": [
+              2,
+              2,
+              1
+            ],
+            "seconds": 17.442
+          },
+          {
+            "id": "argument-2",
+            "family": "argument",
+            "ranks": [
+              null,
+              null
+            ],
+            "seconds": 17.154
+          },
+          {
+            "id": "argument-3",
+            "family": "argument",
+            "ranks": [
+              3,
+              2
+            ],
+            "seconds": 18.557
+          },
+          {
+            "id": "argument-4",
+            "family": "argument",
+            "ranks": [
+              null,
+              null
+            ],
+            "seconds": 16.578
+          },
+          {
+            "id": "argument-5",
+            "family": "argument",
+            "ranks": [
+              1,
+              1
+            ],
+            "seconds": 19.177
+          }
+        ]
+      }
+    }
+  },
+  "cascade_atelier_v3": {
+    "date": "2026-11-26",
+    "reasoning_cascade": "gemini/gemini-2.5-flash,gemini-3.1-flash-lite,gemini-4-hydrogen,gemini-3.8-flash,gemini-3.5-flash-lite",
+    "fast_cascade": "gemini/gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash",
+    "thinking_budget_structured": 512,
+    "trials": [
+      {
+        "profile": "baseline_3.1_flash_lite",
+        "case": "prévision-explication",
+        "seconds": 15.1,
+        "models": [
+          "gemini-3.1-flash-lite",
+          "gemini-3.1-flash-lite"
+        ],
+        "main": true,
+        "rival": true,
+        "suspension_ok": true
+      },
+      {
+        "profile": "baseline_3.1_flash_lite",
+        "case": "algorithme-efficace-et-norme",
+        "seconds": 14.05,
+        "models": [
+          "gemini-3.1-flash-lite",
+          "gemini-3.1-flash-lite"
+        ],
+        "main": true,
+        "rival": false,
+        "suspension_ok": true
+      },
+      {
+        "profile": "cascade_v3",
+        "case": "prévision-explication",
+        "seconds": 13.6,
+        "models": [
+          "gemini-2.5-flash",
+          "gemini-2.5-flash"
+        ],
+        "main": true,
+        "rival": true,
+        "suspension_ok": true
+      },
+      {
+        "profile": "cascade_v3",
+        "case": "algorithme-efficace-et-norme",
+        "seconds": 12.97,
+        "models": [
+          "gemini-2.5-flash",
+          "gemini-2.5-flash"
+        ],
+        "main": true,
+        "rival": true,
+        "suspension_ok": true
+      }
+    ]
   }
 }

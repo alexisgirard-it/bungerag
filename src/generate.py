@@ -15,9 +15,13 @@ Backend cerebras (gpt-oss-120b) : utilise pour les taches utilitaires
 reponses - et c'est aussi le juge d'eval (voir eval_ragas.py).
 """
 
+import logging
 import os
 import time
 from pathlib import Path
+
+LOGGER = logging.getLogger(__name__)
+TRANSIENT_GEMINI_CODES = {429, 500, 503, 504}
 
 # Le chargement de .env est un confort local, pas une condition d'import. Cela
 # permet aux tests unitaires purs d'importer le pipeline avec le seul stdlib.
@@ -123,21 +127,95 @@ def _ollama(prompt, system, max_tokens):
     r.raise_for_status()
     return r.json()["message"]["content"].strip()
 
+def parse_gemini_models(backend: str) -> list[str]:
+    spec = backend.split("/", 1)[1]
+    models = [item.strip() for item in spec.split(",") if item.strip()]
+    if not models:
+        raise ValueError(f"backend Gemini invalide : {backend!r}")
+    return models
+
+
+def _call_gemini_model(client, model, prompt, system, max_tokens, *, structured):
+    from google.genai import errors, types
+
+    # Borner la réflexion sur les modèles pensants pour éviter la troncature du JSON.
+    supports_thinking = "lite" not in model
+    thinking_budget = 512 if structured else 0
+    budgeted_tokens = max_tokens + thinking_budget
+
+    def invoke(with_thinking: bool):
+        config = types.GenerateContentConfig(
+            system_instruction=system,
+            temperature=0,
+            max_output_tokens=budgeted_tokens if with_thinking else max_tokens,
+            response_mime_type="application/json" if structured else "text/plain",
+            thinking_config=types.ThinkingConfig(thinking_budget=thinking_budget)
+            if with_thinking
+            else None,
+        )
+        return client.models.generate_content(
+            model=model, contents=prompt, config=config
+        )
+
+    if not supports_thinking:
+        response = invoke(with_thinking=False)
+    else:
+        try:
+            response = invoke(with_thinking=True)
+        except errors.APIError as exc:
+            if exc.code == 400:
+                response = invoke(with_thinking=False)
+            else:
+                raise
+    return response.model_version or model, (response.text or "")
+
+
 def named_gemini(prompt, system, backend, max_tokens, *, structured):
-    """Une requête bornée vers le modèle choisi, identifié dans les évaluations."""
+    """Appelle un modèle Gemini ou une cascade ordonnée avec bascule sur erreur transitoire."""
     global GEMINI_LAST_MODEL
     from google import genai
-    from google.genai import types
+    from google.genai import errors, types
 
-    model = backend.split("/", 1)[1]
-    options = types.HttpOptions(timeout=60_000, retry_options=types.HttpRetryOptions(attempts=2))
-    config = types.GenerateContentConfig(system_instruction=system, temperature=0,
-                                         max_output_tokens=max_tokens,
-                                         response_mime_type="application/json" if structured else "text/plain")
-    with genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=options) as client:
-        response = client.models.generate_content(model=model, contents=prompt, config=config)
-    GEMINI_LAST_MODEL = response.model_version or model
-    return response.text or ""
+    models = parse_gemini_models(backend)
+    cascade = len(models) > 1
+    options = types.HttpOptions(
+        timeout=30_000 if cascade else 60_000,
+        retry_options=types.HttpRetryOptions(attempts=1 if cascade else 2),
+    )
+    last_error = None
+    with genai.Client(
+        api_key=os.environ["GEMINI_API_KEY"], http_options=options
+    ) as client:
+        for index, model in enumerate(models):
+            remaining = index + 1 < len(models)
+            try:
+                version, text = _call_gemini_model(
+                    client, model, prompt, system, max_tokens, structured=structured
+                )
+                if not text.strip() and remaining:
+                    LOGGER.warning("gemini_empty_response model=%s -> fallback", model)
+                    continue
+                GEMINI_LAST_MODEL = version
+                return text
+            except errors.APIError as exc:
+                last_error = exc
+                if remaining and exc.code in TRANSIENT_GEMINI_CODES:
+                    LOGGER.warning(
+                        "gemini_transient_error model=%s code=%s -> fallback",
+                        model,
+                        exc.code,
+                    )
+                    continue
+                raise
+            except (TimeoutError, OSError) as exc:
+                last_error = exc
+                if remaining:
+                    LOGGER.warning("gemini_network_error model=%s -> fallback", model)
+                    continue
+                raise
+    if last_error is not None:
+        raise last_error
+    return ""
 
 
 def generate_json(prompt, system, backend, max_tokens):

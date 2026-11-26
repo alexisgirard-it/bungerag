@@ -93,7 +93,21 @@ RESEARCH_40X6 = RAGConfig(
 PUBLIC_V2 = replace(PUBLIC_V1, name="public_v2", generation_backend="gemini/gemini-3.1-flash-lite",
                     router_backend="gemini/gemini-3.1-flash-lite", translator_backend="gemini/gemini-3.1-flash-lite", verification_backend="gemini/gemini-3.1-flash-lite")
 
-PUBLIC_V3 = replace(PUBLIC_V2, name="public_v3", k_candidates=24)
+GEMINI_REASONING_CASCADE = (
+    "gemini/gemini-2.5-flash,gemini-3.1-flash-lite,gemini-4-hydrogen,"
+    "gemini-3.8-flash,gemini-3.5-flash-lite"
+)
+GEMINI_FAST_CASCADE = "gemini/gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash"
+
+PUBLIC_V3 = replace(
+    PUBLIC_V2,
+    name="public_v3",
+    k_candidates=24,
+    generation_backend=GEMINI_REASONING_CASCADE,
+    verification_backend=GEMINI_REASONING_CASCADE,
+    translator_backend=GEMINI_FAST_CASCADE,
+    router_backend=GEMINI_FAST_CASCADE,
+)
 
 PROFILES = {
     PUBLIC_V3.name: PUBLIC_V3,

@@ -56,3 +56,95 @@ def test_unknown_profile_is_rejected(monkeypatch):
     clear_rag_env(monkeypatch)
     with pytest.raises(ValueError, match="profil RAG inconnu"):
         get_config("missing")
+
+
+def _install_fake_genai(monkeypatch):
+    import sys
+    import types
+
+    class FakeAPIError(Exception):
+        def __init__(self, code, message=""):
+            super().__init__(message)
+            self.code = code
+
+    class FakeClient:
+        def __init__(self, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    fake_errors = types.SimpleNamespace(APIError=FakeAPIError)
+    fake_types = types.SimpleNamespace(
+        HttpOptions=lambda **kw: kw,
+        HttpRetryOptions=lambda **kw: kw,
+    )
+    fake_genai = types.SimpleNamespace(
+        Client=FakeClient, errors=fake_errors, types=fake_types
+    )
+    fake_google = types.SimpleNamespace(genai=fake_genai)
+    monkeypatch.setitem(sys.modules, "google", fake_google)
+    monkeypatch.setitem(sys.modules, "google.genai", fake_genai)
+    monkeypatch.setitem(sys.modules, "google.genai.errors", fake_errors)
+    monkeypatch.setitem(sys.modules, "google.genai.types", fake_types)
+    return FakeAPIError
+
+
+def test_gemini_cascade_falls_back_on_transient_errors(monkeypatch):
+    import generate
+
+    FakeAPIError = _install_fake_genai(monkeypatch)
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    tried = []
+
+    def fake_call(client, model, prompt, system, max_tokens, *, structured):
+        tried.append(model)
+        if model == "gemini-4-hydrogen":
+            raise FakeAPIError(503, "high demand")
+        if model == "gemini-3.8-flash":
+            return model, ""
+        return "gemini-2.5-flash-001", '{"ok": true}'
+
+    monkeypatch.setattr(generate, "_call_gemini_model", fake_call)
+    out = generate.generate_json(
+        "Q",
+        "S",
+        "gemini/gemini-4-hydrogen,gemini-3.8-flash,gemini-2.5-flash",
+        512,
+    )
+    assert out == '{"ok": true}'
+    assert tried == ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-2.5-flash"]
+    assert generate.GEMINI_LAST_MODEL == "gemini-2.5-flash-001"
+
+
+def test_gemini_cascade_does_not_swallow_client_400(monkeypatch):
+    import generate
+
+    FakeAPIError = _install_fake_genai(monkeypatch)
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+
+    def fake_call(client, model, prompt, system, max_tokens, *, structured):
+        raise FakeAPIError(400, "bad request")
+
+    monkeypatch.setattr(generate, "_call_gemini_model", fake_call)
+    with pytest.raises(FakeAPIError):
+        generate.generate_json(
+            "Q",
+            "S",
+            "gemini/gemini-4-hydrogen,gemini-2.5-flash",
+            512,
+        )
+
+
+def test_public_v3_uses_stable_flash_first_cascade():
+    from config import PUBLIC_V3
+    from generate import parse_gemini_models
+
+    reasoning = parse_gemini_models(PUBLIC_V3.generation_backend)
+    fast = parse_gemini_models(PUBLIC_V3.translator_backend)
+    assert reasoning[0] == "gemini-2.5-flash"
+    assert "gemini-3.1-flash-lite" in reasoning
+    assert fast[0] == "gemini-3.5-flash-lite"
