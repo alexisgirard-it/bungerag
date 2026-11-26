@@ -370,13 +370,13 @@ def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):
             is_done = pub.get("status") not in (None, "processing")
             has_src = bool(res[4]) and "Aucune source" not in str(res[4])
             head_html = APPARATUS_HEADING if (is_done and has_src) else ""
-            # En cas de quota ou d'erreur fournisseur, afficher immédiatement les passages sourcés hors quota.
-            if is_done and pub.get("status") in ("quota_rejected", "provider_error", "internal_error"):
+            # En cas de quota, erreur fournisseur ou réponse non vérifiée sans sources, afficher immédiatement les passages sourcés hors quota.
+            if is_done and pub.get("status") in ("quota_rejected", "provider_error", "internal_error", "unverified"):
                 fallback_hits = search_library(q_text)
                 if fallback_hits:
                     fallback_html = (
-                        '<div class="prose"><p><strong>Passages directs de la bibliothèque</strong> '
-                        "(la synthèse IA est momentanément indisponible, voici les textes vérifiés correspondants) :</p></div>"
+                        '<div class="prose"><p><strong>Passages directs vérifiés dans la bibliothèque</strong> '
+                        "(la synthèse IA n’a pas pu être validée sur cet essai ; voici les textes exacts correspondants) :</p></div>"
                         + "".join(render_card(s, LOCAL_BOOKS) for s in fallback_hits)
                     )
                     res = (res[0], res[1], "", fallback_html, "", res[5])

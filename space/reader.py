@@ -1060,7 +1060,15 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     )
 
     def focus(q_text, saved, rs):
-        nodeids = suggested_nodes(q_text) or [
+        from wiki_concepts import CONCEPT_ALIASES
+
+        qf = fold(q_text or "")
+        alias_hits = [
+            k
+            for k, aliases in CONCEPT_ALIASES.items()
+            if k in NODES and any(fold(a) in qf for a in aliases)
+        ]
+        nodeids = alias_hits or suggested_nodes(q_text) or [
             k for p in resolve(q_text, saved, rs) for k in on_page(p["book"], p["page"])
         ]
         if not nodeids:

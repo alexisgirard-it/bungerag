@@ -185,18 +185,18 @@ body {
 }
 #reader-tabs > .tab-wrapper,
 #reader-tabs > .tab-nav {
-  background: rgba(255, 255, 255, 0.52) !important;
+  background: rgba(255, 255, 255, 0.56) !important;
   backdrop-filter: blur(20px) saturate(170%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(170%) !important;
   border: 1px solid var(--bunge-glass-border) !important;
   border-radius: 999px !important;
   box-shadow: var(--bunge-shadow-glass) !important;
-  display: inline-flex !important;
-  gap: 4px !important;
+  display: flex !important;
+  gap: 6px !important;
   margin-bottom: 18px !important;
   padding: 5px !important;
-  width: fit-content !important;
-  max-width: 100%;
+  width: 100% !important;
+  max-width: 560px !important;
 }
 #reader-tabs > .tab-wrapper button,
 #reader-tabs > .tab-nav button {
@@ -861,7 +861,7 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
 #page-shell .block:has(> .html-container:empty),
 #page-shell .hide-container:empty,
 #page-shell .followup-bar:not(:has(button)),
-#ai-answer-card:not(:has(#answer-copy > *, #status-output > *, #notice-output > *)),
+#ai-answer-card:not(:has(.prose, .system-status, .reading-card, .system-message, .bunge-loading-bar)),
 #book-reader-panel:not(:has(.book-reader-card)) {
   display: none !important;
   margin: 0 !important;
