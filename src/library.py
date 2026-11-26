@@ -394,13 +394,40 @@ def question_scope(question):
 
 def linked_evidence(keys, limit=6):
     """Étend les appuis d'une lecture par des liens sourcés, y compris les restrictions."""
-    selected = list(dict.fromkeys(k for k in keys if k in NODES))
-    for key in selected.copy():
-        for link in neighbours(key):
-            for k in (link["witness"], link["origin"], link["target"]):
-                if k not in selected:
-                    selected.append(k)
-    return selected[:limit]
+    initial = list(dict.fromkeys(k for k in keys if k in NODES))[:limit]
+    selected = dict.fromkeys(initial)
+    frontier = initial
+    for _ in range(2):
+        if len(selected) == limit:
+            break
+        next_hop = []
+        relations = [link for key in frontier for link in neighbours(key)]
+        relations.sort(key=lambda link: link["kind"] != "Lien explicite")
+        for link in relations:
+            for key in (link["witness"], link["origin"], link["target"]):
+                if key not in selected and len(selected) < limit:
+                    selected[key] = None
+                    next_hop.append(key)
+        frontier = next_hop
+    return list(selected)
+
+
+def passage_context(source):
+    """Donne au vérificateur une courte fenêtre autour de la citation de l’édition."""
+    passage = source["excerpt"]
+    edition = source.get("edition")
+    if not edition or not passage:
+        return passage
+    with closing(connect()) as db:
+        rows = db.execute(
+            """SELECT t.text FROM pages p JOIN books b ON b.book=p.book
+               JOIN spans a ON a.page_id=p.id JOIN passages t ON t.rowid BETWEEN a.first_row AND a.last_row
+               WHERE p.book=? AND p.page=? AND b.edition=?""",
+            (source["book"], str(source["page"]), edition),
+        ).fetchall()
+    return next(
+        (row["text"] for row in rows if lexical_match(row["text"], passage)), passage
+    )
 
 
 LABELS_FR = {

@@ -358,4 +358,4 @@ if __name__ == "__main__":
         demo.launch(theme=THEME, css=CSS, server_name="127.0.0.1", share=False,
                     allowed_paths=[str(p) for p in LOCAL_BOOKS.glob("*.pdf")])
     else:
-        demo.launch(theme=THEME, css=CSS)
+        demo.launch(theme=THEME, css=CSS, ssr_mode=False)

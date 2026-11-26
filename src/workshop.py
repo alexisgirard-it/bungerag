@@ -10,6 +10,7 @@ from library import (
     linked_evidence,
     node_source,
     on_page,
+    passage_context,
     suggested_nodes,
 )
 
@@ -299,7 +300,15 @@ def open_question(question, research, *, generate=None):
         s["id"]: {
             "statut": s["role"],
             "texte": s["text"],
-            "appuis": [p["excerpt"] for p in s["sources"]],
+            "appuis": [
+                {
+                    "ouvrage": p["title"],
+                    "page": p.get("pages", p["page"]),
+                    "extrait": p["excerpt"],
+                    "contexte": passage_context(p),
+                }
+                for p in s["sources"]
+            ],
         }
         for s in steps
     }

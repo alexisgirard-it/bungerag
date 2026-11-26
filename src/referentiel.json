@@ -1718,7 +1718,7 @@
       "origin": "intension",
       "target": "reference",
       "witness": "intension",
-      "verb": "se lit avec",
+      "verb": "distingue le sens d’un problème de",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1726,7 +1726,7 @@
       "origin": "interpretation",
       "target": "representation",
       "witness": "interpretation",
-      "verb": "se lit avec",
+      "verb": "décrit les étapes qui permettent la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1734,15 +1734,15 @@
       "origin": "extension",
       "target": "reference",
       "witness": "extension",
-      "verb": "se lit avec",
-      "kind": "Rapprochement éditorial"
+      "verb": "présuppose une théorie de la",
+      "kind": "Lien explicite"
     },
     {
       "id": "voisins--raison",
       "origin": "voisins",
       "target": "raison",
       "witness": "voisins",
-      "verb": "se lit avec",
+      "verb": "situe la sémantique parmi les disciplines qui étudient notamment la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1750,7 +1750,7 @@
       "origin": "proprietes",
       "target": "chose",
       "witness": "proprietes",
-      "verb": "se lit avec",
+      "verb": "précise ce qui appartient à une",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1758,7 +1758,7 @@
       "origin": "possible",
       "target": "dynamique",
       "witness": "possible",
-      "verb": "se lit avec",
+      "verb": "éclaire les capacités qui rendent possible la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1766,7 +1766,7 @@
       "origin": "flux",
       "target": "changement",
       "witness": "flux",
-      "verb": "se lit avec",
+      "verb": "formule un point repris par la thèse sur",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1774,7 +1774,7 @@
       "origin": "espace",
       "target": "chose",
       "witness": "espace",
-      "verb": "se lit avec",
+      "verb": "s’appuie sur la notion de",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1782,7 +1782,7 @@
       "origin": "chimie",
       "target": "biosystemisme",
       "witness": "chimie",
-      "verb": "se lit avec",
+      "verb": "précise les limites de réduction qu’illustre le",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1790,7 +1790,7 @@
       "origin": "identite",
       "target": "cerveau",
       "witness": "identite",
-      "verb": "se lit avec",
+      "verb": "met en discussion une lecture des rapports entre",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1798,7 +1798,7 @@
       "origin": "societe-nouveaute",
       "target": "societe",
       "witness": "societe-nouveaute",
-      "verb": "se lit avec",
+      "verb": "décrit des propriétés nouvelles de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1806,7 +1806,7 @@
       "origin": "communication",
       "target": "connaissance",
       "witness": "communication",
-      "verb": "se lit avec",
+      "verb": "explicite la dimension collective de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1814,7 +1814,7 @@
       "origin": "perception-concepts",
       "target": "perception",
       "witness": "perception-concepts",
-      "verb": "se lit avec",
+      "verb": "précise les interactions entre le concept et l’",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1822,7 +1822,7 @@
       "origin": "concept",
       "target": "existence-conceptuelle",
       "witness": "concept",
-      "verb": "se lit avec",
+      "verb": "introduit une distinction utile à la lecture de l’",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1830,7 +1830,7 @@
       "origin": "inference",
       "target": "conjecture",
       "witness": "inference",
-      "verb": "se lit avec",
+      "verb": "fournit un mode de mise en relation des propositions utile à la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1838,7 +1838,7 @@
       "origin": "probleme",
       "target": "conjecture",
       "witness": "probleme",
-      "verb": "se lit avec",
+      "verb": "donne les situations qui nécessitent une",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1846,7 +1846,7 @@
       "origin": "coherence",
       "target": "connaissance",
       "witness": "coherence",
-      "verb": "se lit avec",
+      "verb": "décrit une forme d’organisation de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1854,7 +1854,7 @@
       "origin": "evaluation",
       "target": "controle",
       "witness": "evaluation",
-      "verb": "se lit avec",
+      "verb": "précise des critères du",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1862,7 +1862,7 @@
       "origin": "changement-savoir",
       "target": "connaissance",
       "witness": "changement-savoir",
-      "verb": "se lit avec",
+      "verb": "décrit des transformations de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1870,7 +1870,7 @@
       "origin": "types-savoirs",
       "target": "connaissance",
       "witness": "types-savoirs",
-      "verb": "se lit avec",
+      "verb": "s’interroge sur les diverses formes de",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1878,7 +1878,7 @@
       "origin": "etude-savoir",
       "target": "types-savoirs",
       "witness": "etude-savoir",
-      "verb": "se lit avec",
+      "verb": "distingue des approches applicables aux",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1886,7 +1886,7 @@
       "origin": "axiologie",
       "target": "valeur",
       "witness": "axiologie",
-      "verb": "se lit avec",
+      "verb": "précise la méthode d’analyse de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1894,7 +1894,7 @@
       "origin": "cas-moraux",
       "target": "etre-devoir",
       "witness": "cas-moraux",
-      "verb": "se lit avec",
+      "verb": "illustre les conditions d’application discutées dans",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1902,7 +1902,7 @@
       "origin": "types-ethique",
       "target": "metaethique",
       "witness": "types-ethique",
-      "verb": "se lit avec",
+      "verb": "construit des distinctions relevant de la",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1910,7 +1910,7 @@
       "origin": "ethique-action",
       "target": "metaethique",
       "witness": "ethique-action",
-      "verb": "se lit avec",
+      "verb": "précise la portée de l’éthique dans",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1918,7 +1918,7 @@
       "origin": "agir",
       "target": "ethique-action",
       "witness": "agir",
-      "verb": "se lit avec",
+      "verb": "développe le programme pratique d’",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1926,7 +1926,7 @@
       "origin": "philo-sociale",
       "target": "societe",
       "witness": "philo-sociale",
-      "verb": "se lit avec",
+      "verb": "porte sur les croyances, les valeurs et les normes d’une",
       "kind": "Rapprochement éditorial"
     },
     {
@@ -1934,7 +1934,7 @@
       "origin": "survie",
       "target": "philo-sociale",
       "witness": "survie",
-      "verb": "se lit avec",
+      "verb": "énonce une priorité normative retenue dans le projet de",
       "kind": "Rapprochement éditorial"
     }
   ]
