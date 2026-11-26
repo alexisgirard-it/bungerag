@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.5",
+  "version": "2026-11-26.7",
   "core": [
     "materialisme",
     "systemisme",
@@ -1414,6 +1414,61 @@
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "the value system advocated in this book is human survival"
       }
+    },
+    "ordre-partiel": {
+      "title": "Ordre des parties",
+      "domain": "Ontologie",
+      "kind": "Justification de la définition 1.2",
+      "text": "Bunge présente la relation partie-tout entre individus substantiels comme un ordre partiel. L’antisymétrie est la propriété qui permet d’identifier deux individus dont chacun est partie de l’autre.",
+      "tags": [
+        "partie",
+        "ordre partiel",
+        "antisymétrie"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 45,
+        "folio": "29",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "is a partial order relation"
+      }
+    },
+    "superiorite-mecanisme": {
+      "title": "Explication par mécanisme et subsomption",
+      "domain": "Épistémologie",
+      "kind": "Thèse méthodologique",
+      "text": "Bunge défend la supériorité de l’explication par mécanisme sur l’explication par subsomption et renvoie à plusieurs de ses travaux.",
+      "tags": [
+        "explication",
+        "mécanisme",
+        "subsomption"
+      ],
+      "source": {
+        "book": "chasing-reality-2006",
+        "page": 158,
+        "folio": "144",
+        "edition": "05ccdb41c19672af95e122279fe759401cadead8c33eeb9cfb190b69ee0889a1",
+        "quote": "the superiority of mechanismic explanation over subsumption"
+      }
+    },
+    "snell": {
+      "title": "La réfraction comme cas de subsomption",
+      "domain": "Épistémologie",
+      "kind": "Exemple",
+      "text": "La loi de Snell avec les valeurs pertinentes permet de déduire l’angle de réfraction. Selon Bunge, ce calcul relève d’un compte rendu déductif qui décrit le phénomène.",
+      "tags": [
+        "réfraction",
+        "snell",
+        "optique",
+        "angle"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 32,
+        "folio": "20",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "entails the value of the angle refraction and thus accounts for it"
+      }
     }
   },
   "relations": [
@@ -1936,6 +1991,30 @@
       "witness": "survie",
       "verb": "énonce une priorité normative retenue dans le projet de",
       "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "ordre-partiel--unique",
+      "origin": "ordre-partiel",
+      "verb": "permet de formaliser une justification de l’",
+      "target": "unique",
+      "witness": "ordre-partiel",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "snell--mecanisme",
+      "origin": "snell",
+      "target": "mecanisme",
+      "witness": "mecanisme",
+      "verb": "illustre le contraste avec une",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "mecanisme--superiorite-mecanisme",
+      "origin": "mecanisme",
+      "target": "superiorite-mecanisme",
+      "witness": "superiorite-mecanisme",
+      "verb": "se compare à la défense de l’",
+      "kind": "Comparaison entre ouvrages"
     }
   ]
 }

@@ -134,9 +134,10 @@ def unique_world():
     other = proposition("autre-preuve")
     uniqueness = proposition("unicite-sup")
     claim["supports"] = [["monde", "supremum", "unicite-sup"], ["autre-preuve"]]
+    order = proposition("ordre-partiel")
     return dict(
         title="Pourquoi Bunge conclut-il à l’unicité du monde ?",
-        steps=[world, sup, uniqueness, other, claim],
+        steps=[world, sup, uniqueness, other, order, claim],
         objection="Suspendre un postulat de la première preuve laisse ouverte la seconde. Pour la discuter il faut examiner sa notion de sous-monde.",
         open="Les deux arguments mobilisent-ils le même sens de « monde » ?",
     )
@@ -165,17 +166,42 @@ def existence():
     )
 
 
+def mechanism():
+    example, criterion, comparison = map(
+        proposition, ["snell", "mecanisme", "superiorite-mecanisme"]
+    )
+    applied = step(
+        "descriptif",
+        "Une conséquence calculable",
+        "Le calcul de l’angle donne une prédiction déductive. Le texte laisse encore à établir le processus qui produit cette réfraction.",
+        "Reconstruction éditoriale",
+        [["snell", "mecanisme"]],
+    )
+    return dict(
+        title="Que manque-t-il à la loi de Snell pour expliquer la réfraction ?",
+        steps=[example, criterion, comparison, applied],
+        objection="Si l’on intègre cette loi à une théorie qui spécifie aussi les processus à l’origine de la réfraction, on change l’ensemble des prémisses évaluées.",
+        open="Quel modèle permettrait d’identifier ces processus et quelles observations le mettraient à l’épreuve ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
     "ia": understanding,
     "monde": unique_world,
     "existence": existence,
+    "mecanisme": mechanism,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if node in {"snell", "superiorite-mecanisme"} or (
+        any(term in q for term in ("snell", "refraction"))
+        and any(term in q for term in ("expliqu", "loi", "mecanisme"))
+    ):
+        return "mecanisme"
     if any(
         t in q
         for t in (
@@ -266,6 +292,33 @@ def formal_happiness():
             "P signifie que cette satisfaction est réellement possible. En supposant ¬P, C peut encore "
             "être vraie. Le pont C → P exclut ce cas. Ce fragment éditorial isole cette étape et suppose "
             "déjà que l’incompatibilité des valeurs entraîne ¬P."
+        ),
+    }
+
+
+def formal_world():
+    """Contrôle l’étape d’antisymétrie après instanciation des prémisses universelles."""
+    rows = []
+    for left, right, equal in itertools.product([False, True], repeat=3):
+        antisymmetry = not (left and right) or equal
+        counterexample = left and right and antisymmetry and not equal
+        rows.append((left, right, equal, antisymmetry, counterexample))
+    return {
+        "formula": "a ⊑ b, b ⊑ a, (a ⊑ b ∧ b ⊑ a) → a = b ⊨ a = b",
+        "headers": (
+            "a ⊑ b",
+            "b ⊑ a",
+            "a = b",
+            "Condition d’antisymétrie",
+            "Contre-exemple",
+        ),
+        "valid": not any(row[-1] for row in rows),
+        "rows": rows,
+        "gloss": (
+            "La notation ⊑ représente la relation partie-tout. Si a et b sont tous deux des "
+            "individus dont tout autre est partie, alors a ⊑ b et b ⊑ a. "
+            "L’antisymétrie de l’ordre partiel donne l’égalité. La formalisation éditoriale "
+            "vérifie l’inférence après l’instanciation de a et b."
         ),
     }
 

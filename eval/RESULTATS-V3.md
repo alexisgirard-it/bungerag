@@ -40,3 +40,12 @@ Le répertoire contient 25 ouvrages et 54 chapitres du *Traité* repérés. Le r
 Pour les cinq questions à plusieurs références, la lecture des dossiers et des relations a fait passer la couverture complète des références de 1/5 à 3/5 sur le premier audit. Deux questions restent partielles. Les 54 ouvertures de chapitre ont été contrôlées contre la concordance.
 
 Sur ordinateur, l’argument sur le bonheur s’est ouvert depuis une question de recherche. La suspension puis le rétablissement du postulat ont modifié l’état de sa justification. Sur mobile, le dossier sur l’IA s’ouvre depuis une navigation dédiée. Ces parcours ont également été rejoués à partir du bundle de 23 fichiers destiné au Space. Le résultat du psychon y affiche les deux numéros de page.
+
+
+## Recette sur le Space
+
+Le 26 novembre, le Space CPU a servi le profil V3. La recette sur le navigateur a confirmé la recherche paginée, la navigation jusqu’à une page de chapitre, l’Atlas au clavier et retour à la recherche, puis la suspension d’un postulat et l’ouverture du dossier IA sur mobile. La première révision publique a rédigé une réponse sur le psychon en 91 secondes. Ses quatre extraits ont été contrôlés dans les PDF, aux pages physiques 78, 76 et 54 de leurs éditions respectives. La révision suivante utilise le rendu côté navigateur. [Space](https://huggingface.co/spaces/alexisgirard/bungerag) · [Révision testée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/7cab50878e3ddb62bbe07398537589f0580b03bf)
+
+Le référentiel public étendu contient 77 fiches et 65 liens. Sur les cinq demandes à plusieurs références, il permet de retrouver toutes les pages annotées pour quatre demandes après ouverture de l’argument. Ces cas sont les mêmes que ceux du premier audit. Le résultat documente une vérification de la couverture sur ces questions connues. [Inventaire des chapitres](COUVERTURE-TRAITE.md)
+
+La révision suivante retrouve aussi la notation ℳ = ⟨D, F, I⟩ en saisie directe. Le test navigateur a affiché la page 82 du livre, PDF p. 93, puis le lexique des symboles dans l’Atlas. [Révision testée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/8df36386f741039ec1f999034d64a7d77d22ece3)

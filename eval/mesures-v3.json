@@ -4107,5 +4107,533 @@
       "decision": "non retenu",
       "motif": "Glissement d’un système neuronal biologique à un réseau de neurones artificiel, puis assimilation de comprendre et de comprendre consciemment."
     }
-  ]
+  ],
+  "audit_referentiel_etendu": [
+    {
+      "id": "citation-1",
+      "loci": [
+        "treatise-4-ontology-2-world-of-systems-1979:44",
+        "philosophy-of-psychology-1987:29",
+        "emergence-and-convergence-2003:90",
+        "foundations-of-biophilosophy-1997:202",
+        "treatise-4-ontology-2-world-of-systems-1979:13"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-2",
+      "loci": [
+        "mind-body-problem-1980:165",
+        "philosophical-dictionary-2003:24",
+        "philosophical-dictionary-2003:175",
+        "sociology-philosophy-connection-1999:232",
+        "treatise-6-epistemology-2-understanding-the-world-1983:81"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-3",
+      "loci": [
+        "causality-and-modern-science-1959:135",
+        "scientific-research-1-search-for-system-1967:220",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:137",
+        "foundations-of-biophilosophy-1997:62",
+        "causality-and-modern-science-1959:254"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-4",
+      "loci": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:46",
+        "treatise-4-ontology-2-world-of-systems-1979:171",
+        "treatise-5-epistemology-1-exploring-the-world-1983:59",
+        "treatise-5-epistemology-1-exploring-the-world-1983:51",
+        "philosophy-of-psychology-1987:173"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-5",
+      "loci": [
+        "philosophical-dictionary-2003:284",
+        "philosophical-dictionary-2003:41",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "between-two-worlds-memoirs-2016:273",
+        "scientific-realism-selected-essays-2001:ch32 - (1999)"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-1",
+      "loci": [
+        "chasing-reality-2006:254",
+        "scientific-research-1-search-for-system-1967:248",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "treatise-6-epistemology-2-understanding-the-world-1983:33",
+        "scientific-research-2-search-for-truth-1967:53"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-2",
+      "loci": [
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:40",
+        "between-two-worlds-memoirs-2016:485",
+        "scientific-research-1-search-for-system-1967:11",
+        "between-two-worlds-memoirs-2016:312",
+        "between-two-worlds-memoirs-2016:489"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-3",
+      "loci": [
+        "chasing-reality-2006:15",
+        "chasing-reality-2006:18",
+        "chasing-reality-2006:45",
+        "chasing-reality-2006:48",
+        "chasing-reality-2006:278"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-4",
+      "loci": [
+        "causality-and-modern-science-1959:139",
+        "chasing-reality-2006:61",
+        "between-two-worlds-memoirs-2016:358",
+        "scientific-research-1-search-for-system-1967:239",
+        "political-philosophy-2009:94"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-5",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:39",
+        "mind-body-problem-1980:144",
+        "treatise-4-ontology-2-world-of-systems-1979:173",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:253",
+        "foundations-of-biophilosophy-1997:338"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-1",
+      "loci": [
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:93",
+        "scientific-research-1-search-for-system-1967:434",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362",
+        "foundations-of-biophilosophy-1997:117",
+        "treatise-5-epistemology-1-exploring-the-world-1983:361"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-2",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:45",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:59",
+        "treatise-4-ontology-2-world-of-systems-1979:21",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:42"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-3",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:179",
+        "treatise-8-ethics-the-good-and-the-right-1989:190",
+        "political-philosophy-2009:74",
+        "treatise-8-ethics-the-good-and-the-right-1989:372",
+        "causality-and-modern-science-1959:75"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-4",
+      "loci": [
+        "treatise-1-semantics-1-sense-and-reference-1974:71",
+        "treatise-1-semantics-1-sense-and-reference-1974:156",
+        "scientific-materialism-1981:152",
+        "treatise-1-semantics-1-sense-and-reference-1974:69",
+        "treatise-5-epistemology-1-exploring-the-world-1983:350"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-5",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:68",
+        "treatise-1-semantics-1-sense-and-reference-1974:158",
+        "philosophical-dictionary-2003:136",
+        "treatise-8-ethics-the-good-and-the-right-1989:71",
+        "treatise-8-ethics-the-good-and-the-right-1989:128"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-1",
+      "loci": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:361",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:33",
+        "treatise-4-ontology-2-world-of-systems-1979:86",
+        "foundations-of-biophilosophy-1997:113",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362"
+      ],
+      "ranks": [
+        null
+      ],
+      "combined_ranks": [
+        null
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-2",
+      "loci": [
+        "treatise-4-ontology-2-world-of-systems-1979:41",
+        "treatise-4-ontology-2-world-of-systems-1979:42",
+        "treatise-4-ontology-2-world-of-systems-1979:40",
+        "treatise-6-epistemology-2-understanding-the-world-1983:261",
+        "emergence-and-convergence-2003:47"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-3",
+      "loci": [
+        "treatise-1-semantics-1-sense-and-reference-1974:24",
+        "treatise-1-semantics-1-sense-and-reference-1974:197",
+        "treatise-1-semantics-1-sense-and-reference-1974:76",
+        "scientific-research-2-search-for-truth-1967:98",
+        "treatise-1-semantics-1-sense-and-reference-1974:105"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-4",
+      "loci": [
+        "causality-and-modern-science-1959:346",
+        "treatise-8-ethics-the-good-and-the-right-1989:94",
+        "scientific-research-1-search-for-system-1967:140",
+        "scientific-research-2-search-for-truth-1967:309",
+        "philosophical-dictionary-2003:239"
+      ],
+      "ranks": [
+        2
+      ],
+      "combined_ranks": [
+        2
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-5",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:130",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "foundations-of-biophilosophy-1997:374",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "mind-body-problem-1980:237"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-1",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:50",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:132",
+        "mind-body-problem-1980:171",
+        "foundations-of-biophilosophy-1997:107"
+      ],
+      "ranks": [
+        null,
+        2,
+        1
+      ],
+      "combined_ranks": [
+        7,
+        2,
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-2",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:299",
+        "treatise-8-ethics-the-good-and-the-right-1989:57",
+        "sociology-philosophy-connection-1999:62",
+        "scientific-research-2-search-for-truth-1967:47",
+        "scientific-research-1-search-for-system-1967:151"
+      ],
+      "ranks": [
+        null,
+        2
+      ],
+      "combined_ranks": [
+        11,
+        2
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-3",
+      "loci": [
+        "mind-body-problem-1980:260",
+        "mind-body-problem-1980:164",
+        "mind-body-problem-1980:165",
+        "treatise-5-epistemology-1-exploring-the-world-1983:70",
+        "mind-body-problem-1980:52"
+      ],
+      "ranks": [
+        2,
+        3
+      ],
+      "combined_ranks": [
+        2,
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-4",
+      "loci": [
+        "chasing-reality-2006:254",
+        "causality-and-modern-science-1959:342",
+        "causality-and-modern-science-1959:333",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "chasing-reality-2006:149"
+      ],
+      "ranks": [
+        null,
+        4
+      ],
+      "combined_ranks": [
+        7,
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-5",
+      "loci": [
+        "causality-and-modern-science-1959:135",
+        "causality-and-modern-science-1959:29",
+        "causality-and-modern-science-1959:150",
+        "causality-and-modern-science-1959:401",
+        "causality-and-modern-science-1959:385"
+      ],
+      "ranks": [
+        1,
+        null
+      ],
+      "combined_ranks": [
+        1,
+        null
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-1",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-2",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-3",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "clarifier",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-4",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-5",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    }
+  ],
+  "audit_referentiel_etendu_version": "2026-11-26.5",
+  "space_validation": {
+    "sha": "7cab50878e3ddb62bbe07398537589f0580b03bf",
+    "index": "b489333e935e4e14a31e977f63a365db5fa201b3",
+    "profil": "public_v3",
+    "parcours": [
+      "citation et double pagination",
+      "chapitres",
+      "atlas au clavier et retour",
+      "atelier et objection",
+      "mobile"
+    ],
+    "redaction": {
+      "sha": "43775a2cc1002c8d79777685d49724d36f3bc9b1",
+      "extraits_verifies": 4,
+      "secondes": 91.0
+    },
+    "notation": {
+      "sha": "8df36386f741039ec1f999034d64a7d77d22ece3",
+      "pdf_page": 93,
+      "folio": 82,
+      "secondes": 0.95
+    }
+  }
 }

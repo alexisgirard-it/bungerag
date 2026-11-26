@@ -29,6 +29,7 @@ from workshop import (
     choose_dossier,
     formal_happiness,
     formal_rights,
+    formal_world,
     open_question,
 )
 
@@ -222,6 +223,7 @@ def dossier_view(dossier, changes, local):
     formalizations = {
         "restriction": formal_rights,
         "theoreme-bonheur": formal_happiness,
+        "unique": formal_world,
     }
     for identifier in formalizations.keys() & {s["id"] for s in dossier["steps"]}:
         fragment = formalizations[identifier]()
@@ -233,10 +235,10 @@ def dossier_view(dossier, changes, local):
             for row in fragment["rows"]
         )
         sections.append(
-            f'<details><summary>Vérifier le fragment formel</summary><p class="formula">{esc(fragment["formula"])}</p><p>{esc(fragment["gloss"])}</p>'
-            f"<table><thead><tr>{headers}</tr></thead><tbody>"
+            f'<details class="formal-check"><summary>Vérifier le fragment formel</summary><p class="formula">{esc(fragment["formula"])}</p><p>{esc(fragment["gloss"])}</p>'
+            f'<div class="formal-table"><table><thead><tr>{headers}</tr></thead><tbody>'
             + rows
-            + "</tbody></table></details>"
+            + "</tbody></table></div></details>"
         )
     sections.append(
         "<details><summary>Cadre philosophique de cette lecture</summary>"
@@ -332,6 +334,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     ("Compréhension et IA", "ia"),
                     ("Unicité du monde", "monde"),
                     ("Existence des construits", "existence"),
+                    ("Explication et réfraction", "mecanisme"),
                 ],
                 label="Dossiers de lecture",
             )
