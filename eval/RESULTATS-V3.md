@@ -122,7 +122,7 @@ Sur les mêmes pools de 24 candidats hybrides (30 questions historiques et 25 qu
 
 Dans `src/generate.py` et `src/config.py`, `PUBLIC_V3` remplace le modèle unique `gemini-3.1-flash-lite` par deux cascades avec bascule automatique sur erreurs transitoires (`429`, `500`, `503`, `504`) ou réponse vide :
 
-- **Rédaction, vérification et Atelier :** `gemini-2.5-flash` → `gemini-3.1-flash-lite` → `gemini-4-hydrogen` → `gemini-3.8-flash` → `gemini-3.5-flash-lite` (avec `thinking_budget=512` ajouté à `max_output_tokens` sur les modèles pensants pour éviter toute troncature JSON).
+- **Rédaction, vérification et Atelier :** `gemini-4-hydrogen` → `gemini-3.8-flash` → `gemini-2.5-flash` → `gemini-3.1-flash-lite` → `gemini-3.5-flash-lite`, avec `thinking_budget=512` ajouté à `max_output_tokens` sur les modèles pensants et un **coupe-circuit temporaire par modèle** (5 min sur `500`/`503`/`504` ou réponse vide, 30 min sur `429`, délai court de 15 s avant bascule). Dès qu’un modèle de tête est saturé, il est écarté en 0 ms sur les appels suivants (y compris la passe de vérification) puis retenté automatiquement après la pause.
 - **Traduction et routage :** `gemini-3.5-flash-lite` → `gemini-3.1-flash-lite` → `gemini-2.5-flash` (sans `thinking_config` sur les variantes `flash-lite`).
 
 Un premier essai plaçant `gemini-4-hydrogen` et `gemini-3.8-flash` en tête sans `thinking_budget` borné a montré des `503`/`504` fréquents (+30 à +45 s d’attente) et une troncature JSON sur `gemini-2.5-flash`. Avec `gemini-2.5-flash` en tête et le budget de réflexion borné, sur les deux cas libres de l’Atelier (`prévision-explication` et `algorithme-efficace-et-norme`) :

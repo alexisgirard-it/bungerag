@@ -94,8 +94,8 @@ PUBLIC_V2 = replace(PUBLIC_V1, name="public_v2", generation_backend="gemini/gemi
                     router_backend="gemini/gemini-3.1-flash-lite", translator_backend="gemini/gemini-3.1-flash-lite", verification_backend="gemini/gemini-3.1-flash-lite")
 
 GEMINI_REASONING_CASCADE = (
-    "gemini/gemini-2.5-flash,gemini-3.1-flash-lite,gemini-4-hydrogen,"
-    "gemini-3.8-flash,gemini-3.5-flash-lite"
+    "gemini/gemini-4-hydrogen,gemini-3.8-flash,gemini-2.5-flash,"
+    "gemini-3.1-flash-lite,gemini-3.5-flash-lite"
 )
 GEMINI_FAST_CASCADE = "gemini/gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash"
 

@@ -17,11 +17,16 @@ reponses - et c'est aussi le juge d'eval (voir eval_ragas.py).
 
 import logging
 import os
+from threading import Lock
 import time
 from pathlib import Path
 
 LOGGER = logging.getLogger(__name__)
 TRANSIENT_GEMINI_CODES = {429, 500, 503, 504}
+COOLDOWN_TRANSIENT_SECONDS = 300.0
+COOLDOWN_QUOTA_SECONDS = 1800.0
+_MODEL_COOLDOWN: dict[str, float] = {}
+_COOLDOWN_LOCK = Lock()
 
 # Le chargement de .env est un confort local, pas une condition d'import. Cela
 # permet aux tests unitaires purs d'importer le pipeline avec le seul stdlib.
@@ -170,49 +175,72 @@ def _call_gemini_model(client, model, prompt, system, max_tokens, *, structured)
     return response.model_version or model, (response.text or "")
 
 
+def _cooldown_seconds(code: int | None) -> float:
+    return COOLDOWN_QUOTA_SECONDS if code == 429 else COOLDOWN_TRANSIENT_SECONDS
+
+
+def _mark_cooldown(model: str, code: int | None = None) -> None:
+    until = time.monotonic() + _cooldown_seconds(code)
+    with _COOLDOWN_LOCK:
+        _MODEL_COOLDOWN[model] = max(_MODEL_COOLDOWN.get(model, 0.0), until)
+
+
+def _active_cascade(models: list[str]) -> list[str]:
+    now = time.monotonic()
+    with _COOLDOWN_LOCK:
+        available = [m for m in models if _MODEL_COOLDOWN.get(m, 0.0) <= now]
+    # Si tous les modèles sont en pause, on réessaie la liste complète sans bloquer.
+    return available or list(models)
+
+
 def named_gemini(prompt, system, backend, max_tokens, *, structured):
-    """Appelle un modèle Gemini ou une cascade ordonnée avec bascule sur erreur transitoire."""
+    """Appelle un modèle Gemini ou une cascade ordonnée avec coupe-circuit temporaire."""
     global GEMINI_LAST_MODEL
     from google import genai
     from google.genai import errors, types
 
     models = parse_gemini_models(backend)
     cascade = len(models) > 1
-    options = types.HttpOptions(
-        timeout=30_000 if cascade else 60_000,
-        retry_options=types.HttpRetryOptions(attempts=1 if cascade else 2),
-    )
+    candidates = _active_cascade(models) if cascade else models
     last_error = None
-    with genai.Client(
-        api_key=os.environ["GEMINI_API_KEY"], http_options=options
-    ) as client:
-        for index, model in enumerate(models):
-            remaining = index + 1 < len(models)
-            try:
+    for index, model in enumerate(candidates):
+        remaining = index + 1 < len(candidates)
+        timeout_ms = 15_000 if (cascade and remaining) else (30_000 if cascade else 60_000)
+        options = types.HttpOptions(
+            timeout=timeout_ms,
+            retry_options=types.HttpRetryOptions(attempts=1 if cascade else 2),
+        )
+        try:
+            with genai.Client(
+                api_key=os.environ["GEMINI_API_KEY"], http_options=options
+            ) as client:
                 version, text = _call_gemini_model(
                     client, model, prompt, system, max_tokens, structured=structured
                 )
-                if not text.strip() and remaining:
-                    LOGGER.warning("gemini_empty_response model=%s -> fallback", model)
-                    continue
-                GEMINI_LAST_MODEL = version
-                return text
-            except errors.APIError as exc:
-                last_error = exc
-                if remaining and exc.code in TRANSIENT_GEMINI_CODES:
-                    LOGGER.warning(
-                        "gemini_transient_error model=%s code=%s -> fallback",
-                        model,
-                        exc.code,
-                    )
-                    continue
-                raise
-            except (TimeoutError, OSError) as exc:
-                last_error = exc
-                if remaining:
-                    LOGGER.warning("gemini_network_error model=%s -> fallback", model)
-                    continue
-                raise
+            if not text.strip() and remaining:
+                _mark_cooldown(model)
+                LOGGER.warning("gemini_empty_response model=%s -> cooldown", model)
+                continue
+            GEMINI_LAST_MODEL = version
+            return text
+        except errors.APIError as exc:
+            last_error = exc
+            if remaining and exc.code in TRANSIENT_GEMINI_CODES:
+                _mark_cooldown(model, exc.code)
+                LOGGER.warning(
+                    "gemini_transient_error model=%s code=%s -> cooldown",
+                    model,
+                    exc.code,
+                )
+                continue
+            raise
+        except (TimeoutError, OSError) as exc:
+            last_error = exc
+            if remaining:
+                _mark_cooldown(model)
+                LOGGER.warning("gemini_network_error model=%s -> cooldown", model)
+                continue
+            raise
     if last_error is not None:
         raise last_error
     return ""

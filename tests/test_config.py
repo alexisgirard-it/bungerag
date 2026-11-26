@@ -96,6 +96,7 @@ def _install_fake_genai(monkeypatch):
 def test_gemini_cascade_falls_back_on_transient_errors(monkeypatch):
     import generate
 
+    generate._MODEL_COOLDOWN.clear()
     FakeAPIError = _install_fake_genai(monkeypatch)
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     tried = []
@@ -109,20 +110,26 @@ def test_gemini_cascade_falls_back_on_transient_errors(monkeypatch):
         return "gemini-2.5-flash-001", '{"ok": true}'
 
     monkeypatch.setattr(generate, "_call_gemini_model", fake_call)
-    out = generate.generate_json(
-        "Q",
-        "S",
-        "gemini/gemini-4-hydrogen,gemini-3.8-flash,gemini-2.5-flash",
-        512,
-    )
+    cascade = "gemini/gemini-4-hydrogen,gemini-3.8-flash,gemini-2.5-flash"
+    out = generate.generate_json("Q", "S", cascade, 512)
     assert out == '{"ok": true}'
     assert tried == ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-2.5-flash"]
     assert generate.GEMINI_LAST_MODEL == "gemini-2.5-flash-001"
+
+    # Second call immediately skips models in cooldown (0 ms wasted on 503/empty).
+    tried.clear()
+    out2 = generate.generate_json("Q2", "S", cascade, 512)
+    assert out2 == '{"ok": true}'
+    assert tried == ["gemini-2.5-flash"]
+
+    # After cooldown expires, best model is probed again automatically.
+    generate._MODEL_COOLDOWN.clear()
 
 
 def test_gemini_cascade_does_not_swallow_client_400(monkeypatch):
     import generate
 
+    generate._MODEL_COOLDOWN.clear()
     FakeAPIError = _install_fake_genai(monkeypatch)
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
 
@@ -139,12 +146,12 @@ def test_gemini_cascade_does_not_swallow_client_400(monkeypatch):
         )
 
 
-def test_public_v3_uses_stable_flash_first_cascade():
+def test_public_v3_uses_best_first_cascade():
     from config import PUBLIC_V3
     from generate import parse_gemini_models
 
     reasoning = parse_gemini_models(PUBLIC_V3.generation_backend)
     fast = parse_gemini_models(PUBLIC_V3.translator_backend)
-    assert reasoning[0] == "gemini-2.5-flash"
+    assert reasoning[:3] == ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-2.5-flash"]
     assert "gemini-3.1-flash-lite" in reasoning
     assert fast[0] == "gemini-3.5-flash-lite"
