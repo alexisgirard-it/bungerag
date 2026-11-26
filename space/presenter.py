@@ -59,6 +59,8 @@ class SourceView:
     file: str = ""
     pdf_page: int = 0
     edition: str = ""
+    voice: str = ""
+    edition_label: str = ""
 
     def public_payload(self) -> dict[str, object]:
         report = {"index": self.index, "title": self.title, "pages": self.pages, "excerpt": self.excerpt}
@@ -66,6 +68,10 @@ class SourceView:
             report["edition_sha256"] = self.edition
         if self.pdf_page:
             report["pdf_page"] = self.pdf_page
+        if self.voice:
+            report["quoted_author"] = self.voice
+        if self.edition_label:
+            report["edition_label"] = self.edition_label
         return report
 
 
@@ -140,7 +146,9 @@ def _source_view(raw: Any, index: int) -> SourceView:
     edition = _get(locator,"edition","")
     return SourceView(edition=edition if isinstance(edition,str) and re.fullmatch("[0-9a-f]{64}",edition) else "", index=index, title=title[:240], pages=pages[:220], excerpt=excerpt,
                       file=name if isinstance(name,str) and re.fullmatch(r"[a-z0-9-]+\.pdf",name) else "",
-                      pdf_page=physical if type(physical) is int and physical>0 else 0)
+                      pdf_page=physical if type(physical) is int and physical>0 else 0,
+                      voice=_text(_get(locator,"voice",""))[:140],
+                      edition_label=_text(_get(locator,"edition_label",""))[:220])
 
 
 def _citation_validation(answer: str, source_count: int, abstained: bool) -> tuple[str, str, tuple[int, ...]]:
@@ -307,13 +315,15 @@ def render_sources(view: AnswerView, local_books: Path | None = None) -> str:
                 href = "/gradio_api/file=" + quote(str(pdf)) + "#page=" + str(source.pdf_page)
                 reader = f'<a href="{html.escape(href)}" target="_blank" rel="noopener">Ouvrir la page du PDF</a>'
         expanded = " open" if source.pdf_page or source.pages.startswith("ch") else ""
+        voice = f'<small>Auteur cité · {html.escape(source.voice)}</small>' if source.voice else ""
+        imprint = f'<p><small>Édition indexée · {html.escape(source.edition_label)}</small></p>' if source.edition_label else ""
         cards.append(
             f'<details class="source-card" id="source-{source.index}"{expanded}>'
             f'<summary><span class="source-number">[{source.index}]</span>'
             f'<span class="source-heading"><strong>{html.escape(source.title)}</strong>'
             f'<small>{html.escape(source.pages)}</small></span>'
             '<span class="source-toggle" aria-hidden="true">+</span></summary>'
-            f'<blockquote>« {excerpt} »</blockquote>{reader}</details>'
+            f'{imprint}{voice}<blockquote>« {excerpt} »</blockquote>{reader}</details>'
         )
     return '<div class="source-list">' + "".join(cards) + "</div>"
 

@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.7",
+  "version": "2026-11-26.9",
   "core": [
     "materialisme",
     "systemisme",
@@ -1469,6 +1469,101 @@
         "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
         "quote": "entails the value of the angle refraction and thus accounts for it"
       }
+    },
+    "emerson-fatum": {
+      "title": "Nature et destin chez Emerson",
+      "domain": "Ontologie",
+      "kind": "Position citée et critiquée",
+      "text": "Bunge cite une formule d’Emerson qui assimile la nature au destin et la présente comme une erreur.",
+      "tags": [
+        "Emerson",
+        "fatalisme",
+        "destin"
+      ],
+      "source": {
+        "voice": "Emerson",
+        "book": "causality-and-modern-science-1959",
+        "page": 135,
+        "folio": "101",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "the book of Nature is the book of Fate"
+      }
+    },
+    "fatalisme": {
+      "title": "Nécessité transcendante dans le fatalisme",
+      "domain": "Ontologie",
+      "kind": "Caractérisation de la position",
+      "text": "Bunge caractérise le fatalisme par l’affirmation d’un destin inconnaissable et inéluctable.",
+      "tags": [
+        "fatalisme",
+        "destin",
+        "fatum"
+      ],
+      "source": {
+        "voice": "Bunge",
+        "book": "causality-and-modern-science-1959",
+        "page": 135,
+        "folio": "101",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "an unknowable and inescapable Destiny"
+      }
+    },
+    "determinisme-causal": {
+      "title": "Connaître et modifier le cours des événements",
+      "domain": "Ontologie",
+      "kind": "Caractérisation de la position",
+      "text": "Bunge décrit le déterminisme causal comme une théorie offrant des moyens de connaître, prévoir et par là modifier le cours des événements.",
+      "tags": [
+        "causalité",
+        "déterminisme",
+        "prévision"
+      ],
+      "source": {
+        "voice": "Bunge",
+        "book": "causality-and-modern-science-1959",
+        "page": 135,
+        "folio": "101",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "the means for knowing, predicting, and consequently changing the course of events"
+      }
+    },
+    "distinction-fatum": {
+      "title": "Distinguer fatalisme et déterminisme",
+      "domain": "Ontologie",
+      "kind": "Argument",
+      "text": "Bunge distingue le fatalisme du déterminisme, causal ou non. Dans la suite du passage, il oppose l’enchaînement causal à un pouvoir extérieur aux événements.",
+      "tags": [
+        "fatalisme",
+        "déterminisme",
+        "causalité"
+      ],
+      "source": {
+        "voice": "Bunge",
+        "book": "causality-and-modern-science-1959",
+        "page": 136,
+        "folio": "102",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "the difference between fatalism and determinism (whether causal or not)"
+      }
+    },
+    "wilson-fatum": {
+      "title": "Objections au déterminisme chez Wilson",
+      "domain": "Ontologie",
+      "kind": "Argument cité",
+      "text": "Bunge cite Wilson pour introduire l’idée que de nombreuses objections visant le déterminisme portent sur le fatalisme. La note 12 attribue cette phrase à Wilson.",
+      "tags": [
+        "Wilson",
+        "objection",
+        "fatalisme"
+      ],
+      "source": {
+        "voice": "H. van Rensselaer Wilson",
+        "book": "causality-and-modern-science-1959",
+        "page": 136,
+        "folio": "102",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "virtually all of the objections that are ever raised against determinism"
+      }
     }
   },
   "relations": [
@@ -2015,6 +2110,189 @@
       "witness": "superiorite-mecanisme",
       "verb": "se compare à la défense de l’",
       "kind": "Comparaison entre ouvrages"
+    },
+    {
+      "id": "emerson-fatum--fatalisme",
+      "origin": "emerson-fatum",
+      "target": "fatalisme",
+      "witness": "emerson-fatum",
+      "verb": "sert d’exemple critiqué dans la discussion du",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "fatalisme--distinction-fatum",
+      "origin": "fatalisme",
+      "target": "distinction-fatum",
+      "witness": "distinction-fatum",
+      "verb": "constitue le premier terme de la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "determinisme-causal--distinction-fatum",
+      "origin": "determinisme-causal",
+      "target": "distinction-fatum",
+      "witness": "distinction-fatum",
+      "verb": "fournit un cas dans la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "wilson-fatum--distinction-fatum",
+      "origin": "wilson-fatum",
+      "target": "distinction-fatum",
+      "witness": "wilson-fatum",
+      "verb": "est cité à l’appui de la",
+      "kind": "Lien explicite"
     }
-  ]
+  ],
+  "editions": {
+    "causality-and-modern-science-1959": {
+      "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+      "label": "Dover, 1979 · 3e édition revue",
+      "isbn": "978-0-486-23728-2",
+      "imprint_pdf_page": 8
+    },
+    "scientific-materialism-1981": {
+      "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1981",
+      "isbn": "978-94-009-8519-3",
+      "imprint_pdf_page": 4
+    },
+    "treatise-1-semantics-1-sense-and-reference-1974": {
+      "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+      "label": "D. Reidel, 1974",
+      "isbn": "978-90-277-0572-3",
+      "imprint_pdf_page": 4
+    },
+    "treatise-2-semantics-2-interpretation-and-truth-1974": {
+      "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+      "label": "D. Reidel, 1974",
+      "isbn": "978-90-277-0573-0",
+      "imprint_pdf_page": 4
+    },
+    "treatise-3-ontology-1-furniture-of-the-world-1977": {
+      "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1977",
+      "isbn": "978-90-277-0785-7",
+      "imprint_pdf_page": 4
+    },
+    "treatise-4-ontology-2-world-of-systems-1979": {
+      "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1979",
+      "isbn": "978-90-277-0945-5",
+      "imprint_pdf_page": 4
+    },
+    "treatise-5-epistemology-1-exploring-the-world-1983": {
+      "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1983",
+      "isbn": "978-90-277-1523-4",
+      "imprint_pdf_page": 4
+    },
+    "treatise-6-epistemology-2-understanding-the-world-1983": {
+      "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+      "label": "Springer · édition numérique de l’ouvrage paru chez D. Reidel en 1983",
+      "isbn": "978-94-015-6921-7",
+      "imprint_pdf_page": 5
+    },
+    "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985": {
+      "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1985",
+      "isbn": "978-94-010-8832-9",
+      "imprint_pdf_page": 4
+    },
+    "treatise-7b-philosophy-of-science-tech-2-life-social-1985": {
+      "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+      "label": "D. Reidel · réimpression brochée de la 1re édition de 1985",
+      "isbn": "978-94-010-8835-0",
+      "imprint_pdf_page": 4
+    },
+    "treatise-8-ethics-the-good-and-the-right-1989": {
+      "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+      "label": "Kluwer · réimpression brochée de la 1re édition de 1989",
+      "isbn": "978-90-277-2840-1",
+      "imprint_pdf_page": 4
+    },
+    "chasing-reality-2006": {
+      "edition": "05ccdb41c19672af95e122279fe759401cadead8c33eeb9cfb190b69ee0889a1",
+      "label": "University of Toronto Press, 2006",
+      "isbn": "978-0-8020-9075-1",
+      "imprint_pdf_page": 4
+    },
+    "emergence-and-convergence-2003": {
+      "edition": "968854cd0ad6f7ada042c8db233b4a6fc979d492c4cc288557745d96c4118b40",
+      "label": "University of Toronto Press · réimpression brochée de 2014",
+      "isbn": "978-1-4426-2821-2",
+      "imprint_pdf_page": 4
+    },
+    "mind-body-problem-1980": {
+      "edition": "af17a5b67f8fa96ecc02c0f9e54abe8d298bd54549ccb00a8b2bd141a3741767",
+      "label": "Pergamon Press, 1980 · 1re édition",
+      "isbn": "0-08-024720-2",
+      "imprint_pdf_page": 4
+    },
+    "philosophical-dictionary-2003": {
+      "edition": "33d1ff1e9326c1291b7093ab3f0eb6679fe1c03786ba49eb5b4847fe14da6233",
+      "label": "Prometheus Books, 2003 · 2e édition revue et augmentée",
+      "isbn": "1-59102-037-9",
+      "imprint_pdf_page": 6
+    },
+    "between-two-worlds-memoirs-2016": {
+      "edition": "fa91d08f4a2cf5cf830f882f692bb7031f7af5f3934cdb4854b23a6fa48fa840",
+      "label": "Springer · édition numérique de 2016",
+      "isbn": "978-3-319-29251-9",
+      "imprint_pdf_page": 6
+    },
+    "foundations-of-biophilosophy-1997": {
+      "edition": "22d803f3077ee5dc70aeb2622c70b2bb6aa46cbf1b8421f48ea76064088bd94e",
+      "label": "Springer-Verlag, 1997",
+      "isbn": "3-540-61838-4",
+      "imprint_pdf_page": 8
+    },
+    "from-a-scientific-point-of-view-2018": {
+      "edition": "da2b72cdf04a696afebb5264f2265bbbbe9685ea4cba8862387aa3c00a14a236",
+      "label": "Cambridge Scholars Publishing, 2018",
+      "isbn": "978-1-5275-0864-4",
+      "imprint_pdf_page": 5
+    },
+    "philosophy-of-physics-1973": {
+      "edition": "fdc6a0b1c5e09af8e4ed3e096c08552ec1e7f5ba8c5acb19cd85d1d947b08dcd",
+      "label": "D. Reidel, 1973",
+      "isbn": "978-94-010-2524-9",
+      "imprint_pdf_page": 3
+    },
+    "philosophy-of-psychology-1987": {
+      "edition": "1c4630b742028953a5146a7e3037a52f08d3b4b2ce7939138cb2fe266bc2ce0b",
+      "label": "Springer-Verlag, 1987",
+      "isbn": "978-1-4612-9118-3",
+      "imprint_pdf_page": 3
+    },
+    "political-philosophy-2009": {
+      "edition": "504e374c2d89ad507d3da6d649b59d4933dc5a4026ea3355eeb6ecb65d55e427",
+      "label": "Transaction Publishers, 2009",
+      "isbn": "978-1-4128-0828-6",
+      "imprint_pdf_page": 4
+    },
+    "scientific-realism-selected-essays-2001": {
+      "edition": "ed8eb9a00ae6aa9ffc01c6c6ce1ec7ca72a8cf4a7ee6aa443e6104a168077718",
+      "label": "Prometheus Books, 2001 · EPUB dirigé par Martin Mahner",
+      "isbn": "978-1-57392-892-2"
+    },
+    "scientific-research-1-search-for-system-1967": {
+      "edition": "445c131e1008cddcc9b6723446340bc98441da6f7c52f49b6d605ca70a1bb1c9",
+      "label": "Springer-Verlag New York, 1967",
+      "isbn": "",
+      "imprint_pdf_page": 7
+    },
+    "scientific-research-2-search-for-truth-1967": {
+      "edition": "592b8f6be62ecf56b0721c186d13992d2e7903224c8ec09e903b8ac23de1167c",
+      "label": "Springer-Verlag · réimpression brochée de la 1re édition de 1967",
+      "isbn": "978-3-642-48140-6",
+      "imprint_pdf_page": 3
+    },
+    "sociology-philosophy-connection-1999": {
+      "edition": "a8066c2356438277d7c317d9f2758ef95fce3a41ea68a535e85536ac8051ddbd",
+      "label": "Transaction Publishers, 1999",
+      "isbn": "978-1-56000-416-5",
+      "imprint_pdf_page": 5
+    }
+  }
 }

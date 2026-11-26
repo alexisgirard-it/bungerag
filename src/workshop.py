@@ -187,6 +187,26 @@ def mechanism():
     )
 
 
+def causal_fatalism():
+    emerson, fate, causal, wilson, distinction = map(
+        proposition,
+        [
+            "emerson-fatum",
+            "fatalisme",
+            "determinisme-causal",
+            "wilson-fatum",
+            "distinction-fatum",
+        ],
+    )
+    distinction["supports"] = [["fatalisme", "determinisme-causal"]]
+    return dict(
+        title="La causalité implique-t-elle le fatalisme ?",
+        steps=[emerson, fate, causal, wilson, distinction],
+        objection="Si une chaîne causale comprend aussi nos interventions, alors l’existence de causes ne suffit pas à établir qu’une issue surviendrait quelles que soient nos actions.",
+        open="Quel rôle les conditions et les interventions jouent-elles dans le cas particulier discuté ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
@@ -194,11 +214,17 @@ DOSSIERS = {
     "monde": unique_world,
     "existence": existence,
     "mecanisme": mechanism,
+    "fatalisme": causal_fatalism,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if node in {"fatalisme", "distinction-fatum", "emerson-fatum", "wilson-fatum"} or (
+        "fatalis" in q
+        and any(term in q for term in ("caus", "determin", "emerson", "wilson"))
+    ):
+        return "fatalisme"
     if node in {"snell", "superiorite-mecanisme"} or (
         any(term in q for term in ("snell", "refraction"))
         and any(term in q for term in ("expliqu", "loi", "mecanisme"))
@@ -396,6 +422,7 @@ def open_question(question, research, *, generate=None, external=None):
                 {
                     "ouvrage": p["title"],
                     "page": p.get("pages", p["page"]),
+                    "auteur_cite": p.get("voice"),
                     "extrait": p["excerpt"],
                     "contexte": passage_context(p),
                 }

@@ -139,14 +139,23 @@ def location(row):
     return page
 
 
+def edition_label(book, edition):
+    info = CATALOG.get("editions", {}).get(book)
+    if info and info["edition"] == edition:
+        return f"{info['label']} · ISBN {info['isbn']}" if info["isbn"] else info["label"]
+    return ""
+
+
 def describe_page(db, pid):
-    return dict(
+    item = dict(
         db.execute(
             """SELECT p.id,p.book,p.page,p.folio,p.chapter,b.year,b.title,b.authors,b.file,b.edition
                               FROM pages p JOIN books b ON b.book=p.book WHERE p.id=?""",
             (pid,),
         ).fetchone()
     )
+    item["edition_label"] = edition_label(item["book"], item["edition"])
+    return item
 
 
 def query_phrases(q):
@@ -295,6 +304,11 @@ def search_library(question, *, english=None, semantic=True, limit=5):
             item["excerpt"] = limited_excerpt(
                 snippets[pid], set(terms + original), phrase
             )
+            voice = quotation_voice(
+                item["book"], item["page"], item["edition"], item["excerpt"]
+            )
+            if voice:
+                item["voice"] = voice
             result.append(item)
             if len(result) == limit:
                 break
@@ -307,6 +321,25 @@ def on_page(book, page):
         for key, n in NODES.items()
         if n["source"]["book"] == book and str(n["source"]["page"]) == str(page)
     ]
+
+
+def quotation_notes(book, page, edition):
+    return tuple(
+        node["source"]
+        for key in on_page(book, page)
+        if (node := NODES[key])["source"]["edition"] == edition
+        and node["source"].get("voice") not in (None, "Bunge")
+    )
+
+
+def quotation_voice(book, page, edition, excerpt):
+    for note in quotation_notes(book, page, edition):
+        quote = note["quote"]
+        if lexical_match(excerpt, quote) or (
+            len(excerpt.split()) >= 5 and lexical_match(quote, excerpt)
+        ):
+            return note["voice"]
+    return ""
 
 
 def notation_matches(question):
@@ -342,6 +375,8 @@ def node_source(key):
             raise ValueError("Édition du référentiel incompatible")
         item = describe_page(db, row[0])
     item.update(excerpt=source["quote"], pages=location(item))
+    if source.get("voice") and source["voice"] != "Bunge":
+        item["voice"] = source["voice"]
     return item
 
 

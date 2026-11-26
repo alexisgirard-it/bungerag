@@ -39,6 +39,16 @@ esc = html.escape
 
 def card(source, local):
     link = ""
+    attribution = (
+        f'<small class="citation-voice">Auteur cité · {esc(source["voice"])}</small>'
+        if source.get("voice")
+        else ""
+    )
+    imprint = (
+        f'<p class="folio">Édition indexée · {esc(source["edition_label"])}</p>'
+        if source.get("edition_label")
+        else ""
+    )
     if local and source["file"].endswith(".pdf") and str(source["page"]).isdecimal():
         pdf = (local / source["file"]).resolve()
         if pdf.parent == local.resolve() and pdf.is_file():
@@ -46,7 +56,7 @@ def card(source, local):
     return (
         f'<article class="reading-card"><header><strong>{esc(source["title"])}</strong> '
         f"<small>{esc(str(source['year']))} · {esc(source['authors'])}</small></header>"
-        f'<p class="folio">{esc(source["pages"])}</p><blockquote lang="en">{esc(source["excerpt"])}</blockquote>{link}</article>'
+        f'{imprint}<p class="folio">{esc(source["pages"])}</p>{attribution}<blockquote lang="en">{esc(source["excerpt"])}</blockquote>{link}</article>'
     )
 
 
@@ -351,6 +361,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     ("Unicité du monde", "monde"),
                     ("Existence des construits", "existence"),
                     ("Explication et réfraction", "mecanisme"),
+                    ("Causalité et fatalisme", "fatalisme"),
                 ],
                 label="Dossiers de lecture",
             )

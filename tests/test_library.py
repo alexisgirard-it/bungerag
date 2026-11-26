@@ -26,3 +26,20 @@ def test_numbered_lemma_lookup_uses_full_number_and_the_kind():
     assert [row["text"] for row in formal_hits(db, "Où est le postulat 2.1 ?")] == [
         "The full realization"
     ]
+
+
+def test_attribution_uses_the_quote_and_edition():
+    from library import NODES, quotation_voice
+
+    loc = NODES["emerson-fatum"]["source"]
+    assert (
+        quotation_voice(loc["book"], loc["page"], loc["edition"], loc["quote"])
+        == "Emerson"
+    )
+    assert not quotation_voice(loc["book"], loc["page"], "autre édition", loc["quote"])
+    assert not quotation_voice(
+        loc["book"],
+        loc["page"],
+        loc["edition"],
+        "an unknowable and inescapable Destiny",
+    )

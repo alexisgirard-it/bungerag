@@ -357,9 +357,20 @@ def answer_with_evidence(question, hits, cfg, generate_json):
     passages = passages_for(hits, db)
     frame = ""
     if cfg.name == "public_v3":
-        from library import core_context
+        from library import core_context, edition_label, quotation_notes, quotation_voice
         add_linked_passages(question, passages, db)
-        frame = "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. Cherche les conditions de portée et les objections.\n" + core_context()
+        notes = [
+            f"[{key}] {note['voice']} est l’auteur du passage cité « {note['quote']} »."
+            for key, passage in passages.items()
+            for note in quotation_notes(passage.book, passage.page, passage.edition)
+        ]
+        frame = (
+            "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. "
+            "Distingue les auteurs cités et les positions discutées.\n"
+            + core_context()
+            + "\n"
+            + "\n".join(notes)
+        )
     claims, reason = draft_claims(
         question, passages, db, generate_json, cfg.generation_backend, frame
     )
@@ -369,11 +380,26 @@ def answer_with_evidence(question, hits, cfg, generate_json):
             [],
             reason,
         )
+    if cfg.name == "public_v3":
+        for _, refs in claims:
+            for source, _ in refs:
+                locator = source["locator"]
+                locator["edition_label"] = edition_label(locator["book"], locator["edition"])
+                voice = quotation_voice(
+                    locator["book"], locator.get("pdf_page", locator.get("section")),
+                    locator["edition"], source["extrait"]
+                )
+                if voice:
+                    locator["voice"] = voice
     review = [
         {
             "n": n,
             "affirmation": claim,
-            "preuves": [{"citation": s["extrait"], "contexte": ctx} for s, ctx in refs],
+            "preuves": [
+                {"citation": s["extrait"], "contexte": ctx, "auteur_cite": s["locator"]["voice"]}
+                if s["locator"].get("voice") else {"citation": s["extrait"], "contexte": ctx}
+                for s, ctx in refs
+            ],
         }
         for n, (claim, refs) in enumerate(claims, 1)
     ]
