@@ -300,13 +300,13 @@ from library import CATALOG, search_library
 from workshop import open_question
 
 
-def dossier_for_reader(question, request, passages=None):
+def dossier_for_reader(question, request, passages=None, *, external=None):
     if passages is None:
         passages = search_library(question)
     try:
         reservation = QUOTAS.reserve(client_id(request))
     except QuotaExceeded:
-        dossier = open_question(question, passages)
+        dossier = open_question(question, passages, external=external)
         dossier["notice"] = "Quota de rédaction atteint. Les extraits restent consultables."
         return dossier
     try:
@@ -315,13 +315,13 @@ def dossier_for_reader(question, request, passages=None):
         cfg = get_config()
         def write(prompt, system):
             return generate_json(prompt, system, cfg.generation_backend, 1800)
-        dossier = open_question(question, passages, generate=write)
+        dossier = open_question(question, passages, generate=write, external=external)
         QUOTAS.commit(reservation)
         return dossier
     except Exception:
         QUOTAS.release(reservation)
         LOGGER.exception("atelier_indisponible")
-        dossier = open_question(question, passages)
+        dossier = open_question(question, passages, external=external)
         dossier["notice"] = "La rédaction est indisponible. Les sources et la question ouverte restent consultables."
         return dossier
 

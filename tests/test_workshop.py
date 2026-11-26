@@ -1,3 +1,5 @@
+import pytest
+
 from workshop import (
     assess,
     formal_happiness,
@@ -5,6 +7,7 @@ from workshop import (
     open_question,
     step,
     choose_dossier,
+    contemporary_claim,
 )
 
 
@@ -74,3 +77,19 @@ def test_a_proposed_argument_requires_real_appuis_and_a_second_read(monkeypatch)
         )
         == 1
     )
+
+
+def test_contemporary_claim_without_bunge_evidence_stays_an_open_case():
+    fact = contemporary_claim(
+        "Le système produit du texte.", "https://example.org/report", "2026-11-26"
+    )
+    dossier = open_question(
+        "Question inédite",
+        [],
+        external=fact,
+        generate=lambda *_: pytest.fail("aucun appui textuel"),
+    )
+    assert dossier["steps"][0]["external"] == [fact]
+    assert dossier["steps"][0]["role"] == "Donnée contemporaine à vérifier"
+    with pytest.raises(ValueError, match="HTTPS"):
+        contemporary_claim("Un fait", "javascript:alert(1)", "2026-11-26")

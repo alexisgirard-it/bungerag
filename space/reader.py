@@ -27,6 +27,7 @@ from workshop import (
     DOSSIERS,
     assess,
     choose_dossier,
+    contemporary_claim,
     formal_happiness,
     formal_rights,
     formal_world,
@@ -289,11 +290,19 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 discuss = gr.Button("Contester une prémisse dans l’Atelier")
                 legacy(q)
         with gr.Tab("Atlas des concepts", id="atlas"):
-            domain = gr.Dropdown(
-                ["Tous les domaines", *domains],
-                value="Tous les domaines",
-                label="Domaine",
-            )
+            with gr.Accordion("Vue d’ensemble du système", open=False):
+                domain = gr.Radio(
+                    [("Toutes les notions", "Tous les domaines")]
+                    + [
+                        (
+                            f"{name} · {sum(node['domain'] == name for node in NODES.values())} fiches",
+                            name,
+                        )
+                        for name in domains
+                    ],
+                    value="Tous les domaines",
+                    label="Parcourir les domaines",
+                )
             with gr.Row():
                 concept = gr.Dropdown(options, value="systemisme", label="Notion")
                 linked = gr.Dropdown(label="Suivre un lien", choices=[])
@@ -327,6 +336,13 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 placeholder="Un modèle de langage peut-il comprendre ?",
             )
             work_go = gr.Button("Ouvrir le dossier", variant="primary")
+            with gr.Accordion("Ajouter un fait contemporain au dossier", open=False):
+                supplied_fact = gr.Textbox(label="Fait à examiner", lines=2)
+                with gr.Row():
+                    supplied_link = gr.Textbox(label="Lien de la source")
+                    supplied_date = gr.Textbox(
+                        label="Date de publication", placeholder="AAAA-MM-JJ"
+                    )
             shortcuts = gr.Radio(
                 [
                     ("Bonheur complet", "bonheur"),
@@ -603,7 +619,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
         api_name=False,
     )
 
-    def custom(question, request: gr.Request):
+    def custom(question, fact, link, published, request: gr.Request):
         question = " ".join((question or "").split())
         if not 3 <= len(question) <= max_chars:
             return (
@@ -612,14 +628,27 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 "<p>Précisez la thèse à examiner.</p>",
                 gr.Dropdown(choices=[], value=None),
             )
-        key = choose_dossier(question)
-        d = DOSSIERS[key]() if key else create_dossier(question, request)
+        try:
+            external = contemporary_claim(fact, link, published)
+        except ValueError as exc:
+            return (
+                {},
+                {},
+                f'<p role="alert">{esc(str(exc))}</p>',
+                gr.Dropdown(choices=[], value=None),
+            )
+        key = choose_dossier(question) if not external else None
+        d = (
+            DOSSIERS[key]()
+            if key
+            else create_dossier(question, request, external=external)
+        )
         return ready(d)
 
     for event in (work_go.click, work_q.submit):
         event(
             custom,
-            work_q,
+            [work_q, supplied_fact, supplied_link, supplied_date],
             [dossier, changes, work_text, premise],
             api_name=False,
             concurrency_id="reader",
