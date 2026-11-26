@@ -26,6 +26,14 @@ DOMAIN_COLORS = {
     "Philosophie des sciences": "#b45309",
     "Éthique": "#be185d",
 }
+DOMAIN_SHORT = {
+    "Ontologie": "Ontologie",
+    "Sémantique": "Sémantique",
+    "Épistémologie": "Épistémologie",
+    "Philosophie de l’esprit": "Esprit",
+    "Philosophie des sciences": "Sciences",
+    "Éthique": "Éthique",
+}
 
 MINDMAP_CSS = """
 .atlas-mindmap {
@@ -559,10 +567,11 @@ def render_mindmap(selected_key: str = "systemisme", active_domain: str = "Tous 
     for dom in DOMAIN_ORDER:
         cnt = sum(1 for n in NODES.values() if n["domain"] == dom)
         active_cls = " is-active" if active_domain == dom else ""
+        short_dom = DOMAIN_SHORT.get(dom, dom)
         pills.append(
-            f'<button type="button" class="atlas-domain-pill{active_cls}" data-domain="{esc(dom)}">'
+            f'<button type="button" class="atlas-domain-pill{active_cls}" data-domain="{esc(dom)}" title="{esc(dom)}">'
             f'<span class="atlas-pill-dot" style="background:{DOMAIN_COLORS[dom]};"></span>'
-            f"{esc(dom)} ({cnt})</button>"
+            f"{esc(short_dom)} ({cnt})</button>"
         )
 
     sel = nodes_payload.get(selected_key) or next(iter(nodes_payload.values()))

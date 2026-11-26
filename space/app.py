@@ -100,15 +100,9 @@ MASTHEAD = """
 
 HERO = """
 <section id="hero" aria-labelledby="hero-title">
-  <div class="hero-kicker">✦ Bibliothèque critique de Mario Bunge</div>
+  <div class="hero-kicker">Mario Bunge · 25 ouvrages vérifiés</div>
   <h1 id="hero-title">Questionner les textes.<br><span class="hero-accent">Remonter aux sources.</span></h1>
-  <p>Retrouvez un passage vérifié à la page près, explorez la carte interactive du système et mettez ses prémisses à l’épreuve.</p>
-  <div class="hero-stats" aria-label="Repères du corpus">
-    <span class="hero-stat"><strong>25</strong> ouvrages indexés</span>
-    <span class="hero-stat"><strong>54/54</strong> chapitres du Traité</span>
-    <span class="hero-stat"><strong>113</strong> notions · <strong>16</strong> symboles</span>
-    <span class="hero-stat"><strong>21</strong> dossiers d’Atelier</span>
-  </div>
+  <p>Trouvez un passage exact à la page près, explorez les concepts sur la carte ou testez un argument philosophique.</p>
 </section>
 """
 
@@ -256,10 +250,10 @@ def answer_question(question: str, request: gr.Request):
         elapsed = time.monotonic() - started
         yield (
             processing_payload(elapsed),
-            render_status("working", elapsed),
-            '<div class="answer-meta"><span>PIPELINE ACTIF</span><span>CPU PUBLIC</span></div>',
+            '<div class="bunge-loading-bar" aria-label="Recherche en cours"></div>' + render_status("working", elapsed),
             "",
-            '<div class="sources-empty">Les sources apparaîtront avec la réponse complète.</div>',
+            "",
+            "",
             "",
         )
         time.sleep(POLL_SECONDS)
@@ -354,26 +348,38 @@ def debate_for_reader(dossier, changes, history, objection, request):
         return debate_turn(dossier, changes, history, objection, generate=None)
 
 
-def legacy_controls(question):
-    with gr.Accordion("Réponse rédigée et sources", open=False):
-        submit = gr.Button("Envoyer la question", variant="secondary")
+def legacy_controls(question, submit_btn):
+    with gr.Column(visible=False, elem_id="ai-answer-card") as ai_panel:
         gr.HTML(ANSWER_HEADING)
-        status = gr.HTML(render_status("ready"), elem_id="status-output")
+        status = gr.HTML("", elem_id="status-output")
         meta = gr.HTML("", elem_id="meta-output")
-        answer = gr.Markdown(EMPTY_ANSWER, elem_id="answer-copy")
+        answer = gr.Markdown("", elem_id="answer-copy")
         notice = gr.HTML("", elem_id="notice-output")
         gr.HTML(APPARATUS_HEADING)
         sources = gr.HTML("", elem_id="sources-output")
         payload = gr.JSON(value=None, visible=False)
-        submit.click(answer_question, inputs=question, outputs=[payload,status,meta,answer,sources,notice],
-                     api_name="answer", scroll_to_output=True, concurrency_limit=1, concurrency_id="rag")
+
+    def answer_and_reveal(q_text, request: gr.Request):
+        for res in answer_question(q_text, request):
+            yield (gr.Column(visible=True), *res)
+
+    submit_btn.click(
+        answer_and_reveal,
+        inputs=question,
+        outputs=[ai_panel, payload, status, meta, answer, sources, notice],
+        api_name="answer",
+        show_progress="hidden",
+        scroll_to_output=True,
+        concurrency_limit=1,
+        concurrency_id="rag",
+    )
 
 
 with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=True) as demo:
     with gr.Column(elem_id="page-shell"):
         gr.HTML(MASTHEAD)
         gr.HTML(HERO)
-        concept, view, linked, comparison, mindmap, initial_atlas = build_reader(
+        build_reader(
             legacy_controls,
             LOCAL_BOOKS,
             dossier_for_reader,
@@ -381,7 +387,6 @@ with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=Tru
             run_debate=debate_for_reader,
         )
         gr.HTML(FOOTER)
-    demo.load(initial_atlas, concept, [view, linked, comparison, mindmap], api_name=False)
 
 demo.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 
