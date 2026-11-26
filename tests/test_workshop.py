@@ -1,4 +1,11 @@
-from workshop import assess, formal_rights, open_question, step, choose_dossier
+from workshop import (
+    assess,
+    formal_happiness,
+    formal_rights,
+    open_question,
+    step,
+    choose_dossier,
+)
 
 
 def test_replacing_a_premise_preserves_independent_justifications():
@@ -20,6 +27,9 @@ def test_formal_example_checks_every_boolean_valuation():
     result = formal_rights()
     assert result["formula"] == "R → ¬H, H ⊨ ¬R"
     assert result["valid"] and len(result["rows"]) == 4
+    happiness = formal_happiness()
+    assert happiness["valid"]
+    assert [row for row in happiness["rows"] if row[3]] == [(True, False, False, True)]
 
 
 def test_unrelated_ai_question_does_not_open_the_curated_llm_dossier():

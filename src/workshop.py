@@ -235,9 +235,37 @@ def formal_rights():
         rows.append((right, hindrance, rule, counterexample))
     return {
         "formula": "R → ¬H, H ⊨ ¬R",
+        "headers": ("R", "H", "R → ¬H", "Contre-exemple"),
         "valid": not any(r[-1] for r in rows),
         "rows": rows,
         "gloss": "R signifie que le droit de base considéré existe. H signifie que l’action entrave autrui au sens de la clause. La formalisation éditoriale retient une condition nécessaire de la norme 4.1. Les quatre valuations booléennes ont été vérifiées.",
+    }
+
+
+def formal_happiness():
+    """Vérifie le rôle du pont entre croyance et possibilité dans une formalisation éditoriale."""
+    rows = []
+    for belief, possible in itertools.product([False, True], repeat=2):
+        incompatibility = not possible
+        bridge = not belief or possible
+        counterexample = incompatibility and belief
+        rows.append((belief, possible, bridge, counterexample))
+    return {
+        "formula": "¬P ⊭ ¬C   ·   ¬P, C → P ⊨ ¬C",
+        "headers": ("C", "P", "C → P", "Contre-exemple sans le pont"),
+        "valid": (
+            any(row[3] for row in rows)
+            and not any(
+                bridge and counterexample for _, _, bridge, counterexample in rows
+            )
+        ),
+        "rows": rows,
+        "gloss": (
+            "C signifie que l’agent croit à la possibilité de satisfaire tous ses besoins et désirs. "
+            "P signifie que cette satisfaction est réellement possible. En supposant ¬P, C peut encore "
+            "être vraie. Le pont C → P exclut ce cas. Ce fragment éditorial isole cette étape et suppose "
+            "déjà que l’incompatibilité des valeurs entraîne ¬P."
+        ),
     }
 
 

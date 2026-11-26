@@ -10,6 +10,8 @@ import gradio as gr
 from library import (
     CATALOG,
     NODES,
+    chapter_openings,
+    chapter_source,
     connect,
     fold,
     formal_markers,
@@ -21,7 +23,14 @@ from library import (
     search_library,
     suggested_nodes,
 )
-from workshop import DOSSIERS, assess, choose_dossier, formal_rights, open_question
+from workshop import (
+    DOSSIERS,
+    assess,
+    choose_dossier,
+    formal_happiness,
+    formal_rights,
+    open_question,
+)
 
 esc = html.escape
 
@@ -210,15 +219,22 @@ def dossier_view(dossier, changes, local):
     sections.append(
         f"<h4>Objection</h4><p>{esc(dossier['objection'])}</p><h4>Question ouverte</h4><p>{esc(dossier['open'])}</p>"
     )
-    if any(s["id"] == "restriction" for s in dossier["steps"]):
-        f = formal_rights()
+    formalizations = {
+        "restriction": formal_rights,
+        "theoreme-bonheur": formal_happiness,
+    }
+    for identifier in formalizations.keys() & {s["id"] for s in dossier["steps"]}:
+        fragment = formalizations[identifier]()
+        headers = "".join(
+            f"<th scope='col'>{esc(label)}</th>" for label in fragment["headers"]
+        )
         rows = "".join(
-            f"<tr><td>{int(r)}</td><td>{int(h)}</td><td>{int(rule)}</td><td>{int(ce)}</td></tr>"
-            for r, h, rule, ce in f["rows"]
+            "<tr>" + "".join(f"<td>{int(value)}</td>" for value in row) + "</tr>"
+            for row in fragment["rows"]
         )
         sections.append(
-            f'<details><summary>Vérifier le fragment formel</summary><p class="formula">{esc(f["formula"])}</p><p>{esc(f["gloss"])}</p>'
-            "<table><thead><tr><th>R</th><th>H</th><th>R → ¬H</th><th>Contre-exemple</th></tr></thead><tbody>"
+            f'<details><summary>Vérifier le fragment formel</summary><p class="formula">{esc(fragment["formula"])}</p><p>{esc(fragment["gloss"])}</p>'
+            f"<table><thead><tr>{headers}</tr></thead><tbody>"
             + rows
             + "</tbody></table></details>"
         )
@@ -243,7 +259,16 @@ def build_reader(legacy, local, create_dossier, max_chars):
     dossier = gr.State({})
     changes = gr.State({})
     domains = sorted({node["domain"] for node in NODES.values()}, key=fold)
-    with gr.Tabs(selected="search") as tabs:
+    sections = (
+        ("Rechercher", "search"),
+        ("Atlas des concepts", "atlas"),
+        ("Atelier philosophique", "work"),
+    )
+    with gr.Row(elem_id="reader-quicknav"):
+        mobile_navigation = [
+            (gr.Button(label, size="sm"), section) for label, section in sections
+        ]
+    with gr.Tabs(selected="search", elem_id="reader-tabs") as tabs:
         with gr.Tab("Rechercher", id="search"):
             with gr.Column(elem_id="chat-shell"):
                 q = gr.Textbox(
@@ -283,6 +308,9 @@ def build_reader(legacy, local, create_dossier, max_chars):
             with gr.Accordion("Couverture de la bibliothèque", open=False):
                 book = gr.Dropdown(book_options, label="Ouvrage", value=first_book)
                 overview = gr.HTML(coverage_html)
+                first_chapters = chapter_openings(first_book)
+                chapter = gr.Dropdown(first_chapters, label="Chapitre", value=None)
+                opening = gr.HTML()
                 first_marks = formal_markers(first_book)
                 marker = gr.Dropdown(
                     first_marks,
@@ -322,6 +350,14 @@ def build_reader(legacy, local, create_dossier, max_chars):
             with gr.Row():
                 apply = gr.Button("Voir les conséquences")
                 reset = gr.Button("Revenir à l’argument initial")
+
+    for button, section in mobile_navigation:
+        button.click(
+            lambda selected=section: gr.Tabs(selected=selected),
+            outputs=tabs,
+            api_name=False,
+            queue=False,
+        )
 
     def atlas_change(key):
         return atlas_view(key, local)
@@ -370,9 +406,24 @@ def build_reader(legacy, local, create_dossier, max_chars):
     def show_book(b):
         text, _, _ = coverage(b)
         marks = formal_markers(b)
-        return text, gr.Dropdown(choices=marks, value=marks[0][1] if marks else None)
+        chapters = chapter_openings(b)
+        return (
+            text,
+            gr.Dropdown(choices=chapters, value=None, interactive=bool(chapters)),
+            gr.Dropdown(choices=marks, value=marks[0][1] if marks else None),
+            "",
+        )
 
-    book.change(show_book, book, [overview, marker], api_name=False)
+    def show_chapter(b, name):
+        source = chapter_source(b, name) if name else None
+        marks = formal_markers(b, chapter=name)
+        return (
+            card(source, local) if source else "",
+            gr.Dropdown(choices=marks, value=marks[0][1] if marks else None),
+        )
+
+    book.change(show_book, book, [overview, chapter, marker, opening], api_name=False)
+    chapter.input(show_chapter, [book, chapter], [opening, marker], api_name=False)
     back.click(lambda: gr.Tabs(selected="search"), outputs=tabs, api_name=False)
 
     def get_dossier(question, node, results, request):

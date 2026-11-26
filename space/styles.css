@@ -316,3 +316,10 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
 .concept-map li { position:relative; padding:.32rem 0; }
 .concept-map li::before { content:""; position:absolute; left:-1.25rem; top:50%; width:1rem; border-top:1px solid var(--bunge-rule); }
 @media(max-width:650px) { .concept-map { flex-wrap:wrap; gap:.75rem; } #hero { padding-top:2rem; padding-bottom:1rem; } }
+
+#reader-quicknav { display:none !important; }
+@media(max-width:650px) {
+  #reader-quicknav { display:flex !important; flex-wrap:wrap; gap:.55rem; }
+  #reader-quicknav button { flex:1 1 120px; min-width:0; min-height:44px; }
+  #reader-tabs > .tab-wrapper { display:none !important; }
+}

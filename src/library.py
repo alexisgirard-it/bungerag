@@ -415,12 +415,13 @@ LABELS_FR = {
 }
 
 
-def formal_markers(book, page=None):
+def formal_markers(book, page=None, *, chapter=None):
     with closing(connect()) as db:
         rows = db.execute(
             """SELECT l.uid,l.kind,l.number,p.page,p.folio FROM labels l JOIN pages p ON p.id=l.page_id
-                           WHERE p.book=? AND (? IS NULL OR p.page=?) ORDER BY CAST(p.page AS INTEGER),l.rowid""",
-            (book, page, page),
+                           WHERE p.book=? AND (? IS NULL OR p.page=?) AND (? IS NULL OR p.chapter=?)
+                           ORDER BY CAST(p.page AS INTEGER),l.rowid""",
+            (book, page, page, chapter, chapter),
         ).fetchall()
     return [
         (
@@ -430,6 +431,34 @@ def formal_markers(book, page=None):
         )
         for r in rows
     ]
+
+
+def chapter_openings(book):
+    with closing(connect()) as db:
+        return [
+            (r["title"], r["title"])
+            for r in db.execute(
+                "SELECT title FROM chapters WHERE book=? ORDER BY page", (book,)
+            )
+        ]
+
+
+def chapter_source(book, chapter):
+    with closing(connect()) as db:
+        row = db.execute(
+            """SELECT p.id, t.text FROM chapters c JOIN pages p ON p.book=c.book AND p.page=CAST(c.page AS TEXT)
+               JOIN spans a ON a.page_id=p.id JOIN passages t ON t.rowid=a.first_row
+               WHERE c.book=? AND c.title=?""",
+            (book, chapter),
+        ).fetchone()
+        if row is None:
+            return None
+        source = describe_page(db, row["id"])
+    source.update(
+        excerpt=limited_excerpt(row["text"], set(words(chapter))),
+        pages=location(source),
+    )
+    return source
 
 
 def read_marker(uid):

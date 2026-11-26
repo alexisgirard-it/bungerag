@@ -17,7 +17,15 @@ Qwen est conservé. Granite obtient un rang moyen un peu meilleur sur le petit g
 
 ## Recette réservée
 
-La série a été figée avant le choix des options. Elle contient 25 questions avec pages cibles et cinq demandes de clarification ou sans source disponible. Le profil de rédaction V3 retrouve au moins une page annotée pour **23/25** et toutes les prémisses pour **3/5** questions argumentatives. La recherche paginée retrouve au moins une page pour **24/25** et donne la réponse d’orientation attendue dans les cinq cas restants. Le seul échec de localisation porte sur la formulation d’une question de notation. Les deux chemins ont des objectifs de classement distincts. La comparaison complète à la V2 et le contrôle extrait par extrait sont en cours. [Questions réservées](lecture-reservee.jsonl)
+La série a été figée avant le choix des options. Elle contient 25 questions avec pages cibles et cinq demandes de clarification ou sans source disponible.
+
+| Parcours sur les questions documentées | Première réponse au rang 1 | Au moins une cible dans le top 5 | Ensemble des prémisses |
+|---|---:|---:|---:|
+| V2, sélection des blocs destinés à la rédaction | 16/25 | 21/25 | 3/5 |
+| V3, sélection des blocs destinés à la rédaction | 15/25 | 23/25 | 3/5 |
+| V3, recherche directe de pages | 14/25 | 24/25 | 1/5 |
+
+Le reclassement V3 gagne deux références au total par rapport à la V2. La recherche par page donne la réponse d’orientation attendue dans les cinq cas sans cible unique. Son seul échec de localisation concerne une question de notation. Le contrôle des ancrages retrouve 125 extraits sur leurs pages. Les délais de recherche avec traduction ont été mesurés sur le Mac pendant plusieurs calculs et ne servent pas de référence pour le CPU du Space. [Questions réservées](lecture-reservee.jsonl)
 
 ## Rédaction et disponibilité
 
@@ -27,4 +35,6 @@ Les six cas à passages identiques ont donné cinq réponses documentées et une
 
 Le répertoire contient 25 ouvrages et 54 chapitres du *Traité* repérés. Le référentiel éditorial actuel compte 37 fiches et 25 relations documentées. Les 125 extraits affichés sur la recette réservée ont été retrouvés dans leur page de concordance. Les repères formels et renvois transcrits automatiquement sont signalés comme tels. La lecture d’un extrait, le passage vers l’Atlas et le retour au texte ont été testés au clavier avec la définition de psychon, p. 70 du livre et PDF p. 78. Les deux dossiers d’éthique permettent d’identifier les enseignements directs des sources et les étapes de reconstruction. [Référentiel](../src/referentiel.json)
 
-Pour les cinq questions à plusieurs références, la lecture des dossiers et des relations a fait passer la couverture complète des références de 1/5 à 3/5 sur le premier audit. Deux questions restent partielles. Le graphe fournit des appuis supplémentaires selon la question et ne mesure pas à lui seul la validité d’un argument.
+Pour les cinq questions à plusieurs références, la lecture des dossiers et des relations a fait passer la couverture complète des références de 1/5 à 3/5 sur le premier audit. Deux questions restent partielles. Les 54 ouvertures de chapitre ont été contrôlées contre la concordance.
+
+Sur ordinateur, l’argument sur le bonheur s’est ouvert depuis une question de recherche. La suspension puis le rétablissement du postulat ont modifié l’état de sa justification. Sur mobile, le dossier sur l’IA s’ouvre depuis une navigation dédiée. Ces parcours ont également été rejoués à partir du bundle de 23 fichiers destiné au Space. Le résultat du psychon y affiche les deux numéros de page.

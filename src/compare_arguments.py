@@ -31,10 +31,12 @@ def main():
     p.add_argument("models", nargs="+")
     p.add_argument("--out", default="arguments-v3")
     p.add_argument("--judge", default="gemini/gemini-3.1-flash-lite")
+    p.add_argument("--cases", nargs="+", choices=QUESTIONS, default=tuple(QUESTIONS))
     args = p.parse_args()
     out = ROOT / "eval/cache" / args.out
     out.mkdir(parents=True, exist_ok=True)
-    for case, question in QUESTIONS.items():
+    for case in args.cases:
+        question = QUESTIONS[case]
         steps = DOSSIERS[case]()["steps"]
         evidence = [
             {

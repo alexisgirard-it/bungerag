@@ -3552,5 +3552,464 @@
       "bad_anchors": []
     }
   ],
-  "catalogue_version_recette": "2026-11-26.2"
+  "catalogue_version_recette": "2026-11-26.2",
+  "recette_v2": [
+    {
+      "id": "argument-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What postulate on the suprema and what theorem on Bunge aggregation invokes to conclude that there is only one world?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00051",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00053",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00154",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00155"
+      ],
+      "ranks": [
+        1,
+        1,
+        1
+      ],
+      "translation_seconds": 3.085,
+      "search_seconds": 54.769
+    },
+    {
+      "id": "argument-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What relationship does Bunge establish in Ethics between the formal definition of needs and that of well-being?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00352",
+        "between-two-worlds-memoirs-2016:00653",
+        "treatise-8-ethics-the-good-and-the-right-1989:00003",
+        "treatise-8-ethics-the-good-and-the-right-1989:00305",
+        "between-two-worlds-memoirs-2016:00635"
+      ],
+      "ranks": [
+        null,
+        null
+      ],
+      "translation_seconds": 1.94,
+      "search_seconds": 39.634
+    },
+    {
+      "id": "argument-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "How does he articulate the neuronal development of the newborn and his rejection of the ideas innate in The Mind-Body Problem?",
+      "ranking": [
+        "between-two-worlds-memoirs-2016:00518",
+        "mind-body-problem-1980:00168",
+        "mind-body-problem-1980:00004",
+        "mind-body-problem-1980:00167",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00073"
+      ],
+      "ranks": [
+        4,
+        2
+      ],
+      "translation_seconds": 1.818,
+      "search_seconds": 50.045
+    },
+    {
+      "id": "argument-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where does Chasing Reality defend the explanation by mechanism and what example on the refraction of Volume VI illustrates the difference with a descriptive law?",
+      "ranking": [
+        "treatise-6-epistemology-2-understanding-the-world-1983:00031",
+        "chasing-reality-2006:00002",
+        "chasing-reality-2006:00162",
+        "scientific-research-2-search-for-truth-1967:00078",
+        "causality-and-modern-science-1959:00346"
+      ],
+      "ranks": [
+        null,
+        null
+      ],
+      "translation_seconds": 4.323,
+      "search_seconds": 41.26
+    },
+    {
+      "id": "argument-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What passages present the fatalistic thesis and then distinguish it from determinism in Causality and Modern Science?",
+      "ranking": [
+        "causality-and-modern-science-1959:00134",
+        "causality-and-modern-science-1959:00023",
+        "causality-and-modern-science-1959:00133",
+        "causality-and-modern-science-1959:00152",
+        "causality-and-modern-science-1959:00399"
+      ],
+      "ranks": [
+        1,
+        1
+      ],
+      "translation_seconds": 1.826,
+      "search_seconds": 39.888
+    },
+    {
+      "id": "citation-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "« All systems, except the universe, originate by assembly »",
+      "ranking": [
+        "foundations-of-biophilosophy-1997:00055",
+        "treatise-4-ontology-2-world-of-systems-1979:00047",
+        "treatise-4-ontology-2-world-of-systems-1979:00315",
+        "between-two-worlds-memoirs-2016:00442",
+        "philosophy-of-psychology-1987:00038"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 8.675,
+      "search_seconds": 37.809
+    },
+    {
+      "id": "citation-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where to find \"there are no innate ideas, no a priori intuitions\"?",
+      "ranking": [
+        "mind-body-problem-1980:00168",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00160",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00073",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00226",
+        "between-two-worlds-memoirs-2016:00284"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 10.74,
+      "search_seconds": 40.61
+    },
+    {
+      "id": "citation-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "\"The book of Nature is the book of Fate\": where does Bunge quote this author?",
+      "ranking": [
+        "political-philosophy-2009:00566",
+        "between-two-worlds-memoirs-2016:00744",
+        "between-two-worlds-memoirs-2016:00003",
+        "between-two-worlds-memoirs-2016:00001",
+        "causality-and-modern-science-1959:00297"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 3.544,
+      "search_seconds": 52.941
+    },
+    {
+      "id": "citation-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "\"there is no perceptual learning without motor activity\"",
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:00044",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00050",
+        "philosophy-of-psychology-1987:00335",
+        "treatise-4-ontology-2-world-of-systems-1979:00203",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00167"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 35.811,
+      "search_seconds": 33.802
+    },
+    {
+      "id": "citation-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What precedes the phrase \"the ordered quadruple\" in the theorem on the half-treillis?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "between-two-worlds-memoirs-2016:00445",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00303",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00304",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00407"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 7.38,
+      "search_seconds": 21.791
+    },
+    {
+      "id": "définition-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where is the formal definition of a factual model in the volume on formal and physical sciences?",
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:00431",
+        "foundations-of-biophilosophy-1997:00163",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00116",
+        "philosophy-of-physics-1973:00143",
+        "foundations-of-biophilosophy-1997:00158"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 3.441,
+      "search_seconds": 53.498
+    },
+    {
+      "id": "définition-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where does Bunge define a composite individual in the first volume of ontology?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00047",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00065",
+        "foundations-of-biophilosophy-1997:00428",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00116",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00080"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 13.02,
+      "search_seconds": 93.081
+    },
+    {
+      "id": "définition-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In Volume VIII, how are virtue and vice defined as traits of character?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00206",
+        "treatise-8-ethics-the-good-and-the-right-1989:00207",
+        "treatise-8-ethics-the-good-and-the-right-1989:00209",
+        "treatise-8-ethics-the-good-and-the-right-1989:00210",
+        "treatise-8-ethics-the-good-and-the-right-1989:00221"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.777,
+      "search_seconds": 98.937
+    },
+    {
+      "id": "définition-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where does he define the co-referentials of a semantic building?",
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:00077",
+        "treatise-1-semantics-1-sense-and-reference-1974:00076",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00079",
+        "treatise-1-semantics-1-sense-and-reference-1974:00074",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00059"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 1.737,
+      "search_seconds": 31.744
+    },
+    {
+      "id": "définition-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What is its definition of an ideal achievable in Ethics?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00078",
+        "treatise-8-ethics-the-good-and-the-right-1989:00075",
+        "treatise-8-ethics-the-good-and-the-right-1989:00378",
+        "emergence-and-convergence-2003:00313",
+        "between-two-worlds-memoirs-2016:00635"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.744,
+      "search_seconds": 24.196
+    },
+    {
+      "id": "souvenir-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "He took the refraction of light as an example of a law capable of describing without explaining.",
+      "ranking": [
+        "scientific-research-1-search-for-system-1967:00443",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00030",
+        "chasing-reality-2006:00321",
+        "scientific-research-1-search-for-system-1967:00315",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00031"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 4.731,
+      "search_seconds": 29.611
+    },
+    {
+      "id": "souvenir-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "I remember an example of sparrows living in London and Buenos Aires. It was to criticize what conception of the species?",
+      "ranking": [
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00044",
+        "between-two-worlds-memoirs-2016:00677",
+        "between-two-worlds-memoirs-2016:00502",
+        "scientific-research-1-search-for-system-1967:00003",
+        "emergence-and-convergence-2003:00061"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 8.52,
+      "search_seconds": 84.017
+    },
+    {
+      "id": "souvenir-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In Chasing Reality, where did he announce different branches of realism and anti-realism?",
+      "ranking": [
+        "chasing-reality-2006:00376",
+        "chasing-reality-2006:00008",
+        "chasing-reality-2006:00007",
+        "between-two-worlds-memoirs-2016:00467",
+        "scientific-realism-selected-essays-2001:00422"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 3.068,
+      "search_seconds": 84.687
+    },
+    {
+      "id": "souvenir-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In the scientific method, he opposed a hypothesis to fiction while discussing his relationship to the fact.",
+      "ranking": [
+        "scientific-research-1-search-for-system-1967:00306",
+        "scientific-research-1-search-for-system-1967:00309",
+        "scientific-research-1-search-for-system-1967:00346",
+        "causality-and-modern-science-1959:00164",
+        "chasing-reality-2006:00186"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 8.704,
+      "search_seconds": 77.048
+    },
+    {
+      "id": "souvenir-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What passage says that animals can change their preferences and that species are changing in this respect?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00038",
+        "mind-body-problem-1980:00146",
+        "treatise-8-ethics-the-good-and-the-right-1989:00037",
+        "treatise-4-ontology-2-world-of-systems-1979:00204",
+        "foundations-of-biophilosophy-1997:00265"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 2.489,
+      "search_seconds": 73.917
+    },
+    {
+      "id": "symbole-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where does Bunge explain D, F and I in the triplet of the factual model?",
+      "ranking": [
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00113",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00116",
+        "chasing-reality-2006:00269",
+        "scientific-realism-selected-essays-2001:00238",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00029"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 3.437,
+      "search_seconds": 29.111
+    },
+    {
+      "id": "symbole-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "I'm looking for U and V in the postulates on the inputs and outputs of a system.",
+      "ranking": [
+        "treatise-4-ontology-2-world-of-systems-1979:00043",
+        "treatise-4-ontology-2-world-of-systems-1979:00327",
+        "treatise-4-ontology-2-world-of-systems-1979:00044",
+        "treatise-4-ontology-2-world-of-systems-1979:00325",
+        "treatise-4-ontology-2-world-of-systems-1979:00034"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 6.338,
+      "search_seconds": 23.308
+    },
+    {
+      "id": "symbole-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In the first volume of semantics, what relationship between w, x, z and y strings can call x a part of y?",
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:00019",
+        "treatise-1-semantics-1-sense-and-reference-1974:00018",
+        "foundations-of-biophilosophy-1997:00427",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00153",
+        "foundations-of-biophilosophy-1997:00021"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 7.836,
+      "search_seconds": 22.927
+    },
+    {
+      "id": "symbole-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In the calculation of the value, where are A(x) and N(x) for the quantity available and the need?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00105",
+        "treatise-8-ethics-the-good-and-the-right-1989:00106",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00043",
+        "philosophical-dictionary-2003:00502",
+        "treatise-8-ethics-the-good-and-the-right-1989:00115"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.92,
+      "search_seconds": 27.083
+    },
+    {
+      "id": "symbole-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "Where can I find the upper notation of the aggregation of parts of x?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00051",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00154",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00066",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "treatise-4-ontology-2-world-of-systems-1979:00075"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 9.63,
+      "search_seconds": 96.367
+    }
+  ],
+  "referentiel_local": "2026-11-26.3"
 }
