@@ -29,6 +29,17 @@
         {"changer": "fatalisme", "texte": null, "attendu": {"distinction-fatum": "disponible"}},
         {"changer": "determinisme-causal", "texte": "", "attendu": {"distinction-fatum": "justification suspendue"}}
       ]
+    },
+    {
+      "dossier": "existence",
+      "étapes": [
+        {"changer": "existence-conceptuelle", "texte": "", "attendu": {"portee": "disponible"}},
+        {"changer": "existence-dictionnaire", "texte": "", "attendu": {"portee": "justification suspendue"}},
+        {"changer": "existence-conceptuelle", "texte": null, "attendu": {"portee": "disponible"}},
+        {"changer": "materialisme", "texte": "On donne à exister un sens identique dans les deux ouvrages.", "attendu": {"materialisme": "remplacée", "portee": "justification suspendue"}},
+        {"changer": "existence-dictionnaire", "texte": null, "attendu": {"portee": "justification suspendue"}},
+        {"changer": "materialisme", "texte": null, "attendu": {"portee": "disponible"}}
+      ]
     }
   ]
 }

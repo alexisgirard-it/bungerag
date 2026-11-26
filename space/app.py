@@ -80,7 +80,10 @@ if not INDEX.exists():
 
 LOCAL_BOOKS = (RUNTIME_ROOT / "corpus") if (__name__ == "__main__" and APP_DIR.name == "space" and (RUNTIME_ROOT / "corpus").is_dir() and not os.environ.get("SPACE_ID")) else None
 
+from library import CATALOG, search_library  # noqa: E402
 from rag import ask_smart  # noqa: E402
+from reader import build_reader  # noqa: E402
+from workshop import open_question  # noqa: E402
 
 
 # Un seul calcul lourd : deux rerankings simultanes degradent le CPU gratuit.
@@ -294,11 +297,6 @@ def answer_question(question: str, request: gr.Request):
 
 CSS = (APP_DIR / "styles.css").read_text(encoding="utf-8")
 THEME = build_theme()
-
-from reader import build_reader
-from library import CATALOG, search_library
-from workshop import open_question
-
 
 def dossier_for_reader(question, request, passages=None, *, external=None):
     if passages is None:

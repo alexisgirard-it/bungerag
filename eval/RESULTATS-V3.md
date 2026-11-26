@@ -56,3 +56,21 @@ La révision suivante retrouve aussi la notation ℳ = ⟨D, F, I⟩ en saisie d
 Les 25 exemplaires sont identifiés dans le référentiel par leur SHA-256 et les indications relevées dans le livre ou l’EPUB. Le PDF de *Causality and Modern Science* correspond à l’édition revue de Dover (1979, ISBN 978-0-486-23728-2). La phrase citée est attribuée à Emerson, la discussion d’une objection distincte à H. van Rensselaer Wilson. La recette publique a vérifié l’attribution, la navigation et l’effet de deux contestations successives. Un dossier avec une donnée contemporaine fournie par le lecteur conserve la source et la date avec le statut « à vérifier ». [Révision éditions et attribution](https://huggingface.co/spaces/alexisgirard/bungerag/commit/58328b02fd300a2280a8c5a9bb068c7ec2987776)
 
 Les six recherches chronométrées sur le CPU du Space ont affiché leur page attendue. Les cinq recherches par citation ou notation ont pris entre 0,36 et 0,86 seconde dans ce scénario, et la recherche par souvenir français a pris 15,93 secondes. L’échantillon est trop petit pour estimer un p95 de production. L’appel de rédaction lancé en parallèle a rencontré un verrou à l’import de PyTorch sur cette révision. Cette panne de chargement a motivé la sérialisation des importations et des initialisations des modèles.
+
+Sur la révision suivante, les deux parcours lancés ensemble ont réussi. Le souvenir français a retrouvé la réfraction au bout de 23,08 secondes, PDF p. 32. La rédaction obtenue en 45,42 secondes attribue la citation à Emerson, p. 101 du livre et PDF p. 135. Elle omet toutefois d’expliquer la critique par Bunge demandée dans la seconde partie. La recette suivante retient cette omission comme échec de couverture. [Révision de la recette concurrente](https://huggingface.co/spaces/alexisgirard/bungerag/commit/e7a4643d723f59421963661790d22a93d9e063fb)
+
+Une deuxième rédaction, en 53,09 secondes, ajoute la distinction entre fatalisme et déterminisme causal. Elle laisse de nouveau implicite la réaction de Bunge à Emerson. La réponse éditée ajoute cette réaction avec son propre extrait. Le contrôle local accepte les deux ancrages p. 101 du livre, PDF p. 135, et laisse au parcours de recherche les variantes dont la citation ou la demande diffèrent. Le contrôle avant publication valide 25 éditions, 87 citations de fiches et 75 relations. Sur l’EPUB, la recette accepte un extrait de sa section et rejette une autre section, un autre exemplaire et un texte inventé. [Deuxième révision testée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/ae7686f8eef03fe9f87a074f550ebb185865e693)
+
+Dans l’Atlas, la comparaison entre le tome I du *Traité* et *Scientific Materialism* présente la portée des deux énoncés sur l’existence. L’annotation de lecture indique sous quelle interprétation ils sont compatibles. La quatrième séquence de l’Atelier essaie deux suspensions, trois rétablissements et un changement de sens. L’interface affiche les appuis à rétablir pour chaque justification. Le contrôle local passe sur huit dossiers, 29 citations et 21 modifications dans quatre séquences. [Séquences de l’Atelier](recette-atelier.json)
+
+## Titres et pages voisines
+
+Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.
+
+| Pondération des titres dans BM25 | Au rang 1 | Dans les 5 premières pages | Rang réciproque moyen |
+|---:|---:|---:|---:|
+| 0 | 10/25 | 18/25 | 0,526 |
+| 0,2 | 11/25 | 19/25 | 0,568 |
+| 1,5 | 12/25 | 19/25 | 0,585 |
+
+Le parcours de recherche complet, avec la correction de notation, retrouve une cible pour 25/25 questions sur ce réemploi de la série. Il retrouve toutes les prémisses de 1/5 arguments dans les cinq premières pages. Ajouter les pages physiques adjacentes aux trois premières complète deux autres arguments, soit 3/5 avec davantage de pages. Le classement public conserve son poids de 0,2 et ses cinq premiers résultats. Les deux variantes n’ont pas encore été départagées sur de nouvelles questions et à budget de pages égal. [Mesures et traductions](mesures-v3.json) · [Script](../src/compare_page_context.py)

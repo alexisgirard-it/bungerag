@@ -2,7 +2,7 @@
 
 Inventaire local du 26 novembre 2026. Une fiche indique qu’un point précis du chapitre a été identifié et justifié. Le nombre de fiches ne mesure pas la proportion de l’argumentation couverte.
 
-Référentiel `2026-11-26.7` · 80 fiches et 68 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
+Référentiel `2026-11-26.12` · 87 fiches et 75 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
 
 ## Treatise 1 - Semantics I: Sense and Reference
 
@@ -64,7 +64,7 @@ Référentiel `2026-11-26.7` · 80 fiches et 68 liens dans la bibliothèque, don
 
 | Chapitre | PDF | Fiches dans ce chapitre | Repères formels détectés |
 |---|---:|---|---:|
-| Understanding | 15 | Explication et mécanisme, La réfraction comme cas de subsomption | 0 |
+| Understanding | 15 | Explication et mécanisme, La réfraction comme cas de subsomption, Degrés de compréhension | 0 |
 | Producing Evidence | 71 | Vérifiabilité des résultats | 1 |
 | Evaluating | 126 | Vérité et utilité dans l’évaluation | 0 |
 | Epistemic Change | 168 | Évolution des connaissances | 0 |

@@ -7,7 +7,7 @@ import pytest
 from citations import validate_citations
 from config import PUBLIC_V2
 from definitions import candidates
-from evidence import Passage, locate, resolve_quote
+from evidence import Passage, add_linked_passages, locate, resolve_quote
 from rag import ranked_hits
 
 
@@ -73,6 +73,31 @@ def test_cross_page_quote_keeps_both_folios(database):
         )
         is None
     )
+
+
+def test_graph_recovers_a_different_excerpt_from_an_already_retrieved_page(
+    database, monkeypatch
+):
+    quote = "Those remote ancestors were"
+    source = {
+        "book": "book",
+        "page": "165",
+        "title": "Book",
+        "year": "2003",
+        "file": "book.pdf",
+        "edition": "",
+        "excerpt": quote,
+    }
+    monkeypatch.setattr("library.node_source", lambda _: source)
+    monkeypatch.setattr("library.suggested_nodes", lambda *_: ["ref"])
+    monkeypatch.setattr("library.linked_evidence", lambda keys, **_: keys)
+    passages = {"P1": passage("165", "A different excerpt.")}
+
+    add_linked_passages("Where?", passages, database)
+    add_linked_passages("Where?", passages, database)
+
+    assert list(passages) == ["P1", "P2"]
+    assert locate(passages["P2"], quote, database)["locator"]["pdf_page"] == 165
 
 
 def test_epub_has_section_offset(database):

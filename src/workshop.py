@@ -193,10 +193,11 @@ def mechanism():
 
 
 def causal_fatalism():
-    emerson, fate, causal, wilson, distinction = map(
+    emerson, critique, fate, causal, wilson, distinction = map(
         proposition,
         [
             "emerson-fatum",
+            "critique-emerson",
             "fatalisme",
             "determinisme-causal",
             "wilson-fatum",
@@ -206,7 +207,7 @@ def causal_fatalism():
     distinction["supports"] = [["fatalisme", "determinisme-causal"]]
     return dict(
         title="La causalité implique-t-elle le fatalisme ?",
-        steps=[emerson, fate, causal, wilson, distinction],
+        steps=[emerson, critique, fate, causal, wilson, distinction],
         objection="Si une chaîne causale comprend aussi nos interventions, alors l’existence de causes ne suffit pas à établir qu’une issue surviendrait quelles que soient nos actions.",
         open="Quel rôle les conditions et les interventions jouent-elles dans le cas particulier discuté ?",
     )
@@ -260,7 +261,13 @@ def choose_dossier(question, node=None):
         for term in ("fenetre de contexte", "million de jetons", "million de tokens")
     ):
         return "contexte"
-    if node in {"fatalisme", "distinction-fatum", "emerson-fatum", "wilson-fatum"} or (
+    if node in {
+        "fatalisme",
+        "distinction-fatum",
+        "emerson-fatum",
+        "critique-emerson",
+        "wilson-fatum",
+    } or (
         "fatalis" in q
         and any(term in q for term in ("caus", "determin", "emerson", "wilson"))
     ):

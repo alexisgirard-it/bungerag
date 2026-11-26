@@ -323,30 +323,87 @@ def draft_claims(question, passages, db, generate_json, backend, frame=""):
     return [], "citation-validation"
 
 
+def editorial_passage(source, key, db):
+    page = str(source["page"])
+    if not page.isdecimal():
+        return None
+    book = source["book"]
+    _, lines, visible, positions = page_image_text(db, db.stat().st_mtime_ns, book, page)
+    needle = canonical(source["excerpt"])
+    if not needle or (pos := unique_match(visible, needle)) is None:
+        return None
+    begin = max(0, positions[pos] - 3)
+    end = min(len(lines), positions[pos + len(needle) - 1] + 5)
+    raw = "\n".join(line for _, line in lines[begin:end])
+    offset = sum(len(line) + 1 for _, line in lines[:begin])
+    return Passage(book, source["title"], source["year"], page, offset, raw,
+                   1.0, source["file"], "atlas/" + key, source["edition"])
+
+
+def editorial_attribution(question, table):
+    """Répond à une demande d’attribution et de commentaire relus dans l’édition."""
+    from library import CATALOG, NODES, fold, node_source, query_phrases
+
+    parts = re.split(r",?\s+et\s+(?=comment bunge\b|qu[’']en dit bunge\b)",
+                     fold(question), maxsplit=1)
+    if len(parts) != 2 or not re.match(r"^(qui a (ecrit|dit)|qui est l[’']auteur)\b", parts[0]):
+        return None
+    if not re.fullmatch(
+        r"(comment bunge (traite-t-il|interprete-t-il|commente-t-il) (cette (affirmation|phrase|citation)|ce passage)"
+        r"|qu[’']en dit bunge)\s*\??", parts[1].strip()
+    ):
+        return None
+    quoted = {canonical(phrase) for phrase in query_phrases(question)}
+    matches = [
+        link for link in CATALOG["relations"] if link.get("attribution_comment")
+        and canonical(NODES[link["origin"]]["source"]["quote"]) in quoted
+    ]
+    if len(matches) != 1:
+        return None
+    link = matches[0]
+    db = ROOT / "index" / f"provenance-{table.removeprefix('bunge_')}.sqlite"
+    if not db.is_file():
+        return None
+    sources = []
+    for key in (link["origin"], link["witness"]):
+        entry = node_source(key)
+        passage = editorial_passage(entry, key, db)
+        source = locate(passage, entry["excerpt"], db) if passage else None
+        if not source:
+            return None
+        source["locator"]["edition_label"] = entry["edition_label"]
+        if entry.get("voice"):
+            source["locator"]["voice"] = entry["voice"]
+        sources.append(source)
+    author = sources[0]["locator"].get("voice")
+    if not author:
+        return None
+    return (
+        f"L’auteur de la phrase citée est {author}. [1]\n\n{link['attribution_comment']} [2]",
+        sources,
+    )
+
+
 def add_linked_passages(question, passages, db):
     from library import linked_evidence, node_source, on_page, suggested_nodes
 
     seeds = suggested_nodes(question, 3)
+    windows = {}
     for p in list(passages.values()):
         seeds.extend(on_page(p.book, p.page))
-    seen = {(p.book, p.page) for p in passages.values()}
+        windows.setdefault((p.book, p.page, p.edition), []).append(canonical(p.raw))
     for key in linked_evidence(seeds, limit=7):
         source = node_source(key)
         book, page = source["book"], str(source["page"])
-        if (book, page) in seen or not page.isdecimal():
-            continue
-        _, lines, visible, positions = page_image_text(db, db.stat().st_mtime_ns, book, page)
         needle = canonical(source["excerpt"])
-        pos = unique_match(visible, needle)
-        if pos is None:
+        locus = (book, page, source["edition"])
+        known = windows.setdefault(locus, [])
+        if not needle or any(needle in window for window in known) or not page.isdecimal():
             continue
-        begin = max(0, positions[pos] - 3)
-        end = min(len(lines), positions[pos + len(needle) - 1] + 5)
-        raw = "\n".join(line for _, line in lines[begin:end])
-        offset = sum(len(line) + 1 for _, line in lines[:begin])
-        passages[f"P{len(passages)+1}"] = Passage(book,source["title"],source["year"],page,offset,raw,
-                                                1.0,source["file"],"atlas/"+key,source["edition"])
-        seen.add((book,page))
+        passage = editorial_passage(source, key, db)
+        if passage:
+            passages[f"P{len(passages)+1}"] = passage
+            known.append(canonical(passage.raw))
 
 
 def answer_with_evidence(question, hits, cfg, generate_json):
@@ -363,10 +420,13 @@ def answer_with_evidence(question, hits, cfg, generate_json):
             f"[{key}] {note['voice']} est l’auteur du passage cité « {note['quote']} »."
             for key, passage in passages.items()
             for note in quotation_notes(passage.book, passage.page, passage.edition)
+            if canonical(note["quote"]) in canonical(passage.raw)
         ]
         frame = (
             "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. "
-            "Distingue les auteurs cités et les positions discutées.\n"
+            "Traite séparément les parties documentées de la question. "
+            "Pour une citation discutée par Bunge, distingue son auteur, la réaction de Bunge et les arguments qu'il donne. "
+            "Utilise des appuis distincts pour l'attribution de la citation et pour la position de Bunge.\n"
             + core_context()
             + "\n"
             + "\n".join(notes)

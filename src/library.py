@@ -117,7 +117,7 @@ def limited_excerpt(text, terms, phrase="", limit=16):
     ]
 
 
-def fts(db, terms, *, phrase=False, limit=100):
+def fts(db, terms, *, phrase=False, limit=100, heading_weight=0.2):
     if not terms:
         return []
 
@@ -130,9 +130,9 @@ def fts(db, terms, *, phrase=False, limit=100):
         else " OR ".join(quote(t) for t in dict.fromkeys(terms))
     )
     return db.execute(
-        """SELECT rowid,page_id,text,bm25(passages,1.0,0.2,0,0) AS rank
+        """SELECT rowid,page_id,text,bm25(passages,1.0,?,0,0) AS rank
                          FROM passages WHERE passages MATCH ? ORDER BY rank LIMIT ?""",
-        (expr, limit),
+        (heading_weight, expr, limit),
     ).fetchall()
 
 

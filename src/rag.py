@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from citations import CITATION_FAILURE_ANSWER, validate_citations  # noqa: E402
 from config import RAGConfig, get_config  # noqa: E402
 from definitions import candidates, strength, terms_for
-from evidence import answer_with_evidence
+from evidence import answer_with_evidence, editorial_attribution
 from generate import generate, generate_json  # noqa: E402
 from output_guard import has_long_verbatim_overlap, short_excerpt  # noqa: E402
 from schemas import RAGResult, Source, make_result  # noqa: E402
@@ -307,6 +307,18 @@ def ask_smart(
     from decompose import analyse
 
     cfg = get_config(config)
+    if cfg.name == "public_v3":
+        start = time.time()
+        edited = editorial_attribution(question, cfg.table)
+        if edited:
+            answer, sources = edited
+            return make_result(
+                answer=answer, sources=sources, contexts=[s["extrait"] for s in sources],
+                abstained=None, mode="direct", question_en=None, sous_questions=[],
+                top_score=1.0, timings=_timings(retrieve=time.time()-start),
+                citation_validation=validate_citations(answer, len(sources)),
+                config_id=cfg.config_id,
+            )
     if cfg.name in ("public_v2", "public_v3"):
         decision = analyse(question, backend=cfg.router_backend, translate_direct=True)
         if decision.get("mode") == "direct" and decision.get("en"):

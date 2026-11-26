@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.10",
+  "version": "2026-11-26.12",
   "core": [
     "materialisme",
     "systemisme",
@@ -1489,6 +1489,25 @@
         "quote": "the book of Nature is the book of Fate"
       }
     },
+    "critique-emerson": {
+      "title": "La critique de l’assimilation de la nature au destin",
+      "domain": "Ontologie",
+      "kind": "Réponse de Bunge",
+      "text": "Bunge traite l’affirmation d’Emerson comme une erreur. Il conteste que les sciences de la nature révèlent une fatalité, et que toute explication scientifique soit causale.",
+      "tags": [
+        "Emerson",
+        "fatalisme",
+        "destin"
+      ],
+      "source": {
+        "voice": "Bunge",
+        "book": "causality-and-modern-science-1959",
+        "page": 135,
+        "folio": "101",
+        "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
+        "quote": "he merely repeated another common error"
+      }
+    },
     "fatalisme": {
       "title": "Nécessité transcendante dans le fatalisme",
       "domain": "Ontologie",
@@ -1712,7 +1731,17 @@
       "target": "existence-dictionnaire",
       "witness": "existence-dictionnaire",
       "verb": "se compare avec",
-      "kind": "Comparaison entre ouvrages"
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le Traité distingue l’existence conceptuelle de l’existence physique. Le Dictionnaire précise de quel ensemble de construits l’existence conceptuelle dépend, en prenant une théorie pour exemple."
+    },
+    {
+      "id": "materialisme--existence-conceptuelle",
+      "origin": "materialisme",
+      "target": "existence-conceptuelle",
+      "witness": "existence-conceptuelle",
+      "verb": "s’articule avec la distinction formulée dans",
+      "kind": "Rapprochement éditorial",
+      "comparison": "La thèse de Scientific Materialism porte sur ce qui existe réellement. Dans le tome I du Traité, le prédicat de la définition porte sur l’existence conceptuelle. Si les deux passages ont ces portées, affirmer l’existence conceptuelle d’un construit est compatible avec le matérialisme."
     },
     {
       "id": "autre-preuve--unique",
@@ -2129,6 +2158,15 @@
       "witness": "superiorite-mecanisme",
       "verb": "se compare à la défense de l’",
       "kind": "Comparaison entre ouvrages"
+    },
+    {
+      "id": "emerson-fatum--critique-emerson",
+      "origin": "emerson-fatum",
+      "target": "critique-emerson",
+      "witness": "critique-emerson",
+      "verb": "reçoit la réponse suivante",
+      "kind": "Lien explicite",
+      "attribution_comment": "Bunge écrit qu’Emerson répète une erreur courante."
     },
     {
       "id": "emerson-fatum--fatalisme",

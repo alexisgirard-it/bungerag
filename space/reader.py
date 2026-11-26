@@ -167,6 +167,8 @@ def atlas_view(key, local):
             + "".join(card(node_source(k), local) for k in keys)
             + "</div>"
         )
+        if annotation := e.get("comparison"):
+            compare += f"<p><strong>Lecture éditoriale</strong> {esc(annotation)}</p>"
     branches = "".join(
         f'<li><a href="#atlas-rel-{i}">{esc(title)}</a></li>'
         for i, (title, _) in enumerate(choices, 1)
@@ -202,15 +204,22 @@ def dossier_view(dossier, changes, local):
         return ""
     states = assess(dossier["steps"], changes)
     sections = [f"<h3>{esc(dossier['title'])}</h3>"]
+    title_by_id = {s["id"]: s["title"] for s in dossier["steps"]}
     for s in dossier["steps"]:
         state = states[s["id"]]
         sources = "".join(card(r, local) for r in s["sources"])
         for f in s.get("external", []):
             sources += f'<p><a href="{esc(f["url"], quote=True)}" target="_blank" rel="noopener">{esc(f["title"])}</a></p>'
-        title_by_id = {r["id"]: r["title"] for r in dossier["steps"]}
-        supports = " ou ".join(
-            " + ".join(title_by_id[p] for p in group) for group in s["supports"]
-        )
+        supports = []
+        for group in s["supports"]:
+            names = " et ".join(title_by_id[p] for p in group)
+            unavailable = [title_by_id[p] for p in group if states[p] != "disponible"]
+            status = (
+                ", ".join(unavailable) + " à rétablir"
+                if unavailable
+                else "Justification disponible"
+            )
+            supports.append(f"<li>{esc(names)}<br><small>{esc(status)}</small></li>")
         replacement = changes.get(s["id"], "")
         sections.append(
             f'<article class="argument-step"><small>{esc(s["role"])} · {esc(state)}</small><h4>{esc(s["title"])}</h4>'
@@ -220,7 +229,7 @@ def dossier_view(dossier, changes, local):
                 if replacement
                 else ""
             )
-            + (f"<p>Appuis : {esc(supports)}</p>" if supports else "")
+            + ("<p>Justifications</p><ul>" + "".join(supports) + "</ul>" if supports else "")
             + (
                 f"<details><summary>Consulter les sources</summary>{sources}</details>"
                 if sources
