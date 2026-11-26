@@ -78,17 +78,18 @@ MINDMAP_CSS = """
 }
 .atlas-domain-pill {
   align-items: center;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.76);
   border: 1px solid rgba(15, 23, 42, 0.09);
   border-radius: 999px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   color: #334155;
   cursor: pointer;
   display: inline-flex;
-  font-size: 11.5px;
-  font-weight: 550;
-  gap: 6px;
-  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 560;
+  gap: 5px;
+  padding: 4px 9px;
+  white-space: nowrap;
   transition: all 150ms ease;
 }
 .atlas-domain-pill:hover {
@@ -141,18 +142,10 @@ MINDMAP_CSS = """
 .atlas-mindmap-edge { cursor: pointer; fill: none; transition: opacity 180ms ease, stroke-width 180ms ease; }
 .atlas-mindmap-edge:hover { opacity: 0.95 !important; }
 .atlas-mindmap-tip {
-  position: absolute;
-  left: 12px;
-  bottom: 10px;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 999px;
-  color: #475569;
-  font-size: 11px;
-  padding: 4px 11px;
-  pointer-events: none;
+  color: #64748b;
+  font-size: 11.5px;
+  margin: 8px 4px 0;
+  text-align: right;
 }
 .atlas-mindmap-inspector {
   margin-top: 12px;
@@ -180,153 +173,184 @@ MINDMAP_CSS = """
 """
 
 MINDMAP_JS = """
-const root = element.querySelector('.atlas-mindmap');
-if (!root || root.dataset.bound === '1') return;
-root.dataset.bound = '1';
-const svg = root.querySelector('svg.atlas-mindmap-canvas');
-const inspector = root.querySelector('.atlas-mindmap-inspector');
-const payloadEl = root.querySelector('.atlas-mindmap-data');
-if (!svg || !inspector || !payloadEl) return;
+const bindMindmap = () => {
+  const root = element.querySelector('.atlas-mindmap');
+  if (!root || root.dataset.bound === '1') return;
+  root.dataset.bound = '1';
+  const svg = root.querySelector('svg.atlas-mindmap-canvas');
+  const inspector = root.querySelector('.atlas-mindmap-inspector');
+  const payloadEl = root.querySelector('.atlas-mindmap-data');
+  if (!svg || !inspector || !payloadEl) return;
 
-let data = { nodes: {}, edges: [], selected: 'systemisme' };
-try { data = JSON.parse(payloadEl.textContent || '{}'); } catch (_) { return; }
+  let data = { nodes: {}, edges: [], selected: 'systemisme' };
+  try { data = JSON.parse(payloadEl.textContent || '{}'); } catch (_) { return; }
 
-const DEFAULT_VB = { x: 0, y: 0, w: 1120, h: 680 };
-let vb = { ...DEFAULT_VB };
-const applyViewBox = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  const DEFAULT_VB = { x: 0, y: 0, w: 1120, h: 680 };
+  let vb = { ...DEFAULT_VB };
+  const applyViewBox = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
 
-const zoom = (factor, cx = vb.x + vb.w / 2, cy = vb.y + vb.h / 2) => {
-  const nw = Math.max(260, Math.min(1900, vb.w * factor));
-  const nh = Math.max(158, Math.min(1154, vb.h * factor));
-  vb.x = cx - ((cx - vb.x) / vb.w) * nw;
-  vb.y = cy - ((cy - vb.y) / vb.h) * nh;
-  vb.w = nw;
-  vb.h = nh;
-  applyViewBox();
-};
+  const zoom = (factor, cx = vb.x + vb.w / 2, cy = vb.y + vb.h / 2) => {
+    const nw = Math.max(260, Math.min(1900, vb.w * factor));
+    const nh = Math.max(158, Math.min(1154, vb.h * factor));
+    vb.x = cx - ((cx - vb.x) / vb.w) * nw;
+    vb.y = cy - ((cy - vb.y) / vb.h) * nh;
+    vb.w = nw;
+    vb.h = nh;
+    applyViewBox();
+  };
 
-const escHtml = (s) => String(s || '').replace(/[&<>"']/g, (c) => ({
-  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-}[c]));
+  const escHtml = (s) => String(s || '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
 
-const highlightNode = (key) => {
-  const node = data.nodes[key];
-  if (!node) return;
-  const neighbors = new Set([key]);
-  const incident = [];
-  for (const edge of data.edges) {
-    if (edge.origin === key || edge.target === key) {
-      neighbors.add(edge.origin);
-      neighbors.add(edge.target);
-      incident.push(edge);
-    }
-  }
-  const labeled = new Set([key, ...Array.from(neighbors).slice(0, 7)]);
-  svg.querySelectorAll('.atlas-mindmap-node').forEach((el) => {
-    const k = el.dataset.key;
-    el.style.opacity = neighbors.has(k) ? '1' : '0.24';
-    const circle = el.querySelector('circle');
-    if (circle) {
-      circle.setAttribute('stroke-width', k === key ? '3.5' : '1.6');
-    }
-    const lbl = el.querySelector('.atlas-node-label');
-    if (lbl) lbl.style.opacity = labeled.has(k) ? '1' : '0';
-  });
-  svg.querySelectorAll('.atlas-mindmap-edge').forEach((el) => {
-    const active = el.dataset.origin === key || el.dataset.target === key;
-    el.style.opacity = active ? '0.92' : '0.10';
-    el.setAttribute('stroke-width', active ? '2.2' : '0.9');
-  });
-  const rels = incident.slice(0, 6).map((e) => {
-    return `<li>${escHtml(data.nodes[e.origin]?.title || e.origin)} → <em>${escHtml(e.verb)}</em> → ${escHtml(data.nodes[e.target]?.title || e.target)} <small>(${escHtml(e.kind)})</small></li>`;
-  }).join('');
-  const notation = node.formula ? `<p style="margin:6px 0;"><strong>Notation :</strong> <code>${escHtml(node.formula)}</code></p>` : '';
-  const voice = node.voice ? ` · Auteur cité : ${escHtml(node.voice)}` : '';
-  inspector.style.borderLeftColor = node.color || '#2563eb';
-  inspector.innerHTML = `<strong style="font-size:15px;">${escHtml(node.title)}</strong> <small style="color:#64748b;">(${escHtml(node.domain)} · ${escHtml(node.kind)}${voice})</small>`
-    + `<p style="margin:6px 0 4px;">${escHtml(node.text)}</p>${notation}`
-    + `<small style="color:#64748b;">${escHtml(node.book)} · p. ${escHtml(node.folio || node.page)} (PDF p. ${escHtml(node.page)})</small>`
-    + `<blockquote lang="en">« ${escHtml(node.quote)} »</blockquote>`
-    + (rels ? `<ul style="margin:8px 0 0 18px;padding:0;font-size:12.5px;">${rels}</ul>` : '');
-};
-
-const highlightEdge = (id) => {
-  const edge = data.edges.find((e) => e.id === id);
-  if (!edge) return;
-  const o = data.nodes[edge.origin], t = data.nodes[edge.target], w = data.nodes[edge.witness];
-  inspector.style.borderLeftColor = o?.color || '#2563eb';
-  inspector.innerHTML = `<strong style="font-size:14.5px;">${escHtml(o?.title || edge.origin)} → ${escHtml(edge.verb)} → ${escHtml(t?.title || edge.target)}</strong>`
-    + `<br><small style="color:#64748b;">${escHtml(edge.kind)} · Témoin : ${escHtml(w?.title || edge.witness)} (PDF p. ${escHtml(w?.page || '')})</small>`
-    + (edge.comparison ? `<p style="margin:6px 0 0;"><strong>Lecture éditoriale :</strong> ${escHtml(edge.comparison)}</p>` : '')
-    + (w?.quote ? `<blockquote lang="en">« ${escHtml(w.quote)} »</blockquote>` : '');
-};
-
-const resetAll = () => {
-  vb = { ...DEFAULT_VB };
-  applyViewBox();
-  root.querySelectorAll('.atlas-domain-pill').forEach((b) => {
-    b.classList.toggle('is-active', b.dataset.domain === 'ALL');
-  });
-  highlightNode(data.selected || 'systemisme');
-};
-
-root.querySelector('[data-action="zoom-in"]')?.addEventListener('click', () => zoom(0.8));
-root.querySelector('[data-action="zoom-out"]')?.addEventListener('click', () => zoom(1.25));
-root.querySelector('[data-action="zoom-reset"]')?.addEventListener('click', resetAll);
-
-let dragging = false, startX = 0, startY = 0;
-svg.addEventListener('pointerdown', (e) => {
-  if (e.target.closest('.atlas-mindmap-node, .atlas-mindmap-edge')) return;
-  dragging = true; startX = e.clientX; startY = e.clientY;
-  svg.setPointerCapture(e.pointerId);
-});
-svg.addEventListener('pointermove', (e) => {
-  if (!dragging) return;
-  const rect = svg.getBoundingClientRect();
-  const dx = (e.clientX - startX) * (vb.w / rect.width);
-  const dy = (e.clientY - startY) * (vb.h / rect.height);
-  vb.x -= dx; vb.y -= dy; startX = e.clientX; startY = e.clientY;
-  applyViewBox();
-});
-svg.addEventListener('pointerup', () => { dragging = false; });
-svg.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  zoom(e.deltaY > 0 ? 1.12 : 0.89);
-}, { passive: false });
-
-svg.querySelectorAll('.atlas-mindmap-node').forEach((el) => {
-  el.addEventListener('click', () => highlightNode(el.dataset.key));
-});
-svg.querySelectorAll('.atlas-mindmap-edge').forEach((el) => {
-  el.addEventListener('click', () => highlightEdge(el.dataset.id));
-});
-root.querySelectorAll('.atlas-domain-pill').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const dom = btn.dataset.domain;
-    root.querySelectorAll('.atlas-domain-pill').forEach((b) => b.classList.toggle('is-active', b === btn));
-    if (dom === 'ALL') {
-      resetAll();
-      return;
-    }
-    let shown = 0;
-    svg.querySelectorAll('.atlas-mindmap-node').forEach((el) => {
-      const match = el.dataset.domain === dom;
-      el.style.opacity = match ? '1' : '0.12';
-      const lbl = el.querySelector('.atlas-node-label');
-      if (lbl) {
-        lbl.style.opacity = match && shown < 8 ? '1' : '0';
-        if (match) shown += 1;
+  const separateLabels = (keys) => {
+    const placed = [];
+    for (const k of keys) {
+      const el = svg.querySelector(`.atlas-mindmap-node[data-key="${CSS.escape(k)}"]`);
+      const lbl = el?.querySelector('.atlas-node-label');
+      if (!lbl) continue;
+      const baseX = parseFloat(lbl.dataset.bx || lbl.getAttribute('x') || '0');
+      const baseY = parseFloat(lbl.dataset.by || lbl.getAttribute('y') || '0');
+      const w = (lbl.textContent || '').length * 6.4 + 10;
+      const anchor = lbl.getAttribute('text-anchor') || 'start';
+      const x0 = anchor === 'end' ? baseX - w : baseX;
+      let y = baseY;
+      for (let tries = 0; tries < 10; tries++) {
+        const hit = placed.some((b) => !(x0 + w < b.x0 || x0 > b.x1 || y - 14 > b.y1 || y + 3 < b.y0));
+        if (!hit) break;
+        y += (tries % 2 === 0 ? 1 : -1) * (16 * Math.ceil((tries + 1) / 2));
       }
+      lbl.setAttribute('y', String(Math.round(y * 10) / 10));
+      placed.push({ x0, x1: x0 + w, y0: y - 14, y1: y + 3 });
+    }
+  };
+
+  const highlightNode = (key) => {
+    const node = data.nodes[key];
+    if (!node) return;
+    const neighborsOrdered = [key];
+    const incident = [];
+    for (const edge of data.edges) {
+      if (edge.origin === key || edge.target === key) {
+        const other = edge.origin === key ? edge.target : edge.origin;
+        if (!neighborsOrdered.includes(other)) neighborsOrdered.push(other);
+        incident.push(edge);
+      }
+    }
+    const neighbors = new Set(neighborsOrdered);
+    const labeled = new Set(neighborsOrdered.slice(0, 6));
+    svg.querySelectorAll('.atlas-mindmap-node').forEach((el) => {
+      const k = el.dataset.key;
+      el.style.opacity = neighbors.has(k) ? '1' : '0.22';
+      const circle = el.querySelector('circle.atlas-dot');
+      if (circle) {
+        circle.setAttribute('stroke', k === key ? '#0f172a' : '#ffffff');
+        circle.setAttribute('stroke-width', k === key ? '3.4' : '1.6');
+      }
+      const lbl = el.querySelector('.atlas-node-label');
+      if (lbl) lbl.style.opacity = labeled.has(k) ? '1' : '0';
     });
+    separateLabels(neighborsOrdered.slice(0, 6));
     svg.querySelectorAll('.atlas-mindmap-edge').forEach((el) => {
-      const oDom = data.nodes[el.dataset.origin]?.domain;
-      const tDom = data.nodes[el.dataset.target]?.domain;
-      const match = oDom === dom || tDom === dom;
-      el.style.opacity = match ? '0.62' : '0.05';
-      el.setAttribute('stroke-width', match ? '1.3' : '0.8');
+      const active = el.dataset.origin === key || el.dataset.target === key;
+      el.style.opacity = active ? '0.92' : '0.09';
+      el.setAttribute('stroke-width', active ? '2.2' : '0.9');
+    });
+    const rels = incident.slice(0, 6).map((e) => {
+      return `<li>${escHtml(data.nodes[e.origin]?.title || e.origin)} → <em>${escHtml(e.verb)}</em> → ${escHtml(data.nodes[e.target]?.title || e.target)} <small>(${escHtml(e.kind)})</small></li>`;
+    }).join('');
+    const notation = node.formula ? `<p style="margin:6px 0;"><strong>Notation :</strong> <code>${escHtml(node.formula)}</code></p>` : '';
+    const voice = node.voice ? ` · Auteur cité : ${escHtml(node.voice)}` : '';
+    inspector.style.borderLeftColor = node.color || '#2563eb';
+    inspector.innerHTML = `<strong style="font-size:15px;">${escHtml(node.title)}</strong> <small style="color:#64748b;">(${escHtml(node.domain)} · ${escHtml(node.kind)}${voice})</small>`
+      + `<p style="margin:6px 0 4px;">${escHtml(node.text)}</p>${notation}`
+      + `<small style="color:#64748b;">${escHtml(node.book)} · p. ${escHtml(node.folio || node.page)} (PDF p. ${escHtml(node.page)})</small>`
+      + `<blockquote lang="en">« ${escHtml(node.quote)} »</blockquote>`
+      + (rels ? `<ul style="margin:8px 0 0 18px;padding:0;font-size:12.5px;">${rels}</ul>` : '');
+  };
+
+  const highlightEdge = (id) => {
+    const edge = data.edges.find((e) => e.id === id);
+    if (!edge) return;
+    const o = data.nodes[edge.origin], t = data.nodes[edge.target], w = data.nodes[edge.witness];
+    inspector.style.borderLeftColor = o?.color || '#2563eb';
+    inspector.innerHTML = `<strong style="font-size:14.5px;">${escHtml(o?.title || edge.origin)} → ${escHtml(edge.verb)} → ${escHtml(t?.title || edge.target)}</strong>`
+      + `<br><small style="color:#64748b;">${escHtml(edge.kind)} · Témoin : ${escHtml(w?.title || edge.witness)} (PDF p. ${escHtml(w?.page || '')})</small>`
+      + (edge.comparison ? `<p style="margin:6px 0 0;"><strong>Lecture éditoriale :</strong> ${escHtml(edge.comparison)}</p>` : '')
+      + (w?.quote ? `<blockquote lang="en">« ${escHtml(w.quote)} »</blockquote>` : '');
+  };
+
+  const resetAll = () => {
+    vb = { ...DEFAULT_VB };
+    applyViewBox();
+    root.querySelectorAll('.atlas-domain-pill').forEach((b) => {
+      b.classList.toggle('is-active', b.dataset.domain === 'ALL');
+    });
+    highlightNode(data.selected || 'systemisme');
+  };
+
+  root.querySelector('[data-action="zoom-in"]')?.addEventListener('click', () => zoom(0.8));
+  root.querySelector('[data-action="zoom-out"]')?.addEventListener('click', () => zoom(1.25));
+  root.querySelector('[data-action="zoom-reset"]')?.addEventListener('click', resetAll);
+
+  let dragging = false, startX = 0, startY = 0;
+  svg.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.atlas-mindmap-node, .atlas-mindmap-edge')) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    svg.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const rect = svg.getBoundingClientRect();
+    const dx = (e.clientX - startX) * (vb.w / rect.width);
+    const dy = (e.clientY - startY) * (vb.h / rect.height);
+    vb.x -= dx; vb.y -= dy; startX = e.clientX; startY = e.clientY;
+    applyViewBox();
+  });
+  svg.addEventListener('pointerup', () => { dragging = false; });
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    zoom(e.deltaY > 0 ? 1.12 : 0.89);
+  }, { passive: false });
+
+  svg.addEventListener('click', (e) => {
+    const nodeEl = e.target.closest('.atlas-mindmap-node');
+    if (nodeEl) { highlightNode(nodeEl.dataset.key); return; }
+    const edgeEl = e.target.closest('.atlas-mindmap-edge');
+    if (edgeEl) { highlightEdge(edgeEl.dataset.id); }
+  });
+
+  root.querySelectorAll('.atlas-domain-pill').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dom = btn.dataset.domain;
+      root.querySelectorAll('.atlas-domain-pill').forEach((b) => b.classList.toggle('is-active', b === btn));
+      if (dom === 'ALL') { resetAll(); return; }
+      const shownKeys = [];
+      svg.querySelectorAll('.atlas-mindmap-node').forEach((el) => {
+        const match = el.dataset.domain === dom;
+        el.style.opacity = match ? '1' : '0.12';
+        const lbl = el.querySelector('.atlas-node-label');
+        if (lbl) {
+          const show = match && shownKeys.length < 6;
+          lbl.style.opacity = show ? '1' : '0';
+          if (show) shownKeys.push(el.dataset.key);
+        }
+      });
+      separateLabels(shownKeys);
+      svg.querySelectorAll('.atlas-mindmap-edge').forEach((el) => {
+        const oDom = data.nodes[el.dataset.origin]?.domain;
+        const tDom = data.nodes[el.dataset.target]?.domain;
+        const match = oDom === dom || tDom === dom;
+        el.style.opacity = match ? '0.62' : '0.05';
+        el.setAttribute('stroke-width', match ? '1.3' : '0.8');
+      });
     });
   });
-});
+};
+
+bindMindmap();
+const obs = new MutationObserver(() => bindMindmap());
+obs.observe(element, { childList: true, subtree: true });
 """
 
 CLUSTER_CENTERS = {
@@ -388,8 +412,31 @@ def render_mindmap(selected_key: str = "systemisme", active_domain: str = "Tous 
             if other not in neighbors_ordered:
                 neighbors_ordered.append(other)
     neighbors = set(neighbors_ordered)
-    # Limiter les libellés permanents au nœud actif + ses 6 premiers voisins (zéro chevauchement).
-    initially_labeled = set(neighbors_ordered[:7])
+    # Limiter les libellés permanents au nœud actif + ses 5 premiers voisins, séparés sans collision.
+    initially_labeled_order = neighbors_ordered[:6]
+    initially_labeled = set(initially_labeled_order)
+    label_coords: dict[str, tuple[float, float, str]] = {}
+    placed_boxes: list[tuple[float, float, float, float]] = []
+    for k in initially_labeled_order:
+        nx, ny = positions[k]
+        dom_k = NODES[k]["domain"]
+        ccx, _ = CLUSTER_CENTERS.get(dom_k, (560.0, 340.0))
+        rad = 10.5 if k == selected_key else (7.2 if k in core else 5.2)
+        anchor = "end" if (nx < ccx - 6 or nx > 800) else "start"
+        tx = round(nx - rad - 6, 1) if anchor == "end" else round(nx + rad + 6, 1)
+        title_k = NODES[k]["title"][:26] + ("…" if len(NODES[k]["title"]) > 26 else "")
+        w = len(title_k) * 6.5 + 12
+        x0 = tx - w if anchor == "end" else tx
+        ty = ny + 4.0
+        for tries in range(12):
+            hit = any(not (x0 + w < bx0 or x0 > bx1 or ty - 14 > by1 or ty + 4 < by0) for bx0, bx1, by0, by1 in placed_boxes)
+            if not hit:
+                break
+            step_dir = 1 if tries % 2 == 0 else -1
+            ty = ny + 4.0 + step_dir * 18.0 * ((tries // 2) + 1)
+        ty = round(max(52.0, min(626.0, ty)), 1)
+        placed_boxes.append((x0, x0 + w, ty - 14.0, ty + 4.0))
+        label_coords[k] = (tx, ty, anchor)
 
     edge_svg = []
     edges_payload = []
@@ -446,24 +493,27 @@ def render_mindmap(selected_key: str = "systemisme", active_domain: str = "Tous 
         )
         stroke = "#0f172a" if is_selected else "#ffffff"
         stroke_w = "3.2" if is_selected else "1.6"
-        short_label = node["title"][:28] + ("…" if len(node["title"]) > 28 else "")
+        short_label = node["title"][:26] + ("…" if len(node["title"]) > 26 else "")
         label_opacity = "1" if key in initially_labeled else "0"
-        anchor = "end" if x > 780 else "start"
-        tx = round(x - radius - 5, 1) if anchor == "end" else round(x + radius + 5, 1)
+        ccx, _ = CLUSTER_CENTERS.get(dom, (560.0, 340.0))
+        default_anchor = "end" if (x < ccx - 6 or x > 800) else "start"
+        default_tx = round(x - radius - 6, 1) if default_anchor == "end" else round(x + radius + 6, 1)
+        tx, ty, anchor = label_coords.get(key, (default_tx, round(y + 4, 1), default_anchor))
         halo = (
             f'<circle cx="{x}" cy="{y}" r="{radius + 6}" fill="{color}" opacity="0.18"/>'
             if is_selected
             else ""
         )
         label_el = (
-            f'<text class="atlas-node-label" x="{tx}" y="{round(y + 4, 1)}" '
-            f'text-anchor="{anchor}" font-size="{12.5 if is_selected else 11}" '
+            f'<text class="atlas-node-label" data-bx="{default_tx}" data-by="{round(y + 4, 1)}" '
+            f'x="{tx}" y="{ty}" text-anchor="{anchor}" font-size="{12.5 if is_selected else 11}" '
             f'font-weight="{700 if is_selected else 600}" fill="#0f172a" '
             f'style="opacity:{label_opacity};">{esc(short_label)}</text>'
         )
         node_svg.append(
             f'<g class="atlas-mindmap-node" data-key="{esc(key)}" data-domain="{esc(dom)}" opacity="{opacity}">'
-            f'{halo}<circle cx="{x}" cy="{y}" r="{radius}" fill="{color}" stroke="{stroke}" stroke-width="{stroke_w}"/>'
+            f'<circle cx="{x}" cy="{y}" r="13" fill="transparent"/>'
+            f'{halo}<circle class="atlas-dot" cx="{x}" cy="{y}" r="{radius}" fill="{color}" stroke="{stroke}" stroke-width="{stroke_w}"/>'
             f"{label_el}<title>{esc(node['title'])} ({esc(dom)})</title></g>"
         )
         src = node["source"]
@@ -544,8 +594,8 @@ def render_mindmap(selected_key: str = "systemisme", active_domain: str = "Tous 
         + "".join(node_svg)
         + "".join(domain_labels)
         + "</svg>"
-        '<div class="atlas-mindmap-tip">Molette pour zoomer · Glisser pour déplacer · Cliquer un nœud ou une arête</div>'
         "</div>"
+        '<div class="atlas-mindmap-tip">Molette pour zoomer · Glisser pour déplacer · Cliquer un nœud ou une arête</div>'
         f'<div class="atlas-mindmap-inspector" style="border-left-color:{sel["color"]};">{initial_inspector}</div>'
         f'<script type="application/json" class="atlas-mindmap-data">{payload_json}</script>'
         "</section>"

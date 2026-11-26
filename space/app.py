@@ -94,8 +94,7 @@ QUOTAS = QuotaGuard(daily_limit=DAILY_LIMIT, per_client_limit=CLIENT_LIMIT)
 
 MASTHEAD = """
 <header id="masthead">
-  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Lecture assistée de Mario Bunge</span></div>
-  <div class="masthead-status">En ligne</div>
+  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Lecture assistée de Mario Bunge</span><div class="masthead-status">En ligne</div></div>
 </header>
 """
 
