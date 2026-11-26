@@ -84,6 +84,23 @@ La reprise sur le Space retrouve la section EPUB en 0,35 seconde. Sur le cas lib
 
 La recette locale vérifie 91 citations et 81 relations. Les appuis supplémentaires relient l’émergentisme du tome IV, la place de la psychologie au tome VII et la définition du psychon. En éthique, le tome VIII fournit un repère pour distinguer bonheur et bien-être. Les contrôles des formules préservent les opérateurs, les variables et la portée des parenthèses. Une notation concise sans appui exact donne une absence de passage. [Couverture du Traité](COUVERTURE-TRAITE.md)
 
+La recette publique retrouve la formule compacte ℳ=⟨D,F,I⟩ au PDF p. 93 et distingue une variable différente. Dans l’Atlas, le passage du tome VII (PDF p. 14) conduit au passage du tome IV (PDF p. 200). Dans l’Atelier mobile, suspendre la thèse sur l’émergence des propriétés mentales suspend la justification neurobiologique et laisse accessible l’hypothèse fonctionnelle. Le contrôle local couvre 31 appuis et 23 modifications sur huit dossiers. [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/dd658e2c4c43a9235614530f54275232e3e25597)
+
+### Renvois du graphe à budget fixe
+
+L’essai à budget fixe de six fiches compare les racines seules, l’expansion sans plafond de racines (`graphe_parent`) et le plafond à 3, 2 ou 1 racine sur les cinq cas historiques à plusieurs prémisses ([questions réservées](lecture-reservee.jsonl)) et sur six nouvelles formulations indépendantes ([recette de liaisons](liaisons-reservees.jsonl)).
+
+| Variante (budget de 6 fiches) | Série historique (5 cas) | Nouvelles formulations (6 cas) | Total complet (11 cas) |
+|---|---:|---:|---:|
+| Pages seules | 1/5 | 1/6 | 2/11 |
+| Fiches sans liens | 3/5 | 3/6 | 6/11 |
+| Graphe sans plafond de racines | 3/5 | 5/6 | 8/11 |
+| Graphe plafonné à 3 racines (`seed_limit=3`) | 4/5 | 5/6 | 9/11 |
+| Graphe plafonné à 2 racines (`seed_limit=2`) | 5/5 | 4/6 | 9/11 |
+| Graphe plafonné à 1 racine (`seed_limit=1`) | 5/5 | 4/6 | 9/11 |
+
+Plafonner l’expansion initiale à 3 racines (`seed_limit=3`) gagne un cas complet sur la série historique (4/5 contre 3/5) tout en préservant 5/6 cas complets sur les nouvelles formulations (alors que 2 ou 1 racine perdent le troisième appui de `plasticite-esprit`) et en améliorant les rangs des appuis sur `existence-et-matiere` et `action-destin`. Ce réglage est retenu dans l’Atelier (`open_question`) et l’enrichissement par graphe de la rédaction (`add_linked_passages`). [Protocole](../src/compare_graph_evidence.py) · [Mesures](mesures-v3.json)
+
 ## Titres et pages voisines
 
 Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.

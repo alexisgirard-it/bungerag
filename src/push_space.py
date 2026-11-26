@@ -147,6 +147,7 @@ def main() -> None:
     from huggingface_hub import CommitOperationAdd, HfApi
 
     from audit_reader import verify_catalogue
+    from audit_workshop import verify_dossiers
 
     write_token = required_secret("HF_WRITE_TOKEN")
     read_token = required_secret("HF_READ_TOKEN")
@@ -157,6 +158,7 @@ def main() -> None:
     index_dir = ROOT / "index"
     library = validate_library(index_dir)
     verify_catalogue()
+    verify_dossiers()
     with tempfile.TemporaryDirectory() as tmp:
         bundle = Path(tmp)
         copied = build_space_bundle(bundle)

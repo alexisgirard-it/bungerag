@@ -6331,5 +6331,938 @@
       "La reproduction de données est appelée prédiction valide sans validation indépendante établie.",
       "La réponse fait du succès numérique futur le test suffisant de l’explication."
     ]
+  },
+  "comparaison_liens": {
+    "date": "2026-11-26",
+    "catalogue_version": "2026-11-26.16",
+    "budget_fiches": 6,
+    "historique_summary": {
+      "total": 5,
+      "pages": 1,
+      "fiches_sans_liens": 3,
+      "graphe_parent": 3,
+      "graphe_racines_3": 4,
+      "graphe_racines_2": 5,
+      "graphe_racine_1": 5
+    },
+    "nouvelles_summary": {
+      "total": 6,
+      "pages": 1,
+      "fiches_sans_liens": 3,
+      "graphe_parent": 5,
+      "graphe_racines_3": 5,
+      "graphe_racines_2": 4,
+      "graphe_racine_1": 4
+    },
+    "historique": [
+      {
+        "id": "argument-1",
+        "classement": {
+          "pages": [
+            null,
+            2,
+            1
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "monde",
+              "autre-preuve",
+              "incompatibilite",
+              "unique",
+              "unicite-sup"
+            ],
+            "rangs": [
+              null,
+              2,
+              1
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "monde",
+              "autre-preuve",
+              "incompatibilite",
+              "unique",
+              "unicite-sup",
+              "theoreme-bonheur"
+            ],
+            "rangs": [
+              null,
+              2,
+              1
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "monde",
+              "autre-preuve",
+              "incompatibilite",
+              "unique",
+              "theoreme-bonheur",
+              "supremum"
+            ],
+            "rangs": [
+              11,
+              2,
+              1
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "monde",
+              "autre-preuve",
+              "unique",
+              "supremum",
+              "unicite-sup",
+              "ordre-partiel"
+            ],
+            "rangs": [
+              9,
+              2,
+              1
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "monde",
+              "unique",
+              "supremum",
+              "autre-preuve",
+              "unicite-sup",
+              "ordre-partiel"
+            ],
+            "rangs": [
+              8,
+              2,
+              1
+            ]
+          }
+        }
+      },
+      {
+        "id": "argument-2",
+        "classement": {
+          "pages": [
+            null,
+            2
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "bien-etre",
+              "bonheur-et-bien-etre",
+              "restriction"
+            ],
+            "rangs": [
+              null,
+              2
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "bien-etre",
+              "bonheur-et-bien-etre",
+              "restriction",
+              "besoin",
+              "bonheur",
+              "droit"
+            ],
+            "rangs": [
+              null,
+              2
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "bien-etre",
+              "bonheur-et-bien-etre",
+              "restriction",
+              "besoin",
+              "bonheur",
+              "droit"
+            ],
+            "rangs": [
+              null,
+              2
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "bien-etre",
+              "bonheur-et-bien-etre",
+              "besoin",
+              "bonheur",
+              "valeur",
+              "deficit"
+            ],
+            "rangs": [
+              11,
+              2
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "bien-etre",
+              "besoin",
+              "bonheur-et-bien-etre",
+              "bonheur",
+              "valeur",
+              "deficit"
+            ],
+            "rangs": [
+              11,
+              2
+            ]
+          }
+        }
+      },
+      {
+        "id": "argument-3",
+        "classement": {
+          "pages": [
+            2,
+            3
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "coherence"
+            ],
+            "rangs": [
+              2,
+              3
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "coherence",
+              "connaissance",
+              "perception",
+              "communication",
+              "changement-savoir",
+              "types-savoirs"
+            ],
+            "rangs": [
+              2,
+              3
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "coherence",
+              "connaissance",
+              "perception",
+              "communication",
+              "changement-savoir",
+              "types-savoirs"
+            ],
+            "rangs": [
+              2,
+              3
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "coherence",
+              "connaissance",
+              "perception",
+              "communication",
+              "changement-savoir",
+              "types-savoirs"
+            ],
+            "rangs": [
+              2,
+              3
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "coherence",
+              "connaissance",
+              "perception",
+              "communication",
+              "changement-savoir",
+              "types-savoirs"
+            ],
+            "rangs": [
+              2,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "id": "argument-4",
+        "classement": {
+          "pages": [
+            null,
+            4
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "mecanisme",
+              "superiorite-mecanisme",
+              "analogie"
+            ],
+            "rangs": [
+              7,
+              4
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "mecanisme",
+              "superiorite-mecanisme",
+              "analogie",
+              "snell",
+              "realisme",
+              "niveaux-comprehension"
+            ],
+            "rangs": [
+              7,
+              4
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "mecanisme",
+              "superiorite-mecanisme",
+              "analogie",
+              "snell",
+              "realisme",
+              "niveaux-comprehension"
+            ],
+            "rangs": [
+              7,
+              4
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "mecanisme",
+              "superiorite-mecanisme",
+              "snell",
+              "analogie",
+              "realisme",
+              "niveaux-comprehension"
+            ],
+            "rangs": [
+              7,
+              4
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "mecanisme",
+              "snell",
+              "analogie",
+              "realisme",
+              "superiorite-mecanisme",
+              "niveaux-comprehension"
+            ],
+            "rangs": [
+              8,
+              4
+            ]
+          }
+        }
+      },
+      {
+        "id": "argument-5",
+        "classement": {
+          "pages": [
+            1,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "determinisme-causal",
+              "distinction-fatum",
+              "wilson-fatum",
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme"
+            ],
+            "rangs": [
+              1,
+              7
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "determinisme-causal",
+              "distinction-fatum",
+              "wilson-fatum",
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme"
+            ],
+            "rangs": [
+              1,
+              7
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "determinisme-causal",
+              "distinction-fatum",
+              "wilson-fatum",
+              "fatalisme",
+              "emerson-fatum",
+              "critique-emerson"
+            ],
+            "rangs": [
+              1,
+              7
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "determinisme-causal",
+              "distinction-fatum",
+              "fatalisme",
+              "wilson-fatum",
+              "emerson-fatum",
+              "critique-emerson"
+            ],
+            "rangs": [
+              1,
+              7
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "determinisme-causal",
+              "distinction-fatum",
+              "fatalisme",
+              "wilson-fatum",
+              "emerson-fatum",
+              "critique-emerson"
+            ],
+            "rangs": [
+              1,
+              7
+            ]
+          }
+        }
+      }
+    ],
+    "nouvelles": [
+      {
+        "id": "esprit-science",
+        "classement": {
+          "pages": [
+            null,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "emergence-esprit",
+              "psychologie",
+              "biosystemisme"
+            ],
+            "rangs": [
+              7,
+              6
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "emergence-esprit",
+              "psychologie",
+              "biosystemisme",
+              "renvoi-psychologie-esprit",
+              "systemisme",
+              "cadre-emergentiste"
+            ],
+            "rangs": [
+              7,
+              6
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "emergence-esprit",
+              "psychologie",
+              "biosystemisme",
+              "renvoi-psychologie-esprit",
+              "systemisme",
+              "cadre-emergentiste"
+            ],
+            "rangs": [
+              7,
+              6
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "emergence-esprit",
+              "psychologie",
+              "renvoi-psychologie-esprit",
+              "cadre-emergentiste",
+              "psychon",
+              "cerveau"
+            ],
+            "rangs": [
+              7,
+              6
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "emergence-esprit",
+              "renvoi-psychologie-esprit",
+              "psychologie",
+              "cadre-emergentiste",
+              "psychon",
+              "cerveau"
+            ],
+            "rangs": [
+              7,
+              6
+            ]
+          }
+        },
+        "pages": [
+          "mind-body-problem-1980:231",
+          "treatise-7b-philosophy-of-science-tech-2-life-social-1985:22",
+          "philosophy-of-psychology-1987:270",
+          "philosophical-dictionary-2003:28",
+          "treatise-7b-philosophy-of-science-tech-2-life-social-1985:116"
+        ]
+      },
+      {
+        "id": "bonheur-satisfait",
+        "classement": {
+          "pages": [
+            2,
+            1
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "besoin",
+              "bonheur",
+              "bonheur-et-bien-etre",
+              "bien-etre"
+            ],
+            "rangs": [
+              2,
+              1
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "besoin",
+              "bonheur",
+              "bonheur-et-bien-etre",
+              "bien-etre",
+              "valeur",
+              "deficit"
+            ],
+            "rangs": [
+              2,
+              1
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "besoin",
+              "bonheur",
+              "bonheur-et-bien-etre",
+              "valeur",
+              "deficit",
+              "bien-etre"
+            ],
+            "rangs": [
+              2,
+              1
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "besoin",
+              "bonheur",
+              "valeur",
+              "deficit",
+              "bien-etre",
+              "theoreme-bonheur"
+            ],
+            "rangs": [
+              2,
+              1
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "besoin",
+              "valeur",
+              "deficit",
+              "bien-etre",
+              "droit",
+              "bonheur-et-bien-etre"
+            ],
+            "rangs": [
+              2,
+              1
+            ]
+          }
+        },
+        "pages": [
+          "treatise-8-ethics-the-good-and-the-right-1989:59",
+          "treatise-8-ethics-the-good-and-the-right-1989:57",
+          "treatise-8-ethics-the-good-and-the-right-1989:38",
+          "treatise-8-ethics-the-good-and-the-right-1989:53",
+          "treatise-8-ethics-the-good-and-the-right-1989:51"
+        ]
+      },
+      {
+        "id": "existence-et-matiere",
+        "classement": {
+          "pages": [
+            1,
+            null,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "concept",
+              "espace",
+              "existence-dictionnaire",
+              "materialisme"
+            ],
+            "rangs": [
+              1,
+              null,
+              8
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "concept",
+              "espace",
+              "existence-dictionnaire",
+              "materialisme",
+              "existence-conceptuelle",
+              "chose"
+            ],
+            "rangs": [
+              1,
+              10,
+              8
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "concept",
+              "espace",
+              "existence-dictionnaire",
+              "existence-conceptuelle",
+              "chose",
+              "materialisme"
+            ],
+            "rangs": [
+              1,
+              9,
+              8
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "concept",
+              "espace",
+              "existence-conceptuelle",
+              "chose",
+              "materialisme",
+              "existence-dictionnaire"
+            ],
+            "rangs": [
+              1,
+              8,
+              11
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "concept",
+              "existence-conceptuelle",
+              "materialisme",
+              "existence-dictionnaire",
+              "espace"
+            ],
+            "rangs": [
+              1,
+              7,
+              9
+            ]
+          }
+        },
+        "pages": [
+          "scientific-materialism-1981:29",
+          "foundations-of-biophilosophy-1997:199",
+          "scientific-realism-selected-essays-2001:ch19 - (1997)",
+          "from-a-scientific-point-of-view-2018:132",
+          "chasing-reality-2006:34"
+        ]
+      },
+      {
+        "id": "action-destin",
+        "classement": {
+          "pages": [
+            1,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme",
+              "determinisme-causal"
+            ],
+            "rangs": [
+              1,
+              null
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme",
+              "determinisme-causal",
+              "distinction-fatum",
+              "wilson-fatum"
+            ],
+            "rangs": [
+              1,
+              10
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme",
+              "distinction-fatum",
+              "determinisme-causal",
+              "wilson-fatum"
+            ],
+            "rangs": [
+              1,
+              9
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme",
+              "distinction-fatum",
+              "determinisme-causal"
+            ],
+            "rangs": [
+              1,
+              9
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "emerson-fatum",
+              "critique-emerson",
+              "fatalisme",
+              "distinction-fatum",
+              "determinisme-causal"
+            ],
+            "rangs": [
+              1,
+              9
+            ]
+          }
+        },
+        "pages": [
+          "causality-and-modern-science-1959:135",
+          "causality-and-modern-science-1959:168",
+          "scientific-realism-selected-essays-2001:ch08 - (1982)",
+          "causality-and-modern-science-1959:12",
+          "causality-and-modern-science-1959:133"
+        ]
+      },
+      {
+        "id": "plasticite-esprit",
+        "classement": {
+          "pages": [
+            null,
+            null,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "emergence-esprit",
+              "psychon",
+              "analogie"
+            ],
+            "rangs": [
+              7,
+              6,
+              8
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "emergence-esprit",
+              "psychon",
+              "analogie",
+              "renvoi-psychologie-esprit",
+              "psychologie",
+              "plasticite"
+            ],
+            "rangs": [
+              7,
+              6,
+              8
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "emergence-esprit",
+              "psychon",
+              "analogie",
+              "renvoi-psychologie-esprit",
+              "psychologie",
+              "plasticite"
+            ],
+            "rangs": [
+              7,
+              6,
+              8
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "emergence-esprit",
+              "psychon",
+              "renvoi-psychologie-esprit",
+              "psychologie",
+              "plasticite",
+              "acquisition"
+            ],
+            "rangs": [
+              7,
+              6,
+              null
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "emergence-esprit",
+              "renvoi-psychologie-esprit",
+              "psychologie",
+              "cadre-emergentiste",
+              "psychon",
+              "cerveau"
+            ],
+            "rangs": [
+              10,
+              6,
+              null
+            ]
+          }
+        },
+        "pages": [
+          "emergence-and-convergence-2003:62",
+          "treatise-5-epistemology-1-exploring-the-world-1983:38",
+          "treatise-5-epistemology-1-exploring-the-world-1983:54",
+          "philosophy-of-psychology-1987:278",
+          "treatise-7b-philosophy-of-science-tech-2-life-social-1985:101"
+        ]
+      },
+      {
+        "id": "limite-besoins",
+        "classement": {
+          "pages": [
+            null,
+            3,
+            null
+          ],
+          "fiches_sans_liens": {
+            "fiches": [
+              "devoir",
+              "etre-devoir",
+              "theoreme-bonheur",
+              "droit"
+            ],
+            "rangs": [
+              null,
+              3,
+              null
+            ]
+          },
+          "graphe_parent": {
+            "fiches": [
+              "devoir",
+              "etre-devoir",
+              "theoreme-bonheur",
+              "droit",
+              "bonheur",
+              "incompatibilite"
+            ],
+            "rangs": [
+              null,
+              3,
+              null
+            ]
+          },
+          "graphe_racines_3": {
+            "fiches": [
+              "devoir",
+              "etre-devoir",
+              "theoreme-bonheur",
+              "droit",
+              "bonheur",
+              "incompatibilite"
+            ],
+            "rangs": [
+              null,
+              3,
+              null
+            ]
+          },
+          "graphe_racines_2": {
+            "fiches": [
+              "devoir",
+              "etre-devoir",
+              "droit",
+              "changement-moral",
+              "metaethique",
+              "cas-moraux"
+            ],
+            "rangs": [
+              null,
+              3,
+              null
+            ]
+          },
+          "graphe_racine_1": {
+            "fiches": [
+              "devoir",
+              "droit",
+              "etre-devoir",
+              "changement-moral",
+              "valeur",
+              "restriction"
+            ],
+            "rangs": [
+              null,
+              3,
+              11
+            ]
+          }
+        },
+        "pages": [
+          "scientific-realism-selected-essays-2001:ch35 - (1999)",
+          "treatise-8-ethics-the-good-and-the-right-1989:118",
+          "treatise-8-ethics-the-good-and-the-right-1989:109",
+          "treatise-8-ethics-the-good-and-the-right-1989:115",
+          "treatise-8-ethics-the-good-and-the-right-1989:113"
+        ]
+      }
+    ]
   }
 }

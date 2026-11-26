@@ -454,7 +454,7 @@ def open_question(question, research, *, generate=None, external=None):
     seeds = suggested_nodes(question, 3) + [
         key for hit in research[:3] for key in on_page(hit["book"], hit["page"])
     ]
-    for key in linked_evidence(seeds):
+    for key in linked_evidence(seeds, seed_limit=3):
         steps.append(proposition(key))
     for i, source in enumerate(research[:4], 1):
         steps.append(

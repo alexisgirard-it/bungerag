@@ -413,7 +413,7 @@ def add_linked_passages(question, passages, db, *, include_core=False):
     for p in list(passages.values()):
         seeds.extend(on_page(p.book, p.page))
         windows.setdefault((p.book, p.page, p.edition), []).append(canonical(p.raw))
-    keys = linked_evidence(seeds, limit=7)
+    keys = linked_evidence(seeds, limit=7, seed_limit=3)
     if include_core:
         keys = list(dict.fromkeys(keys + CATALOG["core"]))
     for key in keys:

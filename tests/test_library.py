@@ -53,3 +53,14 @@ def test_attribution_uses_the_quote_and_edition():
         loc["edition"],
         "an unknowable and inescapable Destiny",
     )
+
+
+def test_linked_evidence_seed_limit_leaves_room_for_explicit_links():
+    from library import linked_evidence
+
+    seeds = ["monde", "autre-preuve", "incompatibilite", "unique", "unicite-sup"]
+    unbounded = linked_evidence(seeds, limit=6)
+    capped = linked_evidence(seeds, limit=6, seed_limit=3)
+    assert "supremum" not in unbounded
+    assert "supremum" in capped
+    assert len(capped) == 6

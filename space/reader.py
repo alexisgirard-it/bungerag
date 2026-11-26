@@ -3,6 +3,7 @@
 import html
 import re
 from contextlib import closing
+from functools import lru_cache
 from urllib.parse import quote
 
 import gradio as gr
@@ -60,6 +61,18 @@ def card(source, local):
     )
 
 
+@lru_cache(maxsize=1)
+def dossiers_by_chapter():
+    chapters = {}
+    for build in DOSSIERS.values():
+        dossier = build()
+        for step in dossier["steps"]:
+            for source in step["sources"]:
+                key = (source["book"], source["chapter"])
+                chapters.setdefault(key, set()).add(dossier["title"])
+    return chapters
+
+
 def coverage(book=""):
     with closing(connect()) as db:
         totals = dict(
@@ -80,21 +93,36 @@ def coverage(book=""):
         pages = db.execute(
             "SELECT count(*) FROM pages WHERE book=?", (book,)
         ).fetchone()[0]
-        count = db.execute(
-            "SELECT count(*) FROM labels JOIN pages ON pages.id=labels.page_id WHERE book=?",
-            (book,),
-        ).fetchone()[0]
+        detected = dict(
+            db.execute(
+                """SELECT p.chapter,count(*) FROM labels l JOIN pages p ON p.id=l.page_id
+                   WHERE p.book=? GROUP BY p.chapter""",
+                (book,),
+            )
+        )
     sourced = [n for n in NODES.values() if n["source"]["book"] == book]
+    dossiers = dossiers_by_chapter()
     rows = []
     for i, row in enumerate(chapters):
         last = chapters[i + 1]["page"] if i + 1 < len(chapters) else float("inf")
-        refs = sum(row["page"] <= n["source"]["page"] < last for n in sourced)
+        refs = sum(row["page"] <= int(n["source"]["page"]) < last for n in sourced)
+        marked = detected.get(row["title"], 0)
+        titles = dossiers.get((book, row["title"]), ())
+        workshop = " · ".join(esc(title) for title in sorted(titles))
         rows.append(
-            f"<li>{esc(row['title'])} · PDF p. {row['page']} · {refs} fiche(s) documentée(s)</li>"
+            f"<li><strong>{esc(row['title'])}</strong> · PDF p. {row['page']} · "
+            f"{refs} fiches · {marked} repères formels détectés"
+            + (
+                f"<br><small>Dossiers de l’Atelier · {workshop}</small>"
+                if workshop
+                else "<br><small>Dossier argumenté à établir</small>"
+            )
+            + "</li>"
         )
     text = (
         f"<p>{totals['ouvrages']} ouvrages indexés · {totals['chapitres']} chapitres du Traité repérés. "
-        f"Pour cet ouvrage, {pages} pages ou sections, {len(sourced)} fiches documentées et {count} occurrences de libellés formels détectées.</p>"
+        f"Pour cet ouvrage, {pages} pages ou sections, {len(sourced)} fiches documentées "
+        f"et {sum(detected.values())} repères formels détectés.</p>"
     )
     return (
         text + ("<ol>" + "".join(rows) + "</ol>" if rows else ""),
