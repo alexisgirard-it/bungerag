@@ -132,7 +132,7 @@ Un premier essai plaçant `gemini-4-hydrogen` et `gemini-3.8-flash` en tête san
 | `gemini-3.1-flash-lite` seul | 15,10 s · 2 branches (principale + rivale) | 14,05 s · 1 branche | OK |
 | Cascade `PUBLIC_V3` (`gemini-2.5-flash` en tête) | **13,60 s** · 2 branches (principale + rivale) | **12,97 s** · **2 branches (principale + rivale)** | OK |
 
-La cascade améliore simultanément la rapidité, la couverture des interprétations rivales et la résilience aux quotas journaliers par modèle gratuit. [Mesures](mesures-v3.json)
+La cascade améliore simultanément la rapidité, la couverture des interprétations rivales et la résilience aux quotas journaliers par modèle gratuit. La révision publiée sur le Space confirme la réponse sourcée sur la distinction vérité/efficacité en 40,79 s (chargement à froid compris, 2 sources vérifiées, aucune abstention) et l’ouverture du dossier d’Atelier correspondant en 0,35 s. [Mesures](mesures-v3.json) · [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/aed5f4c9ba5c13b72799878a1aaf8cf32f5fda76)
 
 ## Titres et pages voisines
 
