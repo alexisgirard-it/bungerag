@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.3",
+  "version": "2026-11-26.5",
   "core": [
     "materialisme",
     "systemisme",
@@ -686,6 +686,734 @@
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "if and only if it has met all of its basic needs"
       }
+    },
+    "representation": {
+      "title": "Représentation conceptuelle",
+      "domain": "Sémantique",
+      "kind": "Distinction",
+      "text": "Bunge décrit les modèles et théories comme des représentations conceptuelles de certains traits de réalités effectives ou hypothétiques.",
+      "tags": [
+        "représentation",
+        "modèle",
+        "traits"
+      ],
+      "source": {
+        "book": "treatise-1-semantics-1-sense-and-reference-1974",
+        "page": 96,
+        "folio": "83",
+        "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+        "quote": "conceptual representations of actual or hypothetical bits of reality"
+      }
+    },
+    "purport": {
+      "title": "Dépendances logiques d’un construit",
+      "domain": "Sémantique",
+      "kind": "Proposition",
+      "text": "Le purport d’un construit dans un contexte regroupe les construits dont celui-ci dépend logiquement. Bunge le distingue de l’import, tourné vers les conséquences.",
+      "tags": [
+        "purport",
+        "import",
+        "construit",
+        "dépendance",
+        "sens"
+      ],
+      "source": {
+        "book": "treatise-1-semantics-1-sense-and-reference-1974",
+        "page": 155,
+        "folio": "142",
+        "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+        "quote": "the collection of constructs upon which it depends"
+      }
+    },
+    "signification": {
+      "title": "Signification et signe",
+      "domain": "Sémantique",
+      "kind": "Distinction",
+      "text": "Bunge distingue la signification d’un signe du sens du construit désigné par ce signe.",
+      "tags": [
+        "signification",
+        "signe",
+        "meaning"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 54,
+        "folio": "42",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "the significance of a sign from the meaning of the construct it designates"
+      }
+    },
+    "chose": {
+      "title": "Chose et propriétés",
+      "domain": "Ontologie",
+      "kind": "Proposition",
+      "text": "Bunge annonce qu’il construit la notion de chose réelle à partir d’un individu doté de ses propriétés.",
+      "tags": [
+        "chose",
+        "individu",
+        "propriété",
+        "thing"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 126,
+        "folio": "110",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "the notion of a real thing as a fully qualitied individual"
+      }
+    },
+    "dynamique": {
+      "title": "Dynamique des systèmes",
+      "domain": "Ontologie",
+      "kind": "Théorème présenté",
+      "text": "Dans sa synthèse du systémisme, Bunge énonce que tout système participe à un processus.",
+      "tags": [
+        "dynamique",
+        "processus",
+        "systémisme"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 262,
+        "folio": "246",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "every system is engaged in some process or other"
+      }
+    },
+    "connaissance": {
+      "title": "Connaissance et cognition",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "Bunge distingue la connaissance comme résultat de la cognition comme activité, tout en les reliant.",
+      "tags": [
+        "connaissance",
+        "cognition",
+        "knowledge"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 75,
+        "folio": "61",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "we cannot detach the outcome (knowledge) from the corresponding process (cognition)"
+      }
+    },
+    "conjecture": {
+      "title": "Conjecture et mise à l’épreuve",
+      "domain": "Épistémologie",
+      "kind": "Thèse de méthode",
+      "text": "Pour Bunge, résoudre un problème implique de formuler une conjecture, puis de tester son adéquation au problème.",
+      "tags": [
+        "conjecture",
+        "hypothèse",
+        "problème"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 296,
+        "folio": "286",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "every conjecture poses the further problem of finding out whether it is adequate"
+      }
+    },
+    "controle": {
+      "title": "Vérifiabilité des résultats",
+      "domain": "Épistémologie",
+      "kind": "Thèse de méthode",
+      "text": "Bunge caractérise la science, la technologie, les mathématiques et les humanités modernes par la possibilité de soumettre leurs productions à des contrôles.",
+      "tags": [
+        "contrôle",
+        "preuve",
+        "données",
+        "expérience"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 72,
+        "folio": "60",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "everything in them is checkable"
+      }
+    },
+    "physique": {
+      "title": "Objets des sciences physiques",
+      "domain": "Philosophie des sciences",
+      "kind": "Proposition",
+      "text": "Bunge donne les corps et les champs comme exemples d’objets dont traitent les sciences physiques.",
+      "tags": [
+        "physique",
+        "corps",
+        "champs"
+      ],
+      "source": {
+        "book": "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985",
+        "page": 136,
+        "folio": "125",
+        "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+        "quote": "Physical science studies physical things"
+      }
+    },
+    "technique": {
+      "title": "Extension du concept de technologie",
+      "domain": "Philosophie des sciences",
+      "kind": "Définition de portée",
+      "text": "Bunge inclut dans la technologie les métiers et techniques artisanales et les technologies fondées sur les sciences.",
+      "tags": [
+        "technologie",
+        "technique",
+        "technologie sociale"
+      ],
+      "source": {
+        "book": "treatise-7b-philosophy-of-science-tech-2-life-social-1985",
+        "page": 230,
+        "folio": "220",
+        "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+        "quote": "it includes all the crafts, such as farming and plumbing"
+      }
+    },
+    "changement-moral": {
+      "title": "Décalage du changement moral",
+      "domain": "Éthique",
+      "kind": "Généralisation",
+      "text": "En général, selon Bunge, les changements moraux suivent avec retard ceux des mœurs et des circonstances.",
+      "tags": [
+        "morale",
+        "mœurs",
+        "changement",
+        "normes"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 145,
+        "folio": "133",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "moral changes do not follow automatically changes in their sources"
+      }
+    },
+    "metaethique": {
+      "title": "Morale, éthique et métaéthique",
+      "domain": "Éthique",
+      "kind": "Distinction",
+      "text": "Bunge assigne à l’éthique l’étude et l’évaluation de la morale. La métaéthique analyse et évalue les idées éthiques elles-mêmes.",
+      "tags": [
+        "métaéthique",
+        "éthique",
+        "morale"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 297,
+        "folio": "287",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "ethics studies, systematizes and evaluates morals"
+      }
+    },
+    "intension": {
+      "title": "Sens et référents",
+      "domain": "Sémantique",
+      "kind": "Exemple",
+      "text": "Deux propositions sur les erreurs humaines ont les mêmes référents mais diffèrent par leur sens. Bunge observe que la seconde implique la première.",
+      "tags": [
+        "sens",
+        "référents",
+        "intension"
+      ],
+      "source": {
+        "book": "treatise-1-semantics-1-sense-and-reference-1974",
+        "page": 128,
+        "folio": "115",
+        "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+        "quote": "have the same referents but different senses"
+      }
+    },
+    "interpretation": {
+      "title": "Deux niveaux d’interprétation",
+      "domain": "Sémantique",
+      "kind": "Distinction",
+      "text": "Les symboles d’une théorie désignent des concepts mathématiques dont certains représentent à leur tour des aspects du monde.",
+      "tags": [
+        "interprétation",
+        "symbole",
+        "théorie"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 13,
+        "folio": null,
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "a double interpretation must be shown"
+      }
+    },
+    "extension": {
+      "title": "Extension, vague et description définie",
+      "domain": "Sémantique",
+      "kind": "Dépendance annoncée",
+      "text": "Bunge annonce que son traitement de l’extension, du vague et des descriptions définies présuppose ses théories de la référence, du sens et de la vérité.",
+      "tags": [
+        "extension",
+        "vague",
+        "description"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 145,
+        "folio": "133",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "presuppose the theories of reference, sense, and truth"
+      }
+    },
+    "voisins": {
+      "title": "Disciplines voisines de la sémantique",
+      "domain": "Sémantique",
+      "kind": "Programme du chapitre",
+      "text": "Bunge situe son travail de sémantique par rapport à la philosophie des mathématiques, à la logique, à l’épistémologie et à la métaphysique.",
+      "tags": [
+        "logique",
+        "sémantique",
+        "disciplines"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 178,
+        "folio": "166",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "the nature of the bonds between the semantics of science and its nearest neighbors"
+      }
+    },
+    "proprietes": {
+      "title": "Une propriété est propriété d’une chose",
+      "domain": "Ontologie",
+      "kind": "Thèse",
+      "text": "Dans le cas des propriétés concrètes, un mouvement, une réaction ou un souvenir appartient à une chose donnée.",
+      "tags": [
+        "propriété",
+        "mouvement",
+        "forme"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 73,
+        "folio": "57",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "the property of some thing or other"
+      }
+    },
+    "possible": {
+      "title": "Possibilités réelles",
+      "domain": "Ontologie",
+      "kind": "Thèse",
+      "text": "Une capacité peut être une propriété réelle d’une chose sans être actualisée dans des circonstances défavorables.",
+      "tags": [
+        "possible",
+        "capacité",
+        "germination"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 180,
+        "folio": "164",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "this possibility may not be actualized due to adverse circumstances"
+      }
+    },
+    "flux": {
+      "title": "Changement et choses",
+      "domain": "Ontologie",
+      "kind": "Postulat annoncé",
+      "text": "Bunge défend le postulat ontologique du changement et cherche un concept qui rende compte de plusieurs types de changement scientifique.",
+      "tags": [
+        "flux",
+        "changement",
+        "mouvement"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 231,
+        "folio": "215",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "the ontological postulate that all things are in flux"
+      }
+    },
+    "espace": {
+      "title": "Une théorie relationnelle de l’espace",
+      "domain": "Ontologie",
+      "kind": "Programme du chapitre",
+      "text": "Bunge se propose de construire une théorie relationnelle de l’espace en utilisant des notions élaborées dans les chapitres antérieurs d’ontologie.",
+      "tags": [
+        "espace",
+        "temps",
+        "spacetime",
+        "relationnel"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 299,
+        "folio": "283",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "our relational theory of space using only materials elaborated in the previous chapters"
+      }
+    },
+    "chimie": {
+      "title": "Systèmes concrets et concepts propres",
+      "domain": "Ontologie",
+      "kind": "Distinction",
+      "text": "L’appartenance des systèmes concrets au monde physique n’implique pas que les catégories de la physique suffisent à les expliquer.",
+      "tags": [
+        "chimie",
+        "physique",
+        "réduction"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 61,
+        "folio": "45",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "the categories of physics are insufficient to account for them"
+      }
+    },
+    "identite": {
+      "title": "Une objection à l’identité psychoneurale",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Hypothèse discutée",
+      "text": "Bunge discute une objection à l’identité psychoneurale qui oppose la discrétion des événements cérébraux à l’expérience de continuité.",
+      "tags": [
+        "psychoneural",
+        "identité",
+        "esprit"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 147,
+        "folio": "131",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "the psychoneural identity hypothesis"
+      }
+    },
+    "societe-nouveaute": {
+      "title": "Nouveauté des sociétés humaines",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse",
+      "text": "Bunge décrit la société humaine comme une société animale qui possède aussi de nouvelles propriétés, en réponse à deux positions qu’il expose à l’ouverture du chapitre.",
+      "tags": [
+        "société",
+        "biologisme",
+        "spiritualisme"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 202,
+        "folio": "186",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "human society is an animal society with many and remarkable novel properties"
+      }
+    },
+    "communication": {
+      "title": "Dimension sociale de l’enquête",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "Bunge distingue l’apprentissage privé et l’enquête sociale. La communication permet de partager questions, réponses et résultats.",
+      "tags": [
+        "communication",
+        "enquête",
+        "tradition"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 111,
+        "folio": "97",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "Learning is private but inquiry is social"
+      }
+    },
+    "perception-concepts": {
+      "title": "Perception et connaissance conceptuelle",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "Bunge affirme que la connaissance conceptuelle peut enrichir, corriger et guider la perception et l’action.",
+      "tags": [
+        "perception",
+        "connaissance",
+        "conceptuel"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 141,
+        "folio": null,
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "which enriches, corrects, and guides perception as well as action"
+      }
+    },
+    "concept": {
+      "title": "Deux notions du concept",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "Bunge distingue le concept comme processus mental en psychologie et comme construit élémentaire en philosophie.",
+      "tags": [
+        "conception",
+        "concept",
+        "construit"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 171,
+        "folio": "159",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "There are two different concepts of a concept"
+      }
+    },
+    "inference": {
+      "title": "Inférer une nouvelle proposition",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "Bunge distingue la formation de propositions à partir de matériaux comme les percepts et l’inférence à partir de propositions déjà connues.",
+      "tags": [
+        "inférence",
+        "raisonnement",
+        "données"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 211,
+        "folio": "199",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "by inferring new propositions from a set of known ones"
+      }
+    },
+    "probleme": {
+      "title": "Problèmes pratiques et cognitifs",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "Les problèmes pratiques et cognitifs se distinguent par leur but. Les solutions des uns peuvent aider à traiter les autres.",
+      "tags": [
+        "problème",
+        "recherche",
+        "pratique"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 243,
+        "folio": null,
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "we face practical problems"
+      }
+    },
+    "coherence": {
+      "title": "Organisation des connaissances",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "Bunge décrit les systèmes de connaissances par leur unité et leur cohérence et fixe des limites à la simplification qui déforme leur objet.",
+      "tags": [
+        "cohérence",
+        "système",
+        "idées"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 333,
+        "folio": "323",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "sets of epistemic items possessing unity and coherence"
+      }
+    },
+    "evaluation": {
+      "title": "Vérité et utilité dans l’évaluation",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "Selon l’objet évalué, Bunge privilégie la vérité ou l’utilité parmi les critères de l’activité cognitive.",
+      "tags": [
+        "évaluation",
+        "vérité",
+        "utilité"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 126,
+        "folio": "114",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "some of them for truth and others for usefulness"
+      }
+    },
+    "changement-savoir": {
+      "title": "Évolution des connaissances",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "Bunge souligne que le savoir peut perdre son usage ou être incorporé à des ensembles plus englobants.",
+      "tags": [
+        "connaissance",
+        "progrès",
+        "changement"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 168,
+        "folio": null,
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "incorporated into more comprehensive and deeper bodies of knowledge"
+      }
+    },
+    "types-savoirs": {
+      "title": "Types de connaissance et leurs rapports",
+      "domain": "Épistémologie",
+      "kind": "Question du chapitre",
+      "text": "Bunge demande quels types de connaissances existent, comment les caractériser et quels rapports les unissent.",
+      "tags": [
+        "connaissance",
+        "classification",
+        "philosophie"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 205,
+        "folio": "194",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "what characterizes every one of them, and how are they related"
+      }
+    },
+    "etude-savoir": {
+      "title": "Quatre approches de la connaissance",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "L’étude de la connaissance peut être philosophique, psychologique, sociologique ou historique. Bunge commence par préciser ce que privilégient ces approches.",
+      "tags": [
+        "épistémologie",
+        "psychologie",
+        "sociologie",
+        "histoire"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 251,
+        "folio": "240",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "philosophically, psychologically, sociologically, or historically"
+      }
+    },
+    "axiologie": {
+      "title": "Analyse conceptuelle des valeurs",
+      "domain": "Éthique",
+      "kind": "Méthode",
+      "text": "Le chapitre de théorie de la valeur annonce une analyse des concepts axiologiques. Bunge distingue l’analyse des valeurs et l’acte d’évaluer.",
+      "tags": [
+        "valeur",
+        "évaluation",
+        "axiologie"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 74,
+        "folio": "61",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "in this chapter we shall analyze rather than evaluate"
+      }
+    },
+    "cas-moraux": {
+      "title": "Rôle des cas moraux",
+      "domain": "Éthique",
+      "kind": "Méthode",
+      "text": "Les cas pratiques aident à expliciter et à éprouver normes, postulats et conventions. Bunge indique que certaines applications demandent des hypothèses supplémentaires.",
+      "tags": [
+        "cas",
+        "morale",
+        "application",
+        "hypothèse"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 170,
+        "folio": "158",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "we shall find it necessary to add a few assumptions and definitions"
+      }
+    },
+    "types-ethique": {
+      "title": "Classifier les doctrines éthiques",
+      "domain": "Éthique",
+      "kind": "Méthode",
+      "text": "Bunge distingue plusieurs façons de répartir les doctrines éthiques selon le critère de division choisi.",
+      "tags": [
+        "classification",
+        "doctrine",
+        "naturalisme"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 207,
+        "folio": "197",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "according to the viewpoint or principium divisionis one chooses"
+      }
+    },
+    "ethique-action": {
+      "title": "Éthique et conduite",
+      "domain": "Éthique",
+      "kind": "Thèse",
+      "text": "Bunge présente l’éthique comme une branche de la connaissance qui concerne directement l’action et entretient des liens avec d’autres domaines.",
+      "tags": [
+        "éthique",
+        "action",
+        "conduite"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 253,
+        "folio": "243",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "Ethics is a branch of knowledge that has a direct bearing on action"
+      }
+    },
+    "agir": {
+      "title": "Efficacité et rectitude de l’action",
+      "domain": "Éthique",
+      "kind": "Programme du chapitre",
+      "text": "Bunge ouvre sa théorie de l’action en posant la question des actes qui réalisent nos valeurs avec efficacité pratique et rectitude morale.",
+      "tags": [
+        "action",
+        "efficacité",
+        "rectitude"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 327,
+        "folio": "319",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "in a practically efficient and morally right way"
+      }
+    },
+    "philo-sociale": {
+      "title": "Constitution d’une philosophie sociale",
+      "domain": "Éthique",
+      "kind": "Proposition",
+      "text": "Une philosophie sociale explicite croyances, valeurs et normes sociales et cherche à les organiser de façon cohérente.",
+      "tags": [
+        "philosophie sociale",
+        "normes",
+        "société"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 362,
+        "folio": "354",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "organize them into a coherent system, we obtain a social philosophy"
+      }
+    },
+    "survie": {
+      "title": "Survie et système de valeurs",
+      "domain": "Éthique",
+      "kind": "Thèse normative",
+      "text": "Bunge désigne la survie humaine comme le bien suprême du système de valeurs défendu dans ce livre.",
+      "tags": [
+        "survie",
+        "avenir",
+        "viabilité"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 401,
+        "folio": "393",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "the value system advocated in this book is human survival"
+      }
     }
   },
   "relations": [
@@ -888,6 +1616,326 @@
       "witness": "bien-etre",
       "verb": "entre dans la définition du",
       "kind": "Lien explicite"
+    },
+    {
+      "id": "representation--modele",
+      "origin": "representation",
+      "target": "modele",
+      "witness": "modele",
+      "verb": "se précise avec la définition du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "signification--reference",
+      "origin": "signification",
+      "target": "reference",
+      "witness": "signification",
+      "verb": "se distingue de la notion de",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "purport--signification",
+      "origin": "purport",
+      "target": "signification",
+      "witness": "purport",
+      "verb": "participe à l’étude du sens au-delà de la",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "chose--systemisme",
+      "origin": "chose",
+      "target": "systemisme",
+      "witness": "chose",
+      "verb": "fournit un point de départ ontologique pour le",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "systemisme--dynamique",
+      "origin": "systemisme",
+      "target": "dynamique",
+      "witness": "dynamique",
+      "verb": "se prolonge dans la thèse sur la",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "connaissance--perception",
+      "origin": "connaissance",
+      "target": "perception",
+      "witness": "perception",
+      "verb": "peut être illustrée par l’étude de l’",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "conjecture--controle",
+      "origin": "conjecture",
+      "target": "controle",
+      "witness": "controle",
+      "verb": "ouvre la question du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "controle--realisme",
+      "origin": "controle",
+      "target": "realisme",
+      "witness": "realisme",
+      "verb": "peut orienter l’étude épistémologique du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "physique--modele",
+      "origin": "physique",
+      "target": "modele",
+      "witness": "modele",
+      "verb": "fournit un domaine d’application au",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "technique--controle",
+      "origin": "technique",
+      "target": "controle",
+      "witness": "controle",
+      "verb": "entre dans le champ du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "changement-moral--devoir",
+      "origin": "changement-moral",
+      "target": "devoir",
+      "witness": "changement-moral",
+      "verb": "amène à dater les formulations du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "metaethique--etre-devoir",
+      "origin": "metaethique",
+      "target": "etre-devoir",
+      "witness": "etre-devoir",
+      "verb": "comprend la discussion du passage",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "intension--reference",
+      "origin": "intension",
+      "target": "reference",
+      "witness": "intension",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "interpretation--representation",
+      "origin": "interpretation",
+      "target": "representation",
+      "witness": "interpretation",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "extension--reference",
+      "origin": "extension",
+      "target": "reference",
+      "witness": "extension",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "voisins--raison",
+      "origin": "voisins",
+      "target": "raison",
+      "witness": "voisins",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "proprietes--chose",
+      "origin": "proprietes",
+      "target": "chose",
+      "witness": "proprietes",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "possible--dynamique",
+      "origin": "possible",
+      "target": "dynamique",
+      "witness": "possible",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "flux--changement",
+      "origin": "flux",
+      "target": "changement",
+      "witness": "flux",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "espace--chose",
+      "origin": "espace",
+      "target": "chose",
+      "witness": "espace",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "chimie--biosystemisme",
+      "origin": "chimie",
+      "target": "biosystemisme",
+      "witness": "chimie",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "identite--cerveau",
+      "origin": "identite",
+      "target": "cerveau",
+      "witness": "identite",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "societe-nouveaute--societe",
+      "origin": "societe-nouveaute",
+      "target": "societe",
+      "witness": "societe-nouveaute",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "communication--connaissance",
+      "origin": "communication",
+      "target": "connaissance",
+      "witness": "communication",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "perception-concepts--perception",
+      "origin": "perception-concepts",
+      "target": "perception",
+      "witness": "perception-concepts",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "concept--existence-conceptuelle",
+      "origin": "concept",
+      "target": "existence-conceptuelle",
+      "witness": "concept",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "inference--conjecture",
+      "origin": "inference",
+      "target": "conjecture",
+      "witness": "inference",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "probleme--conjecture",
+      "origin": "probleme",
+      "target": "conjecture",
+      "witness": "probleme",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "coherence--connaissance",
+      "origin": "coherence",
+      "target": "connaissance",
+      "witness": "coherence",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "evaluation--controle",
+      "origin": "evaluation",
+      "target": "controle",
+      "witness": "evaluation",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "changement-savoir--connaissance",
+      "origin": "changement-savoir",
+      "target": "connaissance",
+      "witness": "changement-savoir",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "types-savoirs--connaissance",
+      "origin": "types-savoirs",
+      "target": "connaissance",
+      "witness": "types-savoirs",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "etude-savoir--types-savoirs",
+      "origin": "etude-savoir",
+      "target": "types-savoirs",
+      "witness": "etude-savoir",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "axiologie--valeur",
+      "origin": "axiologie",
+      "target": "valeur",
+      "witness": "axiologie",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "cas-moraux--etre-devoir",
+      "origin": "cas-moraux",
+      "target": "etre-devoir",
+      "witness": "cas-moraux",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "types-ethique--metaethique",
+      "origin": "types-ethique",
+      "target": "metaethique",
+      "witness": "types-ethique",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "ethique-action--metaethique",
+      "origin": "ethique-action",
+      "target": "metaethique",
+      "witness": "ethique-action",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "agir--ethique-action",
+      "origin": "agir",
+      "target": "ethique-action",
+      "witness": "agir",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "philo-sociale--societe",
+      "origin": "philo-sociale",
+      "target": "societe",
+      "witness": "philo-sociale",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "survie--philo-sociale",
+      "origin": "survie",
+      "target": "philo-sociale",
+      "witness": "survie",
+      "verb": "se lit avec",
+      "kind": "Rapprochement éditorial"
     }
   ]
 }

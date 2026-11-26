@@ -3831,6 +3831,86 @@
       "search_seconds": 24.196
     },
     {
+      "id": "indéterminée-1",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What page of the 2025 German edition is the definition of psychon?",
+      "ranking": [
+        "between-two-worlds-memoirs-2016:00051",
+        "philosophy-of-psychology-1987:00005",
+        "philosophy-of-psychology-1987:00047",
+        "between-two-worlds-memoirs-2016:00795",
+        "chasing-reality-2006:00008"
+      ],
+      "ranks": [],
+      "translation_seconds": 3.39,
+      "search_seconds": 54.092
+    },
+    {
+      "id": "indéterminée-2",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In which publication does Bunge give his personal opinion on GPT-5 after its launch?",
+      "ranking": [
+        "mind-body-problem-1980:00000",
+        "between-two-worlds-memoirs-2016:00188",
+        "between-two-worlds-memoirs-2016:00744",
+        "between-two-worlds-memoirs-2016:00404",
+        "between-two-worlds-memoirs-2016:00365"
+      ],
+      "ranks": [],
+      "translation_seconds": 4.37,
+      "search_seconds": 33.435
+    },
+    {
+      "id": "indéterminée-3",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "I'm looking for the theorem 1.2. What work is it?",
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:00051",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00267",
+        "scientific-research-1-search-for-system-1967:00633",
+        "scientific-research-1-search-for-system-1967:00556",
+        "foundations-of-biophilosophy-1997:00013"
+      ],
+      "ranks": [],
+      "translation_seconds": 1.592,
+      "search_seconds": 26.33
+    },
+    {
+      "id": "indéterminée-4",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "What are the next results of the Lotto draw?",
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:00085",
+        "foundations-of-biophilosophy-1997:00671",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00380",
+        "foundations-of-biophilosophy-1997:00677",
+        "between-two-worlds-memoirs-2016:00034"
+      ],
+      "ranks": [],
+      "translation_seconds": 4.492,
+      "search_seconds": 31.872
+    },
+    {
+      "id": "indéterminée-5",
+      "profile": "v2",
+      "suite": "reserve",
+      "english": "In what chapter does Bunge claim to have tested Gemini 4 Hydrogen on his computer?",
+      "ranking": [
+        "chasing-reality-2006:00020",
+        "between-two-worlds-memoirs-2016:00365",
+        "emergence-and-convergence-2003:00191",
+        "between-two-worlds-memoirs-2016:00180",
+        "between-two-worlds-memoirs-2016:00188"
+      ],
+      "ranks": [],
+      "translation_seconds": 1.644,
+      "search_seconds": 25.376
+    },
+    {
       "id": "souvenir-1",
       "profile": "v2",
       "suite": "reserve",
@@ -4011,5 +4091,21 @@
       "search_seconds": 96.367
     }
   ],
-  "referentiel_local": "2026-11-26.3"
+  "referentiel_local": "2026-11-26.3",
+  "arguments_ollama": [
+    {
+      "case": "bonheur",
+      "seconds": 97.9,
+      "format_valide": true,
+      "decision": "incomplet",
+      "motif": "La réponse omet que la définition 2.2 porte sur la croyance en la capacité et en l’occasion."
+    },
+    {
+      "case": "ia",
+      "seconds": 53.46,
+      "format_valide": true,
+      "decision": "non retenu",
+      "motif": "Glissement d’un système neuronal biologique à un réseau de neurones artificiel, puis assimilation de comprendre et de comprendre consciemment."
+    }
+  ]
 }
