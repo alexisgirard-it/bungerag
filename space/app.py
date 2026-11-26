@@ -26,8 +26,8 @@ sys.path.insert(0, str(SRC_DIR))
 
 from presenter import (  # noqa: E402
     AnswerView,
-    link_citations,
     present_result,
+    render_answer_html,
     render_meta,
     render_notice,
     render_sources,
@@ -35,6 +35,7 @@ from presenter import (  # noqa: E402
 )
 from runtime import BoundedLRUCache, QuotaExceeded, QuotaGuard, classify_exception  # noqa: E402
 from theme import build_theme  # noqa: E402
+from wiki_concepts import WIKI_BRIDGE_JS  # noqa: E402
 
 
 os.environ.setdefault("RAG_PROFILE", "public_v3")
@@ -189,12 +190,12 @@ def error_outputs(kind: str, title: str, message: str, request_id: str = ""):
 
 def view_outputs(view: AnswerView):
     status_name = "cached" if view.cached else "complete"
-    answer = link_citations(view.answer_markdown, len(view.sources))
+    answer_html = render_answer_html(view.answer_markdown, len(view.sources))
     return (
         view.public_payload(),
         render_status(status_name, view.elapsed_seconds),
         render_meta(view),
-        answer,
+        answer_html,
         render_sources(view, LOCAL_BOOKS),
         render_notice(view),
     )
@@ -348,36 +349,69 @@ def debate_for_reader(dossier, changes, history, objection, request):
         return debate_turn(dossier, changes, history, objection, generate=None)
 
 
-def legacy_controls(question, submit_btn):
-    with gr.Column(visible=False, elem_id="ai-answer-card") as ai_panel:
-        gr.HTML(ANSWER_HEADING)
+def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):
+    with gr.Column(elem_id="ai-answer-card", elem_classes=["ai-card-shell"]):
         status = gr.HTML("", elem_id="status-output")
         meta = gr.HTML("", elem_id="meta-output")
-        answer = gr.Markdown("", elem_id="answer-copy")
+        answer = gr.HTML("", elem_id="answer-copy")
         notice = gr.HTML("", elem_id="notice-output")
-        gr.HTML(APPARATUS_HEADING)
+        sources_head = gr.HTML("", elem_id="sources-heading")
         sources = gr.HTML("", elem_id="sources-output")
         payload = gr.JSON(value=None, visible=False)
 
     def answer_and_reveal(q_text, request: gr.Request):
-        for res in answer_question(q_text, request):
-            yield (gr.update(visible=True), *res)
+        from reader import card as render_card
 
+        show_follow = tuple(gr.update(visible=False) for _ in followup_buttons)
+        last_res = None
+        for res in answer_question(q_text, request):
+            last_res = res
+            pub = res[0] if isinstance(res[0], dict) else {}
+            is_done = pub.get("status") not in (None, "processing")
+            has_src = bool(res[4]) and "Aucune source" not in str(res[4])
+            head_html = APPARATUS_HEADING if (is_done and has_src) else ""
+            # En cas de quota ou d'erreur fournisseur, afficher immédiatement les passages sourcés hors quota.
+            if is_done and pub.get("status") in ("quota_rejected", "provider_error", "internal_error"):
+                fallback_hits = search_library(q_text)
+                if fallback_hits:
+                    fallback_html = (
+                        '<div class="prose"><p><strong>Passages directs de la bibliothèque</strong> '
+                        "(la synthèse IA est momentanément indisponible, voici les textes vérifiés correspondants) :</p></div>"
+                        + "".join(render_card(s, LOCAL_BOOKS) for s in fallback_hits)
+                    )
+                    res = (res[0], res[1], "", fallback_html, "", res[5])
+                    head_html = ""
+            btns = tuple(gr.update(visible=is_done) for _ in followup_buttons) if is_done else show_follow
+            yield (*res[:4], head_html, res[4], res[5], *btns)
+        if last_res is None:
+            yield (None, "", "", "", "", "", "", *show_follow)
+
+    outputs = [payload, status, meta, answer, sources_head, sources, notice, *followup_buttons]
     submit_btn.click(
         answer_and_reveal,
         inputs=question,
-        outputs=[ai_panel, payload, status, meta, answer, sources, notice],
+        outputs=outputs,
         api_name="answer",
         show_progress="hidden",
-        scroll_to_output=True,
         concurrency_limit=1,
         concurrency_id="rag",
     )
+    for event in triggers:
+        event(
+            answer_and_reveal,
+            inputs=question,
+            outputs=outputs,
+            api_name=False,
+            show_progress="hidden",
+            concurrency_limit=1,
+            concurrency_id="rag",
+        )
+    return answer_and_reveal, outputs
 
 
 with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=True) as demo:
     with gr.Column(elem_id="page-shell"):
-        gr.HTML(MASTHEAD)
+        gr.HTML(MASTHEAD, js_on_load=WIKI_BRIDGE_JS)
         gr.HTML(HERO)
         build_reader(
             legacy_controls,

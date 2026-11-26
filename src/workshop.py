@@ -2,6 +2,7 @@
 
 import itertools
 import json
+import re
 from datetime import date
 from urllib.parse import urlsplit
 
@@ -638,6 +639,8 @@ def choose_dossier(question, node=None):
         "systemisme",
         "eau",
     } or (
+        "emergen" in q and not any(t in q for t in ("esprit", "mental", "psychon", "cerveau", "llm", "langage"))
+    ) or (
         any(t in q for t in ("systemisme", "agregat", "holisme", "proprietes irreductibles"))
         and any(t in q for t in ("tout", "composant", "emerg", "systeme", "holisme", "atomisme"))
     ):
@@ -898,6 +901,70 @@ def checked_supports(branch, evidence, required, case_sources):
     return list(dict.fromkeys(ids))
 
 
+def _pedagogical_tier(entry: dict) -> int:
+    """Classe une étape d’argument selon sa fonction pédagogique logique."""
+    role = fold(entry.get("role", ""))
+    if any(k in role for k in ("definition", "distinction", "concept", "notation", "fait contemporain", "donnee")):
+        return 0
+    if any(k in role for k in ("postulat", "axiome", "principe", "cadre")):
+        return 1
+    if any(k in role for k in ("these", "exemple", "critique", "auteur", "passage")):
+        return 2
+    if any(k in role for k in ("theoreme", "corollaire", "norme", "regle")):
+        return 3
+    return 4
+
+
+def order_argument_steps(steps: list[dict], question: str = "") -> list[dict]:
+    """Ordonne les étapes (Définitions → Postulats → Thèses/Exemples → Théorèmes → Conclusions)
+    en respectant strictement le graphe de dépendances ``supports``."""
+    if len(steps) <= 1:
+        return list(steps)
+    q_tokens = set(re.findall(r"[^\W_]{3,}", fold(question))) if question else set()
+    by_id = {s["id"]: s for s in steps}
+    orig_index = {s["id"]: idx for idx, s in enumerate(steps)}
+    deps: dict[str, set[str]] = {}
+    dependents: dict[str, list[str]] = {s["id"]: [] for s in steps}
+    for s in steps:
+        needed = {
+            p
+            for group in s.get("supports") or ()
+            for p in group
+            if p in by_id and p != s["id"]
+        }
+        deps[s["id"]] = needed
+        for p in needed:
+            dependents[p].append(s["id"])
+
+    def priority(step_id: str) -> tuple[int, int, int]:
+        s = by_id[step_id]
+        tier = _pedagogical_tier(s)
+        title_tokens = set(re.findall(r"[^\W_]{3,}", fold(s.get("title", ""))))
+        relevance = -len(q_tokens & title_tokens) if q_tokens else 0
+        # Privilégier les définitions/postulats directement liés à la question avant les ramifications.
+        return (tier, relevance if tier <= 2 else 0, orig_index[step_id])
+
+    ready_ids = [sid for sid, d in deps.items() if not d]
+    ordered: list[dict] = []
+    seen: set[str] = set()
+    while ready_ids:
+        ready_ids.sort(key=priority)
+        chosen = ready_ids.pop(0)
+        if chosen in seen:
+            continue
+        seen.add(chosen)
+        ordered.append(by_id[chosen])
+        for child in dependents[chosen]:
+            deps[child].discard(chosen)
+            if not deps[child] and child not in seen:
+                ready_ids.append(child)
+    # Filet de sécurité en cas de cycle imprévu.
+    for s in steps:
+        if s["id"] not in seen:
+            ordered.append(s)
+    return ordered
+
+
 def open_question(question, research, *, generate=None, external=None):
     """Les preuves sont vérifiables séparément des hypothèses propres au dossier."""
     steps = []
@@ -927,7 +994,7 @@ def open_question(question, research, *, generate=None, external=None):
         steps.append(entry)
     dossier = dict(
         title=question,
-        steps=steps,
+        steps=order_argument_steps(steps, question),
         objection="Quelle prémisse permet de passer des textes retrouvés à la conclusion proposée ?",
         open="Les sources disponibles laissent la conclusion ouverte.",
     )
@@ -1057,6 +1124,7 @@ def open_question(question, research, *, generate=None, external=None):
                 ),
             ]
         )
+    dossier["steps"] = order_argument_steps(steps, question)
     dossier.update(objection=proposal["objection"], open=proposal["question_ouverte"])
     return dossier
 

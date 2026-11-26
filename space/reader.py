@@ -25,6 +25,7 @@ from library import (
     fold,
     formal_markers,
     read_marker,
+    read_page_content,
     neighbours,
     node_source,
     on_page,
@@ -32,6 +33,7 @@ from library import (
     search_library,
     suggested_nodes,
 )
+from wiki_concepts import annotate_concepts, render_concept_wiki
 from workshop import (
     DOSSIERS,
     assess,
@@ -44,13 +46,14 @@ from workshop import (
     formal_systemism,
     formal_world,
     open_question,
+    order_argument_steps,
 )
 
 esc = html.escape
 
 
 def card(source, local):
-    link = ""
+    actions = []
     attribution = (
         f'<small class="citation-voice">Auteur cité · {esc(source["voice"])}</small>'
         if source.get("voice")
@@ -61,14 +64,100 @@ def card(source, local):
         if source.get("edition_label")
         else ""
     )
-    if local and source["file"].endswith(".pdf") and str(source["page"]).isdecimal():
+    paragraph = (source.get("paragraph") or "").strip()
+    excerpt = (source.get("excerpt") or "").strip()
+    para_html = ""
+    if paragraph and len(paragraph) > len(excerpt) + 25:
+        para_html = (
+            f'<details class="expand-para"><summary>Voir le paragraphe complet</summary>'
+            f'<p lang="en">{esc(paragraph)}</p></details>'
+        )
+    if source.get("book") and source.get("page"):
+        actions.append(
+            f'<button type="button" class="open-reader-btn open-reader-sm" '
+            f'data-read-book="{esc(source["book"])}" '
+            f'data-read-page="{esc(str(source["page"]))}" '
+            f'data-read-excerpt="{esc(excerpt[:100])}">'
+            f'Lire la page &amp; le chapitre →</button>'
+        )
+    if local and source.get("file", "").endswith(".pdf") and str(source.get("page", "")).isdecimal():
         pdf = (local / source["file"]).resolve()
         if pdf.parent == local.resolve() and pdf.is_file():
-            link = f'<a href="/gradio_api/file={quote(str(pdf))}#page={int(source["page"])}" target="_blank" rel="noopener">Ouvrir cette page ↗</a>'
+            actions.append(
+                f'<a class="wiki-pdf-link" href="/gradio_api/file={quote(str(pdf))}#page={int(source["page"])}" '
+                f'target="_blank" rel="noopener">Ouvrir le PDF ↗</a>'
+            )
+    action_bar = f'<div class="card-actions">{"".join(actions)}</div>' if actions else ""
     return (
         f'<article class="reading-card"><header><strong>{esc(source["title"])}</strong> '
         f"<small>{esc(str(source['year']))} · {esc(source['authors'])}</small></header>"
-        f'{imprint}<p class="folio">{esc(source["pages"])}</p>{attribution}<blockquote lang="en">{esc(source["excerpt"])}</blockquote>{link}</article>'
+        f'{imprint}<p class="folio">{esc(source["pages"])}</p>{attribution}'
+        f'<blockquote lang="en">{esc(excerpt)}</blockquote>{para_html}{action_bar}</article>'
+    )
+
+
+def render_book_reader(page_data: dict | None, highlight: str = "", local=None) -> str:
+    """Rend une page complète dans la liseuse interactive avec contexte de chapitre."""
+    if not page_data:
+        return ""
+    chapter = page_data.get("chapter") or "Section sans titre de chapitre"
+    pos = f"Page {page_data.get('chapter_index', 1)} / {page_data.get('chapter_total', 1)} du chapitre"
+    pdf_link = ""
+    if local and page_data.get("file", "").endswith(".pdf") and str(page_data.get("page", "")).isdecimal():
+        pdf = (local / page_data["file"]).resolve()
+        if pdf.parent == local.resolve() and pdf.is_file():
+            href = f"/gradio_api/file={quote(str(pdf))}#page={int(page_data['page'])}"
+            pdf_link = (
+                f'<a class="wiki-pdf-link" href="{esc(href)}" target="_blank" rel="noopener">'
+                f'Ouvrir le PDF local (p. {int(page_data["page"])}) ↗</a>'
+            )
+
+    needle = " ".join((highlight or "").split())[:90]
+    needle_re = re.compile(re.escape(needle), re.IGNORECASE) if len(needle) >= 12 else None
+
+    para_blocks = []
+    for raw_p in page_data.get("paragraphs") or ():
+        safe_p = esc(raw_p)
+        if needle_re:
+            safe_p = needle_re.sub(
+                lambda m: f'<mark class="reader-highlight">{m.group(0)}</mark>',
+                safe_p,
+                count=1,
+            )
+        para_blocks.append(f'<p class="reader-para" lang="en">{safe_p}</p>')
+    if not para_blocks:
+        para_blocks.append('<p class="reader-para">Aucun texte paginé disponible pour cette page.</p>')
+
+    markers_html = ""
+    if page_data.get("markers"):
+        pills = "".join(
+            f'<span class="reader-marker-pill">{esc(m["kind"])} {esc(m["number"])}</span>'
+            for m in page_data["markers"]
+        )
+        markers_html = f'<div class="reader-meta-strip"><strong>Repères sur cette page :</strong> {pills}</div>'
+
+    concepts_html = ""
+    if page_data.get("concepts"):
+        c_links = "".join(
+            f'<a href="#wiki-{esc(k)}" class="wiki-link reader-concept-pill" data-wiki-concept="{esc(k)}">'
+            f'{esc(NODES[k]["title"])}</a>'
+            for k in page_data["concepts"]
+            if k in NODES
+        )
+        if c_links:
+            concepts_html = f'<div class="reader-meta-strip"><strong>Notions de l’Atlas sur cette page :</strong> {c_links}</div>'
+
+    return (
+        '<section class="book-reader-card" aria-label="Liseuse de page">'
+        '<header class="reader-header">'
+        f'<div><span class="reader-kicker">Liseuse · {esc(chapter)} · {esc(pos)}</span>'
+        f'<h3>{esc(page_data["title"])}</h3>'
+        f'<small>{esc(page_data["authors"])} ({esc(str(page_data["year"]))}) · {esc(page_data["pages"])}'
+        + (f' · {esc(page_data["edition_label"])}' if page_data.get("edition_label") else "")
+        + f"</small></div>{pdf_link}</header>"
+        f"{markers_html}{concepts_html}"
+        f'<div class="reader-body">{"".join(para_blocks)}</div>'
+        "</section>"
     )
 
 
@@ -243,18 +332,19 @@ def atlas_view(key, local):
 def dossier_view(dossier, changes, local):
     if not dossier:
         return ""
-    states = assess(dossier["steps"], changes)
+    ordered_steps = order_argument_steps(dossier["steps"], dossier.get("title", ""))
+    states = assess(ordered_steps, changes)
     sections = [f"<h3>{esc(dossier['title'])}</h3>"]
-    title_by_id = {s["id"]: s["title"] for s in dossier["steps"]}
-    for s in dossier["steps"]:
+    title_by_id = {s["id"]: s["title"] for s in ordered_steps}
+    for idx, s in enumerate(ordered_steps, 1):
         state = states[s["id"]]
         sources = "".join(card(r, local) for r in s["sources"])
         for f in s.get("external", []):
             sources += f'<p><a href="{esc(f["url"], quote=True)}" target="_blank" rel="noopener">{esc(f["title"])}</a></p>'
         supports = []
         for group in s["supports"]:
-            names = " et ".join(title_by_id[p] for p in group)
-            unavailable = [title_by_id[p] for p in group if states[p] != "disponible"]
+            names = " et ".join(title_by_id[p] for p in group if p in title_by_id)
+            unavailable = [title_by_id[p] for p in group if p in states and states[p] != "disponible"]
             status = (
                 ", ".join(unavailable) + " à rétablir"
                 if unavailable
@@ -267,12 +357,19 @@ def dossier_view(dossier, changes, local):
             if state == "disponible"
             else ("step-pill-alt" if "remplac" in state else "step-pill-warn")
         )
+        title_html = (
+            f'<a href="#wiki-{esc(s["id"])}" class="wiki-link" data-wiki-concept="{esc(s["id"])}">{esc(s["title"])}</a>'
+            if s["id"] in NODES
+            else esc(s["title"])
+        )
+        body_html = annotate_concepts(esc(s["text"]), exclude_key=s["id"])
         sections.append(
             f'<article class="argument-step">'
-            f'<div class="step-meta"><span class="step-role">{esc(s["role"])}</span>'
+            f'<div class="step-meta"><span class="step-num">Étape {idx}</span>'
+            f'<span class="step-role">{esc(s["role"])}</span>'
             f'<span class="step-pill {pill_cls}">{esc(state)}</span></div>'
-            f"<h4>{esc(s['title'])}</h4>"
-            f"<p>{esc(s['text'])}</p>"
+            f"<h4>{title_html}</h4>"
+            f"<p>{body_html}</p>"
             + (
                 f"<p><strong>Votre hypothèse :</strong> {esc(replacement)}</p>"
                 if replacement
@@ -287,7 +384,8 @@ def dossier_view(dossier, changes, local):
             + "</article>"
         )
     sections.append(
-        f"<h4>Objection</h4><p>{esc(dossier['objection'])}</p><h4>Question ouverte</h4><p>{esc(dossier['open'])}</p>"
+        f"<h4>Objection</h4><p>{annotate_concepts(esc(dossier['objection']))}</p>"
+        f"<h4>Question ouverte</h4><p>{annotate_concepts(esc(dossier['open']))}</p>"
     )
     formalizations = {
         "restriction": formal_rights,
@@ -353,12 +451,12 @@ def render_debate(history, local, notice=""):
             else "<small>Argument initial actif</small>"
         )
         src_html = "".join(card(s, local) for s in item.get("sources") or [])
-        impact = f"<p><strong>Effet sur les prémisses :</strong> {esc(item['impact'])}</p>" if item.get("impact") else ""
+        impact = f"<p><strong>Effet sur les prémisses :</strong> {annotate_concepts(esc(item['impact']))}</p>" if item.get("impact") else ""
         follow_q = f"<p><small>Piste de poursuite : {esc(item['next_question'])}</small></p>" if item.get("next_question") else ""
         blocks.append(
             f'<article class="argument-step"><small>Tour {int(item["turn"])} · {esc(item.get("mode", "débat"))}</small>'
             f"<h4>Objection : {esc(item['user'])}</h4>{mod_note}"
-            f"<p>{esc(item['answer'])}</p>{impact}{follow_q}"
+            f"<p>{annotate_concepts(esc(item['answer']))}</p>{impact}{follow_q}"
             + (
                 f"<details><summary>Appuis sourcés de ce tour ({len(item['sources'])})</summary>{src_html}</details>"
                 if src_html
@@ -376,12 +474,13 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         ((n["title"], k) for k, n in NODES.items()), key=lambda x: fold(x[0])
     )
     coverage_html, book_options, first_book = coverage()
-    initial_atlas_html, _, initial_compare_html = atlas_view("systemisme", local)
+    initial_wiki_html = render_concept_wiki("systemisme", local)
     initial_dossier = DOSSIERS["ia"]()
     initial_steps = [(s["title"], s["id"]) for s in initial_dossier["steps"]]
     research = gr.State([])
     saved_question = gr.State("")
     inline_dossier = gr.State({})
+    reader_state = gr.State({"book": "", "page": "", "highlight": ""})
     dossier = gr.State(initial_dossier)
     changes = gr.State({})
     debate_history = gr.State([])
@@ -391,7 +490,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         ("Atelier philosophique", "work"),
     )
     suggestions = (
-        ("Qu’est-ce que l’émergence ?", "Qu'est-ce que l'émergence pour Bunge ?"),
+        ("L’émergence", "Qu'est-ce que l'émergence pour Bunge ?"),
         ("Causalité vs déterminisme", "Quelle différence entre causalité et déterminisme ?"),
         ("Un LLM peut-il comprendre ?", "Un modèle de langage peut-il comprendre ?"),
         ("Bonheur complet ?", "Peut-on être complètement heureux selon Bunge ?"),
@@ -419,6 +518,10 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         ("Éthique · Valeurs, cas moraux et mœurs (T8)", "ethique_normes"),
         ("Éthique · Métaéthique, société et survie (T8)", "metaethique_survie"),
     ]
+    # Ponts JS → Gradio invisibles pour ouvrir une page Wikipédia de concept ou la liseuse depuis n'importe quel lien bleu/bouton.
+    wiki_bridge = gr.Textbox(value="", elem_id="wiki-bridge", elem_classes=["sr-bridge"], show_label=False)
+    reader_bridge = gr.Textbox(value="", elem_id="reader-bridge", elem_classes=["sr-bridge"], show_label=False)
+
     with gr.Row(elem_id="reader-quicknav"):
         mobile_navigation = [
             (gr.Button(label, size="sm"), section) for label, section in sections
@@ -427,8 +530,8 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         with gr.Tab("Rechercher", id="search"):
             with gr.Column(elem_id="chat-shell"):
                 q = gr.Textbox(
-                    label="Que cherchez-vous dans l’œuvre de Bunge ?",
-                    placeholder="Posez une question, collez une citation ou un symbole (ex. émergence, causalité, ℳ)…",
+                    label="Que dit Mario Bunge à propos de… ?",
+                    placeholder="Ex. l’émergence, la causalité, la psychanalyse, la conscience, ℳ = ⟨D, F, I⟩…",
                     lines=2,
                     max_lines=4,
                     elem_id="question-box",
@@ -439,15 +542,33 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         for short, full in suggestions
                     ]
                 with gr.Row(elem_classes=["action-bar"]):
-                    go = gr.Button("Rechercher les passages", variant="primary", scale=2)
-                    ai_go = gr.Button("Synthèse IA sourcée", variant="secondary", scale=1)
-                legacy(q, ai_go)
-                hits = gr.HTML()
+                    ai_go = gr.Button("Demander à BungeRAG", variant="primary", scale=2)
+                    go = gr.Button("Rechercher les passages", variant="secondary", scale=1)
                 with gr.Row(elem_classes=["action-bar", "followup-bar"]):
                     expand = gr.Button("Déplier l’argument", visible=False)
-                    locate = gr.Button("Voir sur la carte", visible=False)
+                    locate = gr.Button("Voir la fiche Wikipédia", visible=False)
                     discuss = gr.Button("Tester dans l’Atelier", visible=False)
+                legacy_fn, legacy_outputs = legacy(
+                    q,
+                    ai_go,
+                    triggers=(q.submit,),
+                    followup_buttons=(expand, locate, discuss),
+                )
+                hits = gr.HTML()
                 inline = gr.HTML()
+            with gr.Column(elem_id="book-reader-panel", elem_classes=["glass-panel", "book-reader-shell"]):
+                with gr.Row(elem_classes=["reader-nav-bar"]):
+                    reader_prev = gr.Button("← Page précédente", size="sm", visible=False)
+                    reader_jump = gr.Dropdown(
+                        label="Parcourir le chapitre",
+                        choices=[],
+                        value=None,
+                        visible=False,
+                        scale=3,
+                    )
+                    reader_next = gr.Button("Page suivante →", size="sm", visible=False)
+                    reader_close = gr.Button("Fermer la liseuse", size="sm", visible=False)
+                reader_view = gr.HTML("")
 
         with gr.Tab("Atlas des concepts", id="atlas"):
             with gr.Column(elem_classes=["glass-panel"]):
@@ -455,29 +576,28 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     concept = gr.Dropdown(
                         options,
                         value="systemisme",
-                        label="Aller à une notion (113 fiches)",
+                        label="Rechercher un concept dans l’encyclopédie (113 fiches)",
                         scale=3,
                     )
                     to_work = gr.Button("Tester cette idée dans l’Atelier →", scale=1)
+                wiki_view = gr.HTML(initial_wiki_html)
+            with gr.Accordion("Carte mentale interactive du système (6 domaines · 113 notions)", open=True):
                 mindmap = gr.HTML(
                     render_mindmap("systemisme"),
                     css_template=MINDMAP_CSS,
                     js_on_load=MINDMAP_JS,
                 )
-            with gr.Accordion("Fiche détaillée et liens de cette notion", open=False):
-                atlas = gr.HTML(initial_atlas_html)
             with gr.Accordion("Symboles et formules mathématiques (16)", open=False):
                 symbol_filter = gr.Textbox(
                     label="Filtrer par symbole ou mot-clé",
                     placeholder="Ex. ℳ, ⊑, σ, psychon, vérité, bien-être…",
                 )
                 symbol_lexicon = gr.HTML(render_symbol_lexicon())
-            with gr.Accordion("Comparer deux ouvrages · Parcourir les 25 livres", open=False):
-                comparison = gr.HTML(initial_compare_html)
+            with gr.Accordion("Parcourir les 25 livres & comparer deux notions", open=False):
                 with gr.Row(elem_classes=["inline-submit-row"]):
                     paired = gr.Dropdown(
                         options,
-                        label="Comparer avec une autre notion",
+                        label="Comparer la notion active avec une autre",
                         value=None,
                         scale=3,
                     )
@@ -576,14 +696,15 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         )
 
     def atlas_change(key):
-        view_html, _, compare_html = atlas_view(key, local)
-        graph_key = key if key in NODES else "systemisme"
-        return view_html, compare_html, render_mindmap(graph_key)
+        if key in NODES:
+            return render_concept_wiki(key, local), render_mindmap(key)
+        view_html, _, _ = atlas_view(key, local)
+        return view_html, render_mindmap("systemisme")
 
     concept.change(
         atlas_change,
         concept,
-        [atlas, comparison, mindmap],
+        [wiki_view, mindmap],
         api_name=False,
         show_progress="hidden",
     )
@@ -608,6 +729,126 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
 
     open_marker.click(
         select_concept, marker, concept, api_name=False, show_progress="hidden"
+    )
+
+    # Navigation Wikipédia au clic sur n'importe quel mot souligné en bleu (.wiki-link)
+    def open_wiki_from_link(payload):
+        raw = (payload or "").split("::", 1)[0].strip()
+        if not raw or raw not in NODES:
+            return gr.skip(), gr.skip(), gr.skip(), gr.skip()
+        return (
+            gr.Tabs(selected="atlas"),
+            gr.Dropdown(choices=options, value=raw),
+            render_concept_wiki(raw, local),
+            render_mindmap(raw),
+        )
+
+    wiki_bridge.change(
+        open_wiki_from_link,
+        wiki_bridge,
+        [tabs, concept, wiki_view, mindmap],
+        api_name=False,
+        show_progress="hidden",
+    )
+
+    # Liseuse interactive de page et de chapitre
+    def _render_reader_state(book_id: str, page_str: str, highlight: str = ""):
+        data = read_page_content(book_id, page_str)
+        if not data:
+            return (
+                {"book": "", "page": "", "highlight": ""},
+                gr.update(visible=False),
+                gr.update(visible=False, choices=[], value=None),
+                gr.update(visible=False),
+                gr.update(visible=False),
+                "<p>Page indisponible dans l’index.</p>",
+            )
+        return (
+            {
+                "book": data["book"],
+                "page": data["page"],
+                "prev": data["prev_page"],
+                "next": data["next_page"],
+                "highlight": highlight,
+            },
+            gr.update(visible=True, interactive=bool(data["prev_page"])),
+            gr.update(
+                visible=True,
+                choices=data["chapter_pages"],
+                value=data["page"],
+                label=f"Parcourir · {data['chapter'] or data['title']}",
+            ),
+            gr.update(visible=True, interactive=bool(data["next_page"])),
+            gr.update(visible=True),
+            render_book_reader(data, highlight=highlight, local=local),
+        )
+
+    reader_outputs = [
+        reader_state,
+        reader_prev,
+        reader_jump,
+        reader_next,
+        reader_close,
+        reader_view,
+    ]
+
+    def open_reader_from_bridge(payload):
+        parts = (payload or "").split("||")
+        if len(parts) < 2 or not parts[0] or not parts[1]:
+            return (gr.skip(),) * 7
+        book_id, page_str = parts[0].strip(), parts[1].strip()
+        highlight = parts[2].strip() if len(parts) >= 3 else ""
+        return (gr.Tabs(selected="search"), *_render_reader_state(book_id, page_str, highlight))
+
+    reader_bridge.change(
+        open_reader_from_bridge,
+        reader_bridge,
+        [tabs, *reader_outputs],
+        api_name=False,
+        show_progress="hidden",
+    )
+
+    def reader_step(state, direction):
+        if not state or not state.get("book"):
+            return (gr.skip(),) * 6
+        target = state.get(direction) or ""
+        if not target:
+            return (gr.skip(),) * 6
+        return _render_reader_state(state["book"], target, "")
+
+    reader_prev.click(
+        lambda s: reader_step(s, "prev"),
+        reader_state,
+        reader_outputs,
+        api_name=False,
+        show_progress="hidden",
+    )
+    reader_next.click(
+        lambda s: reader_step(s, "next"),
+        reader_state,
+        reader_outputs,
+        api_name=False,
+        show_progress="hidden",
+    )
+    reader_jump.input(
+        lambda s, p: _render_reader_state(s["book"], p, "") if s and s.get("book") and p else (gr.skip(),) * 6,
+        [reader_state, reader_jump],
+        reader_outputs,
+        api_name=False,
+        show_progress="hidden",
+    )
+    reader_close.click(
+        lambda: (
+            {"book": "", "page": "", "highlight": ""},
+            gr.update(visible=False),
+            gr.update(visible=False, choices=[], value=None),
+            gr.update(visible=False),
+            gr.update(visible=False),
+            "",
+        ),
+        outputs=reader_outputs,
+        api_name=False,
+        show_progress="hidden",
     )
 
     def paired_cards(left, right):
@@ -673,13 +914,15 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         return create_dossier(question, request, results)
 
     def ready(d):
+        ordered = order_argument_steps(d.get("steps", []), d.get("title", ""))
+        d = {**d, "steps": ordered}
         return (
             d,
             {},
             dossier_view(d, {}, local),
             gr.Dropdown(
-                choices=[(s["title"], s["id"]) for s in d["steps"]],
-                value=(d["steps"][0]["id"] if d["steps"] else None),
+                choices=[(s["title"], s["id"]) for s in ordered],
+                value=(ordered[0]["id"] if ordered else None),
             ),
         )
 
@@ -768,28 +1011,27 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         inline,
         inline_dossier,
     ]
-    for event in (go.click, q.submit):
-        event(
-            lookup,
-            inputs=q,
-            outputs=lookup_outputs,
-            api_name=False,
-            show_progress="hidden",
-            concurrency_id="reader",
-            concurrency_limit=1,
-        )
+    go.click(
+        lookup,
+        inputs=q,
+        outputs=lookup_outputs,
+        api_name=False,
+        show_progress="hidden",
+        concurrency_id="reader",
+        concurrency_limit=1,
+    )
 
     for btn, preset in suggestion_buttons:
         def _run_preset(request: gr.Request, text=preset):
-            for step_out in lookup(text, request):
+            for step_out in legacy_fn(text, request):
                 yield (text, *step_out)
 
         btn.click(
             _run_preset,
-            outputs=[q, *lookup_outputs],
+            outputs=[q, *legacy_outputs],
             api_name=False,
             show_progress="hidden",
-            concurrency_id="reader",
+            concurrency_id="rag",
             concurrency_limit=1,
         )
 
@@ -830,9 +1072,8 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         if not nodeids:
             return (
                 gr.Tabs(selected="atlas"),
-                gr.Dropdown(value="systemisme"),
-                initial_atlas_html,
-                initial_compare_html,
+                gr.Dropdown(choices=options, value="systemisme"),
+                initial_wiki_html,
                 render_mindmap("systemisme"),
             )
         key = nodeids[0]
@@ -841,7 +1082,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     locate.click(
         focus,
         [q, saved_question, research],
-        [tabs, concept, atlas, comparison, mindmap],
+        [tabs, concept, wiki_view, mindmap],
         api_name=False,
         show_progress="hidden",
     )
@@ -1035,4 +1276,4 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         api_name=False,
         show_progress="hidden",
     )
-    return concept, atlas, comparison, mindmap, atlas_change
+    return concept, wiki_view, mindmap, atlas_change

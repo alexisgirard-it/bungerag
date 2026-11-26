@@ -61,6 +61,8 @@ class SourceView:
     edition: str = ""
     voice: str = ""
     edition_label: str = ""
+    book: str = ""
+    page_raw: str = ""
 
     def public_payload(self) -> dict[str, object]:
         report = {"index": self.index, "title": self.title, "pages": self.pages, "excerpt": self.excerpt}
@@ -143,12 +145,26 @@ def _source_view(raw: Any, index: int) -> SourceView:
     locator = _get(raw, "locator", {})
     name = _get(locator, "file", "")
     physical = _get(locator, "pdf_page", 0)
-    edition = _get(locator,"edition","")
-    return SourceView(edition=edition if isinstance(edition,str) and re.fullmatch("[0-9a-f]{64}",edition) else "", index=index, title=title[:240], pages=pages[:220], excerpt=excerpt,
-                      file=name if isinstance(name,str) and re.fullmatch(r"[a-z0-9-]+\.pdf",name) else "",
-                      pdf_page=physical if type(physical) is int and physical>0 else 0,
-                      voice=_text(_get(locator,"voice",""))[:140],
-                      edition_label=_text(_get(locator,"edition_label",""))[:220])
+    edition = _get(locator, "edition", "")
+    book_id = _text(_first((_get(raw, "book"), _get(locator, "book")), ""))[:180]
+    page_raw = (
+        str(physical)
+        if type(physical) is int and physical > 0
+        else _text(_first((_get(locator, "page"), _get(locator, "section")), ""))[:80]
+    )
+    return SourceView(
+        edition=edition if isinstance(edition, str) and re.fullmatch("[0-9a-f]{64}", edition) else "",
+        index=index,
+        title=title[:240],
+        pages=pages[:220],
+        excerpt=excerpt,
+        file=name if isinstance(name, str) and re.fullmatch(r"[a-z0-9-]+\.pdf", name) else "",
+        pdf_page=physical if type(physical) is int and physical > 0 else 0,
+        voice=_text(_get(locator, "voice", ""))[:140],
+        edition_label=_text(_get(locator, "edition_label", ""))[:220],
+        book=book_id,
+        page_raw=page_raw,
+    )
 
 
 def _citation_validation(answer: str, source_count: int, abstained: bool) -> tuple[str, str, tuple[int, ...]]:
@@ -302,32 +318,100 @@ def render_meta(view: AnswerView) -> str:
     )
 
 
+def render_answer_html(markdown: str, source_count: int) -> str:
+    """Convertit la réponse sourcée en HTML sûr avec renvois [n] et liens Wikipédia bleus."""
+    from wiki_concepts import annotate_concepts
+
+    text = normalize_groups(markdown or "").strip()
+    if not text:
+        return ""
+
+    def _inline(line: str) -> str:
+        # Déjà échappé (< et >) par present_result, mais on protège si appelé directement.
+        safe = line.replace("&lt;", "\x00LT\x00").replace("&gt;", "\x00GT\x00")
+        safe = html.escape(safe).replace("\x00LT\x00", "&lt;").replace("\x00GT\x00", "&gt;")
+        safe = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", safe)
+        safe = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"<em>\1</em>", safe)
+        safe = re.sub(r"`([^`]+)`", r"<code>\1</code>", safe)
+
+        def _cite(m: re.Match[str]) -> str:
+            num = int(m.group(1))
+            if 1 <= num <= source_count:
+                return f'<a class="cite-badge" href="#source-{num}">[{num}]</a>'
+            return m.group(0)
+
+        return CITATION_RE.sub(_cite, safe)
+
+    blocks: list[str] = []
+    list_items: list[str] = []
+
+    def _flush_list() -> None:
+        if list_items:
+            blocks.append("<ul>" + "".join(list_items) + "</ul>")
+            list_items.clear()
+
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            _flush_list()
+            continue
+        heading = re.match(r"^(#{1,3})\s+(.+)$", line)
+        if heading:
+            _flush_list()
+            level = min(4, len(heading.group(1)) + 1)
+            blocks.append(f"<h{level}>{_inline(heading.group(2))}</h{level}>")
+            continue
+        bullet = re.match(r"^[-*•]\s+(.+)$", line)
+        if bullet:
+            list_items.append(f"<li>{_inline(bullet.group(1))}</li>")
+            continue
+        _flush_list()
+        if line.startswith("&gt;") or line.startswith(">"):
+            blocks.append(f"<blockquote>{_inline(line.lstrip('&gt;> '))}</blockquote>")
+        else:
+            blocks.append(f"<p>{_inline(line)}</p>")
+    _flush_list()
+    rendered = '<div class="prose">' + "".join(blocks) + "</div>"
+    return annotate_concepts(rendered)
+
+
 def render_sources(view: AnswerView, local_books: Path | None = None) -> str:
     if not view.sources:
         return '<div class="sources-empty">Aucune source affichée pour cette réponse.</div>'
     cards = []
     for source in view.sources:
         excerpt = html.escape(source.excerpt) or "Extrait court non disponible."
-        reader = ""
+        actions: list[str] = []
+        if source.book and source.page_raw:
+            actions.append(
+                f'<button type="button" class="open-reader-btn open-reader-sm" '
+                f'data-read-book="{html.escape(source.book)}" '
+                f'data-read-page="{html.escape(source.page_raw)}" '
+                f'data-read-excerpt="{html.escape(source.excerpt[:100])}">'
+                f'Lire la page &amp; le chapitre →</button>'
+            )
         if local_books and source.file and source.pdf_page:
             pdf = (local_books / source.file).resolve()
             if pdf.parent == local_books.resolve() and pdf.is_file():
                 href = "/gradio_api/file=" + quote(str(pdf)) + "#page=" + str(source.pdf_page)
-                reader = f'<a href="{html.escape(href)}" target="_blank" rel="noopener">Ouvrir la page du PDF</a>'
+                actions.append(
+                    f'<a class="wiki-pdf-link" href="{html.escape(href)}" target="_blank" rel="noopener">Ouvrir le PDF ↗</a>'
+                )
+        action_bar = f'<div class="source-actions">{"".join(actions)}</div>' if actions else ""
         expanded = (
             " open"
             if source.pdf_page or source.pages.startswith("ch") or " · section ch" in source.pages
             else ""
         )
         voice = f'<small>Auteur cité · {html.escape(source.voice)}</small>' if source.voice else ""
-        imprint = f'<p><small>Édition indexée · {html.escape(source.edition_label)}</small></p>' if source.edition_label else ""
+        imprint = f'<p class="source-imprint"><small>Édition indexée · {html.escape(source.edition_label)}</small></p>' if source.edition_label else ""
         cards.append(
             f'<details class="source-card" id="source-{source.index}"{expanded}>'
             f'<summary><span class="source-number">[{source.index}]</span>'
             f'<span class="source-heading"><strong>{html.escape(source.title)}</strong>'
             f'<small>{html.escape(source.pages)}</small></span>'
             '<span class="source-toggle" aria-hidden="true">+</span></summary>'
-            f'{imprint}{voice}<blockquote>« {excerpt} »</blockquote>{reader}</details>'
+            f'<div class="source-body">{imprint}{voice}<blockquote>« {excerpt} »</blockquote>{action_bar}</div></details>'
         )
     return '<div class="source-list">' + "".join(cards) + "</div>"
 

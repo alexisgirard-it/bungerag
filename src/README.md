@@ -8,7 +8,7 @@ Ces modules sont les seuls copiés dans le bundle public du Space (aucun corpus,
 - **Bibliothèque & référentiel :** `library.py`, `referentiel.json`, `formal_logic.py`, `workshop.py`, `contemporary.py`
 - **Recherche hybride & reclassement :** `search.py`, `retrieve.py`, `rerank.py`, `definitions.py`
 - **Génération, preuves & garde-fous :** `rag.py`, `evidence.py`, `generate.py`, `decompose.py`, `citations.py`, `output_guard.py`, `config.py`, `schemas.py`
-- **Interface Gradio (`space/`) :** `app.py`, `reader.py`, `atlas_graph.py` (carte mentale SVG interactive & lexique des symboles), `assets/style.css`
+- **Interface Gradio (`space/`) :** `app.py`, `reader.py`, `atlas_graph.py` (carte mentale SVG interactive & lexique des symboles), `wiki_concepts.py` (liens bleus Wikipédia & pages encyclopédiques de concepts), `presenter.py`, `theme.py`, `styles.css`
 
 ## 2. Pipeline hors-ligne (ingestion, audits, benchmarks & déploiement)
 Scripts exécutés uniquement en local sur le corpus privé (jamais déployés sur le Space) :

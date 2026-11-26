@@ -35,6 +35,7 @@ SPACE = f"{USER}/bungerag"
 SPACE_FILES = (
     "app.py",
     "atlas_graph.py",
+    "wiki_concepts.py",
     "README.md",
     "requirements.txt",
     "presenter.py",

@@ -346,6 +346,7 @@ def search_library(question, *, english=None, semantic=True, limit=5):
             item["excerpt"] = limited_excerpt(
                 snippets[pid], set(terms + original), phrase
             )
+            item["paragraph"] = " ".join(snippets[pid].split())[:1200]
             voice = quotation_voice(
                 item["book"], item["page"], item["edition"], item["excerpt"]
             )
@@ -585,6 +586,108 @@ def chapter_source(book, chapter):
         pages=location(source),
     )
     return source
+
+
+def read_page_content(book: str, page: str) -> dict | None:
+    """Charge une page complète, ses paragraphes, sa navigation de chapitre et ses repères."""
+    if not book or not page:
+        return None
+    with closing(connect()) as db:
+        row = db.execute(
+            "SELECT id, book, page, folio, chapter FROM pages WHERE book=? AND page=?",
+            (book, str(page)),
+        ).fetchone()
+        if row is None:
+            return None
+        pid = row["id"]
+        item = describe_page(db, pid)
+        item["pages"] = location(item)
+        paragraphs = [
+            " ".join(r["text"].split())
+            for r in db.execute(
+                """SELECT t.text FROM spans s
+                   JOIN passages t ON t.rowid BETWEEN s.first_row AND s.last_row
+                   WHERE s.page_id=? ORDER BY t.rowid""",
+                (pid,),
+            ).fetchall()
+            if (r["text"] or "").strip()
+        ]
+        prev_row = db.execute(
+            "SELECT page FROM pages WHERE book=? AND id < ? ORDER BY id DESC LIMIT 1",
+            (book, pid),
+        ).fetchone()
+        next_row = db.execute(
+            "SELECT page FROM pages WHERE book=? AND id > ? ORDER BY id ASC LIMIT 1",
+            (book, pid),
+        ).fetchone()
+        chapter = item.get("chapter") or ""
+        if chapter:
+            ch_rows = db.execute(
+                "SELECT id, page, folio FROM pages WHERE book=? AND chapter=? ORDER BY id",
+                (book, chapter),
+            ).fetchall()
+        else:
+            ch_rows = db.execute(
+                "SELECT id, page, folio FROM pages WHERE book=? AND id BETWEEN ? AND ? ORDER BY id",
+                (book, pid - 12, pid + 12),
+            ).fetchall()
+        chapter_pages = []
+        chapter_index = 1
+        for idx, cr in enumerate(ch_rows, 1):
+            if cr["id"] == pid:
+                chapter_index = idx
+            folio_txt = f"p. {cr['folio']}" if cr["folio"] else f"PDF {cr['page']}"
+            chapter_pages.append((f"{idx}/{len(ch_rows)} · {folio_txt}", str(cr["page"])))
+        markers = [
+            {
+                "uid": r["uid"],
+                "kind": LABELS_FR.get(r["kind"], r["kind"]),
+                "number": r["number"],
+                "excerpt": r["excerpt"],
+            }
+            for r in db.execute(
+                "SELECT uid, kind, number, excerpt FROM labels WHERE page_id=? ORDER BY rowid",
+                (pid,),
+            ).fetchall()
+        ]
+    item.update(
+        paragraphs=paragraphs,
+        prev_page=str(prev_row["page"]) if prev_row else "",
+        next_page=str(next_row["page"]) if next_row else "",
+        chapter_pages=chapter_pages,
+        chapter_index=chapter_index,
+        chapter_total=len(ch_rows),
+        markers=markers,
+        concepts=on_page(book, str(page)),
+    )
+    return item
+
+
+def chapter_formal_markers(book: str, chapter: str, limit: int = 12) -> list[dict]:
+    """Renvoie les définitions, postulats, théorèmes et corollaires repérés dans un chapitre."""
+    if not book or not chapter or not DATABASE.is_file():
+        return []
+    with closing(connect()) as db:
+        rows = db.execute(
+            """SELECT l.uid, l.kind, l.number, l.excerpt, p.page, p.folio
+               FROM labels l JOIN pages p ON p.id=l.page_id
+               WHERE p.book=? AND p.chapter=?
+               ORDER BY CAST(p.page AS INTEGER), l.rowid LIMIT ?""",
+            (book, chapter, limit),
+        ).fetchall()
+    return [
+        {
+            "uid": r["uid"],
+            "kind_raw": r["kind"],
+            "kind": LABELS_FR.get(r["kind"], r["kind"]),
+            "number": r["number"],
+            "excerpt": r["excerpt"],
+            "page": str(r["page"]),
+            "folio": str(r["folio"] or r["page"]),
+            "book": book,
+        }
+        for r in rows
+    ]
 
 
 def read_marker(uid):
