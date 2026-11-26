@@ -2,6 +2,7 @@
 
 import argparse
 import json
+from contextlib import closing
 from pathlib import Path
 from time import monotonic
 
@@ -9,6 +10,9 @@ import lancedb
 import numpy as np
 import torch
 from sentence_transformers import SentenceTransformer
+
+from evaluate_reader import ranks as page_ranks
+from library import connect
 
 ROOT = Path(__file__).resolve().parents[1]
 MODELS = {
@@ -25,10 +29,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name", choices=MODELS)
     parser.add_argument("--full", action="store_true")
+    parser.add_argument("--reserve", action="store_true", help="Évalue aussi le jeu paginé gelé.")
     args = parser.parse_args()
+    if args.reserve and not args.full:
+        parser.error("--reserve requiert l’index complet (--full)")
     fixture = json.loads((ROOT / "eval/passages-eval.json").read_text())
     database = lancedb.connect(ROOT / "index/lancedb").open_table("bunge_512")
-    data = database.to_arrow().select(["chunk_id", "text", "vector"]).to_pylist()
+    columns = ["chunk_id", "text", "vector"]
+    if args.reserve:
+        columns.extend(["book", "page_start", "page_end"])
+    data = database.to_arrow().select(columns).to_pylist()
     pool = set(fixture["pool"])
     rows = sorted(
         (r for r in data if args.full or r["chunk_id"] in pool),
@@ -59,6 +69,8 @@ def main():
     if args.name == "qwen":
         vectors = np.array([r["vector"] for r in rows], dtype=np.float32)
     elif part.exists():
+        if json.loads((directory / (prefix + "-ids.json")).read_text()) != ids:
+            raise ValueError("L’ordre des passages du cache diffère de celui de l’index")
         vectors = np.load(part)
     else:
         pieces = []
@@ -108,6 +120,49 @@ def main():
     )
     (directory / (prefix + "-scores.json")).write_text(json.dumps(result, indent=2))
     print(json.dumps(result), flush=True)
+
+    if args.reserve:
+        reserve_file = ROOT / "eval/lecture-reservee.jsonl"
+        cases = [json.loads(line) for line in reserve_file.read_text().splitlines()]
+        cases = [case for case in cases if case["evidence_groups"]]
+        with closing(connect()) as db:
+            editions = dict(db.execute("SELECT book,edition FROM books"))
+        if any(
+            editions.get(group["book"]) != group["edition"]
+            for case in cases
+            for group in case["evidence_groups"]
+        ):
+            raise ValueError("Le jeu réservé et l’index utilisent des éditions différentes")
+        start = monotonic()
+        queries = model.encode(
+            [case["question"] for case in cases],
+            prompt_name="query",
+            batch_size=4,
+            normalize_embeddings=True,
+        ).astype("float32")
+        indices = np.argsort(-(queries @ vectors.T), axis=1)
+        trials = []
+        for case, order in zip(cases, indices):
+            positions = page_ranks(case["evidence_groups"], [rows[i] for i in order])
+            trials.append(dict(id=case["id"], family=case["family"], ranks=positions))
+        first = [
+            min((r for r in row["ranks"] if r is not None), default=float("inf"))
+            for row in trials
+        ]
+        report = dict(
+            model=model_id,
+            revision=revision,
+            count=len(rows),
+            hit1=sum(r == 1 for r in first),
+            hit5=sum(r <= 5 for r in first),
+            mrr=round(sum(1 / r for r in first) / len(first), 4),
+            query_seconds=round(monotonic() - start, 2),
+            trials=trials,
+        )
+        (directory / "reserve-scores.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+        )
+        print({k: v for k, v in report.items() if k != "trials"}, flush=True)
 
 
 if __name__ == "__main__":

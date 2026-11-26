@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.12",
+  "version": "2026-11-26.13",
   "core": [
     "materialisme",
     "systemisme",
@@ -1723,7 +1723,8 @@
       "target": "materialisme",
       "witness": "existence-conceptuelle",
       "verb": "permet de préciser la portée du",
-      "kind": "Rapprochement éditorial"
+      "kind": "Rapprochement éditorial",
+      "comparison": "La thèse de Scientific Materialism porte sur ce qui existe réellement. Dans le tome I du Traité, le prédicat de la définition porte sur l’existence conceptuelle. Si les deux passages ont ces portées, affirmer l’existence conceptuelle d’un construit est compatible avec le matérialisme."
     },
     {
       "id": "existence-conceptuelle--existence-dictionnaire",
@@ -1733,15 +1734,6 @@
       "verb": "se compare avec",
       "kind": "Comparaison entre ouvrages",
       "comparison": "Le Traité distingue l’existence conceptuelle de l’existence physique. Le Dictionnaire précise de quel ensemble de construits l’existence conceptuelle dépend, en prenant une théorie pour exemple."
-    },
-    {
-      "id": "materialisme--existence-conceptuelle",
-      "origin": "materialisme",
-      "target": "existence-conceptuelle",
-      "witness": "existence-conceptuelle",
-      "verb": "s’articule avec la distinction formulée dans",
-      "kind": "Rapprochement éditorial",
-      "comparison": "La thèse de Scientific Materialism porte sur ce qui existe réellement. Dans le tome I du Traité, le prédicat de la définition porte sur l’existence conceptuelle. Si les deux passages ont ces portées, affirmer l’existence conceptuelle d’un construit est compatible avec le matérialisme."
     },
     {
       "id": "autre-preuve--unique",
