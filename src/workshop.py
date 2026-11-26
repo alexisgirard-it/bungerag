@@ -22,6 +22,11 @@ CURRENT_FACT = {
     "url": META_CARD,
     "text": "La fiche du modèle décrit un Transformer autorégressif qui reçoit et produit du texte.",
 }
+HYDROGEN_SPEC = {
+    "title": "Documentation de Gemini 4 Hydrogen · Google, novembre 2026",
+    "url": "https://aistudio.google.com/docs/models/gemini-4-hydrogen",
+    "text": "La documentation indique une fenêtre de 1 048 576 jetons, entrées et sorties comprises.",
+}
 
 
 def proposition(key):
@@ -207,6 +212,35 @@ def causal_fatalism():
     )
 
 
+def context_understanding():
+    capacity = step(
+        "fenetre",
+        "Capacité de traitement annoncée",
+        HYDROGEN_SPEC["text"],
+        "Fait contemporain daté",
+    )
+    capacity["external"] = [HYDROGEN_SPEC]
+    criterion = step(
+        "critere-application",
+        "Critère pour le cas étudié",
+        "Supposons que comprendre une explication exige de pouvoir en retrouver les prémisses et en tirer les conséquences dans un cas nouveau.",
+        "Hypothèse de transposition",
+    )
+    conclusion = step(
+        "epreuve-contexte",
+        "Une épreuve de transfert",
+        "Avec ce critère, la taille de la fenêtre donne une limite d’entrée et de sortie. Pour établir la capacité de compréhension ainsi définie, il reste à vérifier le transfert de l’argument sur des cas nouveaux.",
+        "Conclusion conditionnelle",
+        [["niveaux-comprehension", "fenetre", "critere-application"]],
+    )
+    return dict(
+        title="Une grande fenêtre de contexte suffit-elle à établir la compréhension ?",
+        steps=[proposition("niveaux-comprehension"), capacity, criterion, conclusion],
+        objection="Un lecteur peut choisir un critère plus faible et mesurer seulement la restitution fidèle d’une description. La formulation retenue change alors l’épreuve.",
+        open="Le système conserve-t-il les mêmes conclusions si les prémisses sont reformulées et modifie-t-il les conclusions quand une prémisse décisive change ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
@@ -215,11 +249,17 @@ DOSSIERS = {
     "existence": existence,
     "mecanisme": mechanism,
     "fatalisme": causal_fatalism,
+    "contexte": context_understanding,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if "compr" in q and any(
+        term in q
+        for term in ("fenetre de contexte", "million de jetons", "million de tokens")
+    ):
+        return "contexte"
     if node in {"fatalisme", "distinction-fatum", "emerson-fatum", "wilson-fatum"} or (
         "fatalis" in q
         and any(term in q for term in ("caus", "determin", "emerson", "wilson"))

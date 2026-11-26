@@ -4634,6 +4634,44 @@
       "pdf_page": 93,
       "folio": 82,
       "secondes": 0.95
+    },
+    "lecture_cpu": [
+      {
+        "family": "citation",
+        "target": "PDF p. 78",
+        "seconds": 0.36
+      },
+      {
+        "family": "formule",
+        "target": "PDF p. 93",
+        "seconds": 0.86
+      },
+      {
+        "family": "édition",
+        "target": "PDF p. 135",
+        "seconds": 0.86
+      },
+      {
+        "family": "citation",
+        "target": "PDF p. 46",
+        "seconds": 0.36
+      },
+      {
+        "family": "formule",
+        "target": "PDF p. 93",
+        "seconds": 0.36
+      },
+      {
+        "family": "souvenir",
+        "target": "PDF p. 32",
+        "seconds": 15.93
+      }
+    ],
+    "notices_editions": 25,
+    "atelier": {
+      "dossiers_locaux": 8,
+      "appuis": 28,
+      "modifications": 15
     }
   }
 }

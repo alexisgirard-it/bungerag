@@ -49,3 +49,10 @@ Le 26 novembre, le Space CPU a servi le profil V3. La recette sur le navigateur 
 Le référentiel public étendu contient 77 fiches et 65 liens. Sur les cinq demandes à plusieurs références, il permet de retrouver toutes les pages annotées pour quatre demandes après ouverture de l’argument. Ces cas sont les mêmes que ceux du premier audit. Le résultat documente une vérification de la couverture sur ces questions connues. [Inventaire des chapitres](COUVERTURE-TRAITE.md)
 
 La révision suivante retrouve aussi la notation ℳ = ⟨D, F, I⟩ en saisie directe. Le test navigateur a affiché la page 82 du livre, PDF p. 93, puis le lexique des symboles dans l’Atlas. [Révision testée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/8df36386f741039ec1f999034d64a7d77d22ece3)
+
+
+## Éditions, attribution et vérification des dossiers
+
+Les 25 exemplaires sont identifiés dans le référentiel par leur SHA-256 et les indications relevées dans le livre ou l’EPUB. Le PDF de *Causality and Modern Science* correspond à l’édition revue de Dover (1979, ISBN 978-0-486-23728-2). La phrase citée est attribuée à Emerson, la discussion d’une objection distincte à H. van Rensselaer Wilson. La recette publique a vérifié l’attribution, la navigation et l’effet de deux contestations successives. Un dossier avec une donnée contemporaine fournie par le lecteur conserve la source et la date avec le statut « à vérifier ». [Révision éditions et attribution](https://huggingface.co/spaces/alexisgirard/bungerag/commit/58328b02fd300a2280a8c5a9bb068c7ec2987776)
+
+Les six recherches chronométrées sur le CPU du Space ont affiché leur page attendue. Les cinq recherches par citation ou notation ont pris entre 0,36 et 0,86 seconde dans ce scénario, et la recherche par souvenir français a pris 15,93 secondes. L’échantillon est trop petit pour estimer un p95 de production. L’appel de rédaction lancé en parallèle a rencontré un verrou à l’import de PyTorch sur cette révision. Cette panne de chargement a motivé la sérialisation des importations et des initialisations des modèles.

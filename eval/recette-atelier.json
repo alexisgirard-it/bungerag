@@ -1,0 +1,34 @@
+{
+  "séquences": [
+    {
+      "dossier": "monde",
+      "étapes": [
+        {"changer": "supremum", "texte": "", "attendu": {"unique": "disponible"}},
+        {"changer": "autre-preuve", "texte": "", "attendu": {"unique": "justification suspendue"}},
+        {"changer": "supremum", "texte": null, "attendu": {"unique": "disponible"}},
+        {"changer": "monde", "texte": "Le monde est traité comme un individu maximal.", "attendu": {"monde": "remplacée", "unique": "justification suspendue"}},
+        {"changer": "autre-preuve", "texte": null, "attendu": {"unique": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "ia",
+      "étapes": [
+        {"changer": "critere-neural", "texte": "", "attendu": {"inference-ia": "justification suspendue", "condition-fonctionnelle": "disponible"}},
+        {"changer": "critere-fonctionnel", "texte": "L'observation du comportement est un indice à corroborer.", "attendu": {"condition-fonctionnelle": "justification suspendue"}},
+        {"changer": "critere-neural", "texte": null, "attendu": {"inference-ia": "disponible", "condition-fonctionnelle": "justification suspendue"}},
+        {"changer": "autoregressif", "texte": "", "attendu": {"inference-ia": "justification suspendue", "condition-fonctionnelle": "justification suspendue"}},
+        {"changer": "autoregressif", "texte": null, "attendu": {"inference-ia": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "fatalisme",
+      "étapes": [
+        {"changer": "emerson-fatum", "texte": "", "attendu": {"distinction-fatum": "disponible"}},
+        {"changer": "wilson-fatum", "texte": "", "attendu": {"distinction-fatum": "disponible"}},
+        {"changer": "fatalisme", "texte": "Le destin est connaissable et modifiable.", "attendu": {"fatalisme": "remplacée", "distinction-fatum": "justification suspendue"}},
+        {"changer": "fatalisme", "texte": null, "attendu": {"distinction-fatum": "disponible"}},
+        {"changer": "determinisme-causal", "texte": "", "attendu": {"distinction-fatum": "justification suspendue"}}
+      ]
+    }
+  ]
+}

@@ -21,7 +21,7 @@ from evidence import answer_with_evidence
 from generate import generate, generate_json  # noqa: E402
 from output_guard import has_long_verbatim_overlap, short_excerpt  # noqa: E402
 from schemas import RAGResult, Source, make_result  # noqa: E402
-from search import search  # noqa: E402
+from search import MODEL_LOCK, search  # noqa: E402
 
 
 SYSTEM = """Tu es BungeRAG, un assistant qui restitue fidelement la philosophie de Mario Bunge.
@@ -127,7 +127,8 @@ def ranked_hits(question, english, cfg, k, keep):
         hits, preferred = candidates(question, english, hits, search, cfg.table)
     if not hits:
         return []
-    scores = get_reranker().score(question, [h["text"] for h in hits])
+    with MODEL_LOCK:
+        scores = get_reranker().score(question, [h["text"] for h in hits])
     for hit, score in zip(hits, scores):
         hit["rerank_score"] = float(score)
     hits.sort(key=lambda h: h["rerank_score"], reverse=True)

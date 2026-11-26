@@ -56,25 +56,33 @@ def connect():
 
 @lru_cache(maxsize=1)
 def translator():
-    from transformers import MarianMTModel, MarianTokenizer
+    from search import MODEL_LOCK
 
-    model_id = "Helsinki-NLP/opus-mt-fr-en"
-    revision = "c4aed37b318c763fd177aa449b44e3b783cc6c02"
-    return (
-        MarianTokenizer.from_pretrained(model_id, revision=revision),
-        MarianMTModel.from_pretrained(model_id, revision=revision).eval(),
-    )
+    with MODEL_LOCK:
+        from transformers import MarianMTModel, MarianTokenizer
+
+        model_id = "Helsinki-NLP/opus-mt-fr-en"
+        revision = "c4aed37b318c763fd177aa449b44e3b783cc6c02"
+        return (
+            MarianTokenizer.from_pretrained(model_id, revision=revision),
+            MarianMTModel.from_pretrained(model_id, revision=revision).eval(),
+        )
 
 
 @lru_cache(maxsize=192)
 def translate(question):
-    import torch
+    from search import MODEL_LOCK
 
-    tokenizer, model = translator()
-    batch = tokenizer(question, return_tensors="pt", truncation=True, max_length=256)
-    with torch.inference_mode():
-        ids = model.generate(**batch, num_beams=1, max_length=100)
-    return tokenizer.decode(ids[0], skip_special_tokens=True)
+    with MODEL_LOCK:
+        tokenizer, model = translator()
+        import torch
+
+        batch = tokenizer(
+            question, return_tensors="pt", truncation=True, max_length=256
+        )
+        with torch.inference_mode():
+            ids = model.generate(**batch, num_beams=1, max_length=100)
+        return tokenizer.decode(ids[0], skip_special_tokens=True)
 
 
 def suggested_nodes(question, limit=6):
@@ -142,7 +150,9 @@ def location(row):
 def edition_label(book, edition):
     info = CATALOG.get("editions", {}).get(book)
     if info and info["edition"] == edition:
-        return f"{info['label']} · ISBN {info['isbn']}" if info["isbn"] else info["label"]
+        return (
+            f"{info['label']} · ISBN {info['isbn']}" if info["isbn"] else info["label"]
+        )
     return ""
 
 

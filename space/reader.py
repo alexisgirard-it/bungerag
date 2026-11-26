@@ -362,6 +362,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     ("Existence des construits", "existence"),
                     ("Explication et réfraction", "mecanisme"),
                     ("Causalité et fatalisme", "fatalisme"),
+                    ("Contexte long et compréhension", "contexte"),
                 ],
                 label="Dossiers de lecture",
             )

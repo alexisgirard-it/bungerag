@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.9",
+  "version": "2026-11-26.10",
   "core": [
     "materialisme",
     "systemisme",
@@ -1564,6 +1564,25 @@
         "edition": "d973592af4a6ea5ecdff94903bd3c04f79891589f2e0767326e155959480ae5a",
         "quote": "virtually all of the objections that are ever raised against determinism"
       }
+    },
+    "niveaux-comprehension": {
+      "title": "Degrés de compréhension",
+      "domain": "Épistémologie",
+      "kind": "Distinction",
+      "text": "Bunge distingue plusieurs degrés de compréhension. Une description renseigne sur un processus. La compréhension progresse quand cette description est obtenue à partir d’un modèle de son mécanisme.",
+      "tags": [
+        "compréhension",
+        "degrés",
+        "description",
+        "mécanisme"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 17,
+        "folio": "5",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "we understand it even better if the description follows from some mechanismic model"
+      }
     }
   },
   "relations": [
@@ -2142,6 +2161,14 @@
       "witness": "wilson-fatum",
       "verb": "est cité à l’appui de la",
       "kind": "Lien explicite"
+    },
+    {
+      "id": "niveaux-comprehension--mecanisme",
+      "origin": "niveaux-comprehension",
+      "target": "mecanisme",
+      "witness": "niveaux-comprehension",
+      "verb": "éclaire le rôle d’un modèle dans l’",
+      "kind": "Rapprochement éditorial"
     }
   ],
   "editions": {
