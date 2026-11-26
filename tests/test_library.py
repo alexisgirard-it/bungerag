@@ -1,6 +1,6 @@
 import sqlite3
 
-from library import formal_hits, lexical_match
+from library import formal_hits, lexical_match, notation_matches
 
 
 def test_literal_matching_checks_words_after_stemming():
@@ -20,12 +20,22 @@ def test_numbered_lemma_lookup_uses_full_number_and_the_kind():
         INSERT INTO pages VALUES (56,'ethics','Values');
         INSERT INTO labels VALUES
           (56,'postulate','2.1','The full realization'),
+          (56,'lemma','2.1','A related lemma'),
           (56,'theorem','2.1','Nobody can be'),
           (56,'postulate','2.10','Something else');
     """)
     assert [row["text"] for row in formal_hits(db, "Où est le postulat 2.1 ?")] == [
         "The full realization"
     ]
+    assert [row["text"] for row in formal_hits(db, "Où est le lemme 2.1 ?")] == [
+        "A related lemma"
+    ]
+
+
+def test_pasted_formula_keeps_mathematical_variables():
+    assert list(notation_matches("ℳ=⟨D,F,I⟩")) == ["modele"]
+    assert list(notation_matches("Où se trouve «ℳ=⟨D,F,I⟩» ?")) == ["modele"]
+    assert not list(notation_matches("ℳ=⟨d,F,I⟩"))
 
 
 def test_attribution_uses_the_quote_and_edition():

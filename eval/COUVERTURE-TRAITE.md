@@ -2,7 +2,7 @@
 
 Inventaire local du 26 novembre 2026. Une fiche indique qu’un point précis du chapitre a été identifié et justifié. Le nombre de fiches ne mesure pas la proportion de l’argumentation couverte.
 
-Référentiel `2026-11-26.15` · 87 fiches et 74 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
+Référentiel `2026-11-26.16` · 91 fiches et 81 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
 
 ## Treatise 1 - Semantics I: Sense and Reference
 
@@ -42,7 +42,7 @@ Référentiel `2026-11-26.15` · 87 fiches et 74 liens dans la bibliothèque, do
 | System | 17 | Systémisme, De la molécule à l’eau | 32 |
 | Chemism | 61 | Systèmes concrets et concepts propres | 29 |
 | Life | 91 | Biosystémisme | 25 |
-| Mind | 140 | Une objection à l’identité psychoneurale | 89 |
+| Mind | 140 | Une objection à l’identité psychoneurale, Le matérialisme émergentiste comme cadre, Émergence des propriétés mentales | 89 |
 | Society | 202 | Nouveauté des sociétés humaines | 42 |
 | A Systemic World View | 261 | Dynamique des systèmes | 9 |
 
@@ -82,7 +82,7 @@ Référentiel `2026-11-26.15` · 87 fiches et 74 liens dans la bibliothèque, do
 
 | Chapitre | PDF | Fiches dans ce chapitre | Repères formels détectés |
 |---|---:|---|---:|
-| Life Science From Biology To Psychology | 12 | Psychologie et sciences de la vie | 0 |
+| Life Science From Biology To Psychology | 12 | Psychologie et sciences de la vie, Le tome VII renvoie à l’étude de l’esprit du tome IV | 0 |
 | Social Science From Anthropology To History | 119 | Société et interactions | 0 |
 | Technology From Engineering To Decision Theory 1. Generalities | 229 | Extension du concept de technologie | 0 |
 
@@ -91,7 +91,7 @@ Référentiel `2026-11-26.15` · 87 fiches et 74 liens dans la bibliothèque, do
 | Chapitre | PDF | Fiches dans ce chapitre | Repères formels détectés |
 |---|---:|---|---:|
 | Roots Of Values | 24 | Besoins primaires et secondaires, Valeur primaire, Les besoins comme déficits | 32 |
-| Welfare | 54 | Bonheur complet, Incompatibilité des valeurs, Une limite au bonheur complet, Bien-être | 16 |
+| Welfare | 54 | Bonheur complet, Incompatibilité des valeurs, Une limite au bonheur complet, Bien-être, Le bonheur et le bien-être ont des critères distincts | 16 |
 | Value Theory | 74 | Analyse conceptuelle des valeurs | 8 |
 | Roots Of Morals | 105 | Droits moraux, Devoir moral exigible, Droits et bien-être d’autrui | 28 |
 | Morality Changes | 145 | Décalage du changement moral | 1 |

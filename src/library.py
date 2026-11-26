@@ -12,6 +12,8 @@ from contextlib import closing
 from functools import lru_cache
 from pathlib import Path
 
+from evidence import OPERATORS
+
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE = ROOT / "index/lecture.sqlite"
 CATALOG = json.loads(Path(__file__).with_name("referentiel.json").read_text())
@@ -31,6 +33,8 @@ FORMAL_LABELS = {
     "norm": "norm",
     "hypothese": "hypothesis",
     "hypothesis": "hypothesis",
+    "lemme": "lemma",
+    "lemma": "lemma",
 }
 STOP = set(
     """a an and are as at be by can could did do does for from has have how i in into is it its me of on or that the their this to was what when where which who why with would according bunge mario book volume passage page find remember dans de des du en et il je la le les où ou par pour que quel quelle quels quelles qui se sur un une vous est cherche retrouver livre tome""".split()
@@ -181,7 +185,13 @@ def query_phrases(q):
     quoted = re.findall(r'[«“"]([^»”"]{8,220})[»”"]', q)
     if quoted:
         return quoted[:2]
-    return [q.rstrip(" ?.")] if 3 <= len(q.split()) <= 22 else []
+    return [q.rstrip(" ?.")] if is_formula(q) or 3 <= len(q.split()) <= 22 else []
+
+
+def is_formula(text):
+    return any(mark in text for mark in OPERATORS) and not re.search(
+        r"[^\W\d_]{4,}", text
+    )
 
 
 def form_match(question):
@@ -207,14 +217,23 @@ def lexical_match(text, phrase):
 
 def literal_span(text, phrase):
     pattern = r"[^\W_]+"
-    wanted = re.findall(pattern, fold(phrase))
+    notation = any(mark in phrase for mark in OPERATORS)
+    if notation:
+        pattern += f"|[{re.escape(OPERATORS + '()[]{},_')}]"
+
+    def normalized(token):
+        if notation and len(token) == 1:
+            return unicodedata.normalize("NFKC", token)
+        return fold(token)
+
+    wanted = [normalized(token) for token in re.findall(pattern, phrase)]
     if not wanted:
         return None
     tokens = list(re.finditer(pattern, text))
-    normalized = [fold(token[0]) for token in tokens]
+    content = [normalized(token[0]) for token in tokens]
     count = len(wanted)
     for start in range(len(tokens) - count + 1):
-        if normalized[start : start + count] == wanted:
+        if content[start : start + count] == wanted:
             return tokens[start].start(), tokens[start + count - 1].end()
     return None
 
@@ -225,6 +244,7 @@ def search_library(question, *, english=None, semantic=True, limit=5):
         return []
     with closing(connect()) as db:
         exact = []
+        formula = is_formula(question)
         phrases = query_phrases(question)
         for phrase in phrases:
             tokens = re.findall(r"[^\W_]+", fold(phrase))[:30]
@@ -235,6 +255,8 @@ def search_library(question, *, english=None, semantic=True, limit=5):
                     if lexical_match(row["text"], phrase)
                 )
         notation = list(notation_matches(question))
+        if formula and not (exact or notation):
+            return []
         if english is None:
             if exact or notation:
                 english = question
@@ -274,9 +296,10 @@ def search_library(question, *, english=None, semantic=True, limit=5):
             source = node_source(key)
             ranked[source["id"]] += 1
             snippets.setdefault(source["id"], source["excerpt"])
-        add(fts(db, terms[:28]), 2)
-        if original != terms:
-            add(fts(db, original[:28]), 0.7)
+        if not formula:
+            add(fts(db, terms[:28]), 2)
+            if original != terms:
+                add(fts(db, original[:28]), 0.7)
         if semantic and not exact and not notation:
             from search import search
 
@@ -362,7 +385,10 @@ def quotation_voice(book, page, edition, excerpt):
 
 
 def notation_matches(question):
-    normalized = fold(question).strip(" ?.")
+    def layout(text):
+        return "".join(unicodedata.normalize("NFKC", text).strip(" ?.").split())
+
+    variants = {layout(question), *(layout(phrase) for phrase in query_phrases(question))}
     variables = set(re.findall(r"(?<!\w)[A-Z](?!\w)", question))
     for key, node in NODES.items():
         notation = node.get("notation")
@@ -370,10 +396,10 @@ def notation_matches(question):
             continue
         formula = notation["formula"]
         required = set(re.findall(r"(?<!\w)[A-Z](?!\w)", formula))
-        if normalized == fold(formula) or (
+        if layout(formula) in variants or (
             len(required) >= 2
             and required <= variables
-            and lexical_match(normalized, node["title"])
+            and lexical_match(question, node["title"])
         ):
             yield key
 

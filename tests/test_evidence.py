@@ -108,6 +108,17 @@ def test_epub_has_section_offset(database):
     assert "caractère 44" in s["pages"]
 
 
+def test_mathematical_quotes_keep_the_operator_and_variable(database):
+    source = passage("ch01", "They write P → Q followed by an example.")
+    assert locate(source, "P → Q", database)["extrait"] == "P → Q"
+    assert locate(source, "P ↔ Q", database) is None
+    assert locate(source, "P → ¬Q", database) is None
+    assert locate(source, "p → Q", database) is None
+    closed = passage("ch01", "They write ¬(P ∧ Q) followed by an example.")
+    assert locate(closed, "¬(P ∧ Q)", database)["extrait"] == "¬(P ∧ Q)"
+    assert locate(closed, "¬P ∧ Q", database) is None
+
+
 def test_grouped_citations_do_not_hide_invalid_indices():
     assert validate_citations("A [2, 5].", 5)["indices"] == [2, 5]
     assert validate_citations("A [1, 90].", 2)["invalid_indices"] == [90]

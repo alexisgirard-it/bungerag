@@ -1,8 +1,9 @@
 {
-  "version": "2026-11-26.15",
+  "version": "2026-11-26.16",
   "core": [
     "materialisme",
     "systemisme",
+    "cadre-emergentiste",
     "mecanisme",
     "realisme",
     "raison",
@@ -1603,6 +1604,82 @@
         "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
         "quote": "we understand it even better if the description follows from some mechanismic model"
       }
+    },
+    "cadre-emergentiste": {
+      "title": "Le matérialisme émergentiste comme cadre",
+      "domain": "Ontologie",
+      "kind": "Portée d’un cadre philosophique",
+      "text": "Bunge présente le matérialisme émergentiste, ou systémiste, comme un cadre général pour l’enquête scientifique sur les rapports entre le corps et l’esprit. La résolution de problèmes particuliers relève de cette enquête.",
+      "tags": [
+        "matérialisme",
+        "émergentisme",
+        "systémisme",
+        "esprit"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 200,
+        "folio": "184",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "emergentist (or systemist) materialism does not entail claiming that it has already solved the mind-body problem"
+      }
+    },
+    "emergence-esprit": {
+      "title": "Émergence des propriétés mentales",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Thèse ontologique",
+      "text": "Dans son approche psychobiologique, Bunge réserve les propriétés mentales émergentes aux animaux dotés d’un système nerveux plastique très complexe.",
+      "tags": [
+        "plasticité",
+        "émergence",
+        "propriétés mentales",
+        "psychobiologie"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 200,
+        "folio": "184",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "mentality is an emergent property possessed only by animals endowed with a very complex plastic nervous system"
+      }
+    },
+    "renvoi-psychologie-esprit": {
+      "title": "Le tome VII renvoie à l’étude de l’esprit du tome IV",
+      "domain": "Philosophie des sciences",
+      "kind": "Renvoi explicite",
+      "text": "Au moment de situer la psychologie parmi les sciences de la vie et les sciences sociales, Bunge renvoie à son approche biologique de l’esprit dans le tome IV.",
+      "tags": [
+        "psychologie",
+        "sciences de la vie",
+        "esprit"
+      ],
+      "source": {
+        "book": "treatise-7b-philosophy-of-science-tech-2-life-social-1985",
+        "page": 14,
+        "folio": "3",
+        "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+        "quote": "in harmony with the biological approach to the matter of mind adopted in Vol. 4"
+      }
+    },
+    "bonheur-et-bien-etre": {
+      "title": "Le bonheur et le bien-être ont des critères distincts",
+      "domain": "Éthique",
+      "kind": "Distinction",
+      "text": "À la suite de sa définition du bien-être par les besoins fondamentaux, Bunge restreint le bonheur à un domaine plus étroit. Certains désirs ou certaines attentes peuvent rester insatisfaits chez un animal dont les besoins de base sont comblés.",
+      "tags": [
+        "bonheur",
+        "bien-être",
+        "désirs",
+        "attentes",
+        "besoins"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 59,
+        "folio": "46",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "The concept of happiness is much narrower than that of well-being"
+      }
     }
   },
   "relations": [
@@ -2200,6 +2277,65 @@
       "witness": "niveaux-comprehension",
       "verb": "éclaire le rôle d’un modèle dans l’",
       "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "materialisme--cadre-emergentiste",
+      "origin": "materialisme",
+      "target": "cadre-emergentiste",
+      "witness": "cadre-emergentiste",
+      "verb": "prend une forme particulière dans",
+      "kind": "Rapprochement éditorial",
+      "comparison": "Scientific Materialism expose le noyau de la famille des matérialismes. Dans le tome IV, Bunge précise le rôle de sa forme émergentiste pour l’étude de l’esprit."
+    },
+    {
+      "id": "systemisme--cadre-emergentiste",
+      "origin": "systemisme",
+      "target": "cadre-emergentiste",
+      "witness": "cadre-emergentiste",
+      "verb": "s’articule dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "cadre-emergentiste--emergence-esprit",
+      "origin": "cadre-emergentiste",
+      "target": "emergence-esprit",
+      "witness": "emergence-esprit",
+      "verb": "oriente l’étude de l’",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "psychologie--emergence-esprit",
+      "origin": "psychologie",
+      "target": "emergence-esprit",
+      "witness": "renvoi-psychologie-esprit",
+      "verb": "renvoie au tome où figure l’",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "emergence-esprit--psychon",
+      "origin": "emergence-esprit",
+      "target": "psychon",
+      "witness": "psychon",
+      "verb": "fait intervenir la plasticité qui entre dans la définition du",
+      "kind": "Rapprochement éditorial",
+      "comparison": "Le tome IV discute les conditions d’apparition de propriétés mentales. Scientific Materialism définit le psychon par la plasticité d’un système neuronal. Le passage définitoire, à lui seul, laisse ouverte la capacité de ce système à penser."
+    },
+    {
+      "id": "cerveau--emergence-esprit",
+      "origin": "cerveau",
+      "target": "emergence-esprit",
+      "witness": "emergence-esprit",
+      "verb": "se lit avec la thèse de l’",
+      "kind": "Rapprochement éditorial",
+      "comparison": "Le texte de 1980 attribue la pensée à des systèmes neuronaux. Le tome IV caractérise la mentalité comme une propriété émergente dans des conditions biologiques précisées."
+    },
+    {
+      "id": "bonheur--bien-etre",
+      "origin": "bonheur",
+      "target": "bien-etre",
+      "witness": "bonheur-et-bien-etre",
+      "verb": "se distingue du",
+      "kind": "Lien explicite"
     }
   ],
   "editions": {

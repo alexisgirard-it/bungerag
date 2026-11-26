@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_SOURCES = 12
+OPERATORS = "<>=≠≤≥±∓¬∀∃+−→←↔⇒⇔⟶⟷⟹⟺∈∉∋⊂⊆⊃⊇∧∨⊢⊨×÷∪∩∅≈≡∝⋅√∑∏∂∇∞⟨⟩"
 
 
 def plain(text):
@@ -26,7 +27,7 @@ def canonical(text):
     return "".join(
         c
         for c in unicodedata.normalize("NFKC", text).casefold()
-        if c.isalnum() or c in "<>=≠≤≥±∓¬∀∃+"
+        if c.isalnum() or c in OPERATORS
     )
 
 
@@ -144,24 +145,39 @@ def reading_order(raw, start, db, book, page):
 
 def locate(passage, quote, db, *, fragment=False):
     """Copie les mots à partir du chunk et localise leur ligne dans l'original."""
+    if not isinstance(quote, str):
+        return None
+    mathematical = any(operator in quote for operator in OPERATORS)
     minimum = 1 if fragment else 3
-    if not isinstance(quote, str) or not minimum <= len(quote.split()) <= 20:
+    if len(quote.split()) > 20 or (not mathematical and len(quote.split()) < minimum):
         return None
     needle = canonical(quote)
-    if len(needle) < (2 if fragment else 7):
+    min_anchor = 2 if fragment else (3 if mathematical else 7)
+    if len(needle) < min_anchor:
         return None
     key, indexes = offsets(passage.raw)
     pos = unique_match(key, needle)
     if pos is None:
         return None
     a, b = indexes[pos], indexes[pos + len(needle) - 1] + 1
+    if mathematical:
+        from library import literal_span
+
+        span = literal_span(passage.raw, quote)
+        if span is None:
+            return None
+        a, b = span
     # Un ancrage ne peut pas commencer ou finir au milieu d'un mot.
     if (a and passage.raw[a - 1].isalnum()) or (
         b < len(passage.raw) and passage.raw[b].isalnum()
     ):
         return None
-    exact = plain(passage.raw[a:b])
-    if not minimum <= len(exact.split()) <= 20 or len(exact) > 220:
+    matched = passage.raw[a:b]
+    exact = " ".join(matched.split()) if mathematical else plain(matched)
+    if (
+        len(exact.split()) > 20 or len(exact) > 220
+        or (not mathematical and len(exact.split()) < minimum)
+    ):
         return None
     locator = {
         "book": passage.book,
@@ -178,6 +194,8 @@ def locate(passage, quote, db, *, fragment=False):
         if found is None:
             return None
         first, last = positions[found], positions[found + len(needle) - 1]
+        if mathematical and literal_span("\n".join(line for _, line in lines[first : last + 1]), quote) is None:
+            return None
         locator.update(
             pdf_page=int(passage.page),
             folio=folio,
@@ -431,6 +449,7 @@ def answer_with_evidence(question, hits, cfg, generate_json):
         frame = (
             "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. "
             "Les principes généraux orientent la lecture. Pour un cas particulier, cite aussi un passage qui traite réellement de ce cas. "
+            "Une formule courte peut servir d’appui si ses signes et ses variables sont reproduits exactement. "
             "Traite séparément les parties documentées de la question. "
             "Pour une citation discutée par Bunge, distingue son auteur, la réaction de Bunge et les arguments qu'il donne. "
             "Utilise des appuis distincts pour l'attribution de la citation et pour la position de Bunge.\n"

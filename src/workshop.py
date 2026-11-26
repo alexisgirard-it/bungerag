@@ -112,7 +112,7 @@ def understanding():
         "Ce que la fiche technique permet de conclure",
         "Avec le critère neurobiologique retenu, une description de la production de texte ne suffit pas à établir que le système comprend.",
         "Conclusion conditionnelle",
-        [["cerveau", "analogie", computation["id"], bridge["id"]]],
+        [["cerveau", "emergence-esprit", "analogie", computation["id"], bridge["id"]]],
     )
     rival = step(
         "condition-fonctionnelle",
@@ -124,6 +124,8 @@ def understanding():
     return dict(
         title="Un modèle de langage peut-il comprendre ?",
         steps=[
+            proposition("cadre-emergentiste"),
+            proposition("emergence-esprit"),
             proposition("cerveau"),
             proposition("analogie"),
             computation,
@@ -132,8 +134,8 @@ def understanding():
             inference,
             rival,
         ],
-        objection="Une différence de substrat suffit-elle à exclure un mécanisme fonctionnel comparable ? Les passages cités discutent l’analogie informatique et la pensée humaine. Étendre ces thèses au modèle de 2024 exige un argument.",
-        open="Quel critère de compréhension départagerait ces hypothèses et quelle observation permettrait de le tester ?",
+        objection="Une différence de substrat suffit-elle à exclure un mécanisme fonctionnel comparable ? Le cadre émergentiste oriente l’enquête. Étendre ses thèses sur la pensée humaine au modèle de 2024 exige aussi des données sur ses mécanismes.",
+        open="Quel critère de compréhension départagerait ces hypothèses et quelle observation indépendante permettrait de le tester ?",
     )
 
 

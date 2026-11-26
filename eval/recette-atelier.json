@@ -29,7 +29,9 @@
         {"changer": "critere-fonctionnel", "texte": "L'observation du comportement est un indice à corroborer.", "attendu": {"condition-fonctionnelle": "justification suspendue"}},
         {"changer": "critere-neural", "texte": null, "attendu": {"inference-ia": "disponible", "condition-fonctionnelle": "justification suspendue"}},
         {"changer": "autoregressif", "texte": "", "attendu": {"inference-ia": "justification suspendue", "condition-fonctionnelle": "justification suspendue"}},
-        {"changer": "autoregressif", "texte": null, "attendu": {"inference-ia": "disponible"}}
+        {"changer": "autoregressif", "texte": null, "attendu": {"inference-ia": "disponible"}},
+        {"changer": "critere-fonctionnel", "texte": null, "attendu": {"condition-fonctionnelle": "disponible"}},
+        {"changer": "emergence-esprit", "texte": "", "attendu": {"inference-ia": "justification suspendue", "condition-fonctionnelle": "disponible"}}
       ]
     },
     {

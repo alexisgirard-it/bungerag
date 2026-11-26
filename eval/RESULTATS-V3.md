@@ -80,6 +80,10 @@ Sur le même CPU du Space, après chargement des modèles, les 20 recherches dir
 
 Dans *Scientific Realism*, les 37 sections associées au sommaire affichent désormais le titre de l’essai ou de la partie. Les 38 identifiants de section et les textes extraits correspondent à l’index existant. Une recherche dans le premier essai affiche son titre complet, avec la section ch05. Un renvoi produit par la rédaction conserve en plus la position du caractère. [Notice et intitulés](../src/referentiel.json)
 
+La reprise sur le Space retrouve la section EPUB en 0,35 seconde. Sur le cas libre, la rédaction soumet deux branches en 49,72 secondes. La seconde présente la précision comme un indice sous contrôle, et la première décrit une subsomption au lieu de déclarer une prédiction validée. L’étape reliant un modèle au mécanisme réel mérite encore un contrôle explicite. Le comportement des deux branches après suspension est confirmé. [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/f9862f78d7cdd86e2d1f20e16c4d92bea46dec66)
+
+La recette locale vérifie 91 citations et 81 relations. Les appuis supplémentaires relient l’émergentisme du tome IV, la place de la psychologie au tome VII et la définition du psychon. En éthique, le tome VIII fournit un repère pour distinguer bonheur et bien-être. Les contrôles des formules préservent les opérateurs, les variables et la portée des parenthèses. Une notation concise sans appui exact donne une absence de passage. [Couverture du Traité](COUVERTURE-TRAITE.md)
+
 ## Titres et pages voisines
 
 Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.
