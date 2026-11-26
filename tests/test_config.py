@@ -154,4 +154,6 @@ def test_public_v3_uses_best_first_cascade():
     fast = parse_gemini_models(PUBLIC_V3.translator_backend)
     assert reasoning[:3] == ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-2.5-flash"]
     assert "gemini-3.1-flash-lite" in reasoning
+    assert all("|" not in model for model in reasoning)
     assert fast[0] == "gemini-3.5-flash-lite"
+    assert all("|" not in model for model in fast)

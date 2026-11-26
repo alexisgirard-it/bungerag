@@ -8,6 +8,13 @@ from urllib.parse import quote
 
 import gradio as gr
 
+from atlas_graph import (
+    MINDMAP_CSS,
+    MINDMAP_JS,
+    render_mindmap,
+    render_symbol_lexicon,
+)
+from contemporary import fetch_contemporary_fact
 from formal_logic import FOL_VERIFIERS
 from library import (
     CATALOG,
@@ -30,6 +37,7 @@ from workshop import (
     assess,
     choose_dossier,
     contemporary_claim,
+    debate_turn,
     formal_efficiency,
     formal_happiness,
     formal_rights,
@@ -323,7 +331,37 @@ def dossier_view(dossier, changes, local):
     return "".join(sections)
 
 
-def build_reader(legacy, local, create_dossier, max_chars):
+def render_debate(history, local, notice=""):
+    if not history and not notice:
+        return "<p><small>Posez une objection ou une question de suivi : l’Atelier conserve vos prémisses suspendues/remplacées et recherche des contre-passages sourcés dans Bunge à chaque tour.</small></p>"
+    blocks = []
+    for item in history or []:
+        mods = item.get("active_changes") or {}
+        mod_note = (
+            f"<small>Hypothèses actives du lecteur ({len(mods)} prémisse(s) modifiée(s))</small>"
+            if mods
+            else "<small>Argument initial actif</small>"
+        )
+        src_html = "".join(card(s, local) for s in item.get("sources") or [])
+        impact = f"<p><strong>Effet sur les prémisses :</strong> {esc(item['impact'])}</p>" if item.get("impact") else ""
+        follow_q = f"<p><small>Piste de poursuite : {esc(item['next_question'])}</small></p>" if item.get("next_question") else ""
+        blocks.append(
+            f'<article class="argument-step"><small>Tour {int(item["turn"])} · {esc(item.get("mode", "débat"))}</small>'
+            f"<h4>Objection : {esc(item['user'])}</h4>{mod_note}"
+            f"<p>{esc(item['answer'])}</p>{impact}{follow_q}"
+            + (
+                f"<details><summary>Appuis sourcés de ce tour ({len(item['sources'])})</summary>{src_html}</details>"
+                if src_html
+                else ""
+            )
+            + "</article>"
+        )
+    if notice:
+        blocks.append(f'<p role="status">{esc(notice)}</p>')
+    return "".join(blocks)
+
+
+def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     options = sorted(
         ((n["title"], k) for k, n in NODES.items()), key=lambda x: fold(x[0])
     )
@@ -333,6 +371,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
     inline_dossier = gr.State({})
     dossier = gr.State({})
     changes = gr.State({})
+    debate_history = gr.State([])
     domains = sorted({node["domain"] for node in NODES.values()}, key=fold)
     sections = (
         ("Rechercher", "search"),
@@ -362,6 +401,15 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 discuss = gr.Button("Contester une prémisse dans l’Atelier")
                 legacy(q)
         with gr.Tab("Atlas des concepts", id="atlas"):
+            with gr.Accordion(
+                f"Carte mentale interactive du système ({len(domains)} domaines · {len(NODES)} notions)",
+                open=True,
+            ):
+                mindmap = gr.HTML(
+                    render_mindmap("systemisme"),
+                    css_template=MINDMAP_CSS,
+                    js_on_load=MINDMAP_JS,
+                )
             with gr.Accordion("Vue d’ensemble du système", open=False):
                 domain = gr.Radio(
                     [("Toutes les notions", "Tous les domaines")]
@@ -380,6 +428,12 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 linked = gr.Dropdown(label="Suivre un lien", choices=[])
                 follow = gr.Button("Ouvrir la notion liée")
             atlas = gr.HTML()
+            with gr.Accordion("Lexique des symboles et notations", open=False):
+                symbol_filter = gr.Textbox(
+                    label="Filtrer par symbole, variable ou notion",
+                    placeholder="Ex. ℳ, ⊑, σ, psychon, vérité, bien-être…",
+                )
+                symbol_lexicon = gr.HTML(render_symbol_lexicon())
             with gr.Accordion("Comparer dans plusieurs ouvrages", open=False):
                 comparison = gr.HTML()
                 paired = gr.Dropdown(
@@ -409,29 +463,45 @@ def build_reader(legacy, local, create_dossier, max_chars):
             )
             work_go = gr.Button("Ouvrir le dossier", variant="primary")
             with gr.Accordion("Ajouter un fait contemporain au dossier", open=False):
+                with gr.Row():
+                    fact_lookup = gr.Textbox(
+                        label="Pré-remplir depuis une URL HTTPS publique ou un sujet",
+                        placeholder="https://… ou ex. Llama 3.1, AlphaFold, GPT-4",
+                    )
+                    fact_fetch = gr.Button("Pré-remplir une source datée")
+                fact_status = gr.HTML()
                 supplied_fact = gr.Textbox(label="Fait à examiner", lines=2)
                 with gr.Row():
                     supplied_link = gr.Textbox(label="Lien de la source")
                     supplied_date = gr.Textbox(
                         label="Date de publication", placeholder="AAAA-MM-JJ"
                     )
-            shortcuts = gr.Radio(
+            shortcuts = gr.Dropdown(
                 [
-                    ("Bonheur complet", "bonheur"),
-                    ("Besoin et obligation", "devoir"),
-                    ("Compréhension et IA", "ia"),
-                    ("Unicité du monde", "monde"),
-                    ("Existence des construits", "existence"),
-                    ("Explication et réfraction", "mecanisme"),
-                    ("Causalité et fatalisme", "fatalisme"),
-                    ("Contexte long et compréhension", "contexte"),
-                    ("Systémisme et émergence", "systemisme"),
-                    ("Efficacité, vérité et rectitude", "efficacite"),
-                    ("Sens, référence et synonymie", "signification"),
-                    ("Conjecture, inférence et théorie", "conjecture"),
-                    ("Modèle factuel et physique", "modele_factuel"),
+                    ("Éthique · Bonheur complet (T8)", "bonheur"),
+                    ("Éthique · Besoin et obligation (T8)", "devoir"),
+                    ("IA · Compréhension et modèles de langage (T4)", "ia"),
+                    ("Ontologie · Unicité du monde (T3)", "monde"),
+                    ("Sémantique · Existence des construits (T1)", "existence"),
+                    ("Épistémologie · Explication et réfraction (T6)", "mecanisme"),
+                    ("Causalité · Causalité et fatalisme", "fatalisme"),
+                    ("IA · Contexte long et compréhension (T6)", "contexte"),
+                    ("Ontologie · Systémisme et émergence (T4)", "systemisme"),
+                    ("Technologie & Éthique · Efficacité, vérité et rectitude (T6–T8)", "efficacite"),
+                    ("Sémantique · Sens, référence et synonymie (T1–T2)", "signification"),
+                    ("Épistémologie · Conjecture, inférence et théorie (T5)", "conjecture"),
+                    ("Sciences · Modèle factuel et physique (T7/I)", "modele_factuel"),
+                    ("Sémantique · Référence, interprétation et vérité partielle (T1–T2)", "semantique_verite"),
+                    ("Ontologie · Propriétés, choses, changement et espace-temps (T3)", "ontologie_choses"),
+                    ("Ontologie · Niveaux chimique, biologique et social (T4)", "niveaux_systemes"),
+                    ("Épistémologie · Cognition, perception et enquête sociale (T5)", "cognition_enquete"),
+                    ("Épistémologie · Évaluation et évolution du savoir (T6)", "evolution_savoir"),
+                    ("Sciences · Psychologie et sciences sociales (T7/II)", "sciences_vie_societe"),
+                    ("Éthique · Valeurs, cas moraux et évolution des mœurs (T8)", "ethique_normes"),
+                    ("Éthique · Métaéthique, philosophie sociale et survie (T8)", "metaethique_survie"),
                 ],
-                label="Dossiers de lecture",
+                value=None,
+                label="Dossiers de lecture (21 dossiers · 54/54 chapitres du Traité)",
             )
             work_text = gr.HTML()
             with gr.Row():
@@ -448,6 +518,16 @@ def build_reader(legacy, local, create_dossier, max_chars):
             with gr.Row():
                 apply = gr.Button("Voir les conséquences")
                 reset = gr.Button("Revenir à l’argument initial")
+            with gr.Accordion("Débattre autour de ce dossier (multi-tours)", open=False):
+                debate_view = gr.HTML(render_debate([], local))
+                debate_input = gr.Textbox(
+                    label="Votre objection ou question de suivi",
+                    placeholder="Ex. Et si l’on suspend cette prémisse, quel autre passage de Bunge répond à cette objection ?",
+                    lines=2,
+                )
+                with gr.Row():
+                    debate_send = gr.Button("Envoyer l’objection", variant="primary")
+                    debate_clear = gr.Button("Réinitialiser le débat")
 
     for button, section in mobile_navigation:
         button.click(
@@ -458,7 +538,9 @@ def build_reader(legacy, local, create_dossier, max_chars):
         )
 
     def atlas_change(key):
-        return atlas_view(key, local)
+        view_html, linked_dd, compare_html = atlas_view(key, local)
+        graph_key = key if key in NODES else "systemisme"
+        return view_html, linked_dd, compare_html, render_mindmap(graph_key)
 
     def filter_domain(value):
         matching = [
@@ -466,10 +548,16 @@ def build_reader(legacy, local, create_dossier, max_chars):
             for title, key in options
             if value == "Tous les domaines" or NODES[key]["domain"] == value
         ]
-        return gr.Dropdown(choices=matching, value=matching[0][1])
+        first = matching[0][1]
+        return gr.Dropdown(choices=matching, value=first), render_mindmap(first, value)
 
-    domain.input(filter_domain, domain, concept, api_name=False)
-    concept.change(atlas_change, concept, [atlas, linked, comparison], api_name=False)
+    domain.input(filter_domain, domain, [concept, mindmap], api_name=False)
+    concept.change(
+        atlas_change, concept, [atlas, linked, comparison, mindmap], api_name=False
+    )
+    symbol_filter.input(
+        render_symbol_lexicon, symbol_filter, symbol_lexicon, api_name=False
+    )
 
     def select_concept(key):
         if not key:
@@ -639,6 +727,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 "<p>Aucune fiche éditée ne correspond à cette recherche. Choisissez une notion dans l’atlas.</p>",
                 gr.Dropdown(choices=[], value=None),
                 "<p>Aucune comparaison sélectionnée.</p>",
+                render_mindmap("systemisme"),
             )
         key = nodeids[0]
         return gr.Tabs(selected="atlas"), select_concept(key), *atlas_change(key)
@@ -646,7 +735,7 @@ def build_reader(legacy, local, create_dossier, max_chars):
     locate.click(
         focus,
         [q, saved_question, research],
-        [tabs, concept, atlas, linked, comparison],
+        [tabs, concept, atlas, linked, comparison, mindmap],
         api_name=False,
     )
 
@@ -656,12 +745,12 @@ def build_reader(legacy, local, create_dossier, max_chars):
             if previous and q.strip() == saved
             else get_dossier(q, None, resolve(q, saved, rs), request)
         )
-        return gr.Tabs(selected="work"), q, *ready(d)
+        return gr.Tabs(selected="work"), q, *ready(d), [], render_debate([], local)
 
     discuss.click(
         from_search,
         [q, saved_question, research, inline_dossier],
-        [tabs, work_q, dossier, changes, work_text, premise],
+        [tabs, work_q, dossier, changes, work_text, premise, debate_history, debate_view],
         api_name=False,
     )
 
@@ -675,26 +764,54 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     gr.Tabs(selected="work"),
                     "",
                     *ready(open_question("Choisissez une question.", [])),
+                    [],
+                    render_debate([], local),
                 )
             title, source, _ = record
         d = get_dossier(title, key, [source], request)
-        return gr.Tabs(selected="work"), title, *ready(d)
+        return gr.Tabs(selected="work"), title, *ready(d), [], render_debate([], local)
 
     to_work.click(
         from_atlas,
         concept,
-        [tabs, work_q, dossier, changes, work_text, premise],
+        [tabs, work_q, dossier, changes, work_text, premise, debate_history, debate_view],
+        api_name=False,
+    )
+
+    def prefill_fact(query_or_url):
+        try:
+            item = fetch_contemporary_fact(query_or_url)
+        except Exception as exc:
+            return (
+                gr.skip(),
+                gr.skip(),
+                gr.skip(),
+                f'<p role="alert">{esc(str(exc))}</p>',
+            )
+        return (
+            item["text"],
+            item["url"],
+            item["published"],
+            f'<p role="status">Source pré-remplie ({esc(item["title"])}) — relisez avant d’ouvrir le dossier.</p>',
+        )
+
+    fact_fetch.click(
+        prefill_fact,
+        fact_lookup,
+        [supplied_fact, supplied_link, supplied_date, fact_status],
         api_name=False,
     )
 
     def example(key):
+        if not key or key not in DOSSIERS:
+            return gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
         d = DOSSIERS[key]()
-        return d["title"], *ready(d)
+        return d["title"], *ready(d), [], render_debate([], local)
 
-    shortcuts.input(
+    shortcuts.change(
         example,
         shortcuts,
-        [work_q, dossier, changes, work_text, premise],
+        [work_q, dossier, changes, work_text, premise, debate_history, debate_view],
         api_name=False,
     )
 
@@ -706,6 +823,8 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 {},
                 "<p>Précisez la thèse à examiner.</p>",
                 gr.Dropdown(choices=[], value=None),
+                [],
+                render_debate([], local),
             )
         try:
             external = contemporary_claim(fact, link, published)
@@ -715,6 +834,8 @@ def build_reader(legacy, local, create_dossier, max_chars):
                 {},
                 f'<p role="alert">{esc(str(exc))}</p>',
                 gr.Dropdown(choices=[], value=None),
+                [],
+                render_debate([], local),
             )
         key = choose_dossier(question) if not external else None
         d = (
@@ -722,17 +843,39 @@ def build_reader(legacy, local, create_dossier, max_chars):
             if key
             else create_dossier(question, request, external=external)
         )
-        return ready(d)
+        return *ready(d), [], render_debate([], local)
 
     for event in (work_go.click, work_q.submit):
         event(
             custom,
             [work_q, supplied_fact, supplied_link, supplied_date],
-            [dossier, changes, work_text, premise],
+            [dossier, changes, work_text, premise, debate_history, debate_view],
             api_name=False,
             concurrency_id="reader",
             concurrency_limit=1,
         )
+
+    def send_debate(d, ch, hist, text, request: gr.Request):
+        if run_debate is not None:
+            new_hist, notice = run_debate(d, ch, hist, text, request)
+        else:
+            new_hist, notice = debate_turn(d, ch, hist, text)
+        return new_hist, render_debate(new_hist, local, notice), "" if not notice else text
+
+    for event in (debate_send.click, debate_input.submit):
+        event(
+            send_debate,
+            [dossier, changes, debate_history, debate_input],
+            [debate_history, debate_view, debate_input],
+            api_name=False,
+            concurrency_id="reader",
+            concurrency_limit=1,
+        )
+    debate_clear.click(
+        lambda: ([], render_debate([], local), ""),
+        outputs=[debate_history, debate_view, debate_input],
+        api_name=False,
+    )
 
     def change(d, old, key, operation, new):
         updated = dict(old)
@@ -760,4 +903,4 @@ def build_reader(legacy, local, create_dossier, max_chars):
         [changes, work_text],
         api_name=False,
     )
-    return concept, atlas, linked, comparison, atlas_change
+    return concept, atlas, linked, comparison, mindmap, atlas_change

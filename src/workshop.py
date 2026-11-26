@@ -377,6 +377,180 @@ def factual_model_physics():
     )
 
 
+def semantics_truth():
+    ref, rep, purp, interp, reason, truth, ext, neigh = map(
+        proposition,
+        [
+            "reference",
+            "representation",
+            "purport",
+            "interpretation",
+            "raison",
+            "verite",
+            "extension",
+            "voisins",
+        ],
+    )
+    ext["supports"] = [["reference", "verite"]]
+    conclusion = step(
+        "semantique-realiste",
+        "Une sémantique réaliste articulant référence, sens et vérité partielle",
+        "Les concepts d’extension et de description définie présupposent des théories préalables de la référence, du sens et de la vérité, où la vérité factuelle est partielle sans abandonner la logique ordinaire.",
+        "Reconstruction éditoriale",
+        [["reference", "representation", "purport", "interpretation", "raison", "verite", "extension", "voisins"]],
+    )
+    return dict(
+        title="Comment Bunge relie-t-il référence, interprétation et vérité partielle ?",
+        steps=[ref, rep, purp, interp, reason, truth, ext, neigh, conclusion],
+        objection="Une sémantique purement extensionnelle tente d’identifier signification et conditions de vérité ; Bunge montre au contraire que référence et sens précèdent toute attribution de vérité.",
+        open="Comment évaluer le degré de vérité partielle d’une théorie factuelle lorsqu’elle approche une loi réelle ?",
+    )
+
+
+def ontology_things():
+    props, thing, poss, flux, space = map(
+        proposition, ["proprietes", "chose", "possible", "flux", "espace"]
+    )
+    flux["supports"] = [["chose"]]
+    conclusion = step(
+        "ontologie-materialiste",
+        "Propriétés, possibilités réelles, changement et espace-temps appartiennent aux choses",
+        "Il n’existe ni propriétés flottantes ni espace-temps autonome : toute propriété est propriété d’une chose concrète, tout changement est changement de choses et l’espace-temps est relationnel.",
+        "Reconstruction éditoriale",
+        [["proprietes", "chose", "possible", "flux", "espace"]],
+    )
+    return dict(
+        title="Existe-t-il des propriétés ou un espace-temps indépendants des choses ?",
+        steps=[props, thing, poss, flux, space, conclusion],
+        objection="Certaines théories physiques décrivent le champ ou l’espace-temps comme des entités fondamentales ; chez Bunge, un champ physique est lui-même une chose matérielle concrète dotée d’énergie.",
+        open="À quels critères physiques distingue-t-on une possibilité réelle d’une simple possibilité logique ?",
+    )
+
+
+def levels_of_systems():
+    chem, bio, soc, dyn = map(
+        proposition, ["chimie", "biosystemisme", "societe-nouveaute", "dynamique"]
+    )
+    conclusion = step(
+        "monde-niveaux",
+        "Un monde matérialiste structuré en niveaux émergents dynamiques",
+        "Chaque niveau (chimique, biologique, social) s’enracine dans le niveau sous-jacent tout en présentant des propriétés émergentes propres, et tout système concret est engagé dans un processus.",
+        "Reconstruction éditoriale",
+        [["chimie", "biosystemisme", "societe-nouveaute", "dynamique"]],
+    )
+    return dict(
+        title="Comment les niveaux chimique, biologique et social s’articulent-ils ?",
+        steps=[chem, bio, soc, dyn, conclusion],
+        objection="Le réductionnisme strict nie la nouveauté des niveaux supérieurs, tandis que l’émergentisme spiritualiste rompt leur enracinement matériel ; Bunge articule émergence et analyse mécanique.",
+        open="Quel mécanisme d’assemblage explique l’apparition d’une propriété nouvelle au passage d’un niveau à l’autre ?",
+    )
+
+
+def cognition_inquiry():
+    perc, know, comm, pconc, conc, prob = map(
+        proposition,
+        [
+            "perception",
+            "connaissance",
+            "communication",
+            "perception-concepts",
+            "concept",
+            "probleme",
+        ],
+    )
+    conclusion = step(
+        "epistemologie-naturalisee",
+        "Connaître est un processus biologique, conceptuel et social orienté par des problèmes",
+        "On ne peut détacher la connaissance (résultat) de la cognition (processus actif du cerveau), ni l’enquête individuelle de la communication sociale et de la formulation de problèmes cognitifs ou pratiques.",
+        "Reconstruction éditoriale",
+        [["perception", "connaissance", "communication", "perception-concepts", "concept", "probleme"]],
+    )
+    return dict(
+        title="La connaissance peut-elle se détacher de la cognition et de la société ?",
+        steps=[perc, know, comm, pconc, conc, prob, conclusion],
+        objection="On peut étudier la validité logique d’une proposition abstraction faite du cerveau qui la pense ; Bunge distingue l’analyse logique du construit et l’étude psychobiologique de la cognition.",
+        open="Comment articuler l’analyse conceptuelle d’une théorie avec l’étude empirique des processus d’apprentissage ?",
+    )
+
+
+def epistemic_evolution():
+    ev, chg, kinds, upshot = map(
+        proposition, ["evaluation", "changement-savoir", "types-savoirs", "etude-savoir"]
+    )
+    conclusion = step(
+        "progres-corrigibilite",
+        "La connaissance scientifique progresse par évaluation critique et révision",
+        "Évaluer un savoir combine vérité et utilité selon le type de connaissance, et l’évolution épistémique procède par corrections successives articulées aux sciences voisines.",
+        "Reconstruction éditoriale",
+        [["evaluation", "changement-savoir", "types-savoirs", "etude-savoir"]],
+    )
+    return dict(
+        title="Comment la science évalue-t-elle ses théories et évolue-t-elle ?",
+        steps=[ev, chg, kinds, upshot, conclusion],
+        objection="Le relativisme réduit le changement scientifique à une substitution de paradigmes incommensurables ; Bunge soutient au contraire une corrigibilité cumulable et vérifiable.",
+        open="Quels critères permettent de montrer qu’une nouvelle théorie conserve et dépasse l’ancienne ?",
+    )
+
+
+def life_and_social_sciences():
+    psy, link, soc = map(
+        proposition, ["psychologie", "renvoi-psychologie-esprit", "societe"]
+    )
+    psy["supports"] = [["renvoi-psychologie-esprit"]]
+    conclusion = step(
+        "continuite-bio-sociale",
+        "Psychologie et sciences sociales étudient des systèmes concrets en continuité",
+        "La psychologie relève des sciences de la vie (en cohérence avec l’étude de l’esprit du tome IV) tout en recoupant les sciences sociales, qui étudient des systèmes concrets d’individus interconnectés.",
+        "Reconstruction éditoriale",
+        [["psychologie", "renvoi-psychologie-esprit", "societe"]],
+    )
+    return dict(
+        title="Comment psychologie et sciences sociales s’ancrent-elles dans le systémisme ?",
+        steps=[link, psy, soc, conclusion],
+        objection="Séparer totalement sciences de la nature et sciences humaines coupe l’esprit du cerveau et la société des individus qui la composent.",
+        open="Comment modéliser à la fois les mécanismes neurobiologiques individuels et les structures sociales collectives ?",
+    )
+
+
+def ethics_values_practice():
+    ax, chg, cases, types_e, act = map(
+        proposition,
+        ["axiologie", "changement-moral", "cas-moraux", "types-ethique", "ethique-action"],
+    )
+    conclusion = step(
+        "ethique-evaluative",
+        "Une éthique révisable ancrée dans l’analyse des valeurs et les cas moraux",
+        "Les doctrines éthiques se classent et s’évaluent à l’aune de l’analyse conceptuelle des valeurs, de la mise à l’épreuve sur des cas moraux concrets et du décalage historique des normes.",
+        "Reconstruction éditoriale",
+        [["axiologie", "changement-moral", "cas-moraux", "types-ethique", "ethique-action"]],
+    )
+    return dict(
+        title="Comment Bunge évalue-t-il les valeurs, les cas moraux et l’évolution des mœurs ?",
+        steps=[ax, chg, cases, types_e, act, conclusion],
+        objection="Une morale purement déontologique ou dogmatique rejette la révision des normes à partir des conséquences sur le bien-être.",
+        open="Comment réviser une norme morale lorsqu’un changement social modifie les conditions de satisfaction des besoins ?",
+    )
+
+
+def metaethics_viable_future():
+    is_ought, meta, social, surv = map(
+        proposition, ["etre-devoir", "metaethique", "philo-sociale", "survie"]
+    )
+    conclusion = step(
+        "ethique-viabilite",
+        "Fonder une philosophie sociale sur des faits, des valeurs et la survie collective",
+        "La métaéthique et le passage contrôlé de l’être au devoir-être éclairent la constitution d’une philosophie sociale orientée vers un système de valeurs compatible avec la survie de l’espèce.",
+        "Reconstruction éditoriale",
+        [["etre-devoir", "metaethique", "philo-sociale", "survie"]],
+    )
+    return dict(
+        title="Comment fonder une philosophie sociale et un avenir viable chez Bunge ?",
+        steps=[is_ought, meta, social, surv, conclusion],
+        objection="Hume interdit de déduire un « devoir-être » de purs faits ; Bunge répond qu’un pont axiologique fondé sur les besoins vitaux rend la justification rationnelle possible sans sophisme naturaliste.",
+        open="Quelles institutions sociales rendent compatibles satisfaction équitable des besoins et viabilité écologique ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
@@ -391,11 +565,51 @@ DOSSIERS = {
     "signification": semantic_meaning,
     "conjecture": epistemic_conjecture,
     "modele_factuel": factual_model_physics,
+    "semantique_verite": semantics_truth,
+    "ontologie_choses": ontology_things,
+    "niveaux_systemes": levels_of_systems,
+    "cognition_enquete": cognition_inquiry,
+    "evolution_savoir": epistemic_evolution,
+    "sciences_vie_societe": life_and_social_sciences,
+    "ethique_normes": ethics_values_practice,
+    "metaethique_survie": metaethics_viable_future,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if node in {"reference", "representation", "purport", "interpretation", "raison", "verite", "extension", "voisins"} or (
+        "verite partielle" in q and any(t in q for t in ("reference", "interpretation", "semantique"))
+    ):
+        return "semantique_verite"
+    if node in {"proprietes", "chose", "possible", "flux", "espace"} or (
+        any(t in q for t in ("espace-temps", "proprietes independantes")) and any(t in q for t in ("choses", "changement"))
+    ):
+        return "ontologie_choses"
+    if node in {"chimie", "biosystemisme", "societe-nouveaute", "dynamique"} or (
+        "niveaux" in q and any(t in q for t in ("chimique", "biologique", "social", "biosystemisme"))
+    ):
+        return "niveaux_systemes"
+    if node in {"perception", "connaissance", "communication", "perception-concepts", "concept", "probleme"} or (
+        "cognition" in q and any(t in q for t in ("connaissance", "societe", "cerveau"))
+    ):
+        return "cognition_enquete"
+    if node in {"evaluation", "changement-savoir", "types-savoirs", "etude-savoir"} or (
+        any(t in q for t in ("changement epistemique", "evolue", "evaluer")) and any(t in q for t in ("theories", "savoir", "science"))
+    ):
+        return "evolution_savoir"
+    if node in {"psychologie", "renvoi-psychologie-esprit", "societe"} or (
+        "psychologie" in q and any(t in q for t in ("sciences sociales", "sciences de la vie", "systemisme"))
+    ):
+        return "sciences_vie_societe"
+    if node in {"axiologie", "changement-moral", "cas-moraux", "types-ethique", "ethique-action"} or (
+        any(t in q for t in ("cas moraux", "axiologie", "evolution des moeurs"))
+    ):
+        return "ethique_normes"
+    if node in {"etre-devoir", "metaethique", "philo-sociale", "survie"} or (
+        any(t in q for t in ("avenir viable", "metaethique", "philosophie sociale")) and any(t in q for t in ("survie", "valeurs", "devoir"))
+    ):
+        return "metaethique_survie"
     if node in {
         "inference-saut",
         "hypothese-profonde",
@@ -845,3 +1059,163 @@ def open_question(question, research, *, generate=None, external=None):
         )
     dossier.update(objection=proposal["objection"], open=proposal["question_ouverte"])
     return dossier
+
+
+def debate_turn(dossier, changes, history, objection, *, search_fn=None, generate=None):
+    """Conduit un tour de débat philosophique en conservant l’état des prémisses contestées."""
+    from library import question_scope, search_library
+
+    clean = " ".join((objection or "").split())[:800]
+    turns = list(history or [])
+    if len(clean) < 3:
+        return turns, "Formulez une objection ou une question d’au moins 3 caractères."
+    if not dossier or not dossier.get("steps"):
+        return turns, "Ouvrez d’abord un dossier dans l’Atelier avant de lancer le débat."
+
+    disposition, message = question_scope(clean)
+    if disposition != "localiser":
+        entry = {
+            "turn": len(turns) + 1,
+            "user": clean,
+            "answer": message,
+            "impact": "Aucune prémisse du référentiel modifiée.",
+            "next_question": "",
+            "sources": [],
+            "active_changes": dict(changes or {}),
+            "mode": "scope-guard",
+        }
+        return turns + [entry], ""
+
+    retriever = search_fn or search_library
+    fresh = retriever(clean)[:4]
+    states = assess(dossier["steps"], changes or {})
+
+    evidence_sources = {}
+    evidence_payload = {}
+    for s in dossier["steps"]:
+        sid = s["id"]
+        evidence_payload[sid] = {
+            "titre": s["title"],
+            "role": s["role"],
+            "etat_dans_le_debat": states[sid],
+            "hypothese_lecteur": (changes or {}).get(sid, ""),
+            "texte": s["text"],
+        }
+        if s["sources"]:
+            evidence_sources[sid] = s["sources"][0]
+            evidence_payload[sid]["extrait"] = s["sources"][0]["excerpt"]
+            evidence_payload[sid]["pages"] = s["sources"][0].get("pages", "")
+    seeds = suggested_nodes(clean, 3) + [
+        key for hit in fresh[:3] for key in on_page(hit["book"], hit["page"])
+    ]
+    for key in linked_evidence(seeds, limit=4, seed_limit=3):
+        if key not in evidence_payload:
+            src = node_source(key)
+            evidence_sources[key] = src
+            evidence_payload[key] = {
+                "titre": NODES[key]["title"],
+                "role": NODES[key]["kind"],
+                "etat_dans_le_debat": "contre-appui retrouvé",
+                "texte": NODES[key]["text"],
+                "extrait": src["excerpt"],
+                "pages": src["pages"],
+            }
+    for i, hit in enumerate(fresh, 1):
+        pid = f"c{i}"
+        evidence_sources[pid] = hit
+        evidence_payload[pid] = {
+            "titre": hit["title"],
+            "role": "Passage retrouvé pour ce tour",
+            "etat_dans_le_debat": "contre-appui retrouvé",
+            "extrait": hit["excerpt"],
+            "pages": hit.get("pages", str(hit["page"])),
+        }
+
+    suspended = [
+        f"{s['title']} ({'remplacée par : ' + changes[s['id']] if changes[s['id']] else 'suspendue'})"
+        for s in dossier["steps"]
+        if s["id"] in (changes or {})
+    ]
+
+    if generate is None:
+        summary = (
+            "Rédaction indisponible (quota ou mode hors-ligne). "
+            + (
+                "Prémisses actives du lecteur : " + " ; ".join(suspended) + ". "
+                if suspended
+                else "Toutes les prémisses initiales du dossier sont actives. "
+            )
+            + f"{len(fresh)} passage(s) de Bunge retrouvé(s) pour examiner votre objection."
+        )
+        entry = {
+            "turn": len(turns) + 1,
+            "user": clean,
+            "answer": summary,
+            "impact": " ; ".join(suspended) or "Argument initial intact.",
+            "next_question": dossier.get("open", ""),
+            "sources": fresh,
+            "active_changes": dict(changes or {}),
+            "mode": "retrieval-only",
+        }
+        return turns + [entry], ""
+
+    system = (
+        "Tu participes à un débat philosophique rigoureux sur Mario Bunge. "
+        "Respecte strictement l’état des prémisses contestées (suspendues ou remplacées par le lecteur) : "
+        "une prémisse suspendue ou remplacée est une hypothèse de travail du lecteur, jamais une thèse attribuée à Bunge. "
+        "N’attribue jamais d’avis posthume à Bunge. Appuie chaque point sur les identifiants fournis dans `preuves`. "
+        'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1"],"impact_premisses":"...","question_suivante":"..."}. '
+        "Cite au moins un identifiant sourcé existant dans `preuves`."
+    )
+    prompt = json.dumps(
+        {
+            "dossier": dossier["title"],
+            "cadre": core_context(),
+            "premisses_modifiees_par_lecteur": suspended,
+            "historique_recent": [
+                {"tour": t["turn"], "lecteur": t["user"], "reponse": t["answer"]}
+                for t in turns[-6:]
+            ],
+            "objection_actuelle": clean,
+            "preuves": evidence_payload,
+        },
+        ensure_ascii=False,
+    )
+    from evidence import parse_object
+
+    parsed = parse_object(generate(prompt, system))
+    ids = parsed.get("appuis") if isinstance(parsed, dict) else None
+    valid_ids = (
+        list(
+            dict.fromkeys(
+                k for k in ids if isinstance(k, str) and k in evidence_sources
+            )
+        )
+        if isinstance(ids, list)
+        else []
+    )
+    answer_text = (parsed.get("reponse") or "").strip() if isinstance(parsed, dict) else ""
+    if not answer_text or not valid_ids:
+        entry = {
+            "turn": len(turns) + 1,
+            "user": clean,
+            "answer": "La réponse générée n’a pas cité d’appui vérifiable dans les sources. Consultez les passages retrouvés ci-dessous.",
+            "impact": " ; ".join(suspended) or "Argument initial intact.",
+            "next_question": dossier.get("open", ""),
+            "sources": fresh,
+            "active_changes": dict(changes or {}),
+            "mode": "citation-fallback",
+        }
+        return turns + [entry], ""
+
+    entry = {
+        "turn": len(turns) + 1,
+        "user": clean,
+        "answer": answer_text[:1800],
+        "impact": (parsed.get("impact_premisses") or "").strip()[:400],
+        "next_question": (parsed.get("question_suivante") or "").strip()[:300],
+        "sources": [evidence_sources[k] for k in valid_ids[:5]],
+        "active_changes": dict(changes or {}),
+        "mode": "verified-debate",
+    }
+    return turns + [entry], ""

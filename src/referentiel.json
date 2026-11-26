@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.19",
+  "version": "2026-11-26.20",
   "core": [
     "materialisme",
     "systemisme",
@@ -99,6 +99,11 @@
         "folio": "33",
         "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
         "quote": "The world is the aggregation of all individuals"
+      },
+      "notation": {
+        "formula": "∀x (x ⊑ □)",
+        "gloss": "Le monde □ est l’individu concret maximal dont toute chose concrète x est une partie selon la relation méréologique ⊑.",
+        "status": "Notation collationnée sur le Traité III, ch. 1 (Substance)."
       }
     },
     "unique": {
@@ -152,6 +157,11 @@
         "folio": "46",
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "the ability and opportunity of meeting all of its needs and wants"
+      },
+      "notation": {
+        "formula": "¬P, C → P ⊨ ¬C",
+        "gloss": "Sous l’incompatibilité réelle des valeurs (¬P), l’impossibilité de croire raisonnablement à la satisfaction complète de tous ses désirs (¬C) exige le pont C → P.",
+        "status": "Formalisation éditoriale collationnée sur le Traité VIII, ch. 2 (Définition 2.2 et Théorème 2.1, p. 46–48)."
       }
     },
     "incompatibilite": {
@@ -279,6 +289,11 @@
         "folio": "98",
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "without hindering anyone else"
+      },
+      "notation": {
+        "formula": "R → ¬H, H ⊨ ¬R",
+        "gloss": "Un droit moral de base R exige l’absence d’entrave H à l’exercice d’un droit comparable par autrui.",
+        "status": "Formalisation éditoriale collationnée sur le Traité VIII, ch. 4 (Norme 4.1, p. 98)."
       }
     },
     "psychon": {
@@ -296,6 +311,11 @@
         "folio": "70",
         "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
         "quote": "Any plastic neural system is called a psychon"
+      },
+      "notation": {
+        "formula": "C_t(a, b) variable ⇒ psychon",
+        "gloss": "La matrice de connectivité synaptique C_t(a, b) entre neurones a et b à l’instant t varie au cours de la vie d’un système neuronal plastique (psychon).",
+        "status": "Notation collationnée sur le Traité IV, ch. 4 (Définitions 4.5–4.8, p. 132)."
       }
     },
     "plasticite": {
@@ -424,6 +444,11 @@
         "folio": "58",
         "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
         "quote": "of a given construct"
+      },
+      "notation": {
+        "formula": "ℛ(c) ⊆ Ω",
+        "gloss": "La classe de référence ℛ(c) d’un construit c est un sous-ensemble de l’univers d’objets Ω.",
+        "status": "Notation collationnée sur le Traité I, ch. 2 (Définition 2.16)."
       }
     },
     "verite": {
@@ -442,6 +467,11 @@
         "folio": "106",
         "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
         "quote": "it leaves ordinary logic intact"
+      },
+      "notation": {
+        "formula": "V(p) ∈ [−1, 1]",
+        "gloss": "La valeur de vérité partielle V(p) d’une proposition factuelle prend ses valeurs dans l’intervalle réel [−1, 1] sans altérer la logique ordinaire.",
+        "status": "Notation collationnée sur le Traité II, ch. 8 (Vérité partielle)."
       }
     },
     "modele": {
@@ -687,6 +717,11 @@
         "folio": "44",
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "if and only if it has met all of its basic needs"
+      },
+      "notation": {
+        "formula": "W(x) ↔ ∀n ∈ N_b(x) Sat(x, n)",
+        "gloss": "Un animal x est en état de bien-être W(x) si et seulement si tous ses besoins fondamentaux N_b(x) sont satisfaits.",
+        "status": "Formalisation éditoriale collationnée sur le Traité VIII, ch. 2 (Définition 2.1, p. 44)."
       }
     },
     "representation": {
@@ -926,6 +961,11 @@
         "folio": "115",
         "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
         "quote": "have the same referents but different senses"
+      },
+      "notation": {
+        "formula": "𝒮(c) = P(c) ∪ I(c)",
+        "gloss": "Le sens complet 𝒮(c) d’un construit réunit sa portée logique (purport P(c), prémisses dont il dépend) et son import I(c) (conséquences qu’il entraîne).",
+        "status": "Notation collationnée sur le Traité I, ch. 5 et Traité II, ch. 7 (Remarque 1, p. 47)."
       }
     },
     "interpretation": {
@@ -1704,6 +1744,11 @@
         "folio": "4",
         "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
         "quote": "A system, then, is a complex object, the components of which are interrelated rather than loose."
+      },
+      "notation": {
+        "formula": "σ(x) = ⟨C(x), E(x), S(x)⟩",
+        "gloss": "Composition C(x), environnement E(x) et structure S(x) caractérisent un système x (complétés par le mécanisme M(x) dans le modèle CESM des systèmes concrets).",
+        "status": "Notation collationnée sur le Traité IV, ch. 1 (p. 4–5)."
       }
     },
     "postulat-emergence": {
@@ -1787,6 +1832,11 @@
         "folio": "157",
         "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
         "quote": "No two animals behave in exactly the same way"
+      },
+      "notation": {
+        "formula": "B(K) = ⋃ B_i(K)",
+        "gloss": "Le répertoire comportemental B(K) d’une espèce K est l’union de ses types de comportement B_i(K), chacun contrôlé par un sous-système nerveux.",
+        "status": "Notation collationnée sur le Traité IV, ch. 4 (Définition 4.24 et Postulat 4.9, p. 157)."
       }
     },
     "verite-efficacite": {
@@ -1808,6 +1858,11 @@
         "folio": "60",
         "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
         "quote": "whereas data and hypotheses can be true to some extent, norms and computer programs can only be effective to some extent."
+      },
+      "notation": {
+        "formula": "E ⊭ V · E ⊭ J",
+        "gloss": "L’efficacité pratique E d’une règle ou d’un artefact n’entraîne ni la vérité V d’une hypothèse ni la rectitude morale J de l’action.",
+        "status": "Formalisation éditoriale collationnée sur le Traité VI, ch. 11 (p. 60) et Traité VIII, ch. 10 (p. 319)."
       }
     },
     "testabilite-reelle": {
@@ -1933,6 +1988,11 @@
         "folio": "57",
         "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
         "quote": "Synonyms have the same vicarious sense and the same vicarious reference"
+      },
+      "notation": {
+        "formula": "Syn(s, s', L) ↔ (𝒮(c) = 𝒮(c') ∧ ℛ(c) = ℛ(c'))",
+        "gloss": "Deux signes s et s' d’un langage L sont sémantiquement synonymes si et seulement si les construits qu’ils désignent ont même sens et même classe de référence.",
+        "status": "Notation collationnée sur le Traité II, ch. 7 (Corollaire 7.4, p. 57)."
       }
     },
     "inference-saut": {

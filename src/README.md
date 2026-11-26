@@ -2,12 +2,13 @@
 
 `src/` regroupe deux familles de modules clairement séparées par la liste blanche de déploiement ([push_space.py](push_space.py)) :
 
-## 1. Runtime public (16 modules déployés sur le Space Hugging Face)
+## 1. Runtime public (17 modules `src/` + `space/` déployés sur le Space Hugging Face)
 Ces modules sont les seuls copiés dans le bundle public du Space (aucun corpus, cache ni script d’évaluation n’est publié) :
 
-- **Bibliothèque & référentiel :** `library.py`, `referentiel.json`, `formal_logic.py`, `workshop.py`
+- **Bibliothèque & référentiel :** `library.py`, `referentiel.json`, `formal_logic.py`, `workshop.py`, `contemporary.py`
 - **Recherche hybride & reclassement :** `search.py`, `retrieve.py`, `rerank.py`, `definitions.py`
 - **Génération, preuves & garde-fous :** `rag.py`, `evidence.py`, `generate.py`, `decompose.py`, `citations.py`, `output_guard.py`, `config.py`, `schemas.py`
+- **Interface Gradio (`space/`) :** `app.py`, `reader.py`, `atlas_graph.py` (carte mentale SVG interactive & lexique des symboles), `assets/style.css`
 
 ## 2. Pipeline hors-ligne (ingestion, audits, benchmarks & déploiement)
 Scripts exécutés uniquement en local sur le corpus privé (jamais déployés sur le Space) :

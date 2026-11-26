@@ -120,6 +120,27 @@
         {"changer": "math-neutre", "texte": "Les mathématiques décrivent directement les objets physiques.", "attendu": {"math-neutre": "remplacée", "formalisation-insuffisante": "justification suspendue"}},
         {"changer": "math-neutre", "texte": null, "attendu": {"formalisation-insuffisante": "disponible"}}
       ]
+    },
+    {
+      "dossier": "semantique_verite",
+      "étapes": [
+        {"changer": "reference", "texte": "", "attendu": {"extension": "justification suspendue", "semantique-realiste": "justification suspendue"}},
+        {"changer": "reference", "texte": null, "attendu": {"extension": "disponible", "semantique-realiste": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "ontologie_choses",
+      "étapes": [
+        {"changer": "chose", "texte": "", "attendu": {"flux": "justification suspendue", "ontologie-materialiste": "justification suspendue"}},
+        {"changer": "chose", "texte": null, "attendu": {"flux": "disponible", "ontologie-materialiste": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "sciences_vie_societe",
+      "étapes": [
+        {"changer": "renvoi-psychologie-esprit", "texte": "", "attendu": {"psychologie": "justification suspendue", "continuite-bio-sociale": "justification suspendue"}},
+        {"changer": "renvoi-psychologie-esprit", "texte": null, "attendu": {"psychologie": "disponible", "continuite-bio-sociale": "disponible"}}
+      ]
     }
   ]
 }

@@ -133,7 +133,11 @@ def _ollama(prompt, system, max_tokens):
     return r.json()["message"]["content"].strip()
 
 def parse_gemini_models(backend: str) -> list[str]:
-    spec = backend.split("/", 1)[1]
+    segment = next(
+        (seg.strip() for seg in backend.split("|") if seg.strip().startswith("gemini/")),
+        backend,
+    )
+    spec = segment.split("/", 1)[1]
     models = [item.strip() for item in spec.split(",") if item.strip()]
     if not models:
         raise ValueError(f"backend Gemini invalide : {backend!r}")
@@ -246,16 +250,109 @@ def named_gemini(prompt, system, backend, max_tokens, *, structured):
     return ""
 
 
+OPENAI_COMPAT_PROVIDERS = {
+    "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY"),
+    "mistral": ("https://api.mistral.ai/v1", "MISTRAL_API_KEY"),
+    "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
+}
+
+
+def _call_openai_compat(provider: str, model: str, prompt: str, system: str, max_tokens: int, *, structured: bool) -> str:
+    from openai import OpenAI
+
+    base_url, env_key = OPENAI_COMPAT_PROVIDERS[provider]
+    api_key = os.environ.get(env_key, "").strip()
+    if not api_key:
+        raise KeyError(env_key)
+    client = OpenAI(base_url=base_url, api_key=api_key, max_retries=1, timeout=25)
+    msgs = ([{"role": "system", "content": system}] if system else []) + [
+        {"role": "user", "content": prompt}
+    ]
+    kwargs = {"model": model, "messages": msgs, "max_tokens": max_tokens, "temperature": 0}
+    if structured:
+        kwargs["response_format"] = {"type": "json_object"}
+    resp = client.chat.completions.create(**kwargs)
+    return (resp.choices[0].message.content or "").strip()
+
+
+def _call_provider_segment(segment: str, prompt: str, system: str, max_tokens: int, *, structured: bool) -> str:
+    global GEMINI_LAST_MODEL
+    if segment.startswith("gemini/"):
+        if not os.environ.get("GEMINI_API_KEY", "").strip():
+            raise KeyError("GEMINI_API_KEY")
+        return named_gemini(prompt, system, segment, max_tokens, structured=structured)
+    provider, _, spec = segment.partition("/")
+    if provider not in OPENAI_COMPAT_PROVIDERS:
+        raise NotImplementedError(f"fournisseur inconnu : {segment!r}")
+    models = [m.strip() for m in spec.split(",") if m.strip()]
+    candidates = _active_cascade(models) if len(models) > 1 else models
+    last_error = None
+    for index, model in enumerate(candidates):
+        remaining = index + 1 < len(candidates)
+        try:
+            text = _call_openai_compat(
+                provider, model, prompt, system, max_tokens, structured=structured
+            )
+            if not text.strip() and remaining:
+                _mark_cooldown(f"{provider}/{model}")
+                continue
+            GEMINI_LAST_MODEL = f"{provider}/{model}"
+            return text
+        except KeyError:
+            raise
+        except Exception as exc:
+            last_error = exc
+            code = getattr(exc, "status_code", None)
+            if remaining and (code in TRANSIENT_GEMINI_CODES or isinstance(exc, (TimeoutError, OSError))):
+                _mark_cooldown(f"{provider}/{model}", code)
+                continue
+            raise
+    if last_error is not None:
+        raise last_error
+    return ""
+
+
+def _call_multi_provider(backend: str, prompt: str, system: str, max_tokens: int, *, structured: bool) -> str:
+    segments = [seg.strip() for seg in backend.split("|") if seg.strip()]
+    last_error = None
+    for index, segment in enumerate(segments):
+        remaining = index + 1 < len(segments)
+        try:
+            return _call_provider_segment(
+                segment, prompt, system, max_tokens, structured=structured
+            )
+        except KeyError:
+            # Fournisseur de secours optionnel sans clé configurée -> ignorer silencieusement.
+            if remaining:
+                continue
+            if last_error is not None:
+                raise last_error
+            raise
+        except Exception as exc:
+            last_error = exc
+            code = getattr(exc, "code", None) or getattr(exc, "status_code", None)
+            if remaining and (
+                code in TRANSIENT_GEMINI_CODES
+                or isinstance(exc, (TimeoutError, OSError))
+            ):
+                LOGGER.warning("provider_failover segment=%s -> next", segment)
+                continue
+            raise
+    if last_error is not None:
+        raise last_error
+    return ""
+
+
 def generate_json(prompt, system, backend, max_tokens):
-    if backend.startswith("gemini/"):
-        return named_gemini(prompt, system, backend, max_tokens, structured=True)
+    if "|" in backend or backend.startswith(("gemini/", "groq/", "mistral/", "openrouter/")):
+        return _call_multi_provider(backend, prompt, system, max_tokens, structured=True)
     return generate(prompt, system=system, backend=backend, max_tokens=max_tokens)
 
 
 def generate(prompt, system=None, max_tokens=2048, backend=None):
     backend = backend or os.environ.get("LLM_BACKEND", "gemini")
-    if backend.startswith("gemini/"):
-        return named_gemini(prompt, system, backend, max_tokens, structured=False)
+    if "|" in backend or backend.startswith(("gemini/", "groq/", "mistral/", "openrouter/")):
+        return _call_multi_provider(backend, prompt, system or "", max_tokens, structured=False)
     if backend == "gemini":
         return _gemini(prompt, system, max_tokens)
     if backend == "cerebras":

@@ -96,8 +96,14 @@ PUBLIC_V2 = replace(PUBLIC_V1, name="public_v2", generation_backend="gemini/gemi
 GEMINI_REASONING_CASCADE = (
     "gemini/gemini-4-hydrogen,gemini-3.8-flash,gemini-2.5-flash,"
     "gemini-3.1-flash-lite,gemini-3.5-flash-lite"
+    "|groq/llama-3.3-70b-versatile"
+    "|mistral/mistral-small-latest"
 )
-GEMINI_FAST_CASCADE = "gemini/gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash"
+GEMINI_FAST_CASCADE = (
+    "gemini/gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash"
+    "|groq/llama-3.1-8b-instant"
+    "|mistral/mistral-small-latest"
+)
 
 PUBLIC_V3 = replace(
     PUBLIC_V2,

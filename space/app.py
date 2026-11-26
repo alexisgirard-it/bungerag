@@ -83,7 +83,7 @@ LOCAL_BOOKS = (RUNTIME_ROOT / "corpus") if (__name__ == "__main__" and APP_DIR.n
 from library import CATALOG, search_library  # noqa: E402
 from rag import ask_smart  # noqa: E402
 from reader import build_reader  # noqa: E402
-from workshop import open_question  # noqa: E402
+from workshop import debate_turn, open_question  # noqa: E402
 
 
 # Un seul calcul lourd : deux rerankings simultanes degradent le CPU gratuit.
@@ -324,6 +324,31 @@ def dossier_for_reader(question, request, passages=None, *, external=None):
         return dossier
 
 
+def debate_for_reader(dossier, changes, history, objection, request):
+    try:
+        reservation = QUOTAS.reserve(client_id(request))
+    except QuotaExceeded:
+        return debate_turn(dossier, changes, history, objection, generate=None)
+    try:
+        from config import get_config
+        from generate import generate_json
+
+        cfg = get_config()
+
+        def write(prompt, system):
+            return generate_json(prompt, system, cfg.generation_backend, 1400)
+
+        new_history, notice = debate_turn(
+            dossier, changes, history, objection, generate=write
+        )
+        QUOTAS.commit(reservation)
+        return new_history, notice
+    except Exception:
+        QUOTAS.release(reservation)
+        LOGGER.exception("debat_atelier_indisponible")
+        return debate_turn(dossier, changes, history, objection, generate=None)
+
+
 def legacy_controls(question):
     with gr.Accordion("Réponse rédigée et sources", open=False):
         submit = gr.Button("Envoyer la question", variant="secondary")
@@ -343,11 +368,15 @@ with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=Tru
     with gr.Column(elem_id="page-shell"):
         gr.HTML(MASTHEAD)
         gr.HTML(HERO)
-        concept, view, linked, comparison, initial_atlas = build_reader(
-            legacy_controls, LOCAL_BOOKS, dossier_for_reader, MAX_QUESTION_CHARS
+        concept, view, linked, comparison, mindmap, initial_atlas = build_reader(
+            legacy_controls,
+            LOCAL_BOOKS,
+            dossier_for_reader,
+            MAX_QUESTION_CHARS,
+            run_debate=debate_for_reader,
         )
         gr.HTML(FOOTER)
-    demo.load(initial_atlas,concept,[view,linked,comparison],api_name=False)
+    demo.load(initial_atlas, concept, [view, linked, comparison, mindmap], api_name=False)
 
 demo.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 
