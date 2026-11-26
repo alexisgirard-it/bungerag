@@ -10,7 +10,7 @@ Sur les 30 questions historiques, la V2 retrouvait 10 références annotées dan
 |---|---:|---:|---:|
 | Qwen3-Embedding-0.6B | 21/30 | 0,368 | 9/30 |
 | IBM Granite 311M Multilingual R2 | 21/30 | 0,380 | 9/30 |
-| EmbeddingGemma 2, texte | 17/30 | 0,303 | |
+| EmbeddingGemma 2, texte | 17/30 | 0,303 | 6/30 |
 | Microsoft Harrier 0.6B | 20/30 | 0,311 | |
 
 Qwen est conservé. Granite obtient un rang moyen un peu meilleur sur le petit groupe. Les deux retrouvent autant de références à cinq passages sur l’index complet. Le comparateur de classement mesure 13/30 en encodant la question anglaise et 11/30 dans les deux variantes hybrides avant reclassement. Le français reste utilisable pour la recherche vectorielle et le reclassement reçoit la question originale. [Qwen](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) · [Granite](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2) · [Horizon Labs](https://huggingface.co/Horizon-Labs/multilingual-reranker-small)
@@ -20,9 +20,10 @@ Sur les questions réservées, la recherche dense seule interroge les **10 412
 | Embedding | Rang 1 | Top 5 | Rang réciproque moyen | Citation / souvenir / définition / symbole / argument au top 5 |
 |---|---:|---:|---:|---|
 | Qwen3-Embedding-0.6B | 8/25 | 18/25 | 0,466 | 3/5 · 2/5 · 5/5 · 5/5 · 3/5 |
+| EmbeddingGemma 2, texte (270 M) | 10/25 | 16/25 | 0,508 | 2/5 · 2/5 · 3/5 · 5/5 · 4/5 |
 | IBM Granite 311M Multilingual R2 | 9/25 | 12/25 | 0,410 | 1/5 · 1/5 · 3/5 · 3/5 · 4/5 |
 
-Qwen récupère huit pages cibles qui manquaient aux cinq premiers résultats de Granite. Granite en récupère deux qui manquent à Qwen. Le résultat soutient le choix de Qwen comme étage dense du profil. Les temps mesurés sur le Mac pendant d’autres calculs servent à reproduire l’essai. [Protocole](../src/benchmark_encoders.py) · [Mesures par question](mesures-v3.json)
+Qwen récupère huit pages cibles qui manquaient aux cinq premiers résultats de Granite (contre deux pour Granite) et quatre pages cibles qui manquaient à EmbeddingGemma 2 (`citation-4`, `souvenir-4`, `définition-1`, `définition-4`, contre deux pour Gemma : `souvenir-2`, `argument-2`), tout en le devançant aussi sur les 30 questions historiques (9/30 contre 6/30). Malgré un bon rang 1 d’EmbeddingGemma 2 (10/25, MRR 0,508), le meilleur rappel top 5 de Qwen sur les deux jeux confirme définitivement **`Qwen3-Embedding-0.6B`** comme étage dense du profil public. Les temps mesurés sur le Mac pendant d’autres calculs servent à reproduire l’essai. [Protocole](../src/benchmark_encoders.py) · [Mesures par question](mesures-v3.json)
 
 ## Recette réservée
 
@@ -153,7 +154,7 @@ Le module [formal_logic.py](../src/formal_logic.py) ajoute **trois preuves véri
 - **Synonymie sémantique (`signification`) :** réfutation de la suffisance de la coréférence `R(c₁) = R(c₂)` par contre-modèle fini explicite (`S(c₁) ≠ S(c₂)`).
 - **Modèle factuel `ℳ = ⟨D, F, I⟩` (`modele_factuel`) :** preuve que le seul formalisme `F` ne suffit pas à constituer un modèle factuel sans domaine concret `D` et interprétation `I`.
 
-La suite de fidélité ([audit_fidelity.py](../src/audit_fidelity.py), bloquante avant toute publication dans `push_space.py`) contrôle **8 formulations orientées** (dont fausses attributions à Bunge sur une citation d’Emerson, demandes d’avis posthume sur GPT-4/Gemini 4, demandes d’édition française et présuppositions biaisées sur holisme/empirisme/formalisme) et **2 conversations longues multi-tours (22 tours)** sans aucune mutation du référentiel ni des dossiers sources.
+La suite de fidélité ([audit_fidelity.py](../src/audit_fidelity.py), bloquante avant toute publication dans `push_space.py`) contrôle **8 formulations orientées** (dont fausses attributions à Bunge sur une citation d’Emerson, demandes d’avis posthume sur GPT-4/Gemini 4, demandes d’édition française et présuppositions biaisées sur holisme/empirisme/formalisme) et **2 conversations longues multi-tours (22 tours)** sans aucune mutation du référentiel ni des dossiers sources. La révision publiée sur le Space confirme en direct les 13 dossiers d’Atelier, les 109 notions de l’Atlas, les dossiers T5 (`conjecture`) et T7/I (`modele_factuel`) ainsi que les blocs de preuve du premier ordre (`∀x∀y`). [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/cfab09ddf404289cdfc52d77c0811b110495c19b)
 
 ### Pages voisines à budget strictement égal (5 pages)
 

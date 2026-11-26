@@ -134,6 +134,47 @@
       ],
       "query_seconds": 1.38,
       "doc_seconds": 33.56
+    },
+    {
+      "model": "google/embeddinggemma-2",
+      "revision": "f9972ac22e696a105c482202646979e33e4b5a1e",
+      "count": 10412,
+      "hit5": 6,
+      "mrr": 0.155,
+      "ranks": [
+        14,
+        11,
+        65,
+        13,
+        557,
+        53,
+        2,
+        71,
+        2,
+        117,
+        43,
+        37,
+        86,
+        27,
+        3,
+        1,
+        2,
+        30,
+        20,
+        106,
+        1,
+        19,
+        169,
+        13,
+        35,
+        85,
+        562,
+        33,
+        10,
+        54
+      ],
+      "query_seconds": 0.92,
+      "doc_seconds": 0.02
     }
   ],
   "ranking_ablation": [
@@ -5655,6 +5696,198 @@
             "ranks": [
               1,
               1
+            ]
+          }
+        ]
+      },
+      {
+        "model": "google/embeddinggemma-2",
+        "revision": "f9972ac22e696a105c482202646979e33e4b5a1e",
+        "count": 10412,
+        "hit1": 10,
+        "hit5": 16,
+        "mrr": 0.5079,
+        "query_seconds": 1.4,
+        "trials": [
+          {
+            "id": "citation-1",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "citation-2",
+            "family": "citation",
+            "ranks": [
+              442
+            ]
+          },
+          {
+            "id": "citation-3",
+            "family": "citation",
+            "ranks": [
+              36
+            ]
+          },
+          {
+            "id": "citation-4",
+            "family": "citation",
+            "ranks": [
+              31
+            ]
+          },
+          {
+            "id": "citation-5",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "souvenir-1",
+            "family": "souvenir",
+            "ranks": [
+              15
+            ]
+          },
+          {
+            "id": "souvenir-2",
+            "family": "souvenir",
+            "ranks": [
+              4
+            ]
+          },
+          {
+            "id": "souvenir-3",
+            "family": "souvenir",
+            "ranks": [
+              25
+            ]
+          },
+          {
+            "id": "souvenir-4",
+            "family": "souvenir",
+            "ranks": [
+              61
+            ]
+          },
+          {
+            "id": "souvenir-5",
+            "family": "souvenir",
+            "ranks": [
+              2
+            ]
+          },
+          {
+            "id": "définition-1",
+            "family": "définition",
+            "ranks": [
+              6
+            ]
+          },
+          {
+            "id": "définition-2",
+            "family": "définition",
+            "ranks": [
+              2
+            ]
+          },
+          {
+            "id": "définition-3",
+            "family": "définition",
+            "ranks": [
+              5
+            ]
+          },
+          {
+            "id": "définition-4",
+            "family": "définition",
+            "ranks": [
+              20
+            ]
+          },
+          {
+            "id": "définition-5",
+            "family": "définition",
+            "ranks": [
+              2
+            ]
+          },
+          {
+            "id": "symbole-1",
+            "family": "symbole",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "symbole-2",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-3",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-4",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-5",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "argument-1",
+            "family": "argument",
+            "ranks": [
+              1,
+              1,
+              2
+            ]
+          },
+          {
+            "id": "argument-2",
+            "family": "argument",
+            "ranks": [
+              1,
+              5
+            ]
+          },
+          {
+            "id": "argument-3",
+            "family": "argument",
+            "ranks": [
+              1,
+              1
+            ]
+          },
+          {
+            "id": "argument-4",
+            "family": "argument",
+            "ranks": [
+              91,
+              261
+            ]
+          },
+          {
+            "id": "argument-5",
+            "family": "argument",
+            "ranks": [
+              1,
+              3
             ]
           }
         ]
