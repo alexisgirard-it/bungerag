@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from push_space import build_space_bundle, stale_remote_files  # noqa: E402
+from push_space import STALE_SPACE_VARIABLES, build_space_bundle, stale_remote_files  # noqa: E402
 
 
 def test_public_bundle_is_strictly_allowlisted(tmp_path):
@@ -30,3 +30,4 @@ def test_remote_space_is_synchronized_to_allowlist():
     copied = ["app.py", "README.md", "src/rag.py"]
     remote = [".gitattributes", *copied, "old_app.py", "debug/context.txt"]
     assert stale_remote_files(remote, copied) == ["debug/context.txt", "old_app.py"]
+    assert "RAG_K_CANDIDATES" in STALE_SPACE_VARIABLES

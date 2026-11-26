@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.18",
+  "version": "2026-11-26.19",
   "core": [
     "materialisme",
     "systemisme",
@@ -1433,6 +1433,11 @@
         "folio": "29",
         "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
         "quote": "is a partial order relation"
+      },
+      "notation": {
+        "formula": "(a ⊑ b ∧ b ⊑ a) → a = b",
+        "gloss": "⊑ désigne la relation partie-tout entre individus concrets ; son antisymétrie identifie deux individus qui sont mutuellement parties l’un de l’autre.",
+        "status": "Notation collationnée sur la page originale (Traité III, ch. 1)."
       }
     },
     "superiorite-mecanisme": {
@@ -1719,6 +1724,11 @@
         "folio": "30",
         "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
         "quote": "Every assembly process is accompanied by the emergence of some properties and the loss of others."
+      },
+      "notation": {
+        "formula": "e(t, t') = p(t') − p(t) ≠ ∅",
+        "gloss": "p(t) désigne l’ensemble des propriétés avant assemblage et p(t') après assemblage ; leur différence non vide exprime l’apparition de propriétés émergentes.",
+        "status": "Notation collationnée sur la page originale (Postulat 1.5, Traité IV, p. 30)."
       }
     },
     "ni-holisme-ni-atomisme": {
@@ -1878,6 +1888,11 @@
         "folio": "47",
         "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
         "quote": "both sense and reference are prior to any assignment of truth value."
+      },
+      "notation": {
+        "formula": "ℳ(c) = ⟨𝒮(c), ℛ(c)⟩",
+        "gloss": "ℳ(c) désigne la signification du construit c, 𝒮(c) son sens complet et ℛ(c) sa classe de référence.",
+        "status": "Notation collationnée sur la page originale (Définition 7.1, Traité II, p. 47)."
       }
     },
     "sens-reference-distincts": {
@@ -2038,6 +2053,90 @@
         "folio": "126",
         "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
         "quote": "the theoretical physicist attempts to model physical things in terms of purely physical properties"
+      }
+    },
+    "frege-sens": {
+      "title": "Frege · Référence identifiée à la valeur de vérité",
+      "domain": "Sémantique",
+      "kind": "Position exposée pour critique",
+      "text": "Bunge rappelle que Frege identifie la Bedeutung (référence) d’un énoncé à sa valeur de vérité et fait dépendre le sens des conditions de vérité, ce que Bunge critique avant d’exposer sa propre théorie.",
+      "tags": [
+        "Frege",
+        "Bedeutung",
+        "vérité",
+        "sens",
+        "référence"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 56,
+        "folio": "44",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "identified the Bedeutung of a statement with its truth value",
+        "voice": "Frege (exposé par Bunge)"
+      }
+    },
+    "mill-connotation": {
+      "title": "Mill · Distinction connotation / dénotation",
+      "domain": "Sémantique",
+      "kind": "Position antérieure discutée",
+      "text": "Bunge rattache la doctrine synthétique de la signification à la distinction popularisée par John Stuart Mill entre connotation (sens) et dénotation (référence), tout en la débarrassant du positivisme.",
+      "tags": [
+        "Mill",
+        "connotation",
+        "dénotation",
+        "signification",
+        "sens"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 56,
+        "folio": "44",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "distinction between the connotation and the denotation of a term",
+        "voice": "J. S. Mill (exposé par Bunge)"
+      }
+    },
+    "husserl-essences": {
+      "title": "Husserl · Vision des essences sans mise à l’épreuve",
+      "domain": "Épistémologie",
+      "kind": "Position exposée pour critique",
+      "text": "Bunge expose l’intuitionnisme de Husserl (Wesensschau), selon lequel certains sujets saisiraient directement l’essence d’un objet sans recourir à l’expérience ni à la théorisation.",
+      "tags": [
+        "Husserl",
+        "Wesensschau",
+        "intuition",
+        "évidence",
+        "essences"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 73,
+        "folio": "61",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "a vision of essences",
+        "voice": "Husserl (exposé par Bunge)"
+      }
+    },
+    "critique-evidence-intuitive": {
+      "title": "Rejet des prétendues vérités évidentes par elles-mêmes",
+      "domain": "Épistémologie",
+      "kind": "Réponse de Bunge",
+      "text": "Bunge réplique à l’intuitionnisme que l’histoire des idées est jonchée de prétendues vérités évidentes qui n’étaient que des opinions reçues ou des superstitions réfutées par l’épreuve.",
+      "tags": [
+        "évidence",
+        "intuitionnisme",
+        "critique",
+        "Husserl",
+        "épreuve"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 73,
+        "folio": "61",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "the history of mankind is littered with the corpses of supposedly selfevident truths",
+        "voice": "Bunge"
       }
     }
   },
@@ -2892,6 +2991,72 @@
       "verb": "rejoint la distinction sémantique des vérités établies par la seule raison dans",
       "kind": "Comparaison entre ouvrages",
       "comparison": "Le tome II sépare la vérité de raison des vérités factuelles. Le tome VII/I en tire la neutralité sémantique des mathématiques pures et la nécessité d’une interprétation factuelle en physique."
+    },
+    {
+      "id": "renvoi-psychologie-esprit--psychologie",
+      "origin": "renvoi-psychologie-esprit",
+      "target": "psychologie",
+      "witness": "renvoi-psychologie-esprit",
+      "verb": "ancre explicitement dans l’approche biologique du tome IV la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "renvoi-psychologie-esprit--cadre-emergentiste",
+      "origin": "renvoi-psychologie-esprit",
+      "target": "cadre-emergentiste",
+      "witness": "renvoi-psychologie-esprit",
+      "verb": "renvoie au tome IV où est posé",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome VII/II renvoie explicitement à l’approche biologique de l’esprit adoptée au tome IV, où Bunge précise la portée du matérialisme émergentiste comme cadre de recherche."
+    },
+    {
+      "id": "bonheur-et-bien-etre--bonheur",
+      "origin": "bonheur-et-bien-etre",
+      "target": "bonheur",
+      "witness": "bonheur-et-bien-etre",
+      "verb": "restreint le champ d’application du",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "bonheur-et-bien-etre--bien-etre",
+      "origin": "bonheur-et-bien-etre",
+      "target": "bien-etre",
+      "witness": "bonheur-et-bien-etre",
+      "verb": "distingue le bonheur du concept plus large de",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "frege-sens--couple-signification",
+      "origin": "frege-sens",
+      "target": "couple-signification",
+      "witness": "couple-signification",
+      "verb": "est critiqué par Bunge avant sa définition du",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "mill-connotation--couple-signification",
+      "origin": "mill-connotation",
+      "target": "couple-signification",
+      "witness": "mill-connotation",
+      "verb": "prépare la synthèse sens-référence élaborée dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "husserl-essences--critique-evidence-intuitive",
+      "origin": "husserl-essences",
+      "target": "critique-evidence-intuitive",
+      "witness": "critique-evidence-intuitive",
+      "verb": "est réfuté par Bunge dans",
+      "kind": "Lien explicite",
+      "attribution_comment": "Bunge expose la Wesensschau de Husserl pour critiquer l’intuitionnisme et rappelle que l’histoire est pleine de prétendues vérités évidentes réfutées par la mise à l’épreuve."
+    },
+    {
+      "id": "critique-evidence-intuitive--testabilite-reelle",
+      "origin": "critique-evidence-intuitive",
+      "target": "testabilite-reelle",
+      "witness": "testabilite-reelle",
+      "verb": "renforce l’exigence d’une",
+      "kind": "Lien explicite"
     }
   ],
   "editions": {

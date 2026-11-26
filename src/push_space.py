@@ -60,6 +60,12 @@ MODULES = (
     "schemas.py",
     "output_guard.py",
 )
+# Anciennes variables V1 qui ne doivent pas écraser les paramètres du profil PUBLIC_V3.
+STALE_SPACE_VARIABLES = (
+    "RAG_K_CANDIDATES",
+    "RAG_PANO_K",
+    "GEMINI_MODELS",
+)
 
 
 def required_secret(name: str) -> str:
@@ -247,6 +253,11 @@ def main() -> None:
             or variables["RAG_PROFILE"].value != "public_v3"
         ):
             api.add_space_variable(SPACE, "RAG_PROFILE", "public_v3")
+        removed_vars = []
+        for stale_var in STALE_SPACE_VARIABLES:
+            if stale_var in variables:
+                api.delete_space_variable(SPACE, stale_var)
+                removed_vars.append(stale_var)
         print(
             json.dumps(
                 {
@@ -254,6 +265,7 @@ def main() -> None:
                     "index": index_revision,
                     "previous_space": live.sha,
                     "previous_index": state.sha,
+                    "removed_variables": removed_vars,
                 }
             )
         )

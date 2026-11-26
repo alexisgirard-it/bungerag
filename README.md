@@ -5,42 +5,67 @@
 > ouvrage + page du fichier PDF (ou section EPUB). Si les extraits ne suffisent pas,
 > le système doit répondre **« Absent du corpus »**. Et tout est **mesuré**.
 
-**[🚀 Démo en ligne](https://huggingface.co/spaces/alexisgirard/bungerag)** · [📊 Résultats d'évaluation complets](eval/RESULTS.md) · [📓 Journal de bord](JOURNAL.md)
+**[🚀 Démo en ligne](https://huggingface.co/spaces/alexisgirard/bungerag)** · [📊 Mesures V3](eval/RESULTATS-V3.md) · [🗺️ Feuille de route](FEUILLE-DE-ROUTE.md) · [📚 Couverture du Traité](eval/COUVERTURE-TRAITE.md) · [📓 Journal de bord](JOURNAL.md)
 
-[Feuille de route du projet](FEUILLE-DE-ROUTE.md) · [Plan du volet Rechercher](PLAN-RECHERCHE.md)
+## BungeRAG V3 : trois volets reliés et vérifiés
 
-## Consulter la bibliothèque V3 en local
+BungeRAG V3 réunit dans un seul site gratuit (CPU Hugging Face Spaces) **trois parcours complémentaires** sur les 25 ouvrages de Mario Bunge (dont les 9 volumes/parties du *Treatise on Basic Philosophy*) :
 
-La recherche affiche un court extrait et la pagination de l’édition indexée. L’atlas donne accès
-aux fiches sourcées, aux comparaisons entre éditions et aux repères détectés dans le *Traité*.
-L’atelier permet de suspendre une prémisse et de lire les conséquences sur ses justifications.
-Le cadre philosophique indique où les thèses centrales prennent appui dans les textes.
+1. **Rechercher et déplier un argument :** recherche paginée sur toute la bibliothèque (citation exacte, souvenir en français, formule mathématique ou repère formel), affichage de l’édition vérifiée (SHA-256, folio imprimé + page PDF ou section EPUB), distinction des voix citées (Emerson, Wilson, Frege, Mill, Husserl) et dépliage direct de l’argument.
+2. **Atlas des concepts :** référentiel versionné de **113 fiches et 113 liens vérifiés** (0 orphelin, 54/54 chapitres du *Traité* couverts, 4 notations formelles collationnées, comparaisons datées entre ouvrages avec lecture éditoriale séparée).
+3. **Atelier philosophique :** **13 dossiers argumentés couvrant les 9/9 tomes/parties du *Traité*** (18/54 chapitres reliés) + dossiers libres avec ajout de fait contemporain daté (lien HTTPS), contestation locale de prémisse (*Suspendre / Remplacer / Rétablir*), **5 formalisations propositionnelles** et **3 preuves vérifiées en logique du premier ordre** avec contre-modèles ([formal_logic.py](src/formal_logic.py)).
 
-Construire la base paginée à partir du corpus privé et de la concordance V2, puis démarrer le site.
+### Chiffres clés V3 (26 novembre 2026)
+
+| Volet / Métrique | Résultat vérifié V3 | Référence |
+|---|---|---|
+| Recherche directe de pages (jeu réservé, 25 q.) | **24/25** au top 5 · **5/5** orientations sans cible · **1,47 s** médiane sur le Space | [RESULTATS-V3.md](eval/RESULTATS-V3.md) |
+| Sélection de blocs rédaction (`Horizon-Labs small`, 24 → 5) | **23/25** sur jeu réservé · **13/30** sur jeu historique (vs 10/30 en V2) | [RESULTATS-V3.md](eval/RESULTATS-V3.md) |
+| Embeddings (10 412 passages, dense seul) | `Qwen3-Embedding-0.6B` **18/25** (vs EmbeddingGemma 2 : 16/25, Granite : 12/25) | [RESULTATS-V3.md](eval/RESULTATS-V3.md) |
+| Renvois du graphe (11 questions multi-prémisses) | **9/11** arguments complets (`seed_limit=3`) contre 2/11 en pages seules | [RESULTATS-V3.md](eval/RESULTATS-V3.md) |
+| Référentiel, Atelier & Fidélité | **113 fiches / 113 liens**, **13 dossiers (9/9 tomes)**, **5+3 preuves**, **8 biais + 22 tours** | [COUVERTURE-TRAITE.md](eval/COUVERTURE-TRAITE.md) |
+
+### Consulter la bibliothèque V3 en local
+
+Construire la base paginée à partir du corpus privé et de la concordance locale, puis démarrer le site (`RAG_PROFILE=public_v3` sur le Space ; `public_v2` reste disponible comme profil historique reproductible) :
 
 ```sh
 .venv/bin/python src/build_library.py
-.venv/bin/python space/app.py
+RAG_PROFILE=public_v3 .venv/bin/python space/app.py
 ```
 
-La recherche et les dossiers édités fonctionnent après téléchargement des modèles locaux.
-La rédaction sur une question libre utilise le profil configuré. Sur le Mac, le lancement
-avec `LLM_BACKEND=ollama` permet aussi de demander une rédaction locale.
+La recherche paginée, l’Atlas et les 13 dossiers édités fonctionnent **sans aucun appel API**. Pour la rédaction libre et l’Atelier ouvert, `public_v3` utilise une cascade LLM gratuite ordonnée meilleur en premier avec coupe-circuit temporaire (`gemini-4-hydrogen` → `gemini-3.8-flash` → `gemini-2.5-flash` → `gemini-3.1-flash-lite` → `gemini-3.5-flash-lite`), ou `LLM_BACKEND=ollama` en 100 % local sur Mac (`qwen3.5:9b`).
 
-Les fichiers de la bibliothèque restent dans `index/`. Le Space reçoit un bundle de code
-sur liste blanche et lit une révision épinglée du dataset privé. `src/push_space.py` vérifie
-la concordance et publie les fichiers V3 après la recette locale.
+`src/push_space.py` contrôle avant chaque publication le catalogue (`audit_reader.py`), les dossiers/transpositions/preuves (`audit_workshop.py`), la fidélité orientée/multi-tours (`audit_fidelity.py`), la liste blanche stricte des 16 modules runtime ([src/README.md](src/README.md)) et l’absence de variables V1 obsolètes sur le Space.
 
-| Faithfulness | Context precision | Context recall | Abstention (pièges) |
+---
+
+## Architecture V3
+
+```mermaid
+flowchart LR
+    Q[Question FR / Formule / Citation] --> S{Portée & Voix}
+    S -- hors corpus / posthume --> A0[Orientation explicite]
+    S -- localiser --> L["Bibliothèque paginée SQLite FTS5<br/>+ Qwen3-Embedding-0.6B (10 412 passages)<br/>+ Repères formels & Notations"]
+    L --> P["Top 5 pages vérifiées<br/>(hors quota API · 1,47 s médiane)"]
+    L --> G["Atlas des concepts<br/>113 fiches · 113 liens · 0 orphelin"]
+    P --> R["Reclasseur Horizon-Labs small<br/>(24 → 5 blocs) + Graphe (seed_limit=3)"]
+    R --> LLM["Cascade Gemini gratuite + coupe-circuit<br/>4-hydrogen → 3.8-flash → 2.5-flash → 3.1-flash-lite"]
+    LLM --> V["Double vérification citations & preuves<br/>+ formal_logic.py (propositionnel + 1er ordre)"]
+    V --> W["Réponse sourcée / Atelier philosophique<br/>13 dossiers (9/9 tomes) · Contester une prémisse"]
+```
+
+---
+
+## Archive des mesures V1 / V2 (juillet–novembre 2026)
+
+| Faithfulness (V1 legacy) | Context precision | Context recall | Abstention (pièges) |
 |:---:|:---:|:---:|:---:|
 | **0,935** | **0,893** | **0,848** | **8 / 10** |
 
-*Résultats du benchmark legacy pré-clôture : chemin direct k=40 → top 6, 30 questions
-de fond + 10 questions-pièges. Ce pipeline historique appliquait la reformulation
-anglaise aux recherches dense et BM25, sans le routeur ni le nouveau validateur de
-sortie. RAGAS 0.4.3, juge Cerebras gpt-oss-120b distinct du générateur ; références
-corrigées puis [validées humainement](eval/VALIDATION-HUMAINE.md). Ces scores ne sont
-attribués ni au code V1 actuel, ni au Space CPU sans nouveau run fingerprinté.*
+*Résultats du benchmark legacy pré-clôture (juillet 2026) : chemin direct k=40 → top 6, 30 questions
+de fond + 10 questions-pièges. RAGAS 0.4.3, juge Cerebras gpt-oss-120b distinct du générateur ; références
+corrigées puis [validées humainement](eval/VALIDATION-HUMAINE.md). Les comparaisons V2 sont dans [RESULTATS-V2.md](eval/RESULTATS-V2.md) et les résultats complets V3 dans [RESULTATS-V3.md](eval/RESULTATS-V3.md).*
 
 ---
 
@@ -262,12 +287,13 @@ expérience hybride reste possible avec `RAG_TRANSLATOR_BACKEND` ou
 ## Structure
 
 ```
-src/            pipeline complet (extraction → index → RAG → éval → déploiement)
-eval/           jeu de questions, résultats, revue et validation humaine
-space/          l'app de démo (Gradio)
-tests/          tests unitaires sans corpus, modèle lourd ni API
-manifest.csv    la liste curée du corpus, exclusions justifiées
-JOURNAL.md      le journal de bord : décisions, incidents, leçons
+src/            16 modules runtime du Space + scripts hors-ligne (voir src/README.md)
+eval/           jeux figés (historique, réservé, liaisons, fidélité), mesures V2/V3 et couverture
+space/          application Gradio (Recherche, Atlas, Atelier) et tests d’interface
+tests/          tests unitaires sans corpus, modèle lourd ni API (compatibles CI)
+manifest.csv    liste curée des 25 ouvrages du corpus et exclusions justifiées
+FEUILLE-DE-ROUTE.md  mémoire versionnée des 3 volets et journal des décisions
+JOURNAL.md      journal de bord historique (V1)
 ```
 
 ## Licence

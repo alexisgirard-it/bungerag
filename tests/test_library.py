@@ -36,6 +36,9 @@ def test_pasted_formula_keeps_mathematical_variables():
     assert list(notation_matches("ℳ=⟨D,F,I⟩")) == ["modele"]
     assert list(notation_matches("Où se trouve «ℳ=⟨D,F,I⟩» ?")) == ["modele"]
     assert not list(notation_matches("ℳ=⟨d,F,I⟩"))
+    assert "couple-signification" in list(notation_matches("ℳ(c) = ⟨𝒮(c), ℛ(c)⟩"))
+    assert "ordre-partiel" in list(notation_matches("(a ⊑ b ∧ b ⊑ a) → a = b"))
+    assert "postulat-emergence" in list(notation_matches("e(t, t') = p(t') − p(t) ≠ ∅"))
 
 
 def test_attribution_uses_the_quote_and_edition():

@@ -2,7 +2,7 @@
 
 Inventaire local du 26 novembre 2026. Une fiche indique qu’un point précis du chapitre a été identifié et justifié. Le nombre de fiches ne mesure pas la proportion de l’argumentation couverte.
 
-Référentiel `2026-11-26.18` · 109 fiches et 105 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
+Référentiel `2026-11-26.19` · 113 fiches et 113 liens (0 orphelin) dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
 
 ## Treatise 1 - Semantics I: Sense and Reference
 
@@ -19,7 +19,7 @@ Référentiel `2026-11-26.18` · 109 fiches et 105 liens dans la bibliothèque, 
 | Chapitre | PDF | Fiches dans ce chapitre | Dossiers de l’Atelier | Repères formels détectés |
 |---|---:|---|---|---:|
 | Interpretation | 13 | Deux niveaux d’interprétation | — | 10 |
-| Meaning | 54 | Signification et signe, Définition 7.1 · Signification comme couple sens-référence, Une même chose représentée par plusieurs construits, Corollaire 7.4 · Critère sémantique de synonymie | Deux expressions ayant les mêmes référents ont-elles la même signification ? | 24 |
+| Meaning | 54 | Signification et signe, Définition 7.1 · Signification comme couple sens-référence, Une même chose représentée par plusieurs construits, Corollaire 7.4 · Critère sémantique de synonymie, Frege · Référence identifiée à la valeur de vérité, Mill · Distinction connotation / dénotation | Deux expressions ayant les mêmes référents ont-elles la même signification ? | 24 |
 | Truth | 93 | Vérité partielle, Vérité de raison | — | 23 |
 | Offshoots | 145 | Extension, vague et description définie | — | 37 |
 | Neighbors | 178 | Disciplines voisines de la sémantique | — | 9 |
@@ -65,7 +65,7 @@ Référentiel `2026-11-26.18` · 109 fiches et 105 liens dans la bibliothèque, 
 | Chapitre | PDF | Fiches dans ce chapitre | Dossiers de l’Atelier | Repères formels détectés |
 |---|---:|---|---|---:|
 | Understanding | 15 | Explication et mécanisme, La réfraction comme cas de subsomption, Degrés de compréhension | Que manque-t-il à la loi de Snell pour expliquer la réfraction ?, Une grande fenêtre de contexte suffit-elle à établir la compréhension ? | 0 |
-| Producing Evidence | 71 | Vérifiabilité des résultats, Vérité des propositions et efficacité des règles, Mise à l’épreuve effective | La collecte de faits suffit-elle à produire une théorie scientifique ?, Une règle technique efficace est-elle vraie ou moralement juste ? | 1 |
+| Producing Evidence | 71 | Vérifiabilité des résultats, Vérité des propositions et efficacité des règles, Mise à l’épreuve effective, Husserl · Vision des essences sans mise à l’épreuve, Rejet des prétendues vérités évidentes par elles-mêmes | La collecte de faits suffit-elle à produire une théorie scientifique ?, Une règle technique efficace est-elle vraie ou moralement juste ? | 1 |
 | Evaluating | 126 | Vérité et utilité dans l’évaluation | — | 0 |
 | Epistemic Change | 168 | Évolution des connaissances | — | 0 |
 | Kinds of Knowledge | 205 | Types de connaissance et leurs rapports | — | 0 |

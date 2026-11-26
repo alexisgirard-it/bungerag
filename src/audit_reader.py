@@ -79,6 +79,10 @@ def verify_catalogue():
                 or cited["edition"] != reply["edition"]
             ):
                 raise ValueError(f"Attribution ou réponse ambiguë pour le lien {link['id']}")
+    connected = {k for link in relations for k in (link["origin"], link["target"])}
+    orphans = sorted(set(NODES) - connected)
+    if orphans:
+        raise ValueError(f"Fiches orphelines sans lien dans l’Atlas : {orphans}")
     print(f"{len(notices)} éditions, {len(NODES)} citations et {len(relations)} liens contrôlés.")
 
 
