@@ -844,10 +844,11 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   margin: 0;
 }
 
-/* Hide empty Gradio HTML slots cleanly so zero blank bars appear */
+/* Hide empty Gradio HTML slots & empty follow-up row cleanly */
 #page-shell .html-container:empty,
 #page-shell .block:has(> .html-container:empty),
-#page-shell .hide-container:empty {
+#page-shell .hide-container:empty,
+#page-shell .followup-bar:not(:has(button)) {
   display: none !important;
   margin: 0 !important;
   padding: 0 !important;

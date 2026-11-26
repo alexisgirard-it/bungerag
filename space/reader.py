@@ -443,10 +443,10 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     ai_go = gr.Button("Synthèse IA sourcée", variant="secondary", scale=1)
                 legacy(q, ai_go)
                 hits = gr.HTML()
-                with gr.Row(visible=False, elem_classes=["action-bar"]) as next_steps:
-                    expand = gr.Button("Déplier l’argument")
-                    locate = gr.Button("Voir sur la carte")
-                    discuss = gr.Button("Tester dans l’Atelier")
+                with gr.Row(elem_classes=["action-bar", "followup-bar"]):
+                    expand = gr.Button("Déplier l’argument", visible=False)
+                    locate = gr.Button("Voir sur la carte", visible=False)
+                    discuss = gr.Button("Tester dans l’Atelier", visible=False)
                 inline = gr.HTML()
 
         with gr.Tab("Atlas des concepts", id="atlas"):
@@ -683,6 +683,10 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             ),
         )
 
+    def _next_btns(show: bool):
+        u = gr.update(visible=show)
+        return u, u, u
+
     def lookup(question, request: gr.Request):
         question = " ".join((question or "").split())
         if not 3 <= len(question) <= max_chars:
@@ -692,7 +696,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 "<p>Saisissez une recherche entre 3 et "
                 + str(max_chars)
                 + " caractères.</p>",
-                gr.update(visible=False),
+                *_next_btns(False),
                 "",
                 {},
             )
@@ -703,7 +707,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 [],
                 question,
                 "<p>" + esc(message) + "</p>",
-                gr.update(visible=False),
+                *_next_btns(False),
                 "",
                 {},
             )
@@ -712,7 +716,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             [],
             question,
             '<div class="bunge-loading-bar" aria-label="Recherche en cours"></div>',
-            gr.update(visible=False),
+            *_next_btns(False),
             "",
             {},
         )
@@ -733,7 +737,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 related,
                 question,
                 "".join(card(source, local) for source in related),
-                gr.update(visible=bool(related)),
+                *_next_btns(bool(related)),
                 dossier_view(dossier_obj, {}, local),
                 dossier_obj,
             )
@@ -742,23 +746,33 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         rendered = (
             "".join(card(s, local) for s in result) or "<p>Passage non retrouvé.</p>"
         )
-        yield result, question, rendered, gr.update(visible=bool(result)), "", {}
+        yield result, question, rendered, *_next_btns(bool(result)), "", {}
         if wants_proof:
             d = get_dossier(question, None, result, request)
             yield (
                 result,
                 question,
                 rendered,
-                gr.update(visible=True),
+                *_next_btns(True),
                 dossier_view(d, {}, local),
                 d,
             )
 
+    lookup_outputs = [
+        research,
+        saved_question,
+        hits,
+        expand,
+        locate,
+        discuss,
+        inline,
+        inline_dossier,
+    ]
     for event in (go.click, q.submit):
         event(
             lookup,
             inputs=q,
-            outputs=[research, saved_question, hits, next_steps, inline, inline_dossier],
+            outputs=lookup_outputs,
             api_name=False,
             show_progress="hidden",
             concurrency_id="reader",
@@ -772,7 +786,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
 
         btn.click(
             _run_preset,
-            outputs=[q, research, saved_question, hits, next_steps, inline, inline_dossier],
+            outputs=[q, *lookup_outputs],
             api_name=False,
             show_progress="hidden",
             concurrency_id="reader",
