@@ -487,11 +487,11 @@ def question_scope(question):
     return "localiser", ""
 
 
-def linked_evidence(keys, limit=6):
+def linked_evidence(keys, limit=6, *, seed_limit=None):
     """Étend les appuis d'une lecture par des liens sourcés, y compris les restrictions."""
     initial = list(dict.fromkeys(k for k in keys if k in NODES))[:limit]
-    selected = dict.fromkeys(initial)
-    frontier = initial
+    frontier = initial[:seed_limit]
+    selected = dict.fromkeys(frontier)
     for _ in range(2):
         if len(selected) == limit:
             break
@@ -504,6 +504,10 @@ def linked_evidence(keys, limit=6):
                     selected[key] = None
                     next_hop.append(key)
         frontier = next_hop
+    for key in initial:
+        if len(selected) == limit:
+            break
+        selected.setdefault(key, None)
     return list(selected)
 
 
