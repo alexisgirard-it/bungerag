@@ -102,6 +102,24 @@
         {"changer": "intension", "texte": "", "attendu": {"synonymie": "disponible", "non-synonymie": "justification suspendue"}},
         {"changer": "intension", "texte": null, "attendu": {"non-synonymie": "disponible"}}
       ]
+    },
+    {
+      "dossier": "conjecture",
+      "étapes": [
+        {"changer": "hypothese-profonde", "texte": "", "attendu": {"theorie-systeme": "justification suspendue", "insuffisance-empirisme": "justification suspendue"}},
+        {"changer": "hypothese-profonde", "texte": null, "attendu": {"theorie-systeme": "disponible", "insuffisance-empirisme": "disponible"}},
+        {"changer": "controle", "texte": "Une théorie cohérente dispense de toute mise à l’épreuve.", "attendu": {"controle": "remplacée", "theorie-systeme": "disponible", "insuffisance-empirisme": "justification suspendue"}},
+        {"changer": "controle", "texte": null, "attendu": {"insuffisance-empirisme": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "modele_factuel",
+      "étapes": [
+        {"changer": "interpretation-modele", "texte": "", "attendu": {"formalisation-insuffisante": "justification suspendue"}},
+        {"changer": "interpretation-modele", "texte": null, "attendu": {"formalisation-insuffisante": "disponible"}},
+        {"changer": "math-neutre", "texte": "Les mathématiques décrivent directement les objets physiques.", "attendu": {"math-neutre": "remplacée", "formalisation-insuffisante": "justification suspendue"}},
+        {"changer": "math-neutre", "texte": null, "attendu": {"formalisation-insuffisante": "disponible"}}
+      ]
     }
   ]
 }

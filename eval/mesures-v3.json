@@ -8095,5 +8095,691 @@
         "suspension_ok": true
       }
     ]
+  },
+  "equal_budget_neighbors": {
+    "budget_pages": 5,
+    "reserve": {
+      "summary": {
+        "top5": {
+          "total": 25,
+          "hit1": 14,
+          "any_hit5": 24,
+          "all_premises": 20,
+          "arguments_complets": "1/5"
+        },
+        "top3_voisines_5": {
+          "total": 25,
+          "hit1": 14,
+          "any_hit5": 20,
+          "all_premises": 19,
+          "arguments_complets": "3/5"
+        },
+        "top2_voisines_5": {
+          "total": 25,
+          "hit1": 14,
+          "any_hit5": 17,
+          "all_premises": 16,
+          "arguments_complets": "3/5"
+        }
+      },
+      "rows": [
+        {
+          "id": "citation-1",
+          "family": "citation",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "citation-2",
+          "family": "citation",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "citation-3",
+          "family": "citation",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "citation-4",
+          "family": "citation",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "citation-5",
+          "family": "citation",
+          "ranks": {
+            "top5": [
+              3
+            ],
+            "top3_voisines_5": [
+              3
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "souvenir-1",
+          "family": "souvenir",
+          "ranks": {
+            "top5": [
+              3
+            ],
+            "top3_voisines_5": [
+              3
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "souvenir-2",
+          "family": "souvenir",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "souvenir-3",
+          "family": "souvenir",
+          "ranks": {
+            "top5": [
+              3
+            ],
+            "top3_voisines_5": [
+              3
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "souvenir-4",
+          "family": "souvenir",
+          "ranks": {
+            "top5": [
+              4
+            ],
+            "top3_voisines_5": [
+              null
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "souvenir-5",
+          "family": "souvenir",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "définition-1",
+          "family": "définition",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "définition-2",
+          "family": "définition",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "définition-3",
+          "family": "définition",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "définition-4",
+          "family": "définition",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "définition-5",
+          "family": "définition",
+          "ranks": {
+            "top5": [
+              4
+            ],
+            "top3_voisines_5": [
+              null
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "symbole-1",
+          "family": "symbole",
+          "ranks": {
+            "top5": [
+              null
+            ],
+            "top3_voisines_5": [
+              null
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "symbole-2",
+          "family": "symbole",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "symbole-3",
+          "family": "symbole",
+          "ranks": {
+            "top5": [
+              1
+            ],
+            "top3_voisines_5": [
+              1
+            ],
+            "top2_voisines_5": [
+              1
+            ]
+          }
+        },
+        {
+          "id": "symbole-4",
+          "family": "symbole",
+          "ranks": {
+            "top5": [
+              2
+            ],
+            "top3_voisines_5": [
+              2
+            ],
+            "top2_voisines_5": [
+              2
+            ]
+          }
+        },
+        {
+          "id": "symbole-5",
+          "family": "symbole",
+          "ranks": {
+            "top5": [
+              4
+            ],
+            "top3_voisines_5": [
+              null
+            ],
+            "top2_voisines_5": [
+              null
+            ]
+          }
+        },
+        {
+          "id": "argument-1",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              2,
+              1
+            ],
+            "top3_voisines_5": [
+              5,
+              2,
+              1
+            ],
+            "top2_voisines_5": [
+              4,
+              2,
+              1
+            ]
+          }
+        },
+        {
+          "id": "argument-2",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              2
+            ],
+            "top3_voisines_5": [
+              null,
+              2
+            ],
+            "top2_voisines_5": [
+              null,
+              2
+            ]
+          }
+        },
+        {
+          "id": "argument-3",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              2,
+              3
+            ],
+            "top3_voisines_5": [
+              2,
+              3
+            ],
+            "top2_voisines_5": [
+              2,
+              5
+            ]
+          }
+        },
+        {
+          "id": "argument-4",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              4
+            ],
+            "top3_voisines_5": [
+              null,
+              null
+            ],
+            "top2_voisines_5": [
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "argument-5",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              1,
+              null
+            ],
+            "top3_voisines_5": [
+              1,
+              4
+            ],
+            "top2_voisines_5": [
+              1,
+              3
+            ]
+          }
+        }
+      ]
+    },
+    "nouvelles_liaisons": {
+      "summary": {
+        "top5": {
+          "total": 6,
+          "hit1": 3,
+          "any_hit5": 4,
+          "all_premises": 1,
+          "arguments_complets": "1/6"
+        },
+        "top3_voisines_5": {
+          "total": 6,
+          "hit1": 3,
+          "any_hit5": 4,
+          "all_premises": 2,
+          "arguments_complets": "2/6"
+        },
+        "top2_voisines_5": {
+          "total": 6,
+          "hit1": 3,
+          "any_hit5": 4,
+          "all_premises": 2,
+          "arguments_complets": "2/6"
+        }
+      },
+      "rows": [
+        {
+          "id": "esprit-science",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              null
+            ],
+            "top3_voisines_5": [
+              null,
+              null
+            ],
+            "top2_voisines_5": [
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "bonheur-satisfait",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              2,
+              1
+            ],
+            "top3_voisines_5": [
+              2,
+              1
+            ],
+            "top2_voisines_5": [
+              2,
+              1
+            ]
+          }
+        },
+        {
+          "id": "existence-et-matiere",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              1,
+              null,
+              null
+            ],
+            "top3_voisines_5": [
+              1,
+              null,
+              null
+            ],
+            "top2_voisines_5": [
+              1,
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "action-destin",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              1,
+              null
+            ],
+            "top3_voisines_5": [
+              1,
+              4
+            ],
+            "top2_voisines_5": [
+              1,
+              3
+            ]
+          }
+        },
+        {
+          "id": "plasticite-esprit",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              null,
+              null
+            ],
+            "top3_voisines_5": [
+              null,
+              null,
+              null
+            ],
+            "top2_voisines_5": [
+              null,
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "limite-besoins",
+          "family": "argument",
+          "ranks": {
+            "top5": [
+              null,
+              3,
+              null
+            ],
+            "top3_voisines_5": [
+              null,
+              3,
+              null
+            ],
+            "top2_voisines_5": [
+              null,
+              5,
+              null
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "llm_blind_comparison": {
+    "date": "2026-11-26",
+    "cases": [
+      "attribution-emerson",
+      "ethique-bonheur",
+      "biais-holisme",
+      "efficacite-verite"
+    ],
+    "models": {
+      "gemini-4-hydrogen": {
+        "ok_count": 1,
+        "terms_ok_count": 1,
+        "error_count": 3,
+        "rows": [
+          {
+            "id": "attribution-emerson",
+            "status": "ok",
+            "seconds": 93.37,
+            "sources_count": 7,
+            "citations_valid": true,
+            "terms_ok": true,
+            "answer": "Emerson est l'auteur de la phrase « the book of Nature is the book of Fate ». [1]\n\nBunge considère que cette affirmation ne fait que répéter une erreur commune. [2]\n\nSelon Bunge, l'idée que la science naturelle révèle l'œuvre du Destin et que la causalité est fataliste est une conception erronée répandue. [3] [4]\n\nBunge soutient que le fatalisme est incompatible avec le déterminisme causal, car le fatalisme est une doctrine théologique ou surnaturaliste affirmant l'existence d'un Destin inconnaissable et inéluctable. [5] [6]\n\nÀ l'inverse, Bunge précise que le déterminisme causal se présente comme une théorie rationnelle offrant les moyens de connaître, de prédire et de changer le cours des événements. [7]"
+          },
+          {
+            "id": "ethique-bonheur",
+            "status": "error",
+            "seconds": 1.59,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          },
+          {
+            "id": "biais-holisme",
+            "status": "error",
+            "seconds": 9.37,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          },
+          {
+            "id": "efficacite-verite",
+            "status": "error",
+            "seconds": 2.21,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          }
+        ]
+      },
+      "gemini-2.5-flash": {
+        "ok_count": 0,
+        "terms_ok_count": 0,
+        "error_count": 4,
+        "rows": [
+          {
+            "id": "attribution-emerson",
+            "status": "error",
+            "seconds": 1.86,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          },
+          {
+            "id": "ethique-bonheur",
+            "status": "error",
+            "seconds": 1.82,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          },
+          {
+            "id": "biais-holisme",
+            "status": "error",
+            "seconds": 1.93,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          },
+          {
+            "id": "efficacite-verite",
+            "status": "error",
+            "seconds": 8.35,
+            "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "ok_count": 4,
+        "terms_ok_count": 3,
+        "error_count": 0,
+        "rows": [
+          {
+            "id": "attribution-emerson",
+            "status": "ok",
+            "seconds": 1.87,
+            "sources_count": 1,
+            "citations_valid": true,
+            "terms_ok": true,
+            "answer": "Emerson est l'auteur de la phrase « the book of Nature is the book of Fate ». [1]"
+          },
+          {
+            "id": "ethique-bonheur",
+            "status": "ok",
+            "seconds": 7.09,
+            "sources_count": 2,
+            "citations_valid": true,
+            "terms_ok": false,
+            "answer": "Bunge conclut que personne ne peut être complètement heureux car la réalisation totale d'une valeur est incompatible avec celle d'autres valeurs. [1] [2]"
+          },
+          {
+            "id": "biais-holisme",
+            "status": "ok",
+            "seconds": 5.54,
+            "sources_count": 1,
+            "citations_valid": true,
+            "terms_ok": true,
+            "answer": "Le systémisme de Bunge rejette le holisme car celui-ci refuse d'analyser les composants d'un système, ce qui rend impossible la compréhension des liens entre eux. [1]"
+          },
+          {
+            "id": "efficacite-verite",
+            "status": "ok",
+            "seconds": 5.73,
+            "sources_count": 1,
+            "citations_valid": true,
+            "terms_ok": true,
+            "answer": "L'efficacité d'un artefact ou d'une règle peut parfois reposer sur des éléments faux, ce qui confirme que l'efficacité ne garantit pas la rectitude ou la vérité. [1]"
+          }
+        ]
+      }
+    }
   }
 }

@@ -45,6 +45,7 @@ SPACE_FILES = (
 MODULES = (
     "search.py",
     "library.py",
+    "formal_logic.py",
     "referentiel.json",
     "workshop.py",
     "definitions.py",
@@ -146,6 +147,7 @@ def validate_library(index_dir: Path) -> Path:
 def main() -> None:
     from huggingface_hub import CommitOperationAdd, HfApi
 
+    from audit_fidelity import verify_fidelity
     from audit_reader import verify_catalogue
     from audit_workshop import verify_dossiers
 
@@ -159,6 +161,7 @@ def main() -> None:
     library = validate_library(index_dir)
     verify_catalogue()
     verify_dossiers()
+    verify_fidelity()
     with tempfile.TemporaryDirectory() as tmp:
         bundle = Path(tmp)
         copied = build_space_bundle(bundle)

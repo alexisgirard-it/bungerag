@@ -324,6 +324,59 @@ def semantic_meaning():
     )
 
 
+def epistemic_conjecture():
+    jump, deep, conj, theory, check = map(
+        proposition,
+        [
+            "inference-saut",
+            "hypothese-profonde",
+            "conjecture",
+            "theorie-systeme",
+            "controle",
+        ],
+    )
+    theory["supports"] = [["inference-saut", "hypothese-profonde"]]
+    conclusion = step(
+        "insuffisance-empirisme",
+        "La collecte de faits ne suffit pas à former une théorie",
+        "Pour passer de l’observation à une théorie scientifique, il faut formuler des conjectures profondes, les organiser en système hypothético-déductif et les soumettre à des contrôles effectifs.",
+        "Reconstruction éditoriale",
+        [["inference-saut", "hypothese-profonde", "conjecture", "theorie-systeme", "controle"]],
+    )
+    return dict(
+        title="La collecte de faits suffit-elle à produire une théorie scientifique ?",
+        steps=[jump, deep, conj, theory, check, conclusion],
+        objection="Une description empirique bien classée prépare l’enquête, mais sans hypothèse sur des mécanismes non directement observables elle reste au niveau phénoménologique.",
+        open="Quelles conséquences déductives nouvelles et testables la théorie permet-elle de tirer au-delà des données déjà recueillies ?",
+    )
+
+
+def factual_model_physics():
+    neutral, model, interp, physics, autonomous = map(
+        proposition,
+        [
+            "math-neutre",
+            "modele",
+            "interpretation-modele",
+            "physique",
+            "choses-physiques-autonomes",
+        ],
+    )
+    conclusion = step(
+        "formalisation-insuffisante",
+        "Un formalisme sans interprétation factuelle reste purement mathématique",
+        "Comme les mathématiques sont sémantiquement neutres, un formalisme F ne devient un modèle physique que lorsqu’une interprétation I le relie à un domaine concret D de choses et processus physiques.",
+        "Reconstruction éditoriale",
+        [["math-neutre", "modele", "interpretation-modele", "physique", "choses-physiques-autonomes"]],
+    )
+    return dict(
+        title="Un formalisme mathématique suffit-il à constituer un modèle factuel en physique ?",
+        steps=[neutral, model, interp, physics, autonomous, conclusion],
+        objection="Un même formalisme mathématique peut recevoir plusieurs interprétations factuelles distinctes ; le choix de D et de I relève de la science factuelle et non des mathématiques pures.",
+        open="Quels objets physiques composent le domaine D et quelles observations mettent à l’épreuve l’interprétation I retenue ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
@@ -336,11 +389,34 @@ DOSSIERS = {
     "systemisme": systemism_emergence,
     "efficacite": technical_efficiency,
     "signification": semantic_meaning,
+    "conjecture": epistemic_conjecture,
+    "modele_factuel": factual_model_physics,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if node in {
+        "inference-saut",
+        "hypothese-profonde",
+        "conjecture",
+        "theorie-systeme",
+    } or (
+        any(t in q for t in ("collecte de faits", "empirisme", "hypothese profonde", "hypothetico-deductif"))
+        and any(t in q for t in ("theorie", "conjecture", "inference", "scientifique"))
+    ):
+        return "conjecture"
+    if node in {
+        "math-neutre",
+        "modele",
+        "interpretation-modele",
+        "physique",
+        "choses-physiques-autonomes",
+    } or (
+        any(t in q for t in ("formalisme", "modele factuel", "mathematiques"))
+        and any(t in q for t in ("physique", "factuel", "interpretation", "domaine"))
+    ):
+        return "modele_factuel"
     if node in {
         "agregat-et-systeme",
         "postulat-emergence",

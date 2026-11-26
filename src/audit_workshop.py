@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from audit_reader import verified
+from formal_logic import FOL_VERIFIERS
 from library import NODES
 from workshop import (
     DOSSIERS,
@@ -97,6 +98,10 @@ def verify_dossiers():
         result = check()
         if not result.get("valid"):
             raise ValueError(f"Formalisation invalide : {result.get('formula')}")
+    for key, check in FOL_VERIFIERS.items():
+        result = check()
+        if not result.get("valid"):
+            raise ValueError(f"Preuve du premier ordre invalide ({key}) : {result.get('formula')}")
     return dossiers, checked_sources, checked_conditions
 
 
@@ -130,7 +135,8 @@ def main():
             tested += 1
     print(
         f"{len(dossiers)} dossiers, {checked_sources} appuis, {checked_conditions} conditions de transposition, "
-        f"{len(FORMALIZATIONS)} formalisations et {tested} modifications contrôlées."
+        f"{len(FORMALIZATIONS)} formalisations propositionnelles, {len(FOL_VERIFIERS)} preuves du premier ordre "
+        f"et {tested} modifications contrôlées."
     )
 
 

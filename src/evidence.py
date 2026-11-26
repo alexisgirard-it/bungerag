@@ -362,17 +362,30 @@ def editorial_passage(source, key, db):
 
 
 def editorial_attribution(question, table):
-    """Répond à une demande d’attribution et de commentaire relus dans l’édition."""
+    """Répond à une demande d’attribution (directe ou orientée) relue dans l’édition."""
     from library import CATALOG, NODES, fold, node_source, query_phrases
 
-    parts = re.split(r",?\s+et\s+(?=comment bunge\b|qu[’']en dit bunge\b)",
-                     fold(question), maxsplit=1)
-    if len(parts) != 2 or not re.match(r"^(qui a (ecrit|dit)|qui est l[’']auteur)\b", parts[0]):
-        return None
-    if not re.fullmatch(
-        r"(comment bunge (traite-t-il|interprete-t-il|commente-t-il) (cette (affirmation|phrase|citation)|ce passage)"
-        r"|qu[’']en dit bunge)\s*\??", parts[1].strip()
-    ):
+    folded = fold(question)
+    parts = re.split(
+        r",?\s+et\s+(?=comment bunge\b|qu[’']en dit bunge\b)",
+        folded,
+        maxsplit=1,
+    )
+    direct = (
+        len(parts) == 2
+        and bool(re.match(r"^(qui a (ecrit|dit)|qui est l[’']auteur)\b", parts[0]))
+        and bool(
+            re.fullmatch(
+                r"(comment bunge (traite-t-il|interprete-t-il|commente-t-il) (cette (affirmation|phrase|citation)|ce passage)"
+                r"|qu[’']en dit bunge)\s*\??",
+                parts[1].strip(),
+            )
+        )
+    )
+    misattribution = bool(
+        re.search(r"\bbunge\b.{0,40}\b(ecrit|affirme|dit|defend|soutient)\b", folded)
+    )
+    if not (direct or misattribution):
         return None
     quoted = {canonical(phrase) for phrase in query_phrases(question)}
     matches = [
@@ -399,8 +412,13 @@ def editorial_attribution(question, table):
     author = sources[0]["locator"].get("voice")
     if not author:
         return None
+    lead = (
+        f"Non : l’auteur de la phrase citée est {author}, et non Bunge. [1]"
+        if misattribution and not direct
+        else f"L’auteur de la phrase citée est {author}. [1]"
+    )
     return (
-        f"L’auteur de la phrase citée est {author}. [1]\n\n{link['attribution_comment']} [2]",
+        f"{lead}\n\n{link['attribution_comment']} [2]",
         sources,
     )
 

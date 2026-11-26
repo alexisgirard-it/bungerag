@@ -134,6 +134,39 @@ Un premier essai plaçant `gemini-4-hydrogen` et `gemini-3.8-flash` en tête san
 
 La cascade améliore simultanément la rapidité, la couverture des interprétations rivales et la résilience aux quotas journaliers par modèle gratuit. La révision publiée sur le Space confirme la réponse sourcée sur la distinction vérité/efficacité en 40,79 s (chargement à froid compris, 2 sources vérifiées, aucune abstention) et l’ouverture du dossier d’Atelier correspondant en 0,35 s. [Mesures](mesures-v3.json) · [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/aed5f4c9ba5c13b72799878a1aaf8cf32f5fda76)
 
+### Comparatif qualitatif contrôlé des LLM sur passages identiques
+
+Sur quatre questions exigeantes fournies avec les mêmes passages vérifiés (`attribution-emerson`, `ethique-bonheur`, `biais-holisme`, `efficacite-verite` via [compare_llm_blind.py](../src/compare_llm_blind.py)) :
+
+- **`gemini-4-hydrogen`** produit nettement les réponses les plus complètes et fidèles lorsqu’il dispose de quota : **7 sources vérifiées** sur Emerson (distinction exacte de la voix d’Emerson, critique de Bunge, incompatibilité fatalisme/déterminisme causal), **6 sources vérifiées** sur le bonheur et le bien-être, **3 sources** sur l’anti-holisme, et abstention honnête lorsqu’une citation soumise est absente du passage. Il atteint vite son quota gratuit (`429`).
+- **`gemini-2.5-flash`** (avec `thinking_budget=512`) produit 2 branches validées (principale + rivale) sur les deux cas libres de l’Atelier en 13,0–13,6 s, mais partage un quota gratuit journalier serré (`429`).
+- **`gemini-3.1-flash-lite`** reste disponible en continu (4/4 réponses sans erreur, 1,9–7,1 s), mais avec des réponses plus courtes (1 à 2 sources) qui omettent parfois une sous-question (ex. la réponse de Bunge à Emerson ou la distinction bonheur/bien-être).
+
+Ce contraste confirme l’architecture retenue : **meilleur en premier (`gemini-4-hydrogen` → `3.8-flash` → `2.5-flash` → `3.1-flash-lite` → `3.5-flash-lite`) avec coupe-circuit par modèle** (5 min sur `503`/`504`, 30 min sur `429`).
+
+### Couverture des 9/9 tomes, logique du premier ordre et fidélité orientée
+
+Le référentiel `2026-11-26.18` atteint **109 fiches et 105 liens vérifiés** sur les 25 éditions. Deux nouveaux dossiers ouvrent les deux derniers tomes qui n’avaient pas encore de chaîne d’Atelier publiée : **Conjecture, inférence et théorie** (T5 `Inferring`, `Conjecturing`, `Systematizing` + T6 `Producing Evidence`) et **Modèle factuel et physique** (T7/I `Formal Science` et `Physical Science`), portant la couverture à **9/9 tomes/parties du *Traité*** (**18/54 chapitres reliés**, **13 dossiers d’Atelier**, 55 appuis, 49 modifications contrôlées sur 10 séquences). [Couverture du Traité](COUVERTURE-TRAITE.md)
+
+Le module [formal_logic.py](../src/formal_logic.py) ajoute **trois preuves vérifiées en logique du premier ordre** sur structures finies (distinction explicite entre formalisation éditoriale, preuve vérifiée et démonstration reproduite de l’auteur) :
+- **Unicité du monde (`monde`) :** énumération exhaustive des relations binaires `⊑` sur domaines finis de taille 1 à 3 (`∀x∀y ((x ⊑ y ∧ y ⊑ x) → x = y), ∀x (x ⊑ m₁), ∀x (x ⊑ m₂) ⊨ m₁ = m₂`, 0 contre-exemple sous les axiomes complets, et construction d’un contre-modèle fini explicite sans antisymétrie).
+- **Synonymie sémantique (`signification`) :** réfutation de la suffisance de la coréférence `R(c₁) = R(c₂)` par contre-modèle fini explicite (`S(c₁) ≠ S(c₂)`).
+- **Modèle factuel `ℳ = ⟨D, F, I⟩` (`modele_factuel`) :** preuve que le seul formalisme `F` ne suffit pas à constituer un modèle factuel sans domaine concret `D` et interprétation `I`.
+
+La suite de fidélité ([audit_fidelity.py](../src/audit_fidelity.py), bloquante avant toute publication dans `push_space.py`) contrôle **8 formulations orientées** (dont fausses attributions à Bunge sur une citation d’Emerson, demandes d’avis posthume sur GPT-4/Gemini 4, demandes d’édition française et présuppositions biaisées sur holisme/empirisme/formalisme) et **2 conversations longues multi-tours (22 tours)** sans aucune mutation du référentiel ni des dossiers sources.
+
+### Pages voisines à budget strictement égal (5 pages)
+
+Sur les 25 questions réservées documentées et les 6 nouvelles formulations de liaisons ([compare_neighbors_equal_budget.py](../src/compare_neighbors_equal_budget.py)), remplacer les rangs 4–5 par les pages physiques voisines à budget strictement égal de 5 pages donne :
+
+| Variante (budget strict de 5 pages) | Réservée : Hit@1 / Au moins 1 cible / Arguments complets | Nouvelles liaisons (6 cas) : Au moins 1 / Arguments complets |
+|---|---|---|
+| **5 premières pages classées (`top5`)** | 14/25 · **24/25** · 1/5 | **4/6** · 1/6 |
+| Top 3 + 2 pages voisines (`top3_voisines_5`) | 14/25 · 20/25 (-4) · 3/5 | 4/6 · 2/6 |
+| Top 2 + 3 pages voisines (`top2_voisines_5`) | 14/25 · 17/25 (-7) · 3/5 | 4/6 · 2/6 |
+
+À budget de pages égal, insérer les pages voisines fait perdre **4 à 7 questions** sur le jeu réservé (24/25 → 20/25 ou 17/25), alors que l’expansion par graphe de l’Atlas (`seed_limit=3`) atteint déjà **9/11 arguments complets** sans dégrader les 5 premières pages. Le classement de recherche conserve donc strictement les **5 premières pages (`top5`)**.
+
 ## Titres et pages voisines
 
 Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.

@@ -8,6 +8,7 @@ from urllib.parse import quote
 
 import gradio as gr
 
+from formal_logic import FOL_VERIFIERS
 from library import (
     CATALOG,
     NODES,
@@ -287,10 +288,30 @@ def dossier_view(dossier, changes, local):
             for row in fragment["rows"]
         )
         sections.append(
-            f'<details class="formal-check"><summary>Vérifier le fragment formel</summary><p class="formula">{esc(fragment["formula"])}</p><p>{esc(fragment["gloss"])}</p>'
+            f'<details class="formal-check"><summary>Vérifier le fragment formel (propositionnel)</summary>'
+            f'<small>Formalisation éditoriale · Preuve vérifiée par table de vérité</small>'
+            f'<p class="formula">{esc(fragment["formula"])}</p><p>{esc(fragment["gloss"])}</p>'
             f'<div class="formal-table"><table><thead><tr>{headers}</tr></thead><tbody>'
             + rows
             + "</tbody></table></div></details>"
+        )
+    for identifier in FOL_VERIFIERS.keys() & {s["id"] for s in dossier["steps"]}:
+        proof = FOL_VERIFIERS[identifier]()
+        counter = proof.get("countermodel")
+        counter_html = (
+            f"<p><strong>Contre-modèle sans « {esc(proof['dropped_axiom'])} » :</strong> "
+            f"<code>{esc(str(counter))}</code></p>"
+            if counter
+            else ""
+        )
+        sections.append(
+            f'<details class="formal-check"><summary>Vérifier la preuve du premier ordre</summary>'
+            f'<small>{esc(proof["kind"])} · {esc(proof["source_label"])}</small>'
+            f'<p class="formula">{esc(proof["formula"])}</p>'
+            f'<p>{esc(proof["gloss"])}</p>'
+            f"<p><small>{proof['models_checked']} structures/assignations contrôlées · "
+            f"{proof['counterexamples']} contre-exemple(s) sous les axiomes complets.</small></p>"
+            f"{counter_html}</details>"
         )
     sections.append(
         "<details><summary>Cadre philosophique de cette lecture</summary>"
@@ -407,6 +428,8 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     ("Systémisme et émergence", "systemisme"),
                     ("Efficacité, vérité et rectitude", "efficacite"),
                     ("Sens, référence et synonymie", "signification"),
+                    ("Conjecture, inférence et théorie", "conjecture"),
+                    ("Modèle factuel et physique", "modele_factuel"),
                 ],
                 label="Dossiers de lecture",
             )

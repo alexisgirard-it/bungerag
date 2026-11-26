@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.17",
+  "version": "2026-11-26.18",
   "core": [
     "materialisme",
     "systemisme",
@@ -1919,6 +1919,126 @@
         "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
         "quote": "Synonyms have the same vicarious sense and the same vicarious reference"
       }
+    },
+    "inference-saut": {
+      "title": "Inférer au-delà de la collecte de faits",
+      "domain": "Épistémologie",
+      "kind": "Critique de l’empirisme",
+      "text": "L’empirisme sous-estime le rôle de l’inférence : accumuler des faits ne suffit pas à produire de nouvelles propositions ni à avancer dans l’enquête scientifique.",
+      "tags": [
+        "inférence",
+        "empirisme",
+        "faits",
+        "déduction",
+        "inference"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 211,
+        "folio": "199",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "the importance of inference is often underrated by those workers who, misled by empiricism"
+      }
+    },
+    "hypothese-profonde": {
+      "title": "Hypothèse profonde et faits non directement observables",
+      "domain": "Épistémologie",
+      "kind": "Caractérisation méthodologique",
+      "text": "Les hypothèses les plus fécondes ne se bornent pas à résumer des régularités observables : par définition, une hypothèse profonde porte sur des faits inaccessibles à l’observation directe.",
+      "tags": [
+        "hypothèse",
+        "conjecture",
+        "observation",
+        "profondeur",
+        "hypothesis"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 300,
+        "folio": "290",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "by definition, a deep hypothesis concerns facts that are not accessible to direct observation."
+      }
+    },
+    "theorie-systeme": {
+      "title": "Théorie comme système hypothético-déductif",
+      "domain": "Épistémologie",
+      "kind": "Définition épistémologique",
+      "text": "Systématiser la connaissance consiste à relier des propositions en un système hypothético-déductif cohérent, distinct d’un simple amas de données ou d’une doctrine lâche.",
+      "tags": [
+        "théorie",
+        "systématisation",
+        "hypothético-déductif",
+        "cohérence",
+        "theory"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 334,
+        "folio": "324",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "A theory is a hypotheticodeductive system"
+      }
+    },
+    "math-neutre": {
+      "title": "Neutralité sémantique des mathématiques",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse sur les sciences formelles",
+      "text": "En tant que système conceptuel pur, les mathématiques sont sémantiquement neutres : elles ne décrivent pas le monde réel par elles-mêmes.",
+      "tags": [
+        "mathématiques",
+        "science formelle",
+        "neutralité",
+        "a priori",
+        "mathematics"
+      ],
+      "source": {
+        "book": "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985",
+        "page": 20,
+        "folio": "9",
+        "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+        "quote": "mathematics is semantically neutral: it does not describe the real world."
+      }
+    },
+    "interpretation-modele": {
+      "title": "Fonction d’interprétation d’un modèle factuel",
+      "domain": "Philosophie des sciences",
+      "kind": "Définition 1.2 (clause iii)",
+      "text": "Dans le triplet ℳ = ⟨D, F, I⟩, la fonction partielle d’interprétation I associe à des prédicats et formules du formalisme F des ensembles d’éléments factuels du domaine D.",
+      "tags": [
+        "interprétation",
+        "modèle factuel",
+        "formalisme",
+        "domaine",
+        "interpretation"
+      ],
+      "source": {
+        "book": "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985",
+        "page": 93,
+        "folio": "82",
+        "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+        "quote": "assigns some predicates and formulas in F sets of factual items in D."
+      }
+    },
+    "choses-physiques-autonomes": {
+      "title": "Modéliser des choses physiques par des propriétés physiques",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse sur la physique",
+      "text": "À l’encontre des interprétations subjectivistes, le physicien théoricien modélise des choses physiques autonomes au moyen de propriétés proprement physiques.",
+      "tags": [
+        "physique",
+        "propriétés physiques",
+        "réalisme",
+        "modèle",
+        "physics"
+      ],
+      "source": {
+        "book": "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985",
+        "page": 137,
+        "folio": "126",
+        "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+        "quote": "the theoretical physicist attempts to model physical things in terms of purely physical properties"
+      }
     }
   },
   "relations": [
@@ -2698,6 +2818,80 @@
       "witness": "synonymie",
       "verb": "entraîne le double critère de la",
       "kind": "Lien explicite"
+    },
+    {
+      "id": "inference-saut--conjecture",
+      "origin": "inference-saut",
+      "target": "conjecture",
+      "witness": "inference-saut",
+      "verb": "montre la nécessité de dépasser les seuls faits avant d’examiner la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "hypothese-profonde--conjecture",
+      "origin": "hypothese-profonde",
+      "target": "conjecture",
+      "witness": "hypothese-profonde",
+      "verb": "précise la portée non directement observable d’une",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "conjecture--theorie-systeme",
+      "origin": "conjecture",
+      "target": "theorie-systeme",
+      "witness": "theorie-systeme",
+      "verb": "s’organise en système hypothético-déductif dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "theorie-systeme--controle",
+      "origin": "theorie-systeme",
+      "target": "controle",
+      "witness": "controle",
+      "verb": "soumet ses conséquences à l’épreuve empirique selon",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome V définit la théorie comme système hypothético-déductif né d’inférences et de conjectures profondes. Le tome VI rappelle que tout système scientifique doit ensuite être effectivement testable et vérifiable."
+    },
+    {
+      "id": "math-neutre--modele",
+      "origin": "math-neutre",
+      "target": "modele",
+      "witness": "math-neutre",
+      "verb": "explique pourquoi un formalisme pur requiert un domaine et une interprétation pour former un",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "modele--interpretation-modele",
+      "origin": "modele",
+      "target": "interpretation-modele",
+      "witness": "interpretation-modele",
+      "verb": "relie le formalisme mathématique au domaine concret via la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "interpretation-modele--physique",
+      "origin": "interpretation-modele",
+      "target": "physique",
+      "witness": "physique",
+      "verb": "permet d’appliquer un formalisme aux objets réels étudiés par la",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "physique--choses-physiques-autonomes",
+      "origin": "physique",
+      "target": "choses-physiques-autonomes",
+      "witness": "choses-physiques-autonomes",
+      "verb": "précise l’engagement réaliste de la modélisation physique dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "math-neutre--raison",
+      "origin": "math-neutre",
+      "target": "raison",
+      "witness": "math-neutre",
+      "verb": "rejoint la distinction sémantique des vérités établies par la seule raison dans",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome II sépare la vérité de raison des vérités factuelles. Le tome VII/I en tire la neutralité sémantique des mathématiques pures et la nécessité d’une interprétation factuelle en physique."
     }
   ],
   "editions": {

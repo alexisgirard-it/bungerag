@@ -2,7 +2,7 @@
 
 Inventaire local du 26 novembre 2026. Une fiche indique qu’un point précis du chapitre a été identifié et justifié. Le nombre de fiches ne mesure pas la proportion de l’argumentation couverte.
 
-Référentiel `2026-11-26.17` · 103 fiches et 96 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
+Référentiel `2026-11-26.18` · 109 fiches et 105 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
 
 ## Treatise 1 - Semantics I: Sense and Reference
 
@@ -55,17 +55,17 @@ Référentiel `2026-11-26.17` · 103 fiches et 96 liens dans la bibliothèque, d
 | Communication | 111 | Dimension sociale de l’enquête | — | 0 |
 | Perceiving | 141 | Perception et connaissance conceptuelle | — | 0 |
 | Conceiving | 171 | Deux notions du concept | — | 0 |
-| Inferring | 211 | Inférer une nouvelle proposition | — | 2 |
+| Inferring | 211 | Inférer une nouvelle proposition, Inférer au-delà de la collecte de faits | La collecte de faits suffit-elle à produire une théorie scientifique ? | 2 |
 | Exploring | 243 | Problèmes pratiques et cognitifs | — | 0 |
-| Conjecturing | 296 | Conjecture et mise à l’épreuve | — | 0 |
-| Systematizing | 333 | Organisation des connaissances | — | 1 |
+| Conjecturing | 296 | Conjecture et mise à l’épreuve, Hypothèse profonde et faits non directement observables | La collecte de faits suffit-elle à produire une théorie scientifique ? | 0 |
+| Systematizing | 333 | Organisation des connaissances, Théorie comme système hypothético-déductif | La collecte de faits suffit-elle à produire une théorie scientifique ? | 1 |
 
 ## Treatise 6 - Epistemology & Methodology II: Understanding the World
 
 | Chapitre | PDF | Fiches dans ce chapitre | Dossiers de l’Atelier | Repères formels détectés |
 |---|---:|---|---|---:|
 | Understanding | 15 | Explication et mécanisme, La réfraction comme cas de subsomption, Degrés de compréhension | Que manque-t-il à la loi de Snell pour expliquer la réfraction ?, Une grande fenêtre de contexte suffit-elle à établir la compréhension ? | 0 |
-| Producing Evidence | 71 | Vérifiabilité des résultats, Vérité des propositions et efficacité des règles, Mise à l’épreuve effective | Une règle technique efficace est-elle vraie ou moralement juste ? | 1 |
+| Producing Evidence | 71 | Vérifiabilité des résultats, Vérité des propositions et efficacité des règles, Mise à l’épreuve effective | La collecte de faits suffit-elle à produire une théorie scientifique ?, Une règle technique efficace est-elle vraie ou moralement juste ? | 1 |
 | Evaluating | 126 | Vérité et utilité dans l’évaluation | — | 0 |
 | Epistemic Change | 168 | Évolution des connaissances | — | 0 |
 | Kinds of Knowledge | 205 | Types de connaissance et leurs rapports | — | 0 |
@@ -75,8 +75,8 @@ Référentiel `2026-11-26.17` · 103 fiches et 96 liens dans la bibliothèque, d
 
 | Chapitre | PDF | Fiches dans ce chapitre | Dossiers de l’Atelier | Repères formels détectés |
 |---|---:|---|---|---:|
-| Formal Science From Logic To Mathematics | 20 | Modèle factuel | — | 7 |
-| Physical Science From Physics To Earth Science | 135 | Objets des sciences physiques | — | 2 |
+| Formal Science From Logic To Mathematics | 20 | Modèle factuel, Neutralité sémantique des mathématiques, Fonction d’interprétation d’un modèle factuel | Un formalisme mathématique suffit-il à constituer un modèle factuel en physique ? | 7 |
+| Physical Science From Physics To Earth Science | 135 | Objets des sciences physiques, Modéliser des choses physiques par des propriétés physiques | Un formalisme mathématique suffit-il à constituer un modèle factuel en physique ? | 2 |
 
 ## Treatise 7/II - Philosophy of Science & Technology: Life Science, Social Science and Technology
 
