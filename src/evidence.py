@@ -185,8 +185,11 @@ def locate(passage, quote, db, *, fragment=False):
         )
         pages = (f"p. {folio} du livre · " if folio else "") + f"PDF p. {passage.page}"
     else:
+        from library import section_label
+
         locator["section"] = passage.page
-        pages = f"{passage.page} · caractère {locator['start'] + 1}"
+        section = section_label(passage.book, passage.edition, passage.page)
+        pages = f"{section} · caractère {locator['start'] + 1}"
     return {
         "titre": passage.title + (f" ({passage.year})" if passage.year else ""),
         "pages": pages,
@@ -384,15 +387,18 @@ def editorial_attribution(question, table):
     )
 
 
-def add_linked_passages(question, passages, db):
-    from library import linked_evidence, node_source, on_page, suggested_nodes
+def add_linked_passages(question, passages, db, *, include_core=False):
+    from library import CATALOG, linked_evidence, node_source, on_page, suggested_nodes
 
     seeds = suggested_nodes(question, 3)
     windows = {}
     for p in list(passages.values()):
         seeds.extend(on_page(p.book, p.page))
         windows.setdefault((p.book, p.page, p.edition), []).append(canonical(p.raw))
-    for key in linked_evidence(seeds, limit=7):
+    keys = linked_evidence(seeds, limit=7)
+    if include_core:
+        keys = list(dict.fromkeys(keys + CATALOG["core"]))
+    for key in keys:
         source = node_source(key)
         book, page = source["book"], str(source["page"])
         needle = canonical(source["excerpt"])
@@ -415,7 +421,7 @@ def answer_with_evidence(question, hits, cfg, generate_json):
     frame = ""
     if cfg.name == "public_v3":
         from library import core_context, edition_label, quotation_notes, quotation_voice
-        add_linked_passages(question, passages, db)
+        add_linked_passages(question, passages, db, include_core=True)
         notes = [
             f"[{key}] {note['voice']} est l’auteur du passage cité « {note['quote']} »."
             for key, passage in passages.items()
@@ -424,6 +430,7 @@ def answer_with_evidence(question, hits, cfg, generate_json):
         ]
         frame = (
             "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. "
+            "Les principes généraux orientent la lecture. Pour un cas particulier, cite aussi un passage qui traite réellement de ce cas. "
             "Traite séparément les parties documentées de la question. "
             "Pour une citation discutée par Bunge, distingue son auteur, la réaction de Bunge et les arguments qu'il donne. "
             "Utilise des appuis distincts pour l'attribution de la citation et pour la position de Bunge.\n"

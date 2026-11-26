@@ -3,6 +3,7 @@ import json
 import pytest
 
 from workshop import (
+    CATALOG,
     assess,
     formal_happiness,
     formal_rights,
@@ -46,6 +47,7 @@ def test_unrelated_ai_question_does_not_open_the_curated_llm_dossier():
 
 
 def test_a_proposed_argument_requires_real_appuis_and_a_second_read(monkeypatch):
+    monkeypatch.setitem(CATALOG, "core", [])
     monkeypatch.setattr("workshop.core_context", lambda: "Cadre sourcé")
     monkeypatch.setattr("workshop.suggested_nodes", lambda *_: [])
     source = {
@@ -101,6 +103,11 @@ def test_verified_rivals_keep_their_own_dependencies(monkeypatch):
     monkeypatch.setattr("workshop.core_context", lambda: "Cadre sourcé")
     monkeypatch.setattr("workshop.suggested_nodes", lambda *_: [])
     source = {"book": "book", "page": "19", "title": "Source", "excerpt": "An excerpt"}
+    monkeypatch.setitem(CATALOG, "core", ["noyau"])
+    monkeypatch.setattr(
+        "workshop.proposition",
+        lambda key: step(key, "Cadre", "Principe", "Thèse", sources=[source]),
+    )
     fact = contemporary_claim("Résultat rapporté", "https://example.org/report", "2026-11-26")
     proposal = {
         "premisses": ["p1", "fait-propose"],
@@ -109,7 +116,7 @@ def test_verified_rivals_keep_their_own_dependencies(monkeypatch):
         "objection": "Quel critère permet de distinguer les deux cas ?",
         "question_ouverte": "Dispose-t-on d’une description du processus ?",
         "alternative": {
-            "premisses": ["p1", "fait-propose"],
+            "premisses": ["noyau", "p1", "fait-propose"],
             "hypothese": "Si une prédiction suffit.",
             "conclusion": "La performance est un indice selon ce critère.",
         },
@@ -121,17 +128,23 @@ def test_verified_rivals_keep_their_own_dependencies(monkeypatch):
             assert message["question"] == "Quel critère faut-il appliquer ?"
             assert set(message["appuis"]) == {"p1", "fait-propose"}
             if "alternative" in message:
-                assert set(message["appuis_alternatifs"]) == {"p1", "fait-propose"}
+                assert set(message["appuis_alternatifs"]) == {"noyau", "p1", "fait-propose"}
             return '{"valide":true,"alternative_valide":true}'
+        assert "noyau" in message["preuves"]
         return json.dumps(proposal)
 
     dossier = open_question("Quel critère faut-il appliquer ?", [source], generate=generate, external=fact)
     state = assess(dossier["steps"], {"hypothese": ""})
     assert state["conclusion"] == "justification suspendue"
     assert state["conclusion-rivale"] == "disponible"
+    assert assess(dossier["steps"], {"noyau": ""})["conclusion-rivale"] == "justification suspendue"
     state = assess(dossier["steps"], {"fait-propose": ""})
     assert state["conclusion"] == state["conclusion-rivale"] == "justification suspendue"
 
     proposal["alternative"]["premisses"] = ["p1"]
     dossier = open_question("Quel critère faut-il appliquer ?", [source], generate=generate, external=fact)
     assert "conclusion-rivale" not in assess(dossier["steps"], {})
+
+    proposal["premisses"] = ["noyau", "fait-propose"]
+    dossier = open_question("Quel critère faut-il appliquer ?", [source], generate=generate, external=fact)
+    assert "conclusion" not in assess(dossier["steps"], {})

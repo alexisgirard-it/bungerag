@@ -15,6 +15,15 @@ Sur les 30 questions historiques, la V2 retrouvait 10 références annotées dan
 
 Qwen est conservé. Granite obtient un rang moyen un peu meilleur sur le petit groupe. Les deux retrouvent autant de références à cinq passages sur l’index complet. Le comparateur de classement mesure 13/30 en encodant la question anglaise et 11/30 dans les deux variantes hybrides avant reclassement. Le français reste utilisable pour la recherche vectorielle et le reclassement reçoit la question originale. [Qwen](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) · [Granite](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2) · [Horizon Labs](https://huggingface.co/Horizon-Labs/multilingual-reranker-small)
 
+Sur les questions réservées, la recherche dense seule interroge les **10 412 passages** avec le texte original de chaque question. Les deux index ont un encodage des documents propre à leur modèle. Les éditions du jeu et de la bibliothèque ont été comparées avant de compter les pages.
+
+| Embedding | Rang 1 | Top 5 | Rang réciproque moyen | Citation / souvenir / définition / symbole / argument au top 5 |
+|---|---:|---:|---:|---|
+| Qwen3-Embedding-0.6B | 8/25 | 18/25 | 0,466 | 3/5 · 2/5 · 5/5 · 5/5 · 3/5 |
+| IBM Granite 311M Multilingual R2 | 9/25 | 12/25 | 0,410 | 1/5 · 1/5 · 3/5 · 3/5 · 4/5 |
+
+Qwen récupère huit pages cibles qui manquaient aux cinq premiers résultats de Granite. Granite en récupère deux qui manquent à Qwen. Le résultat soutient le choix de Qwen comme étage dense du profil. Les temps mesurés sur le Mac pendant d’autres calculs servent à reproduire l’essai. [Protocole](../src/benchmark_encoders.py) · [Mesures par question](mesures-v3.json)
+
 ## Recette réservée
 
 La série a été figée avant le choix des options. Elle contient 25 questions avec pages cibles et cinq demandes de clarification ou sans source disponible.
@@ -64,6 +73,12 @@ Une deuxième rédaction, en 53,09 secondes, ajoute la distinction entre fatalis
 Le nouvel appel public affiche les deux appuis en 1,82 seconde, tandis que la recherche simultanée sur la réfraction retrouve PDF p. 32 en 21,18 secondes. Les deux extraits anglais de la réponse ont été contrôlés dans le PDF de l’édition 1979. Ce temps concerne une réponse éditée à une citation reconnue. [Révision vérifiée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/6f664c14d867b419bf4cc9817599c287df96962f)
 
 Dans l’Atlas, la comparaison entre le tome I du *Traité* et *Scientific Materialism* présente la portée des deux énoncés sur l’existence. L’annotation de lecture indique sous quelle interprétation ils sont compatibles. La quatrième séquence de l’Atelier essaie deux suspensions, trois rétablissements et un changement de sens. L’interface affiche les appuis à rétablir pour chaque justification. Le contrôle local passe sur huit dossiers, 29 citations et 21 modifications dans quatre séquences. [Séquences de l’Atelier](recette-atelier.json)
+
+Le contrôle navigateur confirme sur le Space l’affichage d’une seule comparaison pour la paire d’ouvrages, puis la suspension d’une des deux preuves de l’unicité du monde et le retour à l’état initial. L’essai sur une question libre relative à la prévision produit deux branches en 36,93 secondes. Leur suspension indépendante fonctionne. La relecture relève deux glissements. La reproduction de données est qualifiée de prédiction valide et l’exactitude future devient le seul test d’une explication. La recette demande désormais de vérifier la distinction entre ajustement, validation indépendante et mise à l’épreuve d’un mécanisme. [Révision testée](https://huggingface.co/spaces/alexisgirard/bungerag/commit/aae58b0404310163a892cf1ebe0805f1c56452c7) · [Critères de relecture](recette-atelier.json)
+
+Sur le même CPU du Space, après chargement des modèles, les 20 recherches directes de la série réservée retrouvent une page cible. Le premier résultat arrive en **1,465 seconde de médiane et 1,99 seconde au 95e percentile empirique**, file et transport inclus. Les cinq souvenirs en français prennent de 1,46 à 2,68 secondes. Les cinq demandes sans cible obtiennent toutes l’orientation attendue. L’échantillon mesure des recherches de passages à chaud, sur cette série et cette révision. [Protocole](../src/measure_reader_http.py) · [Mesures](mesures-v3.json)
+
+Dans *Scientific Realism*, les 37 sections associées au sommaire affichent désormais le titre de l’essai ou de la partie. Les 38 identifiants de section et les textes extraits correspondent à l’index existant. Une recherche dans le premier essai affiche son titre complet, avec la section ch05. Un renvoi produit par la rédaction conserve en plus la position du caractère. [Notice et intitulés](../src/referentiel.json)
 
 ## Titres et pages voisines
 

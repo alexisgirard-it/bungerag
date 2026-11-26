@@ -1,4 +1,16 @@
 {
+  "cas_libres": [
+    {
+      "id": "prévision-explication",
+      "question": "Si un programme de prévision reproduit correctement des données, quelles hypothèses permettent de distinguer prédiction et explication chez Bunge ? Évalue le rôle d’un modèle de mécanisme.",
+      "appuis": ["mecanisme", "niveaux-comprehension", "superiorite-mecanisme"],
+      "critères": [
+        "Distinguer la reproduction de données connues de la validation sur des données indépendantes.",
+        "Demander un argument ou une vérification pour relier le modèle de mécanisme au phénomène.",
+        "Présenter la transposition comme conditionnelle et laisser ouverte l’évaluation du programme."
+      ]
+    }
+  ],
   "séquences": [
     {
       "dossier": "monde",

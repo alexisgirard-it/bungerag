@@ -83,22 +83,60 @@ def extract_pdf(path):
     chunks = pymupdf4llm.to_markdown(str(path), page_chunks=True, show_progress=False)
     return [c["text"] for c in chunks]
 
-def extract_epub(path):
-    """EPUB = pas de pages physiques -> on decoupe par chapitre."""
+def epub_nav(items):
+    for item in items:
+        if isinstance(item, tuple):
+            link, children = item
+            yield link
+            yield from epub_nav(children)
+        else:
+            yield item
+
+
+def epub_documents(path):
+    """Conserve les sections de l’index et lit l’intitulé de la table des matières."""
     from bs4 import BeautifulSoup
     from ebooklib import ITEM_DOCUMENT, epub
 
     book = epub.read_epub(str(path))
-    chapters = []
+    page_anchor = re.compile(r"^page(\d+)$")
+    labels, numbered, link_titles = {}, [], {}
+    for link in epub_nav(book.toc):
+        if not link.href or not link.title:
+            continue
+        document, _, fragment = link.href.partition("#")
+        labels[document] = link.title
+        link_titles[link.href] = link.title
+        if page := page_anchor.fullmatch(fragment):
+            numbered.append((int(page[1]), link.title))
+    numbered.sort()
+    heading, expanded = "", {}
     for item in book.get_items_of_type(ITEM_DOCUMENT):
+        heading = labels.get(item.get_name(), heading)
         soup = BeautifulSoup(item.get_content(), "html.parser")
         text = soup.get_text(separator="\n").strip()
         if len(text) < 200:  # pages de garde, tables des matieres...
             continue
         h = soup.find(["h1", "h2", "h3"])
         title = h.get_text(strip=True) if h else item.get_name()
-        chapters.append((title, text))
-    return chapters
+        if title.casefold() == "contents":
+            expanded = {
+                link_titles[node["href"]]: node.get_text(" ", strip=True)
+                for node in soup.find_all("a", href=True)
+                if node["href"] in link_titles and node.get_text(strip=True)
+            }
+        first = next((page_anchor.fullmatch(tag["id"]) for tag in soup.find_all(id=page_anchor)), None)
+        label = heading
+        if first and numbered:
+            # Le lien vers le titre suivant peut figurer en fin du même fichier XHTML.
+            earlier = [label for number, label in numbered if number <= int(first[1])]
+            label = earlier[-1] if earlier else ""
+        yield title, text, expanded.get(label, label)
+
+
+def extract_epub(path):
+    """EPUB = pas de pages physiques -> on decoupe par chapitre."""
+    return [(title, text) for title, text, _ in epub_documents(path)]
 
 # ------------------------------------------------------------------- main
 

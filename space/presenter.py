@@ -314,7 +314,11 @@ def render_sources(view: AnswerView, local_books: Path | None = None) -> str:
             if pdf.parent == local_books.resolve() and pdf.is_file():
                 href = "/gradio_api/file=" + quote(str(pdf)) + "#page=" + str(source.pdf_page)
                 reader = f'<a href="{html.escape(href)}" target="_blank" rel="noopener">Ouvrir la page du PDF</a>'
-        expanded = " open" if source.pdf_page or source.pages.startswith("ch") else ""
+        expanded = (
+            " open"
+            if source.pdf_page or source.pages.startswith("ch") or " · section ch" in source.pages
+            else ""
+        )
         voice = f'<small>Auteur cité · {html.escape(source.voice)}</small>' if source.voice else ""
         imprint = f'<p><small>Édition indexée · {html.escape(source.edition_label)}</small></p>' if source.edition_label else ""
         cards.append(

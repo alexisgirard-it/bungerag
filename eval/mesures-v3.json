@@ -5270,5 +5270,1066 @@
     "answer_pdf_page": 135,
     "answer_quoted_author": "Emerson",
     "omission": "Réaction de Bunge à la citation"
+  },
+  "embeddings_reserve": {
+    "retrieval": "similarité dense seule sur les 10412 blocs indexés",
+    "question": "texte original du jeu réservé, sans traduction",
+    "candidates": [
+      {
+        "model": "Qwen/Qwen3-Embedding-0.6B",
+        "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+        "count": 10412,
+        "hit1": 8,
+        "hit5": 18,
+        "mrr": 0.4659,
+        "query_seconds": 11.43,
+        "trials": [
+          {
+            "id": "citation-1",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "citation-2",
+            "family": "citation",
+            "ranks": [
+              1386
+            ]
+          },
+          {
+            "id": "citation-3",
+            "family": "citation",
+            "ranks": [
+              14
+            ]
+          },
+          {
+            "id": "citation-4",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "citation-5",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "souvenir-1",
+            "family": "souvenir",
+            "ranks": [
+              6
+            ]
+          },
+          {
+            "id": "souvenir-2",
+            "family": "souvenir",
+            "ranks": [
+              11
+            ]
+          },
+          {
+            "id": "souvenir-3",
+            "family": "souvenir",
+            "ranks": [
+              16
+            ]
+          },
+          {
+            "id": "souvenir-4",
+            "family": "souvenir",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "souvenir-5",
+            "family": "souvenir",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "définition-1",
+            "family": "définition",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "définition-2",
+            "family": "définition",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "définition-3",
+            "family": "définition",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "définition-4",
+            "family": "définition",
+            "ranks": [
+              5
+            ]
+          },
+          {
+            "id": "définition-5",
+            "family": "définition",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "symbole-1",
+            "family": "symbole",
+            "ranks": [
+              5
+            ]
+          },
+          {
+            "id": "symbole-2",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-3",
+            "family": "symbole",
+            "ranks": [
+              4
+            ]
+          },
+          {
+            "id": "symbole-4",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-5",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "argument-1",
+            "family": "argument",
+            "ranks": [
+              2,
+              2,
+              1
+            ]
+          },
+          {
+            "id": "argument-2",
+            "family": "argument",
+            "ranks": [
+              196,
+              46
+            ]
+          },
+          {
+            "id": "argument-3",
+            "family": "argument",
+            "ranks": [
+              2,
+              2
+            ]
+          },
+          {
+            "id": "argument-4",
+            "family": "argument",
+            "ranks": [
+              167,
+              12
+            ]
+          },
+          {
+            "id": "argument-5",
+            "family": "argument",
+            "ranks": [
+              3,
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "model": "ibm-granite/granite-embedding-311m-multilingual-r2",
+        "revision": "44399559930365213510b1ee2eb15ded83374f0e",
+        "count": 10412,
+        "hit1": 9,
+        "hit5": 12,
+        "mrr": 0.4098,
+        "query_seconds": 7.89,
+        "trials": [
+          {
+            "id": "citation-1",
+            "family": "citation",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "citation-2",
+            "family": "citation",
+            "ranks": [
+              239
+            ]
+          },
+          {
+            "id": "citation-3",
+            "family": "citation",
+            "ranks": [
+              55
+            ]
+          },
+          {
+            "id": "citation-4",
+            "family": "citation",
+            "ranks": [
+              67
+            ]
+          },
+          {
+            "id": "citation-5",
+            "family": "citation",
+            "ranks": [
+              50
+            ]
+          },
+          {
+            "id": "souvenir-1",
+            "family": "souvenir",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "souvenir-2",
+            "family": "souvenir",
+            "ranks": [
+              12
+            ]
+          },
+          {
+            "id": "souvenir-3",
+            "family": "souvenir",
+            "ranks": [
+              48
+            ]
+          },
+          {
+            "id": "souvenir-4",
+            "family": "souvenir",
+            "ranks": [
+              83
+            ]
+          },
+          {
+            "id": "souvenir-5",
+            "family": "souvenir",
+            "ranks": [
+              6
+            ]
+          },
+          {
+            "id": "définition-1",
+            "family": "définition",
+            "ranks": [
+              135
+            ]
+          },
+          {
+            "id": "définition-2",
+            "family": "définition",
+            "ranks": [
+              26
+            ]
+          },
+          {
+            "id": "définition-3",
+            "family": "définition",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "définition-4",
+            "family": "définition",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "définition-5",
+            "family": "définition",
+            "ranks": [
+              3
+            ]
+          },
+          {
+            "id": "symbole-1",
+            "family": "symbole",
+            "ranks": [
+              172
+            ]
+          },
+          {
+            "id": "symbole-2",
+            "family": "symbole",
+            "ranks": [
+              16
+            ]
+          },
+          {
+            "id": "symbole-3",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-4",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "symbole-5",
+            "family": "symbole",
+            "ranks": [
+              1
+            ]
+          },
+          {
+            "id": "argument-1",
+            "family": "argument",
+            "ranks": [
+              2,
+              2,
+              1
+            ]
+          },
+          {
+            "id": "argument-2",
+            "family": "argument",
+            "ranks": [
+              7,
+              4
+            ]
+          },
+          {
+            "id": "argument-3",
+            "family": "argument",
+            "ranks": [
+              7,
+              5
+            ]
+          },
+          {
+            "id": "argument-4",
+            "family": "argument",
+            "ranks": [
+              130,
+              254
+            ]
+          },
+          {
+            "id": "argument-5",
+            "family": "argument",
+            "ranks": [
+              1,
+              1
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "recette_attribution_editee": {
+    "sha": "6f664c14d867b419bf4cc9817599c287df96962f",
+    "seconds": 1.82,
+    "concurrent_lookup_seconds": 21.18,
+    "concurrent_lookup_pdf_page": 32,
+    "pdf_pages": [
+      135,
+      135
+    ],
+    "printed_pages": [
+      101,
+      101
+    ],
+    "source_attributions": [
+      "Emerson",
+      "Bunge"
+    ],
+    "sources_checked": true
+  },
+  "recette_lecteur_cpu": {
+    "space_revision": "aae58b0404310163a892cf1ebe0805f1c56452c7",
+    "hardware": "cpu-basic",
+    "rows": [
+      {
+        "id": "citation-1",
+        "family": "citation",
+        "seconds": 0.57,
+        "pages": [
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            44
+          ],
+          [
+            "Philosophy of Psychology",
+            29
+          ],
+          [
+            "Emergence and Convergence: Qualitative Novelty and the Unity of Knowledge",
+            90
+          ],
+          [
+            "Foundations of Biophilosophy",
+            202
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            13
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "citation-2",
+        "family": "citation",
+        "seconds": 0.68,
+        "pages": [
+          [
+            "The Mind-Body Problem: A Psychobiological Approach",
+            165
+          ],
+          [
+            "Philosophical Dictionary (2e ed.)",
+            24
+          ],
+          [
+            "Philosophical Dictionary (2e ed.)",
+            175
+          ],
+          [
+            "The Sociology-Philosophy Connection",
+            232
+          ],
+          [
+            "Treatise 6 - Epistemology & Methodology II: Understanding the World",
+            81
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "citation-3",
+        "family": "citation",
+        "seconds": 0.45,
+        "pages": [
+          [
+            "Causality and Modern Science",
+            135
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            220
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            137
+          ],
+          [
+            "Foundations of Biophilosophy",
+            62
+          ],
+          [
+            "Causality and Modern Science",
+            254
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "citation-4",
+        "family": "citation",
+        "seconds": 0.4,
+        "pages": [
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            46
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            171
+          ],
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            59
+          ],
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            51
+          ],
+          [
+            "Philosophy of Psychology",
+            173
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "citation-5",
+        "family": "citation",
+        "seconds": 0.32,
+        "pages": [
+          [
+            "Philosophical Dictionary (2e ed.)",
+            284
+          ],
+          [
+            "Philosophical Dictionary (2e ed.)",
+            41
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            49
+          ],
+          [
+            "Between Two Worlds: Memoirs of a Philosopher-Scientist",
+            273
+          ]
+        ],
+        "ranks": [
+          3
+        ]
+      },
+      {
+        "id": "souvenir-1",
+        "family": "souvenir",
+        "seconds": 1.56,
+        "pages": [
+          [
+            "Chasing Reality: Strife over Realism",
+            254
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            248
+          ],
+          [
+            "Treatise 6 - Epistemology & Methodology II: Understanding the World",
+            32
+          ],
+          [
+            "Treatise 6 - Epistemology & Methodology II: Understanding the World",
+            33
+          ],
+          [
+            "Scientific Research II: The Search for Truth",
+            53
+          ]
+        ],
+        "ranks": [
+          3
+        ]
+      },
+      {
+        "id": "souvenir-2",
+        "family": "souvenir",
+        "seconds": 2.68,
+        "pages": [
+          [
+            "Treatise 7/II - Philosophy of Science & Technology: Life Science, Social Science and Technology",
+            40
+          ],
+          [
+            "Between Two Worlds: Memoirs of a Philosopher-Scientist",
+            485
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            11
+          ],
+          [
+            "Between Two Worlds: Memoirs of a Philosopher-Scientist",
+            312
+          ],
+          [
+            "Between Two Worlds: Memoirs of a Philosopher-Scientist",
+            489
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "souvenir-3",
+        "family": "souvenir",
+        "seconds": 1.97,
+        "pages": [
+          [
+            "Chasing Reality: Strife over Realism",
+            15
+          ],
+          [
+            "Chasing Reality: Strife over Realism",
+            18
+          ],
+          [
+            "Chasing Reality: Strife over Realism",
+            45
+          ],
+          [
+            "Chasing Reality: Strife over Realism",
+            48
+          ],
+          [
+            "Chasing Reality: Strife over Realism",
+            278
+          ]
+        ],
+        "ranks": [
+          3
+        ]
+      },
+      {
+        "id": "souvenir-4",
+        "family": "souvenir",
+        "seconds": 1.46,
+        "pages": [
+          [
+            "Causality and Modern Science",
+            139
+          ],
+          [
+            "Chasing Reality: Strife over Realism",
+            61
+          ],
+          [
+            "Between Two Worlds: Memoirs of a Philosopher-Scientist",
+            358
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            239
+          ],
+          [
+            "Political Philosophy: Fact, Fiction, and Vision",
+            94
+          ]
+        ],
+        "ranks": [
+          4
+        ]
+      },
+      {
+        "id": "souvenir-5",
+        "family": "souvenir",
+        "seconds": 1.6,
+        "pages": [
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            39
+          ],
+          [
+            "The Mind-Body Problem: A Psychobiological Approach",
+            144
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            173
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            253
+          ],
+          [
+            "Foundations of Biophilosophy",
+            338
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "définition-1",
+        "family": "définition",
+        "seconds": 1.86,
+        "pages": [
+          [
+            "Treatise 7/I - Philosophy of Science & Technology: Formal and Physical Sciences",
+            93
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            434
+          ],
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            362
+          ],
+          [
+            "Foundations of Biophilosophy",
+            117
+          ],
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            361
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "définition-2",
+        "family": "définition",
+        "seconds": 1.48,
+        "pages": [
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            45
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            59
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            21
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            47
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            42
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "définition-3",
+        "family": "définition",
+        "seconds": 1.68,
+        "pages": [
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            179
+          ],
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            190
+          ],
+          [
+            "Political Philosophy: Fact, Fiction, and Vision",
+            74
+          ],
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            372
+          ],
+          [
+            "Causality and Modern Science",
+            75
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "définition-4",
+        "family": "définition",
+        "seconds": 1.46,
+        "pages": [
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            71
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            156
+          ],
+          [
+            "Scientific Materialism",
+            152
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            69
+          ],
+          [
+            "Treatise 5 - Epistemology & Methodology I: Exploring the World",
+            350
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "définition-5",
+        "family": "définition",
+        "seconds": 1.14,
+        "pages": [
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            68
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            158
+          ],
+          [
+            "Philosophical Dictionary (2e ed.)",
+            136
+          ],
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            71
+          ],
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            128
+          ]
+        ],
+        "ranks": [
+          4
+        ]
+      },
+      {
+        "id": "symbole-1",
+        "family": "symbole",
+        "seconds": 0.5,
+        "pages": [
+          [
+            "Treatise 7/I - Philosophy of Science & Technology: Formal and Physical Sciences",
+            93
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            86
+          ],
+          [
+            "Philosophy of Physics",
+            46
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            116
+          ],
+          [
+            "Treatise 2 - Semantics II: Interpretation and Truth",
+            54
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "symbole-2",
+        "family": "symbole",
+        "seconds": 1.77,
+        "pages": [
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            41
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            42
+          ],
+          [
+            "Treatise 4 - Ontology II: A World of Systems",
+            40
+          ],
+          [
+            "Treatise 6 - Epistemology & Methodology II: Understanding the World",
+            261
+          ],
+          [
+            "Emergence and Convergence: Qualitative Novelty and the Unity of Knowledge",
+            47
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "symbole-3",
+        "family": "symbole",
+        "seconds": 1.99,
+        "pages": [
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            24
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            197
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            76
+          ],
+          [
+            "Scientific Research II: The Search for Truth",
+            98
+          ],
+          [
+            "Treatise 1 - Semantics I: Sense and Reference",
+            105
+          ]
+        ],
+        "ranks": [
+          1
+        ]
+      },
+      {
+        "id": "symbole-4",
+        "family": "symbole",
+        "seconds": 1.34,
+        "pages": [
+          [
+            "Causality and Modern Science",
+            346
+          ],
+          [
+            "Treatise 8 - Ethics: The Good and the Right",
+            94
+          ],
+          [
+            "Scientific Research I: The Search for System",
+            140
+          ],
+          [
+            "Scientific Research II: The Search for Truth",
+            309
+          ],
+          [
+            "Philosophical Dictionary (2e ed.)",
+            239
+          ]
+        ],
+        "ranks": [
+          2
+        ]
+      },
+      {
+        "id": "symbole-5",
+        "family": "symbole",
+        "seconds": 1.47,
+        "pages": [
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            130
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            47
+          ],
+          [
+            "Foundations of Biophilosophy",
+            374
+          ],
+          [
+            "Treatise 3 - Ontology I: The Furniture of the World",
+            49
+          ],
+          [
+            "The Mind-Body Problem: A Psychobiological Approach",
+            237
+          ]
+        ],
+        "ranks": [
+          4
+        ]
+      },
+      {
+        "id": "indéterminée-1",
+        "family": "indéterminée",
+        "seconds": 0.3,
+        "pages": [],
+        "message": "La pagination disponible est celle des éditions anglaises indexées. Une autre édition demande sa propre concordance."
+      },
+      {
+        "id": "indéterminée-2",
+        "family": "indéterminée",
+        "seconds": 0.28,
+        "pages": [],
+        "message": "Aucun témoignage de Bunge sur ce modèle dans le corpus. L’Atelier permet d’examiner une transposition conditionnelle."
+      },
+      {
+        "id": "indéterminée-3",
+        "family": "indéterminée",
+        "seconds": 0.35,
+        "pages": [],
+        "message": "Ce numéro figure dans plusieurs ouvrages. Précisez le titre ou le sujet. Par exemple : Treatise 3 - Ontology I: The Furniture of the World ; Treatise 4 - Ontology II: A World of Systems."
+      },
+      {
+        "id": "indéterminée-4",
+        "family": "indéterminée",
+        "seconds": 0.38,
+        "pages": [],
+        "message": "Les ouvrages indexés ne permettent pas d’établir ce résultat futur."
+      },
+      {
+        "id": "indéterminée-5",
+        "family": "indéterminée",
+        "seconds": 0.37,
+        "pages": [],
+        "message": "Aucun témoignage de Bunge sur ce modèle dans le corpus. L’Atelier permet d’examiner une transposition conditionnelle."
+      }
+    ],
+    "summary": {
+      "n": 20,
+      "p50": 1.465,
+      "p95": 1.99
+    }
+  },
+  "atelier_libre_v1": {
+    "space_revision": "aae58b0404310163a892cf1ebe0805f1c56452c7",
+    "case": "prévision-explication",
+    "seconds": 36.93,
+    "independent_state_verified": true,
+    "editorial_review": [
+      "La reproduction de données est appelée prédiction valide sans validation indépendante établie.",
+      "La réponse fait du succès numérique futur le test suffisant de l’explication."
+    ]
   }
 }

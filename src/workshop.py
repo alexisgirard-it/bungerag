@@ -6,6 +6,7 @@ from datetime import date
 from urllib.parse import urlsplit
 
 from library import (
+    CATALOG,
     NODES,
     core_context,
     fold,
@@ -426,7 +427,7 @@ def contemporary_claim(text, source, published):
     return {"text": text, "title": f"{parsed.hostname} · {day}", "url": source}
 
 
-def checked_supports(branch, evidence, required):
+def checked_supports(branch, evidence, required, case_sources):
     if not isinstance(branch, dict):
         return []
     ids = branch.get("premisses")
@@ -434,7 +435,8 @@ def checked_supports(branch, evidence, required):
         isinstance(key, str) and key in evidence for key in ids
     ):
         return []
-    if not required <= set(ids) or not any(evidence[key]["appuis"] for key in ids):
+    chosen = set(ids)
+    if not required <= chosen or not case_sources & chosen:
         return []
     if not all(
         isinstance(branch.get(field), str) and 0 < len(branch[field].strip()) <= 850
@@ -479,6 +481,11 @@ def open_question(question, research, *, generate=None, external=None):
     )
     if generate is None or not any(s["sources"] for s in steps):
         return dossier
+    known_steps = {s["id"] for s in steps}
+    background = {
+        key: proposition(key) for key in CATALOG["core"] if key not in known_steps
+    }
+    case_sources = {s["id"] for s in steps if s["sources"]}
     evidence = {
         s["id"]: {
             "statut": s["role"],
@@ -495,13 +502,16 @@ def open_question(question, research, *, generate=None, external=None):
             ],
             "source_externe": s.get("external", []),
         }
-        for s in steps
+        for s in [*steps, *background.values()]
     }
     system = (
         "Tu prépares une reconstruction éditoriale conditionnelle pour une lectrice de Bunge. "
-        "Le cadre est fourni pour orienter la lecture. Identifie une hypothèse supplémentaire réellement nécessaire, une conclusion conditionnelle, "
+        "Le cadre est fourni pour orienter la lecture. Appuie l’analyse sur au moins un passage pertinent pour le cas étudié. "
+        "Identifie une hypothèse supplémentaire réellement nécessaire, une conclusion conditionnelle, "
         "une objection et un test discriminant. Utilise uniquement les identifiants de preuves fournies. "
         "Une interprétation nouvelle est une hypothèse. N'attribue jamais d'avis posthume à Bunge. "
+        "Conserve exactement ce qui est posé dans le cas. En particulier, sépare la reproduction de données connues, "
+        "la validation indépendante d’une prévision et la mise à l’épreuve d’un modèle du mécanisme. "
         "Les données contemporaines fournies forment une supposition à tester. "
         "Si elles existent, chaque branche doit les citer parmi ses prémisses et rester conditionnelle à leur exactitude. "
         'Réponds en JSON {"premisses":["p1"],"hypothese":"...","conclusion":"...","objection":"...","question_ouverte":"...",'
@@ -521,14 +531,14 @@ def open_question(question, research, *, generate=None, external=None):
 
     proposal = parse_object(raw)
     required = {"fait-propose"} if external else set()
-    ids = checked_supports(proposal, evidence, required)
+    ids = checked_supports(proposal, evidence, required, case_sources)
     if not ids or not all(
         isinstance(proposal.get(k), str) and 0 < len(proposal[k].strip()) <= 850
         for k in ("objection", "question_ouverte")
     ):
         return dossier
     alternative = proposal.pop("alternative", None)
-    rival_ids = checked_supports(alternative, evidence, required)
+    rival_ids = checked_supports(alternative, evidence, required, case_sources)
     if rival_ids and any(
         fold(alternative[key].strip()) == fold(proposal[key].strip())
         for key in ("hypothese", "conclusion")
@@ -547,12 +557,19 @@ def open_question(question, research, *, generate=None, external=None):
             json.dumps(review, ensure_ascii=False),
             "Vérifie que chaque branche répond à la question et que sa conclusion suit de ses prémisses sous les conditions annoncées. "
             "Vérifie la fidélité des appuis, l’attribution et le statut des conjectures. Une donnée contemporaine proposée reste incertaine. "
+            "Rejette une branche qui affaiblit une condition en cours de raisonnement, transforme un résultat rapporté en validation "
+            "indépendante ou infère la réalité d’un mécanisme du seul succès numérique. "
             "Évalue séparément une alternative éventuelle avec ses propres appuis. "
             'Renvoie uniquement un objet JSON avec les booléens "valide" et "alternative_valide".',
         )
     )
     if verdict.get("valide") is not True:
         return dossier
+    rival_accepted = bool(rival_ids) and verdict.get("alternative_valide") is True
+    used = set(ids)
+    if rival_accepted:
+        used.update(rival_ids)
+    steps.extend(s for key, s in background.items() if key in used)
     steps.extend(
         [
             step(
@@ -570,7 +587,7 @@ def open_question(question, research, *, generate=None, external=None):
             ),
         ]
     )
-    if rival_ids and verdict.get("alternative_valide") is True:
+    if rival_accepted:
         steps.extend(
             [
                 step(

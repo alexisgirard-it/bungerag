@@ -1,11 +1,12 @@
 {
-  "version": "2026-11-26.13",
+  "version": "2026-11-26.15",
   "core": [
     "materialisme",
     "systemisme",
     "mecanisme",
     "realisme",
     "raison",
+    "controle",
     "etre-devoir"
   ],
   "nodes": {
@@ -2331,7 +2332,46 @@
     "scientific-realism-selected-essays-2001": {
       "edition": "ed8eb9a00ae6aa9ffc01c6c6ce1ec7ca72a8cf4a7ee6aa443e6104a168077718",
       "label": "Prometheus Books, 2001 · EPUB dirigé par Martin Mahner",
-      "isbn": "978-1-57392-892-2"
+      "isbn": "978-1-57392-892-2",
+      "sections": {
+        "ch02 - PREFACE": "Preface",
+        "ch03 - ACKNOWLEDGMENTS": "Acknowledgments",
+        "ch04 - INTRODUCTION": "Introduction",
+        "ch05 - (1973)": "1. How Do Realism, Materialism, and Dialectics Fare in Contemporary Science? (1973)",
+        "ch06 - (1954)": "2. New Dialogues between Hylas and Philonous (1954)",
+        "ch07 - (2000)": "3. Energy: Between Physics and Metaphysics (2000)",
+        "ch08 - (1982)": "4. The Revival of Causality (1982)",
+        "ch09 - (1977)": "5. Emergence and the Mind (1977)",
+        "ch10 - ": "5. Emergence and the Mind (1977)",
+        "ch11 - (1981)": "6. The Status of Concepts (1981)",
+        "ch12 - ": "6. The Status of Concepts (1981)",
+        "ch13 - (1981)": "7. Popper's Unworldly World 3 (1981)",
+        "ch14 - (1973)": "8. On Method in the Philosophy of Science (1973)",
+        "ch15 - (1963)": "9. Induction in Science (1963)",
+        "ch16 - (1977)": "10. The GST Challenge to the Classical Philosophies of Science (1977)",
+        "ch17 - (1991)": "11. The Power and Limits of Reduction (1991)",
+        "ch18 - (1999)": "12. Thinking in Metaphors (1999)",
+        "ch19 - (1997)": "13. Moderate Mathematical Fictionism (1997)",
+        "ch20 - (1994)": "14. The Gap between Mathematics and Reality (1994)",
+        "ch21 - (1988)": "15. Two Faces and Three Masks of Probability (1988)",
+        "ch22 - (1979)": "16. Physical Relativity and Philosophy (1979)",
+        "ch23 - (1995)": "17. Hidden Variables, Separability, and Realism (1995)",
+        "ch24 - (1999)": "18. Schrodinger's Cat Is Dead (1999)",
+        "ch25 - (1985)": "19. From Mindless Neuroscience and Brainless Psychology to Neuropsychology (1985)",
+        "ch26 - (1993)": "20. Explaining Creativity (1993)",
+        "ch27 - (1988)": "21. Analytic Philosophy of Society and Social Science: The Systemic Approach as an Alternative to Holism and Individualism (1988)",
+        "ch28 - (1995)": "22. Rational Choice Theory: A Critical Look at Its Foundations (1995)",
+        "ch29 - (1993)": "23. Realism and Antirealism in Social Science (1993)",
+        "ch30 - (1988)": "24. The Nature of Applied Science and Technology (1988)",
+        "ch31 - (1999)": "25. The Technology-Science-Philosophy Triangle in Its Social Context (1999)",
+        "ch32 - (1999)": "26. The Technologies in Philosophy (1999)",
+        "ch33 - (1993)": "27. A New Look at Moral Realism (1993)",
+        "ch34 - 27": "27. A New Look at Moral Realism (1993)",
+        "ch35 - (1999)": "28. Rights Imply Duties (1999)",
+        "ch36 - (1992)": "29. Morality Is the Basis of Legal and Political Legitimacy (1992)",
+        "ch37 - (1994)": "30. Technoholodemocracy: An Alternative to Capitalism and Socialism (1994)",
+        "ch38 - BIBLIOGRAPHY": "Bibliography"
+      }
     },
     "scientific-research-1-search-for-system-1967": {
       "edition": "445c131e1008cddcc9b6723446340bc98441da6f7c52f49b6d605ca70a1bb1c9",

@@ -2,7 +2,7 @@
 
 Inventaire local du 26 novembre 2026. Une fiche indique qu’un point précis du chapitre a été identifié et justifié. Le nombre de fiches ne mesure pas la proportion de l’argumentation couverte.
 
-Référentiel `2026-11-26.13` · 87 fiches et 74 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
+Référentiel `2026-11-26.15` · 87 fiches et 74 liens dans la bibliothèque, dont certaines sources hors Traité. [Référentiel](../src/referentiel.json)
 
 ## Treatise 1 - Semantics I: Sense and Reference
 

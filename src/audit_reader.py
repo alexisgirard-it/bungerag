@@ -16,13 +16,13 @@ PROVENANCE = ROOT / "index/provenance-512.sqlite"
 
 @lru_cache(maxsize=4)
 def epub_edition(filename):
-    from extract import extract_epub
+    from extract import epub_documents
 
     path = ROOT / "corpus" / Path(filename).name
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     sections = {
-        f"ch{index:02d} - {title[:60]}": canonical(text)
-        for index, (title, text) in enumerate(extract_epub(path), 1)
+        f"ch{index:02d} - {title[:60]}": (canonical(text), heading)
+        for index, (title, text, heading) in enumerate(epub_documents(path), 1)
     }
     return digest, sections
 
@@ -34,7 +34,7 @@ def verified(source):
         return False
     if not page.isdecimal():
         digest, sections = epub_edition(source["file"])
-        return source["edition"] == digest and anchor in sections.get(page, "")
+        return source["edition"] == digest and anchor in sections.get(page, ("", ""))[0]
     folio, _, text, _ = page_image_text(
         PROVENANCE, PROVENANCE.stat().st_mtime_ns, source["book"], page
     )
@@ -43,10 +43,21 @@ def verified(source):
 
 def verify_catalogue():
     with closing(connect()) as db:
-        indexed = dict(db.execute("SELECT book,edition FROM books"))
+        indexed = {
+            book: (edition, filename)
+            for book, edition, filename in db.execute("SELECT book,edition,file FROM books")
+        }
     notices = CATALOG["editions"]
-    if {key: notice["edition"] for key, notice in notices.items()} != indexed:
+    if {key: notice["edition"] for key, notice in notices.items()} != {
+        book: edition for book, (edition, _) in indexed.items()
+    }:
         raise ValueError("Les éditions du référentiel et de l’index diffèrent")
+    for book, (edition, filename) in indexed.items():
+        if filename.lower().endswith(".epub"):
+            digest, sections = epub_edition(filename)
+            headings = {key: name for key, (_, name) in sections.items() if name}
+            if digest != edition or notices[book].get("sections", {}) != headings:
+                raise ValueError(f"Sections EPUB incompatibles pour {book}")
     if not set(CATALOG["core"]) <= NODES.keys():
         raise ValueError("Le cadre cite une fiche absente")
     for key, node in NODES.items():

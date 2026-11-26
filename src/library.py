@@ -144,7 +144,16 @@ def location(row):
             + "PDF p. "
             + page
         )
-    return page
+    return section_label(row["book"], row["edition"], page)
+
+
+def section_label(book, edition, section):
+    entry = CATALOG.get("editions", {}).get(book)
+    if entry and entry["edition"] == edition:
+        heading = entry.get("sections", {}).get(section)
+        if heading:
+            return f"{heading} · section {section.partition(' - ')[0]}"
+    return section
 
 
 def edition_label(book, edition):
