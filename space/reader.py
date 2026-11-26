@@ -424,7 +424,9 @@ def build_reader(legacy, local, create_dossier, max_chars):
 
     book.change(show_book, book, [overview, chapter, marker, opening], api_name=False)
     chapter.input(show_chapter, [book, chapter], [opening, marker], api_name=False)
-    back.click(lambda: gr.Tabs(selected="search"), outputs=tabs, api_name=False)
+    back.click(
+        lambda: gr.Tabs(selected="search"), outputs=tabs, api_name=False, queue=False
+    )
 
     def get_dossier(question, node, results, request):
         known = choose_dossier(question, node)

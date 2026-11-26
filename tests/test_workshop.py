@@ -38,3 +38,39 @@ def test_unrelated_ai_question_does_not_open_the_curated_llm_dossier():
     )
     assert choose_dossier("Quelle GPU est utilisée pour entraîner Gemini 4 ?") is None
     assert not open_question("Zzzz", [])["steps"]
+
+
+def test_a_proposed_argument_requires_real_appuis_and_a_second_read(monkeypatch):
+    monkeypatch.setattr("workshop.core_context", lambda: "Cadre sourcé")
+    monkeypatch.setattr("workshop.suggested_nodes", lambda *_: [])
+    source = {
+        "book": "book",
+        "page": "19",
+        "title": "Source",
+        "excerpt": "A short passage",
+    }
+    proposed = '{"premisses":["p1"],"hypothese":"Si H","conclusion":"Alors C","objection":"Si non H ?", "question_ouverte":"Quel test ?"}'
+    for confirmation in ('{"valide":false}', '{"valide":true}'):
+        responses = iter((proposed, confirmation))
+        result = open_question(
+            "Sujet expérimental", [source], generate=lambda *_: next(responses)
+        )
+        fields = [row["id"] for row in result["steps"]]
+        if confirmation == '{"valide":true}':
+            assert fields == ["p1", "hypothese", "conclusion"]
+            assert (
+                assess(result["steps"], {"hypothese": ""})["conclusion"]
+                == "justification suspendue"
+            )
+        else:
+            assert fields == ["p1"]
+    impossible = proposed.replace('"p1"', '"passage inexistant"')
+    called = iter((impossible,))
+    assert (
+        len(
+            open_question(
+                "Sujet expérimental", [source], generate=lambda *_: next(called)
+            )["steps"]
+        )
+        == 1
+    )
