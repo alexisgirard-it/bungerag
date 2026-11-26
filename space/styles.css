@@ -914,7 +914,7 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
 #page-shell .block:has(> .html-container:empty),
 #page-shell .hide-container:empty,
 #page-shell .followup-bar:not(:has(button)),
-#ai-answer-card:not(:has(.prose, .system-status, .reading-card, .system-message, .bunge-loading-bar)),
+#ai-answer-card:not(:has(.answer-prose, .system-status, .reading-card, .system-message, .bunge-loading-bar)),
 #book-reader-panel:not(:has(.book-reader-card)) {
   display: none !important;
   margin: 0 !important;

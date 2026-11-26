@@ -375,7 +375,7 @@ def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):
                 fallback_hits = search_library(q_text)
                 if fallback_hits:
                     fallback_html = (
-                        '<div class="prose"><p><strong>Passages directs vérifiés dans la bibliothèque</strong> '
+                        '<div class="prose answer-prose"><p><strong>Passages directs vérifiés dans la bibliothèque</strong> '
                         "(la synthèse IA n’a pas pu être validée sur cet essai ; voici les textes exacts correspondants) :</p></div>"
                         + "".join(render_card(s, LOCAL_BOOKS) for s in fallback_hits)
                     )

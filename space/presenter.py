@@ -371,7 +371,7 @@ def render_answer_html(markdown: str, source_count: int) -> str:
         else:
             blocks.append(f"<p>{_inline(line)}</p>")
     _flush_list()
-    rendered = '<div class="prose">' + "".join(blocks) + "</div>"
+    rendered = '<div class="prose answer-prose">' + "".join(blocks) + "</div>"
     return annotate_concepts(rendered)
 
 
