@@ -206,8 +206,9 @@ def search_library(question, *, english=None, semantic=True, limit=5):
                     for row in fts(db, tokens, phrase=True, limit=36)
                     if lexical_match(row["text"], phrase)
                 )
+        notation = list(notation_matches(question))
         if english is None:
-            if exact:
+            if exact or notation:
                 english = question
             else:
                 try:
@@ -241,17 +242,14 @@ def search_library(question, *, english=None, semantic=True, limit=5):
                 )
             )
             add(formal, 5 if len(formal) == 1 else 2.5)
-        normalized = fold(question).strip(" ?.")
-        for key, node in NODES.items():
-            notation = node.get("notation", {}).get("formula")
-            if notation and normalized == fold(notation):
-                source = node_source(key)
-                ranked[source["id"]] += 1
-                snippets.setdefault(source["id"], source["excerpt"])
+        for key in notation:
+            source = node_source(key)
+            ranked[source["id"]] += 1
+            snippets.setdefault(source["id"], source["excerpt"])
         add(fts(db, terms[:28]), 2)
         if original != terms:
             add(fts(db, original[:28]), 0.7)
-        if semantic and not exact:
+        if semantic and not exact and not notation:
             from search import search
 
             try:
@@ -309,6 +307,23 @@ def on_page(book, page):
         for key, n in NODES.items()
         if n["source"]["book"] == book and str(n["source"]["page"]) == str(page)
     ]
+
+
+def notation_matches(question):
+    normalized = fold(question).strip(" ?.")
+    variables = set(re.findall(r"(?<!\w)[A-Z](?!\w)", question))
+    for key, node in NODES.items():
+        notation = node.get("notation")
+        if not notation:
+            continue
+        formula = notation["formula"]
+        required = set(re.findall(r"(?<!\w)[A-Z](?!\w)", formula))
+        if normalized == fold(formula) or (
+            len(required) >= 2
+            and required <= variables
+            and lexical_match(normalized, node["title"])
+        ):
+            yield key
 
 
 def neighbours(key):
