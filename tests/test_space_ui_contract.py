@@ -16,7 +16,7 @@ def test_public_page_is_a_consultation_interface_not_a_project_report() -> None:
         "Atelier philosophique",
         "Déplier l’argument",
         'elem_id="chat-shell"',
-        "Demander à BungeRAG",
+        "Réponse sourcée (IA)",
         "Sources citées",
         "ÉTUDE DE CAS",
     )

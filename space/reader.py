@@ -531,7 +531,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             with gr.Column(elem_id="chat-shell"):
                 q = gr.Textbox(
                     label="Que dit Mario Bunge à propos de… ?",
-                    placeholder="Ex. l’émergence, la causalité, la psychanalyse, la conscience, ℳ = ⟨D, F, I⟩…",
+                    placeholder="Ex. émergence, causalité, psychanalyse, modèle factuel, ℳ = ⟨D, F, I⟩",
                     lines=2,
                     max_lines=4,
                     elem_id="question-box",
@@ -542,12 +542,12 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         for short, full in suggestions
                     ]
                 with gr.Row(elem_classes=["action-bar"]):
-                    ai_go = gr.Button("Demander à BungeRAG", variant="primary", scale=2)
+                    ai_go = gr.Button("Réponse sourcée (IA)", variant="primary", scale=2)
                     go = gr.Button("Rechercher les passages", variant="secondary", scale=1)
                 with gr.Row(elem_classes=["action-bar", "followup-bar"]):
                     expand = gr.Button("Déplier l’argument", visible=False)
-                    locate = gr.Button("Voir la fiche Wikipédia", visible=False)
-                    discuss = gr.Button("Tester dans l’Atelier", visible=False)
+                    locate = gr.Button("Fiche du concept", visible=False)
+                    discuss = gr.Button("Examiner dans l’Atelier", visible=False)
                 legacy_fn, legacy_outputs = legacy(
                     q,
                     ai_go,
@@ -576,24 +576,24 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     concept = gr.Dropdown(
                         options,
                         value="systemisme",
-                        label="Rechercher un concept dans l’encyclopédie (113 fiches)",
+                        label="Sélectionner une notion (113 fiches)",
                         scale=3,
                     )
-                    to_work = gr.Button("Tester cette idée dans l’Atelier →", scale=1)
+                    to_work = gr.Button("Ouvrir dans l’Atelier", scale=1)
                 wiki_view = gr.HTML(initial_wiki_html)
-            with gr.Accordion("Carte mentale interactive du système (6 domaines · 113 notions)", open=True):
+            with gr.Accordion("Carte des relations (6 domaines · 113 notions)", open=True):
                 mindmap = gr.HTML(
                     render_mindmap("systemisme"),
                     css_template=MINDMAP_CSS,
                     js_on_load=MINDMAP_JS,
                 )
-            with gr.Accordion("Symboles et formules mathématiques (16)", open=False):
+            with gr.Accordion("Symboles et notations formelles (16)", open=False):
                 symbol_filter = gr.Textbox(
                     label="Filtrer par symbole ou mot-clé",
-                    placeholder="Ex. ℳ, ⊑, σ, psychon, vérité, bien-être…",
+                    placeholder="Ex. ℳ, ⊑, σ, psychon, vérité, bien-être",
                 )
                 symbol_lexicon = gr.HTML(render_symbol_lexicon())
-            with gr.Accordion("Parcourir les 25 livres & comparer deux notions", open=False):
+            with gr.Accordion("Ouvrages indexés et comparaison entre éditions (25 livres)", open=False):
                 with gr.Row(elem_classes=["inline-submit-row"]):
                     paired = gr.Dropdown(
                         options,
@@ -623,68 +623,68 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 shortcuts = gr.Dropdown(
                     dossier_choices,
                     value="ia",
-                    label="Choisir un sujet (21 dossiers sur tout le Traité)",
+                    label="Dossier d’argumentation (21 dossiers · 54/54 chapitres du Traité)",
                 )
-                with gr.Accordion("Poser votre propre thèse ou ajouter un article récent", open=False):
+                with gr.Accordion("Examiner une autre thèse ou joindre une source datée", open=False):
                     with gr.Row(elem_classes=["inline-submit-row"]):
                         work_q = gr.Textbox(
-                            label="Votre thèse ou question",
+                            label="Thèse ou question à examiner",
                             placeholder="Ex. Un algorithme prédictif explique-t-il un phénomène ?",
                             scale=3,
                         )
-                        work_go = gr.Button("Analyser", variant="primary", scale=1)
+                        work_go = gr.Button("Ouvrir", variant="primary", scale=1)
                     with gr.Row(elem_classes=["inline-submit-row"]):
                         fact_lookup = gr.Textbox(
-                            label="Optionnel · Lier un article HTTPS ou un sujet Wikipédia",
+                            label="Source datée optionnelle (URL HTTPS ou notice Wikipédia)",
                             placeholder="https://… ou ex. AlphaFold, Llama 3.1",
                             scale=3,
                         )
                         fact_fetch = gr.Button("Pré-remplir", scale=1)
                     fact_status = gr.HTML()
-                    supplied_fact = gr.Textbox(label="Fait récent à examiner", lines=2)
+                    supplied_fact = gr.Textbox(label="Fait contemporain", lines=2)
                     with gr.Row():
-                        supplied_link = gr.Textbox(label="Lien HTTPS de la source")
+                        supplied_link = gr.Textbox(label="URL HTTPS de la source")
                         supplied_date = gr.Textbox(
                             label="Date", placeholder="AAAA-MM-JJ"
                         )
             work_text = gr.HTML(dossier_view(initial_dossier, {}, local))
             with gr.Column(elem_classes=["glass-panel"]):
                 gr.HTML(
-                    '<div class="section-heading"><h3>Tester une hypothèse</h3>'
-                    "<p>Écartez ou remplacez une étape de l’argument pour voir immédiatement si la conclusion tient encore.</p></div>"
+                    '<div class="section-heading"><h3>Modifier une prémisse</h3>'
+                    "<p>Suspendre ou remplacer une étape indique quelles conclusions cessent d’être justifiées dans ce dossier.</p></div>"
                 )
                 with gr.Row():
                     premise = gr.Dropdown(
-                        label="Étape à remettre en cause",
+                        label="Étape à modifier",
                         choices=initial_steps,
                         value=initial_steps[0][1] if initial_steps else None,
                     )
                     action = gr.Radio(
-                        [("Écarter", "Suspendre"), ("Remplacer", "Remplacer")],
+                        [("Suspendre", "Suspendre"), ("Remplacer", "Remplacer")],
                         value="Suspendre",
-                        label="Action",
+                        label="Modification",
                     )
                 replacement = gr.Textbox(
-                    label="Votre hypothèse de remplacement (si « Remplacer »)",
-                    placeholder="Écrivez votre propre prémisse…",
+                    label="Prémisse de remplacement (si « Remplacer »)",
+                    placeholder="Hypothèse de travail",
                 )
                 with gr.Row(elem_classes=["action-bar"]):
-                    apply = gr.Button("Voir l’effet sur la conclusion", variant="primary")
-                    reset = gr.Button("Réinitialiser l’argument")
+                    apply = gr.Button("Appliquer", variant="primary")
+                    reset = gr.Button("Réinitialiser")
             with gr.Column(elem_classes=["glass-panel"]):
                 gr.HTML(
-                    '<div class="section-heading"><h3>Débattre avec les textes</h3>'
-                    "<p>Posez une objection ou une question de suivi : vos hypothèses ci-dessus restent actives et chaque réponse cite Bunge.</p></div>"
+                    '<div class="section-heading"><h3>Discussion sur ce dossier</h3>'
+                    "<p>Les modifications de prémisses restent actives d’un tour à l’autre. Chaque réponse cite des passages indexés.</p></div>"
                 )
                 debate_view = gr.HTML(render_debate([], local))
                 debate_input = gr.Textbox(
-                    label="Votre objection",
-                    placeholder="Ex. Si l’on écarte cette prémisse, quel autre passage de Bunge répond ?",
+                    label="Objection ou question de suivi",
+                    placeholder="Ex. Si cette prémisse est suspendue, quel passage de Bunge répond à cette objection ?",
                     lines=2,
                 )
                 with gr.Row(elem_classes=["action-bar"]):
                     debate_send = gr.Button("Envoyer", variant="primary")
-                    debate_clear = gr.Button("Effacer le débat")
+                    debate_clear = gr.Button("Effacer")
 
     for button, section in mobile_navigation:
         button.click(

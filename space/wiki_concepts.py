@@ -10,11 +10,13 @@ from urllib.parse import quote
 
 from atlas_graph import DOMAIN_COLORS
 from library import (
+    DATABASE,
     NODES,
     chapter_formal_markers,
     fold,
     neighbours,
     node_source,
+    passage_context,
 )
 
 esc = html.escape
@@ -189,9 +191,9 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
     info_rows.append(("Liens directs", f"{len(edges)} proposition(s)"))
 
     infobox_html = (
-        '<aside class="wiki-infobox" aria-label="Fiche synthétique">'
+        '<aside class="wiki-infobox" aria-label="Repères bibliographiques">'
         f'<div class="wiki-infobox-head" style="border-top-color:{color};">'
-        f'<span class="wiki-infobox-kicker">Fiche encyclopédique</span>'
+        f'<span class="wiki-infobox-kicker">Repères bibliographiques</span>'
         f'<strong>{esc(node["title"])}</strong></div>'
         "<dl>"
         + "".join(f"<div><dt>{label}</dt><dd>{val}</dd></div>" for label, val in info_rows)
@@ -211,18 +213,35 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
             )
     infobox_html += "</div></aside>"
 
-    # 2. Corps principal : résumé annoté + citation vérifiée
+    # 2. Corps principal : synthèse claire + passage de référence avec son contexte de page
     lead_text = annotate_concepts(esc(node["text"]), exclude_key=key)
     voice_note = (
         f'<p class="wiki-voice-banner"><strong>Voix citée :</strong> {esc(voice)} (exposé par Bunge, non attribué à Bunge).</p>'
         if voice
         else ""
     )
+    raw_quote = src["excerpt"]
+    full_ctx = passage_context(src) if DATABASE.is_file() else raw_quote
+    clean_ctx = " ".join((full_ctx or raw_quote).split())
+    if len(clean_ctx) > len(raw_quote) + 25:
+        escaped_ctx = esc(clean_ctx)
+        q_re = re.compile(re.escape(esc(raw_quote)), re.IGNORECASE)
+        ctx_html = q_re.sub(
+            lambda m: f'<mark class="reader-highlight">{m.group(0)}</mark>',
+            escaped_ctx,
+            count=1,
+        )
+        prefix = "… " if clean_ctx and clean_ctx[0].islower() else ""
+        suffix = " …" if clean_ctx and clean_ctx[-1] not in ".!?" else ""
+        quote_body = f"{prefix}{ctx_html}{suffix}"
+    else:
+        quote_body = f"« {esc(raw_quote)} »"
+
     lead_html = (
         f'<div class="wiki-lead">'
         f'<p class="wiki-summary">{lead_text}</p>'
         f"{voice_note}"
-        f'<blockquote class="wiki-quote" lang="en">« {esc(src["excerpt"])} »'
+        f'<blockquote class="wiki-quote" lang="en">{quote_body}'
         f'<footer>— {esc(src["authors"])}, <em>{esc(src["title"])}</em> ({esc(str(src["year"]))}), {esc(src["pages"])}'
         + (f' · {esc(src["edition_label"])}' if src.get("edition_label") else "")
         + "</footer></blockquote></div>"
@@ -238,7 +257,7 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
             f'<small class="wiki-muted">{esc(notation["status"])}</small></section>'
         )
 
-    # 4. Propositions liées groupées par rôle (Définitions, Thèses, Théorèmes/Corollaires, Exemples/Critiques)
+    # 4. Propositions liées groupées par rôle (sens grammatical origin -> target + résumé de chaque notion liée)
     buckets: dict[str, list[str]] = {
         "Définitions & fondements": [],
         "Thèses & propositions liées": [],
@@ -246,22 +265,28 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
         "Exemples, critiques & auteurs cités": [],
     }
     for edge in edges:
-        outgoing = edge["origin"] == key
-        other_key = edge["target"] if outgoing else edge["origin"]
+        origin_key, target_key = edge["origin"], edge["target"]
+        other_key = target_key if origin_key == key else origin_key
         other = NODES[other_key]
         other_color = DOMAIN_COLORS.get(other["domain"], "#2563eb")
         bucket = _group_relation_bucket(other["kind"])
         witness_src = node_source(edge["witness"])
-        rel_dir = f"→ <em>{esc(edge['verb'])}</em> →" if outgoing else f"← <em>{esc(edge['verb'])}</em> ←"
         other_link = (
             f'<a href="#wiki-{esc(other_key)}" class="wiki-link" data-wiki-concept="{esc(other_key)}">'
             f"{esc(other['title'])}</a>"
+        )
+        # Phrase toujours lue dans l'ordre grammatical exact (origine -> verbe -> cible).
+        rel_sentence = (
+            f"<strong>{esc(NODES[origin_key]['title'])}</strong> "
+            f"<em>{esc(edge['verb'])}</em> "
+            f"<strong>{esc(NODES[target_key]['title'])}</strong>"
         )
         buckets[bucket].append(
             f'<li class="wiki-rel-item">'
             f'<div class="wiki-rel-head"><span class="wiki-dot" style="background:{other_color};"></span>'
             f'{other_link} <span class="wiki-kind-tag">{esc(other["kind"])}</span></div>'
-            f'<p class="wiki-rel-desc">{esc(node["title"])} {rel_dir} {esc(other["title"])} · <small>{esc(edge["kind"])}</small></p>'
+            f'<p class="wiki-rel-summary">{esc(other["text"])}</p>'
+            f'<p class="wiki-rel-desc">{esc(edge["kind"])} · {rel_sentence}.</p>'
             f'<details class="wiki-witness"><summary>Témoin textuel ({esc(witness_src["title"])}, {esc(witness_src["pages"])})</summary>'
             f'<blockquote lang="en">« {esc(witness_src["excerpt"])} »</blockquote></details></li>'
         )
@@ -274,7 +299,7 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
                 f'<ul class="wiki-rel-list">{"".join(items)}</ul></section>'
             )
 
-    # 5. Théorèmes, définitions, postulats et corollaires repérés dans le même chapitre (SQLite)
+    # 5. Repères formels détectés dans le même chapitre (repliés pour ne pas encombrer la fiche curatée)
     markers_html = ""
     if src.get("chapter"):
         markers = chapter_formal_markers(src["book"], src["chapter"], limit=10)
@@ -285,14 +310,15 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
                     f'<li class="wiki-marker-item">'
                     f'<div><strong>{esc(m["kind"])} {esc(m["number"])}</strong> '
                     f'<small>· p. {esc(m["folio"])} (PDF {esc(m["page"])})</small>'
-                    f'<p class="wiki-marker-excerpt">« {esc(m["excerpt"][:170])} »</p></div>'
+                    f'<p class="wiki-marker-excerpt">« {esc(m["excerpt"][:150])} »</p></div>'
                     f'<button type="button" class="open-reader-btn open-reader-sm" '
                     f'data-read-book="{esc(m["book"])}" data-read-page="{esc(m["page"])}" '
                     f'data-read-excerpt="{esc(m["excerpt"][:90])}">Lire p. {esc(m["page"])}</button></li>'
                 )
             markers_html = (
-                f'<section class="wiki-section"><h3>Définitions, théorèmes et corollaires du chapitre « {esc(src["chapter"])} »</h3>'
-                f'<ul class="wiki-marker-list">{"".join(m_items)}</ul></section>'
+                f'<details class="wiki-markers-drawer">'
+                f'<summary>Repères formels détectés dans le chapitre « {esc(src["chapter"])} » ({len(m_items)})</summary>'
+                f'<ul class="wiki-marker-list">{"".join(m_items)}</ul></details>'
             )
 
     # 6. Comparaisons entre ouvrages
@@ -333,7 +359,7 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
     return (
         f'<article class="wiki-article" data-concept-key="{esc(key)}">'
         f'<nav class="wiki-breadcrumb" aria-label="Fil d’Ariane">'
-        f'<span>Encyclopédie Bunge</span> › <span style="color:{color};font-weight:600;">{esc(node["domain"])}</span> › <span>{esc(node["title"])}</span></nav>'
+        f'<span>Atlas</span> › <span style="color:{color};font-weight:600;">{esc(node["domain"])}</span> › <span>{esc(node["title"])}</span></nav>'
         f'<header class="wiki-title-bar"><h2>{esc(node["title"])}</h2>'
         f'<span class="wiki-kind-pill" style="border-color:{color};color:{color};">{esc(node["kind"])}</span></header>'
         f'<div class="wiki-grid">'

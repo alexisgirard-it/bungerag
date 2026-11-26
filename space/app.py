@@ -95,31 +95,31 @@ QUOTAS = QuotaGuard(daily_limit=DAILY_LIMIT, per_client_limit=CLIENT_LIMIT)
 
 MASTHEAD = """
 <header id="masthead">
-  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Lecture assistée de Mario Bunge</span><div class="masthead-status">En ligne</div></div>
+  <div class="masthead-mark"><strong>BUNGERAG</strong><span>Corpus indexé de Mario Bunge</span><div class="masthead-status">En ligne</div></div>
 </header>
 """
 
 HERO = """
 <section id="hero" aria-labelledby="hero-title">
-  <div class="hero-kicker">Mario Bunge · 25 ouvrages vérifiés</div>
-  <h1 id="hero-title">Questionner les textes.<br><span class="hero-accent">Remonter aux sources.</span></h1>
-  <p>Trouvez un passage exact à la page près, explorez les concepts sur la carte ou testez un argument philosophique.</p>
+  <div class="hero-kicker">25 ouvrages indexés · éditions anglaises de référence</div>
+  <h1 id="hero-title">Questionner les textes.</h1>
+  <p>Consultation de passages sourcés, fiches de concepts et examen d’arguments sur l’œuvre de Mario Bunge.</p>
 </section>
 """
 
 QUESTION_HEADING = """
-<div class="panel-title"><span class="panel-index">Votre question</span>
-<p>Une notion ou une question précise fonctionne généralement mieux.</p></div>
+<div class="panel-title"><span class="panel-index">Question</span>
+<p>Une notion ou une question précise donne des résultats plus ciblés.</p></div>
 """
 
 ANSWER_HEADING = """
 <div class="answer-heading"><span class="panel-index">Réponse</span>
-<p>Les renvois [n] ouvrent les sources correspondantes.</p></div>
+<p>Les renvois [n] renvoient aux sources ci-dessous.</p></div>
 """
 
 APPARATUS_HEADING = """
 <div class="apparatus-heading"><strong>Sources citées</strong>
-<p>Ouvrez une source pour lire le court extrait associé.</p></div>
+<p>Édition, pagination indexée et extrait associé.</p></div>
 """
 
 FOOTER = """
