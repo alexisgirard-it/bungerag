@@ -9,6 +9,16 @@
         "Demander un argument ou une vérification pour relier le modèle de mécanisme au phénomène.",
         "Présenter la transposition comme conditionnelle et laisser ouverte l’évaluation du programme."
       ]
+    },
+    {
+      "id": "algorithme-efficace-et-norme",
+      "question": "Si un algorithme d’aide à la décision atteint une forte efficacité pratique, cela établit-il la vérité de son modèle ou la rectitude morale de son déploiement selon Bunge ?",
+      "appuis": ["verite-efficacite", "testabilite-reelle", "regle-technologique", "agir", "action-valeurs"],
+      "critères": [
+        "Séparer la valeur d’efficacité d’un programme ou d’une règle de la valeur de vérité d’une hypothèse.",
+        "Exiger une mise à l’épreuve effective et distinguer efficacité pratique et rectitude morale.",
+        "Formuler explicitement les conditions nécessaires de transposition sans attribuer d’avis posthume à Bunge."
+      ]
     }
   ],
   "séquences": [
@@ -53,6 +63,44 @@
         {"changer": "materialisme", "texte": "On donne à exister un sens identique dans les deux ouvrages.", "attendu": {"materialisme": "remplacée", "portee": "justification suspendue"}},
         {"changer": "existence-dictionnaire", "texte": null, "attendu": {"portee": "justification suspendue"}},
         {"changer": "materialisme", "texte": null, "attendu": {"portee": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "contexte",
+      "étapes": [
+        {"changer": "fenetre", "texte": "", "attendu": {"epreuve-contexte": "justification suspendue"}},
+        {"changer": "fenetre", "texte": null, "attendu": {"epreuve-contexte": "disponible"}},
+        {"changer": "critere-application", "texte": "Restituer une description suffit à comprendre.", "attendu": {"critere-application": "remplacée", "epreuve-contexte": "justification suspendue"}},
+        {"changer": "critere-application", "texte": null, "attendu": {"epreuve-contexte": "disponible"}},
+        {"changer": "niveaux-comprehension", "texte": "", "attendu": {"epreuve-contexte": "justification suspendue"}},
+        {"changer": "niveaux-comprehension", "texte": null, "attendu": {"epreuve-contexte": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "systemisme",
+      "étapes": [
+        {"changer": "postulat-emergence", "texte": "", "attendu": {"systemisme": "justification suspendue", "non-reductibilite": "justification suspendue"}},
+        {"changer": "postulat-emergence", "texte": null, "attendu": {"systemisme": "disponible", "non-reductibilite": "disponible"}},
+        {"changer": "ni-holisme-ni-atomisme", "texte": "Le tout échappe par principe à toute analyse de ses composants.", "attendu": {"ni-holisme-ni-atomisme": "remplacée", "systemisme": "disponible", "non-reductibilite": "justification suspendue"}},
+        {"changer": "ni-holisme-ni-atomisme", "texte": null, "attendu": {"non-reductibilite": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "efficacite",
+      "étapes": [
+        {"changer": "verite-efficacite", "texte": "", "attendu": {"distinction-efficacite": "justification suspendue"}},
+        {"changer": "verite-efficacite", "texte": null, "attendu": {"distinction-efficacite": "disponible"}},
+        {"changer": "action-valeurs", "texte": "Une action efficace est par définition moralement juste.", "attendu": {"action-valeurs": "remplacée", "distinction-efficacite": "justification suspendue"}},
+        {"changer": "action-valeurs", "texte": null, "attendu": {"distinction-efficacite": "disponible"}}
+      ]
+    },
+    {
+      "dossier": "signification",
+      "étapes": [
+        {"changer": "couple-signification", "texte": "", "attendu": {"synonymie": "justification suspendue", "non-synonymie": "justification suspendue"}},
+        {"changer": "couple-signification", "texte": null, "attendu": {"synonymie": "disponible", "non-synonymie": "disponible"}},
+        {"changer": "intension", "texte": "", "attendu": {"synonymie": "disponible", "non-synonymie": "justification suspendue"}},
+        {"changer": "intension", "texte": null, "attendu": {"non-synonymie": "disponible"}}
       ]
     }
   ]

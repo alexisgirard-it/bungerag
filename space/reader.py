@@ -29,8 +29,10 @@ from workshop import (
     assess,
     choose_dossier,
     contemporary_claim,
+    formal_efficiency,
     formal_happiness,
     formal_rights,
+    formal_systemism,
     formal_world,
     open_question,
 )
@@ -272,6 +274,8 @@ def dossier_view(dossier, changes, local):
         "restriction": formal_rights,
         "theoreme-bonheur": formal_happiness,
         "unique": formal_world,
+        "non-reductibilite": formal_systemism,
+        "distinction-efficacite": formal_efficiency,
     }
     for identifier in formalizations.keys() & {s["id"] for s in dossier["steps"]}:
         fragment = formalizations[identifier]()
@@ -400,6 +404,9 @@ def build_reader(legacy, local, create_dossier, max_chars):
                     ("Explication et réfraction", "mecanisme"),
                     ("Causalité et fatalisme", "fatalisme"),
                     ("Contexte long et compréhension", "contexte"),
+                    ("Systémisme et émergence", "systemisme"),
+                    ("Efficacité, vérité et rectitude", "efficacite"),
+                    ("Sens, référence et synonymie", "signification"),
                 ],
                 label="Dossiers de lecture",
             )

@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-26.16",
+  "version": "2026-11-26.17",
   "core": [
     "materialisme",
     "systemisme",
@@ -1680,6 +1680,245 @@
         "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
         "quote": "The concept of happiness is much narrower than that of well-being"
       }
+    },
+    "agregat-et-systeme": {
+      "title": "Système et agrégat",
+      "domain": "Ontologie",
+      "kind": "Définition introductive",
+      "text": "Un système est un objet complexe dont les composants sont reliés entre eux, à la différence d’un simple agrégat de pièces indépendantes.",
+      "tags": [
+        "système",
+        "agrégat",
+        "liens",
+        "structure",
+        "system"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 20,
+        "folio": "4",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "A system, then, is a complex object, the components of which are interrelated rather than loose."
+      }
+    },
+    "postulat-emergence": {
+      "title": "Postulat 1.5 · Émergence par assemblage",
+      "domain": "Ontologie",
+      "kind": "Postulat 1.5",
+      "text": "Tout processus d’assemblage d’un système fait apparaître certaines propriétés nouvelles et disparaître certaines propriétés des précurseurs.",
+      "tags": [
+        "émergence",
+        "assemblage",
+        "propriétés",
+        "postulat 1.5",
+        "emergence"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 46,
+        "folio": "30",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "Every assembly process is accompanied by the emergence of some properties and the loss of others."
+      }
+    },
+    "ni-holisme-ni-atomisme": {
+      "title": "Ni holisme ni réductionnisme atomiste",
+      "domain": "Ontologie",
+      "kind": "Critique de méthode",
+      "text": "Bunge rejette le holisme qui refuse d’analyser les composants et leurs liens, tout en écartant l’atomisme qui ramène les propriétés émergentes à de simples résultantes.",
+      "tags": [
+        "holisme",
+        "atomisme",
+        "réductionnisme",
+        "analyse",
+        "émergence"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 60,
+        "folio": "44",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "holism is incapable of accounting for any totalities precisely because it refuses to disclose the components"
+      }
+    },
+    "postulat-comportement": {
+      "title": "Postulat 4.9 · Contrôle neuronal du comportement",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Postulat 4.9",
+      "text": "Chez tout animal doté d’un système nerveux, le comportement est contrôlé par ce système nerveux plutôt que d’être une donnée primitive autonome.",
+      "tags": [
+        "comportement",
+        "système nerveux",
+        "postulat 4.9",
+        "contrôle"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 173,
+        "folio": "157",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "The behavior of every animal endowed with a nervous system is controlled"
+      }
+    },
+    "theoreme-comportement": {
+      "title": "Théorème 4.1 · Singularité comportementale",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Théorème 4.1",
+      "text": "Comme il n’existe pas deux systèmes nerveux identiques en tout point, le postulat 4.9 entraîne qu’aucun couple d’animaux ne se comporte exactement de la même manière.",
+      "tags": [
+        "théorème 4.1",
+        "comportement",
+        "animal",
+        "singularité"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 173,
+        "folio": "157",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "No two animals behave in exactly the same way"
+      }
+    },
+    "verite-efficacite": {
+      "title": "Vérité des propositions et efficacité des règles",
+      "domain": "Épistémologie",
+      "kind": "Distinction épistémologique",
+      "text": "Données et hypothèses sont évaluées selon leur degré de vérité, alors que normes, règles et programmes informatiques ne peuvent être évalués que selon leur efficacité.",
+      "tags": [
+        "vérité",
+        "efficacité",
+        "règles",
+        "programmes",
+        "normes",
+        "efficiency"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 72,
+        "folio": "60",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "whereas data and hypotheses can be true to some extent, norms and computer programs can only be effective to some extent."
+      }
+    },
+    "testabilite-reelle": {
+      "title": "Mise à l’épreuve effective",
+      "domain": "Épistémologie",
+      "kind": "Critère de méthode",
+      "text": "Une solution qui n’a pas encore été testée ne peut recevoir ni valeur de vérité ni valeur d’efficacité.",
+      "tags": [
+        "testabilité",
+        "épreuve",
+        "vérité",
+        "efficacité",
+        "contrôle"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 73,
+        "folio": "61",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "an untested one can be assigned neither a truth value nor an efficiency value."
+      }
+    },
+    "regle-technologique": {
+      "title": "Règles technologiques fondées sur des lois",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse sur la technologie",
+      "text": "À la différence des recettes empiriques de la technique artisanale, les règles de la technologie s’appuient sur des énoncés de lois issus de théories éprouvées.",
+      "tags": [
+        "technologie",
+        "règle technologique",
+        "lois",
+        "ingénierie",
+        "technology"
+      ],
+      "source": {
+        "book": "treatise-7b-philosophy-of-science-tech-2-life-social-1985",
+        "page": 252,
+        "folio": "242",
+        "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+        "quote": "those of technology are based upon law statements, i.e. generalizations belonging to theories that have passed empirical tests."
+      }
+    },
+    "action-valeurs": {
+      "title": "L’action s’appuie sur un système de valeurs",
+      "domain": "Éthique",
+      "kind": "Thèse éthique",
+      "text": "La théorie de l’action et la philosophie sociale ne sont pas neutres : elles dépendent du système de valeurs et des normes morales établis par l’éthique.",
+      "tags": [
+        "action",
+        "valeurs",
+        "normes morales",
+        "rectitude",
+        "éthique"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 328,
+        "folio": "320",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "our action theory and our social philosophy depend on the value system and the moral norms adopted in previous chapters"
+      }
+    },
+    "couple-signification": {
+      "title": "Définition 7.1 · Signification comme couple sens-référence",
+      "domain": "Sémantique",
+      "kind": "Définition 7.1",
+      "text": "Bunge définit la signification d’un construit comme le couple ordonné formé de son sens et de sa référence, indépendamment de toute attribution préalable d’une valeur de vérité.",
+      "tags": [
+        "signification",
+        "sens",
+        "référence",
+        "définition 7.1",
+        "meaning"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 59,
+        "folio": "47",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "both sense and reference are prior to any assignment of truth value."
+      }
+    },
+    "sens-reference-distincts": {
+      "title": "Une même chose représentée par plusieurs construits",
+      "domain": "Sémantique",
+      "kind": "Conséquence sémantique",
+      "text": "Maintenir la distinction entre sens et référence rappelle qu’une même chose réelle peut être représentée par plusieurs construits de sens différents.",
+      "tags": [
+        "sens",
+        "référence",
+        "construit",
+        "représentation",
+        "signification"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 66,
+        "folio": "54",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "one and the same thing may be represented by a number of constructs."
+      }
+    },
+    "synonymie": {
+      "title": "Corollaire 7.4 · Critère sémantique de synonymie",
+      "domain": "Sémantique",
+      "kind": "Corollaire 7.4",
+      "text": "Deux expressions ne sont sémantiquement synonymes que si elles partagent à la fois le même sens et la même référence.",
+      "tags": [
+        "synonymie",
+        "synonymes",
+        "sens",
+        "référence",
+        "corollaire 7.4"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 69,
+        "folio": "57",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "Synonyms have the same vicarious sense and the same vicarious reference"
+      }
     }
   },
   "relations": [
@@ -2335,6 +2574,129 @@
       "target": "bien-etre",
       "witness": "bonheur-et-bien-etre",
       "verb": "se distingue du",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "agregat-et-systeme--systemisme",
+      "origin": "agregat-et-systeme",
+      "target": "systemisme",
+      "witness": "agregat-et-systeme",
+      "verb": "distingue le système de l’agrégat avant d’énoncer le",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "postulat-emergence--systemisme",
+      "origin": "postulat-emergence",
+      "target": "systemisme",
+      "witness": "postulat-emergence",
+      "verb": "fonde l’apparition de propriétés nouvelles dans le",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "ni-holisme-ni-atomisme--systemisme",
+      "origin": "ni-holisme-ni-atomisme",
+      "target": "systemisme",
+      "witness": "ni-holisme-ni-atomisme",
+      "verb": "écarte le holisme comme l’atomisme au profit du",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "postulat-emergence--eau",
+      "origin": "postulat-emergence",
+      "target": "eau",
+      "witness": "eau",
+      "verb": "est illustré au niveau moléculaire par",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "postulat-comportement--theoreme-comportement",
+      "origin": "postulat-comportement",
+      "target": "theoreme-comportement",
+      "witness": "theoreme-comportement",
+      "verb": "est invoqué par Bunge pour déduire le",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "postulat-comportement--emergence-esprit",
+      "origin": "postulat-comportement",
+      "target": "emergence-esprit",
+      "witness": "postulat-comportement",
+      "verb": "rattache le comportement au système nerveux en cohérence avec",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "controle--verite-efficacite",
+      "origin": "controle",
+      "target": "verite-efficacite",
+      "witness": "verite-efficacite",
+      "verb": "se dédouble entre vérité des énoncés et efficacité des règles dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "testabilite-reelle--verite-efficacite",
+      "origin": "testabilite-reelle",
+      "target": "verite-efficacite",
+      "witness": "testabilite-reelle",
+      "verb": "exige un test effectif avant d’attribuer",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "regle-technologique--technique",
+      "origin": "regle-technologique",
+      "target": "technique",
+      "witness": "regle-technologique",
+      "verb": "précise le statut scientifique des règles par rapport à",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "regle-technologique--verite-efficacite",
+      "origin": "regle-technologique",
+      "target": "verite-efficacite",
+      "witness": "regle-technologique",
+      "verb": "convertit des lois éprouvées en règles évaluées selon",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome VI sépare la vérité des propositions et l’efficacité des règles ou programmes. Le tome VII/II montre comment la technologie fonde ses règles sur des lois scientifiques déjà éprouvées sans confondre règle pratique et loi."
+    },
+    {
+      "id": "action-valeurs--agir",
+      "origin": "action-valeurs",
+      "target": "agir",
+      "witness": "action-valeurs",
+      "verb": "rattache la rectitude morale aux normes de l’éthique dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "regle-technologique--agir",
+      "origin": "regle-technologique",
+      "target": "agir",
+      "witness": "agir",
+      "verb": "fournit des moyens efficaces que l’éthique soumet encore au critère de",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome VII/II étudie comment la technologie dérive des règles d’action efficaces à partir de lois scientifiques. Le tome VIII ajoute que l’action humaine doit être évaluée à la fois selon son efficacité pratique et sa rectitude morale."
+    },
+    {
+      "id": "intension--couple-signification",
+      "origin": "intension",
+      "target": "couple-signification",
+      "witness": "intension",
+      "verb": "montre que des référents communs ne fixent pas le sens avant",
+      "kind": "Comparaison entre ouvrages",
+      "comparison": "Le tome I illustre des construits ayant les mêmes référents mais des sens distincts. Le tome II réunit sens et référence en un couple ordonné antérieur à l’attribution d’une valeur de vérité."
+    },
+    {
+      "id": "couple-signification--sens-reference-distincts",
+      "origin": "couple-signification",
+      "target": "sens-reference-distincts",
+      "witness": "sens-reference-distincts",
+      "verb": "permet de distinguer plusieurs représentations d’une même chose dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "couple-signification--synonymie",
+      "origin": "couple-signification",
+      "target": "synonymie",
+      "witness": "synonymie",
+      "verb": "entraîne le double critère de la",
       "kind": "Lien explicite"
     }
   ],

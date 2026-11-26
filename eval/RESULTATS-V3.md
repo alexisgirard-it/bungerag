@@ -101,6 +101,12 @@ L’essai à budget fixe de six fiches compare les racines seules, l’expansion
 
 Plafonner l’expansion initiale à 3 racines (`seed_limit=3`) gagne un cas complet sur la série historique (4/5 contre 3/5) tout en préservant 5/6 cas complets sur les nouvelles formulations (alors que 2 ou 1 racine perdent le troisième appui de `plasticite-esprit`) et en améliorant les rangs des appuis sur `existence-et-matiere` et `action-destin`. Ce réglage est retenu dans l’Atelier (`open_question`) et l’enrichissement par graphe de la rédaction (`add_linked_passages`). [Protocole](../src/compare_graph_evidence.py) · [Mesures](mesures-v3.json)
 
+### Extension des chaînes d’arguments et contrôle des transpositions
+
+Le référentiel `2026-11-26.17` passe à **103 fiches et 96 liens vérifiés** sur les 25 éditions indexées. Trois nouveaux dossiers d’Atelier ouvrent des chapitres qui n’avaient pas encore de chaîne argumentée publiée : **Systémisme et émergence** (T4 `System`, avec formalisation `S → L, ¬L ⊨ ¬S`), **Efficacité, vérité et rectitude** (T6 `Producing Evidence`, T7/II `Technology` et T8 `Action`, avec formalisation `E ⊭ V · E ⊭ J`) et **Sens, référence et synonymie** (T1 `Intension` et T2 `Meaning`), complétés par la chaîne Postulat 4.9 → Théorème 4.1 dans T4 `Mind`. La couverture de l’Atelier passe de 7 à **13 chapitres du *Traité* reliés** sur 54.
+
+Le script `src/audit_workshop.py` (appelé aussi avant toute publication par `src/push_space.py`) contrôle désormais les **conditions nécessaires des transpositions** : chaque conclusion conditionnelle doit dépendre à la fois d’un fait contemporain daté avec source HTTPS, d’une hypothèse explicite de transposition (et d’un appui textuel de Bunge pour les transpositions issues du système), et la suspension de chacune de ces conditions doit effectivement suspendre la conclusion. La recette locale valide **11 dossiers, 45 appuis, 6 conditions de transposition, 5 formalisations booléennes et 41 modifications** réparties sur huit séquences, ainsi que les deux cas libres documentés. [Couverture du Traité](COUVERTURE-TRAITE.md) · [Séquences](recette-atelier.json)
+
 ## Titres et pages voisines
 
 Essai exploratoire après correction de la notation sur les 25 questions documentées de la première recette. Les traductions anglaises sont les mêmes dans les trois variantes BM25. Les pages sont dédupliquées avant de calculer les rangs.

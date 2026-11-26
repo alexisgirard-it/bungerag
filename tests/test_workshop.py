@@ -5,12 +5,15 @@ import pytest
 from workshop import (
     CATALOG,
     assess,
-    formal_happiness,
-    formal_rights,
-    open_question,
-    step,
     choose_dossier,
     contemporary_claim,
+    formal_efficiency,
+    formal_happiness,
+    formal_rights,
+    formal_systemism,
+    formal_world,
+    open_question,
+    step,
 )
 
 
@@ -36,6 +39,13 @@ def test_formal_example_checks_every_boolean_valuation():
     happiness = formal_happiness()
     assert happiness["valid"]
     assert [row for row in happiness["rows"] if row[3]] == [(True, False, False, True)]
+    world = formal_world()
+    assert world["valid"] and len(world["rows"]) == 8
+    systemism = formal_systemism()
+    assert systemism["formula"] == "S → L, ¬L ⊨ ¬S"
+    assert systemism["valid"] and len(systemism["rows"]) == 4
+    efficiency = formal_efficiency()
+    assert efficiency["valid"] and len(efficiency["rows"]) == 8
 
 
 def test_unrelated_ai_question_does_not_open_the_curated_llm_dossier():
@@ -43,7 +53,47 @@ def test_unrelated_ai_question_does_not_open_the_curated_llm_dossier():
         choose_dossier("Comment un modèle de langage pourrait-il comprendre ?") == "ia"
     )
     assert choose_dossier("Quelle GPU est utilisée pour entraîner Gemini 4 ?") is None
+    assert (
+        choose_dossier(
+            "Un tout possède-t-il des propriétés irréductibles à ses composants dans le systémisme ?"
+        )
+        == "systemisme"
+    )
+    assert (
+        choose_dossier(
+            "Une règle technique efficace est-elle vraie ou moralement juste ?"
+        )
+        == "efficacite"
+    )
+    assert (
+        choose_dossier(
+            "Deux expressions ayant les mêmes référents ont-elles la même signification ?"
+        )
+        == "signification"
+    )
     assert not open_question("Zzzz", [])["steps"]
+
+
+def test_transposition_audit_requires_dated_fact_and_hypothesis():
+    from audit_workshop import verify_transposition_conditions
+
+    source = {"book": "b", "page": "1", "title": "T", "excerpt": "E"}
+    bad = [
+        step("bunge", "Thèse", "T", "Thèse", sources=[source]),
+        step("c", "Conclusion", "C", "Conclusion conditionnelle", [["bunge"]]),
+    ]
+    with pytest.raises(ValueError, match="Condition nécessaire absente"):
+        verify_transposition_conditions("test", bad)
+
+    good_fact = step("f", "Fait", "F", "Fait contemporain daté")
+    good_fact["external"] = [{"title": "Doc · 2026", "url": "https://example.org/doc"}]
+    good = [
+        step("bunge", "Thèse", "T", "Thèse", sources=[source]),
+        good_fact,
+        step("h", "Hypothèse", "H", "Hypothèse de transposition"),
+        step("c", "Conclusion", "C", "Conclusion conditionnelle", [["bunge", "f", "h"]]),
+    ]
+    assert verify_transposition_conditions("test", good) == 2
 
 
 def test_a_proposed_argument_requires_real_appuis_and_a_second_read(monkeypatch):

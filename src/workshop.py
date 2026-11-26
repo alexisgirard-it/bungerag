@@ -245,6 +245,85 @@ def context_understanding():
     )
 
 
+def systemism_emergence():
+    aggregate, postulate, water, critique, systemism = map(
+        proposition,
+        [
+            "agregat-et-systeme",
+            "postulat-emergence",
+            "eau",
+            "ni-holisme-ni-atomisme",
+            "systemisme",
+        ],
+    )
+    systemism["supports"] = [["agregat-et-systeme", "postulat-emergence"]]
+    synthesis = step(
+        "non-reductibilite",
+        "Émergence explicable sans holisme",
+        "Reconnaître des propriétés propres à un tout systémique n’oblige ni à renoncer à l’analyse des composants, ni à réduire ces propriétés à une simple somme d’attributs isolés.",
+        "Reconstruction éditoriale",
+        [["systemisme", "ni-holisme-ni-atomisme"]],
+    )
+    return dict(
+        title="Un tout possède-t-il des propriétés irréductibles à ses composants ?",
+        steps=[aggregate, postulate, water, critique, systemism, synthesis],
+        objection="Certaines propriétés globales restent résultantes (comme la masse d’un agrégat). Distinguer un système d’un agrégat exige d’identifier les interactions effectives entre ses parties.",
+        open="Quelles interactions internes relient les composants et quelles propriétés disparaissent lorsqu’on dissocie le système ?",
+    )
+
+
+def technical_efficiency():
+    distinction, testability, rule, action, values = map(
+        proposition,
+        [
+            "verite-efficacite",
+            "testabilite-reelle",
+            "regle-technologique",
+            "agir",
+            "action-valeurs",
+        ],
+    )
+    conclusion = step(
+        "distinction-efficacite",
+        "Efficacité technique, vérité et rectitude restent distinctes",
+        "Une règle technologique s’appuie sur des lois éprouvées mais s’évalue par son efficacité ; cette efficacité ne démontre ni la vérité complète d’une hypothèse, ni la rectitude morale de l’action qui l’emploie.",
+        "Reconstruction éditoriale",
+        [["verite-efficacite", "regle-technologique", "agir", "action-valeurs"]],
+    )
+    return dict(
+        title="Une règle technique efficace est-elle vraie ou moralement juste ?",
+        steps=[distinction, testability, rule, action, values, conclusion],
+        objection="Une règle efficace peut reposer sur une approximation utile ou servir une fin moralement contestable ; inversement, une loi vraie ne dicte pas seule ce qu’il faut faire sans valeur ni objectif.",
+        open="Sur quelle loi empiriquement testée repose la règle envisagée, et quelles normes morales encadrent son usage ?",
+    )
+
+
+def semantic_meaning():
+    intension, pair, distinct, synonymy = map(
+        proposition,
+        [
+            "intension",
+            "couple-signification",
+            "sens-reference-distincts",
+            "synonymie",
+        ],
+    )
+    synonymy["supports"] = [["couple-signification"]]
+    conclusion = step(
+        "non-synonymie",
+        "La coréférence ne suffit pas à la synonymie",
+        "Puisque la signification combine sens et référence en un couple ordonné, deux expressions visant les mêmes objets mais dotées de sens différents ne sont pas synonymes.",
+        "Reconstruction éditoriale",
+        [["intension", "couple-signification", "synonymie"]],
+    )
+    return dict(
+        title="Deux expressions ayant les mêmes référents ont-elles la même signification ?",
+        steps=[intension, pair, distinct, synonymy, conclusion],
+        objection="Dans un usage pragmatique courant, des locuteurs substituent parfois deux termes coréférentiels ; Bunge distingue cette synonymie pragmatique de la synonymie sémantique.",
+        open="Les deux construits partagent-ils aussi leurs dépendances logiques (leur sens), ou seulement leur classe de référence ?",
+    )
+
+
 DOSSIERS = {
     "bonheur": ethical_happiness,
     "devoir": ethical_duty,
@@ -254,11 +333,46 @@ DOSSIERS = {
     "mecanisme": mechanism,
     "fatalisme": causal_fatalism,
     "contexte": context_understanding,
+    "systemisme": systemism_emergence,
+    "efficacite": technical_efficiency,
+    "signification": semantic_meaning,
 }
 
 
 def choose_dossier(question, node=None):
     q = fold(question)
+    if node in {
+        "agregat-et-systeme",
+        "postulat-emergence",
+        "ni-holisme-ni-atomisme",
+        "systemisme",
+        "eau",
+    } or (
+        any(t in q for t in ("systemisme", "agregat", "holisme", "proprietes irreductibles"))
+        and any(t in q for t in ("tout", "composant", "emerg", "systeme", "holisme", "atomisme"))
+    ):
+        return "systemisme"
+    if node in {
+        "verite-efficacite",
+        "testabilite-reelle",
+        "regle-technologique",
+        "action-valeurs",
+        "agir",
+    } or (
+        any(t in q for t in ("regle technique", "regle technologique", "efficacite", "efficace"))
+        and any(t in q for t in ("vrai", "verite", "moral", "juste", "rectitude", "technolog"))
+    ):
+        return "efficacite"
+    if node in {
+        "couple-signification",
+        "sens-reference-distincts",
+        "synonymie",
+        "intension",
+    } or (
+        any(t in q for t in ("signification", "synonym"))
+        and any(t in q for t in ("referent", "sens", "reference"))
+    ):
+        return "signification"
     if "compr" in q and any(
         term in q
         for term in ("fenetre de contexte", "million de jetons", "million de tokens")
@@ -397,6 +511,52 @@ def formal_world():
             "individus dont tout autre est partie, alors a ⊑ b et b ⊑ a. "
             "L’antisymétrie de l’ordre partiel donne l’égalité. La formalisation éditoriale "
             "vérifie l’inférence après l’instanciation de a et b."
+        ),
+    }
+
+
+def formal_systemism():
+    """Vérifie qu’un objet sans liens entre ses parties n’est pas un système."""
+    rows = []
+    for system, bonded in itertools.product([False, True], repeat=2):
+        rule = not system or bonded
+        counterexample = rule and (not bonded) and system
+        rows.append((system, bonded, rule, counterexample))
+    return {
+        "formula": "S → L, ¬L ⊨ ¬S",
+        "headers": ("S", "L", "S → L", "Contre-exemple"),
+        "valid": not any(r[-1] for r in rows),
+        "rows": rows,
+        "gloss": (
+            "S signifie que l’objet complexe est un système. L signifie que ses composants sont reliés "
+            "par des interactions effectives. En l’absence de liens (¬L), le tout reste un agrégat et non "
+            "un système (¬S). Les quatre valuations booléennes ont été vérifiées."
+        ),
+    }
+
+
+def formal_efficiency():
+    """Vérifie que l’efficacité technique n’entraîne ni la vérité ni la rectitude morale."""
+    rows = []
+    for effective, true_law, right_action in itertools.product([False, True], repeat=3):
+        counter_truth = effective and not true_law
+        counter_right = effective and not right_action
+        rows.append((effective, true_law, right_action, counter_truth, counter_right))
+    return {
+        "formula": "E ⊭ V   ·   E ⊭ J",
+        "headers": (
+            "E (efficace)",
+            "V (vrai)",
+            "J (juste)",
+            "Contre-exemple à E → V",
+            "Contre-exemple à E → J",
+        ),
+        "valid": any(r[3] for r in rows) and any(r[4] for r in rows),
+        "rows": rows,
+        "gloss": (
+            "E signifie que la règle ou l’artefact est efficace, V que l’hypothèse sous-jacente est vraie "
+            "et J que l’action est moralement juste. Les huit valuations montrent que E = 1 reste compatible "
+            "avec V = 0 ou J = 0 : efficacité, vérité et rectitude exigent des contrôles distincts."
         ),
     }
 
