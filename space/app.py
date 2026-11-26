@@ -37,7 +37,7 @@ from runtime import BoundedLRUCache, QuotaExceeded, QuotaGuard, classify_excepti
 from theme import build_theme  # noqa: E402
 
 
-os.environ.setdefault("RAG_PROFILE", "public_v2")
+os.environ.setdefault("RAG_PROFILE", "public_v3")
 
 
 def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
@@ -85,7 +85,7 @@ from rag import ask_smart  # noqa: E402
 
 # Un seul calcul lourd : deux rerankings simultanes degradent le CPU gratuit.
 POOL = ThreadPoolExecutor(max_workers=1, thread_name_prefix="bungerag")
-CACHE: BoundedLRUCache[str, AnswerView] = BoundedLRUCache(max_size=CACHE_SIZE)
+CACHE: BoundedLRUCache[tuple, AnswerView] = BoundedLRUCache(max_size=CACHE_SIZE)
 QUOTAS = QuotaGuard(daily_limit=DAILY_LIMIT, per_client_limit=CLIENT_LIMIT)
 
 
@@ -98,10 +98,9 @@ MASTHEAD = """
 
 HERO = """
 <section id="hero" aria-labelledby="hero-title">
-  <div class="hero-kicker">Une question · une réponse · ses sources</div>
+  <div class="hero-kicker">Bibliothèque de Mario Bunge</div>
   <h1 id="hero-title">Questionner les textes.<br>Remonter aux sources.</h1>
-  <p>Posez votre question en français. BungeRAG répond à partir des textes de Mario Bunge
-  et affiche les passages utilisés — ou indique simplement que le corpus ne permet pas de répondre.</p>
+  <p>Retrouvez un passage, suivez un argument à travers les ouvrages et mettez ses prémisses à l’épreuve.</p>
 </section>
 """
 
@@ -202,7 +201,9 @@ def view_outputs(view: AnswerView):
 def answer_question(question: str, request: gr.Request):
     """Endpoint public generator : progres honnete puis contrat public filtre."""
     request_id = uuid4().hex[:10]
-    clean_question, cache_key = normalize_question(question)
+    clean_question, key = normalize_question(question)
+    from config import get_config
+    cache_key = (os.environ.get("INDEX_REVISION", "local"), CATALOG["version"], get_config().config_id, key)
     if len(clean_question) < 8:
         yield error_outputs(
             "input",
@@ -294,90 +295,61 @@ def answer_question(question: str, request: gr.Request):
 CSS = (APP_DIR / "styles.css").read_text(encoding="utf-8")
 THEME = build_theme()
 
-with gr.Blocks(
-    title="BungeRAG — édition critique numérique",
-    fill_width=True,
-) as demo:
+from reader import build_reader
+from library import CATALOG, search_library
+from workshop import open_question
+
+
+def dossier_for_reader(question, request, passages=None):
+    if passages is None:
+        passages = search_library(question)
+    try:
+        reservation = QUOTAS.reserve(client_id(request))
+    except QuotaExceeded:
+        dossier = open_question(question, passages)
+        dossier["notice"] = "Quota de rédaction atteint. Les extraits restent consultables."
+        return dossier
+    try:
+        from config import get_config
+        from generate import generate_json
+        cfg = get_config()
+        def write(prompt, system):
+            return generate_json(prompt, system, cfg.generation_backend, 1800)
+        dossier = open_question(question, passages, generate=write)
+        QUOTAS.commit(reservation)
+        return dossier
+    except Exception:
+        QUOTAS.release(reservation)
+        LOGGER.exception("atelier_indisponible")
+        dossier = open_question(question, passages)
+        dossier["notice"] = "La rédaction est indisponible. Les sources et la question ouverte restent consultables."
+        return dossier
+
+
+def legacy_controls(question):
+    with gr.Accordion("Réponse rédigée et sources", open=False):
+        submit = gr.Button("Envoyer la question", variant="secondary")
+        gr.HTML(ANSWER_HEADING)
+        status = gr.HTML(render_status("ready"), elem_id="status-output")
+        meta = gr.HTML("", elem_id="meta-output")
+        answer = gr.Markdown(EMPTY_ANSWER, elem_id="answer-copy")
+        notice = gr.HTML("", elem_id="notice-output")
+        gr.HTML(APPARATUS_HEADING)
+        sources = gr.HTML("", elem_id="sources-output")
+        payload = gr.JSON(value=None, visible=False)
+        submit.click(answer_question, inputs=question, outputs=[payload,status,meta,answer,sources,notice],
+                     api_name="answer", scroll_to_output=True, concurrency_limit=1, concurrency_id="rag")
+
+
+with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=True) as demo:
     with gr.Column(elem_id="page-shell"):
         gr.HTML(MASTHEAD)
         gr.HTML(HERO)
-
-        with gr.Column(elem_id="chat-shell"):
-            with gr.Column(elem_id="question-panel"):
-                gr.HTML(QUESTION_HEADING)
-                question = gr.Textbox(
-                    label="Question à BungeRAG",
-                    placeholder="Par exemple : qu'est-ce que le systémisme ?",
-                    lines=3,
-                    max_lines=6,
-                    elem_id="question-box",
-                )
-                gr.HTML(
-                    f'<p class="input-note">8 à {MAX_QUESTION_CHARS} caractères · '
-                    "ne saisissez aucune donnée personnelle.</p>"
-                )
-                submit_button = gr.Button(
-                    "Envoyer la question",
-                    variant="primary",
-                    elem_id="submit-button",
-                )
-                gr.HTML('<p class="example-heading">Essayer une question</p>')
-                example_buttons = []
-                with gr.Row(elem_id="example-buttons"):
-                    for example in EXAMPLES:
-                        example_buttons.append(
-                            gr.Button(example, variant="secondary", elem_classes=["example-chip"])
-                        )
-
-            with gr.Column(elem_id="answer-panel"):
-                gr.HTML(ANSWER_HEADING)
-                status_output = gr.HTML(render_status("ready"), elem_id="status-output")
-                meta_output = gr.HTML("", elem_id="meta-output")
-                answer_output = gr.Markdown(EMPTY_ANSWER, elem_id="answer-copy")
-                notice_output = gr.HTML("", elem_id="notice-output")
-                gr.HTML(APPARATUS_HEADING)
-                sources_output = gr.HTML(
-                    '<div class="sources-empty">Les sources apparaîtront ici.</div>',
-                    elem_id="sources-output",
-                )
-                # Premier output de /answer : contrat JSON public, jamais les contexts.
-                api_payload = gr.JSON(value=None, visible=False)
-
-        gr.HTML(FOOTER)
-
-    outputs = [
-        api_payload,
-        status_output,
-        meta_output,
-        answer_output,
-        sources_output,
-        notice_output,
-    ]
-    click_event = submit_button.click(
-        answer_question,
-        inputs=question,
-        outputs=outputs,
-        api_name="answer",
-        scroll_to_output=True,
-        concurrency_limit=1,
-        concurrency_id="rag",
-    )
-    question.submit(
-        answer_question,
-        inputs=question,
-        outputs=outputs,
-        api_name=False,
-        scroll_to_output=True,
-        concurrency_limit=1,
-        concurrency_id="rag",
-    )
-    for button, example in zip(example_buttons, EXAMPLES):
-        button.click(
-            lambda value=example: value,
-            outputs=question,
-            api_name=False,
-            queue=False,
+        concept, view, linked, comparison, initial_atlas = build_reader(
+            legacy_controls, LOCAL_BOOKS, dossier_for_reader, MAX_QUESTION_CHARS
         )
+        gr.HTML(FOOTER)
+    demo.load(initial_atlas,concept,[view,linked,comparison],api_name=False)
 
 demo.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 

@@ -67,6 +67,12 @@ def search(query=None, mode="hybrid", k=5, table=None, *,
     if mode in {"bm25", "hybrid"} and not text_query:
         raise ValueError("text_query est requis pour cette recherche")
 
+    # La table historique indexe des mots sans positions. La bibliothèque paginée traite les citations littérales.
+    if text_query:
+        text_query = text_query.replace('“', " ").replace('”', " ").replace('"', " ").strip()
+        if not text_query and mode != "dense":
+            return []
+
     # BUNGE_TABLE reste supporte pour les scripts historiques.
     table = table or os.environ.get("BUNGE_TABLE", "bunge_512")
     tbl = _open_table(table)

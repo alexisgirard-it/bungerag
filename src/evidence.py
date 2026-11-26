@@ -273,7 +273,7 @@ def parse_object(raw):
     return obj if isinstance(obj, dict) else {}
 
 
-def draft_claims(question, passages, db, generate_json, backend):
+def draft_claims(question, passages, db, generate_json, backend, frame=""):
     prompt = (
         question
         + "\n\n"
@@ -284,7 +284,7 @@ def draft_claims(question, passages, db, generate_json, backend):
     )
     # Une reprise ciblée en cas de JSON ou d'ancrages inutilisables.
     for attempt in range(2):
-        raw = generate_json(prompt, system=DRAFT, backend=backend, max_tokens=3600)
+        raw = generate_json(prompt, system=DRAFT + frame, backend=backend, max_tokens=3600)
         rows = parse_object(raw).get("claims")
         if rows == []:
             return [], "llm"
@@ -323,14 +323,45 @@ def draft_claims(question, passages, db, generate_json, backend):
     return [], "citation-validation"
 
 
+def add_linked_passages(question, passages, db):
+    from library import linked_evidence, node_source, on_page, suggested_nodes
+
+    seeds = suggested_nodes(question, 3)
+    for p in list(passages.values()):
+        seeds.extend(on_page(p.book, p.page))
+    seen = {(p.book, p.page) for p in passages.values()}
+    for key in linked_evidence(seeds, limit=7):
+        source = node_source(key)
+        book, page = source["book"], str(source["page"])
+        if (book, page) in seen or not page.isdecimal():
+            continue
+        _, lines, visible, positions = page_image_text(db, db.stat().st_mtime_ns, book, page)
+        needle = canonical(source["excerpt"])
+        pos = unique_match(visible, needle)
+        if pos is None:
+            continue
+        begin = max(0, positions[pos] - 3)
+        end = min(len(lines), positions[pos + len(needle) - 1] + 5)
+        raw = "\n".join(line for _, line in lines[begin:end])
+        offset = sum(len(line) + 1 for _, line in lines[:begin])
+        passages[f"P{len(passages)+1}"] = Passage(book,source["title"],source["year"],page,offset,raw,
+                                                1.0,source["file"],"atlas/"+key,source["edition"])
+        seen.add((book,page))
+
+
 def answer_with_evidence(question, hits, cfg, generate_json):
     from citations import CITATION_FAILURE_ANSWER
     from output_guard import has_long_verbatim_overlap
 
     db = ROOT / "index" / f"provenance-{cfg.table.removeprefix('bunge_')}.sqlite"
     passages = passages_for(hits, db)
+    frame = ""
+    if cfg.name == "public_v3":
+        from library import core_context
+        add_linked_passages(question, passages, db)
+        frame = "\nCadre de lecture documenté du système de Bunge. Appuie chaque attribution sur les passages numérotés. Cherche les conditions de portée et les objections.\n" + core_context()
     claims, reason = draft_claims(
-        question, passages, db, generate_json, cfg.generation_backend
+        question, passages, db, generate_json, cfg.generation_backend, frame
     )
     if reason:
         return (

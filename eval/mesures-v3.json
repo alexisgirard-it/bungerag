@@ -1,0 +1,3556 @@
+{
+  "date": "2026-11-26",
+  "fixture_sha256": "2d24a5c0ea8476d4a06c432d77a84f38479aebb79aec888464d06a8a7a305529",
+  "edition_index_manifest_sha256": "ad5c8420f43a1c921d268aefb890efd5a9207dc2e46003fb874d8b3b3548e69e",
+  "catalogue_version": "2026-11-26.2",
+  "index_counts": {
+    "books": 25,
+    "chapters": 54,
+    "pages": 8293,
+    "labels": 1266,
+    "mentions": 154,
+    "passages": 53121
+  },
+  "embeddings": [
+    {
+      "model": "google/embeddinggemma-2",
+      "revision": "f9972ac22e696a105c482202646979e33e4b5a1e",
+      "count": 227,
+      "hit5": 17,
+      "mrr": 0.3026,
+      "ranks": [
+        3,
+        4,
+        7,
+        4,
+        34,
+        8,
+        1,
+        9,
+        2,
+        18,
+        5,
+        5,
+        11,
+        2,
+        3,
+        1,
+        1,
+        5,
+        6,
+        10,
+        1,
+        4,
+        12,
+        4,
+        8,
+        14,
+        36,
+        4,
+        3,
+        10
+      ],
+      "query_seconds": 2.99,
+      "doc_seconds": 49.61
+    },
+    {
+      "model": "ibm-granite/granite-embedding-311m-multilingual-r2",
+      "revision": "44399559930365213510b1ee2eb15ded83374f0e",
+      "count": 10412,
+      "hit5": 9,
+      "mrr": 0.2238,
+      "ranks": [
+        17,
+        24,
+        6,
+        21,
+        50,
+        31,
+        2,
+        46,
+        10,
+        226,
+        49,
+        12,
+        36,
+        2,
+        7,
+        3,
+        10,
+        52,
+        1,
+        28,
+        2,
+        14,
+        81,
+        2,
+        14,
+        20,
+        497,
+        1,
+        1,
+        4
+      ],
+      "query_seconds": 1.41,
+      "doc_seconds": 2095.11
+    },
+    {
+      "model": "ibm-granite/granite-embedding-311m-multilingual-r2",
+      "revision": "44399559930365213510b1ee2eb15ded83374f0e",
+      "count": 227,
+      "hit5": 21,
+      "mrr": 0.3797,
+      "ranks": [
+        3,
+        6,
+        4,
+        5,
+        6,
+        6,
+        2,
+        9,
+        4,
+        17,
+        5,
+        4,
+        5,
+        1,
+        5,
+        1,
+        4,
+        6,
+        1,
+        6,
+        2,
+        3,
+        7,
+        2,
+        4,
+        2,
+        36,
+        1,
+        1,
+        2
+      ],
+      "query_seconds": 1.38,
+      "doc_seconds": 33.56
+    }
+  ],
+  "ranking_ablation": [
+    {
+      "id": 1,
+      "ranks": {
+        "dense-fr": {
+          "initial": 4
+        },
+        "dense-en": {
+          "initial": 3
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 8
+        },
+        "hybride": {
+          "initial": 3
+        },
+        "hybride-en": {
+          "initial": 3
+        },
+        "horizon-12": {
+          "final": 2
+        },
+        "horizon-24": {
+          "final": 2
+        },
+        "horizon-40": {
+          "final": 2
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 33.75
+    },
+    {
+      "id": 10,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": 20
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 37
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": 13
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 11.04
+    },
+    {
+      "id": 11,
+      "ranks": {
+        "dense-fr": {
+          "initial": 12
+        },
+        "dense-en": {
+          "initial": 12
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 25
+        },
+        "hybride-en": {
+          "initial": 26
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": 21
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 9.72
+    },
+    {
+      "id": 12,
+      "ranks": {
+        "dense-fr": {
+          "initial": 10
+        },
+        "dense-en": {
+          "initial": 17
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 19
+        },
+        "hybride": {
+          "initial": 9
+        },
+        "hybride-en": {
+          "initial": 9
+        },
+        "horizon-12": {
+          "final": 2
+        },
+        "horizon-24": {
+          "final": 4
+        },
+        "horizon-40": {
+          "final": 4
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.38
+    },
+    {
+      "id": 13,
+      "ranks": {
+        "dense-fr": {
+          "initial": 23
+        },
+        "dense-en": {
+          "initial": 25
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.76
+    },
+    {
+      "id": 14,
+      "ranks": {
+        "dense-fr": {
+          "initial": 6
+        },
+        "dense-en": {
+          "initial": 5
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 4
+        },
+        "hybride": {
+          "initial": 2
+        },
+        "hybride-en": {
+          "initial": 2
+        },
+        "horizon-12": {
+          "final": 6
+        },
+        "horizon-24": {
+          "final": 9
+        },
+        "horizon-40": {
+          "final": 11
+        },
+        "horizon-v2": {
+          "final": 6
+        }
+      },
+      "seconds": 8.88
+    },
+    {
+      "id": 15,
+      "ranks": {
+        "dense-fr": {
+          "initial": 14
+        },
+        "dense-en": {
+          "initial": 37
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 2
+        },
+        "hybride": {
+          "initial": 6
+        },
+        "hybride-en": {
+          "initial": 7
+        },
+        "horizon-12": {
+          "final": 4
+        },
+        "horizon-24": {
+          "final": 4
+        },
+        "horizon-40": {
+          "final": 8
+        },
+        "horizon-v2": {
+          "final": 5
+        }
+      },
+      "seconds": 8.78
+    },
+    {
+      "id": 16,
+      "ranks": {
+        "dense-fr": {
+          "initial": 8
+        },
+        "dense-en": {
+          "initial": 5
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 8
+        },
+        "hybride": {
+          "initial": 7
+        },
+        "hybride-en": {
+          "initial": 5
+        },
+        "horizon-12": {
+          "final": 1
+        },
+        "horizon-24": {
+          "final": 2
+        },
+        "horizon-40": {
+          "final": 3
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 8.45
+    },
+    {
+      "id": 17,
+      "ranks": {
+        "dense-fr": {
+          "initial": 7
+        },
+        "dense-en": {
+          "initial": 9
+        },
+        "lex-fr": {
+          "initial": 7
+        },
+        "lex-en": {
+          "initial": 2
+        },
+        "hybride": {
+          "initial": 3
+        },
+        "hybride-en": {
+          "initial": 5
+        },
+        "horizon-12": {
+          "final": 1
+        },
+        "horizon-24": {
+          "final": 1
+        },
+        "horizon-40": {
+          "final": 1
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 8.78
+    },
+    {
+      "id": 18,
+      "ranks": {
+        "dense-fr": {
+          "initial": 35
+        },
+        "dense-en": {
+          "initial": 21
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.32
+    },
+    {
+      "id": 19,
+      "ranks": {
+        "dense-fr": {
+          "initial": 2
+        },
+        "dense-en": {
+          "initial": 3
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 15
+        },
+        "hybride": {
+          "initial": 4
+        },
+        "hybride-en": {
+          "initial": 4
+        },
+        "horizon-12": {
+          "final": 8
+        },
+        "horizon-24": {
+          "final": 9
+        },
+        "horizon-40": {
+          "final": 10
+        },
+        "horizon-v2": {
+          "final": 6
+        }
+      },
+      "seconds": 7.82
+    },
+    {
+      "id": 2,
+      "ranks": {
+        "dense-fr": {
+          "initial": 9
+        },
+        "dense-en": {
+          "initial": 15
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 9
+        },
+        "hybride": {
+          "initial": 10
+        },
+        "hybride-en": {
+          "initial": 7
+        },
+        "horizon-12": {
+          "final": 11
+        },
+        "horizon-24": {
+          "final": 10
+        },
+        "horizon-40": {
+          "final": 13
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 9.41
+    },
+    {
+      "id": 20,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": null
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 3
+        },
+        "hybride": {
+          "initial": 7
+        },
+        "hybride-en": {
+          "initial": 8
+        },
+        "horizon-12": {
+          "final": 8
+        },
+        "horizon-24": {
+          "final": 12
+        },
+        "horizon-40": {
+          "final": 20
+        },
+        "horizon-v2": {
+          "final": 7
+        }
+      },
+      "seconds": 8.32
+    },
+    {
+      "id": 21,
+      "ranks": {
+        "dense-fr": {
+          "initial": 1
+        },
+        "dense-en": {
+          "initial": 1
+        },
+        "lex-fr": {
+          "initial": 15
+        },
+        "lex-en": {
+          "initial": 9
+        },
+        "hybride": {
+          "initial": 4
+        },
+        "hybride-en": {
+          "initial": 4
+        },
+        "horizon-12": {
+          "final": 1
+        },
+        "horizon-24": {
+          "final": 1
+        },
+        "horizon-40": {
+          "final": 1
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 9.28
+    },
+    {
+      "id": 22,
+      "ranks": {
+        "dense-fr": {
+          "initial": 10
+        },
+        "dense-en": {
+          "initial": 9
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 40
+        },
+        "hybride": {
+          "initial": 8
+        },
+        "hybride-en": {
+          "initial": 7
+        },
+        "horizon-12": {
+          "final": 2
+        },
+        "horizon-24": {
+          "final": 3
+        },
+        "horizon-40": {
+          "final": 3
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.99
+    },
+    {
+      "id": 23,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": null
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 10.34
+    },
+    {
+      "id": 24,
+      "ranks": {
+        "dense-fr": {
+          "initial": 1
+        },
+        "dense-en": {
+          "initial": 3
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 5
+        },
+        "hybride-en": {
+          "initial": 8
+        },
+        "horizon-12": {
+          "final": 2
+        },
+        "horizon-24": {
+          "final": 3
+        },
+        "horizon-40": {
+          "final": 3
+        },
+        "horizon-v2": {
+          "final": 2
+        }
+      },
+      "seconds": 9.67
+    },
+    {
+      "id": 25,
+      "ranks": {
+        "dense-fr": {
+          "initial": 4
+        },
+        "dense-en": {
+          "initial": 4
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 17
+        },
+        "hybride-en": {
+          "initial": 18
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": 1
+        },
+        "horizon-40": {
+          "final": 1
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 17.55
+    },
+    {
+      "id": 26,
+      "ranks": {
+        "dense-fr": {
+          "initial": 7
+        },
+        "dense-en": {
+          "initial": 3
+        },
+        "lex-fr": {
+          "initial": 39
+        },
+        "lex-en": {
+          "initial": 1
+        },
+        "hybride": {
+          "initial": 1
+        },
+        "hybride-en": {
+          "initial": 1
+        },
+        "horizon-12": {
+          "final": 11
+        },
+        "horizon-24": {
+          "final": 19
+        },
+        "horizon-40": {
+          "final": 25
+        },
+        "horizon-v2": {
+          "final": 12
+        }
+      },
+      "seconds": 9.51
+    },
+    {
+      "id": 27,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": 17
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": 34
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.47
+    },
+    {
+      "id": 28,
+      "ranks": {
+        "dense-fr": {
+          "initial": 18
+        },
+        "dense-en": {
+          "initial": 20
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 34
+        },
+        "hybride-en": {
+          "initial": 39
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": 33
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.11
+    },
+    {
+      "id": 29,
+      "ranks": {
+        "dense-fr": {
+          "initial": 1
+        },
+        "dense-en": {
+          "initial": 4
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 7
+        },
+        "hybride-en": {
+          "initial": 17
+        },
+        "horizon-12": {
+          "final": 6
+        },
+        "horizon-24": {
+          "final": 8
+        },
+        "horizon-40": {
+          "final": 10
+        },
+        "horizon-v2": {
+          "final": 5
+        }
+      },
+      "seconds": 7.68
+    },
+    {
+      "id": 3,
+      "ranks": {
+        "dense-fr": {
+          "initial": 11
+        },
+        "dense-en": {
+          "initial": 9
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": 23
+        },
+        "hybride-en": {
+          "initial": 23
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": 9
+        },
+        "horizon-40": {
+          "final": 10
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.63
+    },
+    {
+      "id": 30,
+      "ranks": {
+        "dense-fr": {
+          "initial": 10
+        },
+        "dense-en": {
+          "initial": 2
+        },
+        "lex-fr": {
+          "initial": 7
+        },
+        "lex-en": {
+          "initial": 4
+        },
+        "hybride": {
+          "initial": 2
+        },
+        "hybride-en": {
+          "initial": 2
+        },
+        "horizon-12": {
+          "final": 4
+        },
+        "horizon-24": {
+          "final": 5
+        },
+        "horizon-40": {
+          "final": 5
+        },
+        "horizon-v2": {
+          "final": 4
+        }
+      },
+      "seconds": 8.33
+    },
+    {
+      "id": 4,
+      "ranks": {
+        "dense-fr": {
+          "initial": 3
+        },
+        "dense-en": {
+          "initial": 2
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 3
+        },
+        "hybride": {
+          "initial": 1
+        },
+        "hybride-en": {
+          "initial": 1
+        },
+        "horizon-12": {
+          "final": 4
+        },
+        "horizon-24": {
+          "final": 4
+        },
+        "horizon-40": {
+          "final": 5
+        },
+        "horizon-v2": {
+          "final": 3
+        }
+      },
+      "seconds": 11.22
+    },
+    {
+      "id": 5,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": null
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": null
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 8.88
+    },
+    {
+      "id": 6,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": null
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 27
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 9.16
+    },
+    {
+      "id": 7,
+      "ranks": {
+        "dense-fr": {
+          "initial": 2
+        },
+        "dense-en": {
+          "initial": 1
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 12
+        },
+        "hybride": {
+          "initial": 1
+        },
+        "hybride-en": {
+          "initial": 1
+        },
+        "horizon-12": {
+          "final": 3
+        },
+        "horizon-24": {
+          "final": 3
+        },
+        "horizon-40": {
+          "final": 5
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 8.3
+    },
+    {
+      "id": 8,
+      "ranks": {
+        "dense-fr": {
+          "initial": null
+        },
+        "dense-en": {
+          "initial": null
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 30
+        },
+        "hybride": {
+          "initial": null
+        },
+        "hybride-en": {
+          "initial": null
+        },
+        "horizon-12": {
+          "final": null
+        },
+        "horizon-24": {
+          "final": null
+        },
+        "horizon-40": {
+          "final": null
+        },
+        "horizon-v2": {
+          "final": null
+        }
+      },
+      "seconds": 7.5
+    },
+    {
+      "id": 9,
+      "ranks": {
+        "dense-fr": {
+          "initial": 1
+        },
+        "dense-en": {
+          "initial": 1
+        },
+        "lex-fr": {
+          "initial": null
+        },
+        "lex-en": {
+          "initial": 2
+        },
+        "hybride": {
+          "initial": 3
+        },
+        "hybride-en": {
+          "initial": 1
+        },
+        "horizon-12": {
+          "final": 1
+        },
+        "horizon-24": {
+          "final": 1
+        },
+        "horizon-40": {
+          "final": 1
+        },
+        "horizon-v2": {
+          "final": 1
+        }
+      },
+      "seconds": 7.32
+    }
+  ],
+  "historique_v3": [
+    {
+      "id": 1,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is emergence for Bunge?",
+      "ranking": [
+        "chasing-reality-2006:00023",
+        "emergence-and-convergence-2003:00019",
+        "philosophy-of-psychology-1987:00027",
+        "between-two-worlds-memoirs-2016:00448",
+        "emergence-and-convergence-2003:00186"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 88.433
+    },
+    {
+      "id": 10,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is scientific realism according to Bunge?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00423",
+        "chasing-reality-2006:00375",
+        "between-two-worlds-memoirs-2016:00375",
+        "chasing-reality-2006:00376",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00328"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 8.015
+    },
+    {
+      "id": 11,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "How does Bunge critique the Copenhagen interpretation of quantum mechanics?",
+      "ranking": [
+        "chasing-reality-2006:00096",
+        "scientific-realism-selected-essays-2001:00028",
+        "between-two-worlds-memoirs-2016:00461",
+        "scientific-materialism-1981:00012",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00178"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.547
+    },
+    {
+      "id": 12,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is partial truth, and how does Bunge conceive of truth?",
+      "ranking": [
+        "emergence-and-convergence-2003:00305",
+        "philosophical-dictionary-2003:00491",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00347",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00119",
+        "between-two-worlds-memoirs-2016:00404"
+      ],
+      "ranks": [
+        4
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.901
+    },
+    {
+      "id": 13,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What distinction does Bunge make between the sense and the reference of a concept?",
+      "ranking": [
+        "philosophy-of-physics-1973:00235",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00100",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00060",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00229",
+        "foundations-of-biophilosophy-1997:00106"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.265
+    },
+    {
+      "id": 14,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is the nature of Bunge’s ethics, grounded in needs and rights‑duties?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00457",
+        "between-two-worlds-memoirs-2016:00653",
+        "treatise-8-ethics-the-good-and-the-right-1989:00361",
+        "political-philosophy-2009:00151",
+        "political-philosophy-2009:00145"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.387
+    },
+    {
+      "id": 15,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is Bunge’s view on neoliberalism and the free market?",
+      "ranking": [
+        "political-philosophy-2009:00268",
+        "political-philosophy-2009:00226",
+        "political-philosophy-2009:00199",
+        "political-philosophy-2009:00198",
+        "between-two-worlds-memoirs-2016:00529"
+      ],
+      "ranks": [
+        4
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.359
+    },
+    {
+      "id": 16,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is the “integral democracy” defended by Bunge?",
+      "ranking": [
+        "from-a-scientific-point-of-view-2018:00107",
+        "political-philosophy-2009:00489",
+        "from-a-scientific-point-of-view-2018:00108",
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00233",
+        "treatise-8-ethics-the-good-and-the-right-1989:00237"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.771
+    },
+    {
+      "id": 17,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is a living organism, a biosystem, according to Bunge and Mahner?",
+      "ranking": [
+        "emergence-and-convergence-2003:00060",
+        "foundations-of-biophilosophy-1997:00232",
+        "foundations-of-biophilosophy-1997:00235",
+        "foundations-of-biophilosophy-1997:00234",
+        "treatise-4-ontology-2-world-of-systems-1979:00110"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.048
+    },
+    {
+      "id": 18,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What does Bunge’s account of the scientific method entail?",
+      "ranking": [
+        "foundations-of-biophilosophy-1997:00135",
+        "philosophy-of-psychology-1987:00096",
+        "scientific-research-1-search-for-system-1967:00030",
+        "foundations-of-biophilosophy-1997:00134",
+        "scientific-research-1-search-for-system-1967:00020"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.152
+    },
+    {
+      "id": 19,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What constitutes a scientific hypothesis, and what renders it testable?",
+      "ranking": [
+        "scientific-research-1-search-for-system-1967:00346",
+        "scientific-research-1-search-for-system-1967:00377",
+        "scientific-research-1-search-for-system-1967:00368",
+        "scientific-research-1-search-for-system-1967:00364",
+        "scientific-realism-selected-essays-2001:00185"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.891
+    },
+    {
+      "id": 2,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is a system? Of what is it constituted (its composition, environment, and structure)?",
+      "ranking": [
+        "mind-body-problem-1980:00247",
+        "treatise-4-ontology-2-world-of-systems-1979:00017",
+        "philosophical-dictionary-2003:00462",
+        "chasing-reality-2006:00171",
+        "philosophy-of-psychology-1987:00072"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 8.791
+    },
+    {
+      "id": 20,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "In which country was Bunge born, and how did he come to philosophy?",
+      "ranking": [
+        "between-two-worlds-memoirs-2016:00073",
+        "between-two-worlds-memoirs-2016:00258",
+        "between-two-worlds-memoirs-2016:00680",
+        "between-two-worlds-memoirs-2016:00474",
+        "between-two-worlds-memoirs-2016:00418"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.636
+    },
+    {
+      "id": 21,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is the CESM model of systems analysis?",
+      "ranking": [
+        "emergence-and-convergence-2003:00045",
+        "foundations-of-biophilosophy-1997:00061",
+        "emergence-and-convergence-2003:00048",
+        "scientific-realism-selected-essays-2001:00207",
+        "emergence-and-convergence-2003:00059"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.842
+    },
+    {
+      "id": 22,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "How does Bunge conceive of space and time?",
+      "ranking": [
+        "chasing-reality-2006:00328",
+        "chasing-reality-2006:00327",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00354",
+        "scientific-realism-selected-essays-2001:00083",
+        "between-two-worlds-memoirs-2016:00453"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.313
+    },
+    {
+      "id": 23,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is Bunge’s conception of chance and probability?",
+      "ranking": [
+        "chasing-reality-2006:00140",
+        "scientific-realism-selected-essays-2001:00083",
+        "emergence-and-convergence-2003:00283",
+        "emergence-and-convergence-2003:00299",
+        "scientific-research-1-search-for-system-1967:00597"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.872
+    },
+    {
+      "id": 24,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What distinction does Bunge draw between science and technology?",
+      "ranking": [
+        "treatise-6-epistemology-2-understanding-the-world-1983:00278",
+        "foundations-of-biophilosophy-1997:00316",
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00315",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00084",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00198"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.727
+    },
+    {
+      "id": 25,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "How does Bunge critique social constructivism and relativism?",
+      "ranking": [
+        "chasing-reality-2006:00012",
+        "emergence-and-convergence-2003:00131",
+        "chasing-reality-2006:00091",
+        "chasing-reality-2006:00090",
+        "sociology-philosophy-connection-1999:00233"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.69
+    },
+    {
+      "id": 26,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is Bunge’s position on religion and the existence of God?",
+      "ranking": [
+        "political-philosophy-2009:00270",
+        "philosophical-dictionary-2003:00196",
+        "philosophical-dictionary-2003:00409",
+        "from-a-scientific-point-of-view-2018:00174",
+        "philosophical-dictionary-2003:00195"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.694
+    },
+    {
+      "id": 27,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is a scientific theory according to Bunge?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00190",
+        "foundations-of-biophilosophy-1997:00167",
+        "sociology-philosophy-connection-1999:00006",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00038",
+        "philosophy-of-physics-1973:00241"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.004
+    },
+    {
+      "id": 28,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is the distinction between natural laws and law statements?",
+      "ranking": [
+        "causality-and-modern-science-1959:00292",
+        "foundations-of-biophilosophy-1997:00039",
+        "chasing-reality-2006:00399",
+        "causality-and-modern-science-1959:00068",
+        "causality-and-modern-science-1959:00299"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.641
+    },
+    {
+      "id": 29,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What constitutes a scientific explanation according to Bunge?",
+      "ranking": [
+        "causality-and-modern-science-1959:00334",
+        "scientific-research-2-search-for-truth-1967:00019",
+        "scientific-research-2-search-for-truth-1967:00036",
+        "scientific-research-2-search-for-truth-1967:00091",
+        "foundations-of-biophilosophy-1997:00185"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.663
+    },
+    {
+      "id": 3,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is systemism, and in what way does it oppose individualism and holism?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00356",
+        "emergence-and-convergence-2003:00141",
+        "emergence-and-convergence-2003:00142",
+        "emergence-and-convergence-2003:00139",
+        "political-philosophy-2009:00031"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 5.66
+    },
+    {
+      "id": 30,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What is meant by the scientism that Bunge espouses?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00423",
+        "chasing-reality-2006:00375",
+        "from-a-scientific-point-of-view-2018:00078",
+        "foundations-of-biophilosophy-1997:00226",
+        "chasing-reality-2006:00353"
+      ],
+      "ranks": [
+        5
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 4.836
+    },
+    {
+      "id": 4,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "How does Bunge define matter and a material object?",
+      "ranking": [
+        "chasing-reality-2006:00040",
+        "from-a-scientific-point-of-view-2018:00159",
+        "scientific-materialism-1981:00022",
+        "scientific-materialism-1981:00026",
+        "scientific-materialism-1981:00024"
+      ],
+      "ranks": [
+        5
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 26.126
+    },
+    {
+      "id": 5,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What conception of the mind does Bunge defend?",
+      "ranking": [
+        "mind-body-problem-1980:00240",
+        "between-two-worlds-memoirs-2016:00457",
+        "scientific-realism-selected-essays-2001:00123",
+        "scientific-materialism-1981:00007",
+        "mind-body-problem-1980:00177"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 16.226
+    },
+    {
+      "id": 6,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "Why does Bunge reject mind–body dualism?",
+      "ranking": [
+        "between-two-worlds-memoirs-2016:00556",
+        "scientific-materialism-1981:00124",
+        "mind-body-problem-1980:00097",
+        "between-two-worlds-memoirs-2016:00525",
+        "treatise-4-ontology-2-world-of-systems-1979:00186"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 7.164
+    },
+    {
+      "id": 7,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What distinction does Bunge draw between causality and determinism?",
+      "ranking": [
+        "causality-and-modern-science-1959:00054",
+        "causality-and-modern-science-1959:00403",
+        "causality-and-modern-science-1959:00023",
+        "causality-and-modern-science-1959:00134",
+        "foundations-of-biophilosophy-1997:00075"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.473
+    },
+    {
+      "id": 8,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "How does Bunge distinguish science from pseudoscience?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00408",
+        "political-philosophy-2009:00395",
+        "between-two-worlds-memoirs-2016:00481",
+        "philosophical-dictionary-2003:00426",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00263"
+      ],
+      "ranks": [
+        null
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.294
+    },
+    {
+      "id": 9,
+      "profile": "v3",
+      "suite": "historique",
+      "english": "What does Bunge criticize about psychoanalysis?",
+      "ranking": [
+        "philosophy-of-psychology-1987:00159",
+        "philosophy-of-psychology-1987:00158",
+        "between-two-worlds-memoirs-2016:00552",
+        "scientific-research-1-search-for-system-1967:00565",
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00113"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 0.0,
+      "search_seconds": 6.228
+    }
+  ],
+  "recette_v3": [
+    {
+      "id": "argument-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What postulate on the suprema and what theorem on Bunge aggregation invokes to conclude that there is only one world?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00053",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "foundations-of-biophilosophy-1997:00055",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00051",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00154"
+      ],
+      "ranks": [
+        2,
+        2,
+        1
+      ],
+      "translation_seconds": 4.638,
+      "search_seconds": 19.526
+    },
+    {
+      "id": "argument-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What relationship does Bunge establish in Ethics between the formal definition of needs and that of well-being?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00053",
+        "treatise-8-ethics-the-good-and-the-right-1989:00352",
+        "scientific-realism-selected-essays-2001:00457",
+        "sociology-philosophy-connection-1999:00103",
+        "treatise-8-ethics-the-good-and-the-right-1989:00057"
+      ],
+      "ranks": [
+        null,
+        null
+      ],
+      "translation_seconds": 14.107,
+      "search_seconds": 11.529
+    },
+    {
+      "id": "argument-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "How does he articulate the neuronal development of the newborn and his rejection of the ideas innate in The Mind-Body Problem?",
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:00073",
+        "mind-body-problem-1980:00167",
+        "between-two-worlds-memoirs-2016:00525",
+        "foundations-of-biophilosophy-1997:00326",
+        "scientific-realism-selected-essays-2001:00084"
+      ],
+      "ranks": [
+        2,
+        2
+      ],
+      "translation_seconds": 3.464,
+      "search_seconds": 10.418
+    },
+    {
+      "id": "argument-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where does Chasing Reality defend the explanation by mechanism and what example on the refraction of Volume VI illustrates the difference with a descriptive law?",
+      "ranking": [
+        "scientific-research-2-search-for-truth-1967:00068",
+        "chasing-reality-2006:00182",
+        "chasing-reality-2006:00162",
+        "chasing-reality-2006:00321",
+        "chasing-reality-2006:00002"
+      ],
+      "ranks": [
+        null,
+        null
+      ],
+      "translation_seconds": 16.794,
+      "search_seconds": 21.404
+    },
+    {
+      "id": "argument-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What passages present the fatalistic thesis and then distinguish it from determinism in Causality and Modern Science?",
+      "ranking": [
+        "causality-and-modern-science-1959:00134",
+        "causality-and-modern-science-1959:00053",
+        "causality-and-modern-science-1959:00014",
+        "causality-and-modern-science-1959:00133",
+        "causality-and-modern-science-1959:00023"
+      ],
+      "ranks": [
+        1,
+        1
+      ],
+      "translation_seconds": 4.917,
+      "search_seconds": 10.474
+    },
+    {
+      "id": "citation-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "« All systems, except the universe, originate by assembly »",
+      "ranking": [
+        "treatise-4-ontology-2-world-of-systems-1979:00047",
+        "philosophy-of-psychology-1987:00038",
+        "emergence-and-convergence-2003:00101",
+        "foundations-of-biophilosophy-1997:00055",
+        "treatise-4-ontology-2-world-of-systems-1979:00319"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 40.042,
+      "search_seconds": 69.399
+    },
+    {
+      "id": "citation-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where to find \"there are no innate ideas, no a priori intuitions\"?",
+      "ranking": [
+        "mind-body-problem-1980:00168",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00073",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00160",
+        "philosophical-dictionary-2003:00152",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00226"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 2.363,
+      "search_seconds": 11.837
+    },
+    {
+      "id": "citation-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "\"The book of Nature is the book of Fate\": where does Bunge quote this author?",
+      "ranking": [
+        "causality-and-modern-science-1959:00133",
+        "between-two-worlds-memoirs-2016:00744",
+        "between-two-worlds-memoirs-2016:00001",
+        "causality-and-modern-science-1959:00000",
+        "between-two-worlds-memoirs-2016:00504"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.828,
+      "search_seconds": 8.82
+    },
+    {
+      "id": "citation-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "\"there is no perceptual learning without motor activity\"",
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:00044",
+        "philosophy-of-psychology-1987:00271",
+        "treatise-4-ontology-2-world-of-systems-1979:00203",
+        "mind-body-problem-1980:00115",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00050"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.502,
+      "search_seconds": 7.592
+    },
+    {
+      "id": "citation-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What precedes the phrase \"the ordered quadruple\" in the theorem on the half-treillis?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00303",
+        "philosophy-of-psychology-1987:00068",
+        "between-two-worlds-memoirs-2016:00612",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00304"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 4.478,
+      "search_seconds": 6.686
+    },
+    {
+      "id": "définition-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where is the formal definition of a factual model in the volume on formal and physical sciences?",
+      "ranking": [
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00031",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00432",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00116",
+        "treatise-5-epistemology-1-exploring-the-world-1983:00431",
+        "foundations-of-biophilosophy-1997:00157"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 5.05,
+      "search_seconds": 10.521
+    },
+    {
+      "id": "définition-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where does Bunge define a composite individual in the first volume of ontology?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00047",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00065",
+        "treatise-4-ontology-2-world-of-systems-1979:00016",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00080",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00011"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 15.331,
+      "search_seconds": 18.256
+    },
+    {
+      "id": "définition-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In Volume VIII, how are virtue and vice defined as traits of character?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00221",
+        "treatise-8-ethics-the-good-and-the-right-1989:00206",
+        "treatise-8-ethics-the-good-and-the-right-1989:00529",
+        "philosophical-dictionary-2003:00199",
+        "treatise-8-ethics-the-good-and-the-right-1989:00209"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 2.748,
+      "search_seconds": 8.988
+    },
+    {
+      "id": "définition-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where does he define the co-referentials of a semantic building?",
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:00074",
+        "treatise-1-semantics-1-sense-and-reference-1974:00076",
+        "treatise-1-semantics-1-sense-and-reference-1974:00168",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00079",
+        "philosophical-dictionary-2003:00090"
+      ],
+      "ranks": [
+        2
+      ],
+      "translation_seconds": 2.676,
+      "search_seconds": 11.853
+    },
+    {
+      "id": "définition-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What is its definition of an ideal achievable in Ethics?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00078",
+        "philosophical-dictionary-2003:00216",
+        "treatise-8-ethics-the-good-and-the-right-1989:00075",
+        "treatise-8-ethics-the-good-and-the-right-1989:00378",
+        "philosophical-dictionary-2003:00215"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 3.787,
+      "search_seconds": 7.467
+    },
+    {
+      "id": "indéterminée-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What page of the 2025 German edition is the definition of psychon?",
+      "ranking": [
+        "mind-body-problem-1980:00298",
+        "philosophy-of-psychology-1987:00047",
+        "philosophy-of-psychology-1987:00005",
+        "scientific-materialism-1981:00077",
+        "mind-body-problem-1980:00171"
+      ],
+      "ranks": [],
+      "translation_seconds": 1.847,
+      "search_seconds": 9.83
+    },
+    {
+      "id": "indéterminée-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In which publication does Bunge give his personal opinion on GPT-5 after its launch?",
+      "ranking": [
+        "between-two-worlds-memoirs-2016:00362",
+        "between-two-worlds-memoirs-2016:00744",
+        "between-two-worlds-memoirs-2016:00397",
+        "between-two-worlds-memoirs-2016:00188",
+        "between-two-worlds-memoirs-2016:00365"
+      ],
+      "ranks": [],
+      "translation_seconds": 2.951,
+      "search_seconds": 8.519
+    },
+    {
+      "id": "indéterminée-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "I'm looking for the theorem 1.2. What work is it?",
+      "ranking": [
+        "causality-and-modern-science-1959:00503",
+        "foundations-of-biophilosophy-1997:00010",
+        "foundations-of-biophilosophy-1997:00013",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00267",
+        "scientific-research-2-search-for-truth-1967:00521"
+      ],
+      "ranks": [],
+      "translation_seconds": 2.031,
+      "search_seconds": 10.061
+    },
+    {
+      "id": "indéterminée-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What are the next results of the Lotto draw?",
+      "ranking": [
+        "foundations-of-biophilosophy-1997:00671",
+        "between-two-worlds-memoirs-2016:00034",
+        "between-two-worlds-memoirs-2016:00758",
+        "foundations-of-biophilosophy-1997:00677",
+        "foundations-of-biophilosophy-1997:00228"
+      ],
+      "ranks": [],
+      "translation_seconds": 3.901,
+      "search_seconds": 32.481
+    },
+    {
+      "id": "indéterminée-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In what chapter does Bunge claim to have tested Gemini 4 Hydrogen on his computer?",
+      "ranking": [
+        "scientific-realism-selected-essays-2001:00175",
+        "between-two-worlds-memoirs-2016:00744",
+        "chasing-reality-2006:00020",
+        "emergence-and-convergence-2003:00191",
+        "causality-and-modern-science-1959:00000"
+      ],
+      "ranks": [],
+      "translation_seconds": 13.062,
+      "search_seconds": 22.898
+    },
+    {
+      "id": "souvenir-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "He took the refraction of light as an example of a law capable of describing without explaining.",
+      "ranking": [
+        "scientific-research-1-search-for-system-1967:00318",
+        "scientific-research-1-search-for-system-1967:00317",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00030",
+        "treatise-6-epistemology-2-understanding-the-world-1983:00029",
+        "causality-and-modern-science-1959:00362"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 3.609,
+      "search_seconds": 26.753
+    },
+    {
+      "id": "souvenir-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "I remember an example of sparrows living in London and Buenos Aires. It was to criticize what conception of the species?",
+      "ranking": [
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:00044",
+        "between-two-worlds-memoirs-2016:00500",
+        "scientific-research-1-search-for-system-1967:00003",
+        "between-two-worlds-memoirs-2016:00284",
+        "between-two-worlds-memoirs-2016:00234"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 4.198,
+      "search_seconds": 7.543
+    },
+    {
+      "id": "souvenir-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In Chasing Reality, where did he announce different branches of realism and anti-realism?",
+      "ranking": [
+        "chasing-reality-2006:00045",
+        "chasing-reality-2006:00376",
+        "between-two-worlds-memoirs-2016:00467",
+        "chasing-reality-2006:00008",
+        "chasing-reality-2006:00007"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 1.549,
+      "search_seconds": 5.992
+    },
+    {
+      "id": "souvenir-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In the scientific method, he opposed a hypothesis to fiction while discussing his relationship to the fact.",
+      "ranking": [
+        "scientific-research-1-search-for-system-1967:00306",
+        "causality-and-modern-science-1959:00164",
+        "scientific-realism-selected-essays-2001:00401",
+        "sociology-philosophy-connection-1999:00171",
+        "scientific-realism-selected-essays-2001:00035"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 1.536,
+      "search_seconds": 8.915
+    },
+    {
+      "id": "souvenir-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "What passage says that animals can change their preferences and that species are changing in this respect?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00038",
+        "mind-body-problem-1980:00146",
+        "philosophy-of-psychology-1987:00222",
+        "treatise-8-ethics-the-good-and-the-right-1989:00037",
+        "scientific-materialism-1981:00075"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 0.821,
+      "search_seconds": 14.377
+    },
+    {
+      "id": "symbole-1",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where does Bunge explain D, F and I in the triplet of the factual model?",
+      "ranking": [
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00113",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00029",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00116",
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:00123",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:00146"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 3.219,
+      "search_seconds": 10.275
+    },
+    {
+      "id": "symbole-2",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "I'm looking for U and V in the postulates on the inputs and outputs of a system.",
+      "ranking": [
+        "treatise-4-ontology-2-world-of-systems-1979:00329",
+        "treatise-4-ontology-2-world-of-systems-1979:00325",
+        "treatise-4-ontology-2-world-of-systems-1979:00044",
+        "treatise-4-ontology-2-world-of-systems-1979:00327",
+        "treatise-4-ontology-2-world-of-systems-1979:00337"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 3.738,
+      "search_seconds": 18.38
+    },
+    {
+      "id": "symbole-3",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In the first volume of semantics, what relationship between w, x, z and y strings can call x a part of y?",
+      "ranking": [
+        "philosophical-dictionary-2003:00340",
+        "scientific-materialism-1981:00022",
+        "treatise-1-semantics-1-sense-and-reference-1974:00019",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00071",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00050"
+      ],
+      "ranks": [
+        3
+      ],
+      "translation_seconds": 9.144,
+      "search_seconds": 10.086
+    },
+    {
+      "id": "symbole-4",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "In the calculation of the value, where are A(x) and N(x) for the quantity available and the need?",
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:00105",
+        "treatise-8-ethics-the-good-and-the-right-1989:00106",
+        "sociology-philosophy-connection-1999:00096",
+        "treatise-1-semantics-1-sense-and-reference-1974:00122",
+        "treatise-4-ontology-2-world-of-systems-1979:00123"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 2.406,
+      "search_seconds": 10.99
+    },
+    {
+      "id": "symbole-5",
+      "profile": "v3",
+      "suite": "reserve",
+      "english": "Where can I find the upper notation of the aggregation of parts of x?",
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00051",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00050",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00154",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00052",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:00066"
+      ],
+      "ranks": [
+        1
+      ],
+      "translation_seconds": 1.683,
+      "search_seconds": 11.225
+    }
+  ],
+  "recette_lecteur": [
+    {
+      "id": "argument-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:50",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:132",
+        "mind-body-problem-1980:171",
+        "foundations-of-biophilosophy-1997:107"
+      ],
+      "ranks": [
+        null,
+        2,
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.776
+    },
+    {
+      "id": "argument-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:299",
+        "treatise-8-ethics-the-good-and-the-right-1989:57",
+        "sociology-philosophy-connection-1999:62",
+        "scientific-research-2-search-for-truth-1967:47",
+        "scientific-research-1-search-for-system-1967:151"
+      ],
+      "ranks": [
+        null,
+        2
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 4.232
+    },
+    {
+      "id": "argument-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "mind-body-problem-1980:260",
+        "mind-body-problem-1980:164",
+        "mind-body-problem-1980:165",
+        "treatise-5-epistemology-1-exploring-the-world-1983:70",
+        "mind-body-problem-1980:52"
+      ],
+      "ranks": [
+        2,
+        3
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 3.459
+    },
+    {
+      "id": "argument-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "chasing-reality-2006:254",
+        "causality-and-modern-science-1959:342",
+        "causality-and-modern-science-1959:333",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "chasing-reality-2006:149"
+      ],
+      "ranks": [
+        null,
+        4
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.953
+    },
+    {
+      "id": "argument-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "causality-and-modern-science-1959:135",
+        "causality-and-modern-science-1959:29",
+        "causality-and-modern-science-1959:150",
+        "causality-and-modern-science-1959:401",
+        "causality-and-modern-science-1959:385"
+      ],
+      "ranks": [
+        1,
+        null
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.493
+    },
+    {
+      "id": "citation-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-4-ontology-2-world-of-systems-1979:44",
+        "philosophy-of-psychology-1987:29",
+        "emergence-and-convergence-2003:90",
+        "foundations-of-biophilosophy-1997:202",
+        "treatise-4-ontology-2-world-of-systems-1979:13"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.909
+    },
+    {
+      "id": "citation-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "mind-body-problem-1980:165",
+        "philosophical-dictionary-2003:24",
+        "philosophical-dictionary-2003:175",
+        "sociology-philosophy-connection-1999:232",
+        "treatise-6-epistemology-2-understanding-the-world-1983:81"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.485
+    },
+    {
+      "id": "citation-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "causality-and-modern-science-1959:135",
+        "scientific-research-1-search-for-system-1967:220",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:137",
+        "foundations-of-biophilosophy-1997:62",
+        "causality-and-modern-science-1959:254"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.758
+    },
+    {
+      "id": "citation-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:46",
+        "treatise-4-ontology-2-world-of-systems-1979:171",
+        "treatise-5-epistemology-1-exploring-the-world-1983:59",
+        "treatise-5-epistemology-1-exploring-the-world-1983:51",
+        "philosophy-of-psychology-1987:173"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.152
+    },
+    {
+      "id": "citation-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "philosophical-dictionary-2003:284",
+        "philosophical-dictionary-2003:41",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "between-two-worlds-memoirs-2016:273",
+        "scientific-realism-selected-essays-2001:ch32 - (1999)"
+      ],
+      "ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.168
+    },
+    {
+      "id": "définition-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:93",
+        "scientific-research-1-search-for-system-1967:434",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362",
+        "foundations-of-biophilosophy-1997:117",
+        "treatise-5-epistemology-1-exploring-the-world-1983:361"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.442
+    },
+    {
+      "id": "définition-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:45",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:59",
+        "treatise-4-ontology-2-world-of-systems-1979:21",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:42"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.425
+    },
+    {
+      "id": "définition-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:179",
+        "treatise-8-ethics-the-good-and-the-right-1989:190",
+        "political-philosophy-2009:74",
+        "treatise-8-ethics-the-good-and-the-right-1989:372",
+        "causality-and-modern-science-1959:75"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.73
+    },
+    {
+      "id": "définition-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:71",
+        "treatise-1-semantics-1-sense-and-reference-1974:156",
+        "scientific-materialism-1981:152",
+        "treatise-1-semantics-1-sense-and-reference-1974:69",
+        "treatise-5-epistemology-1-exploring-the-world-1983:350"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.751
+    },
+    {
+      "id": "définition-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:68",
+        "treatise-1-semantics-1-sense-and-reference-1974:158",
+        "philosophical-dictionary-2003:136",
+        "treatise-8-ethics-the-good-and-the-right-1989:71",
+        "treatise-8-ethics-the-good-and-the-right-1989:128"
+      ],
+      "ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.783
+    },
+    {
+      "id": "indéterminée-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [],
+      "ranks": [],
+      "disposition": "source indisponible",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.0
+    },
+    {
+      "id": "indéterminée-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [],
+      "ranks": [],
+      "disposition": "source indisponible",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.0
+    },
+    {
+      "id": "indéterminée-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [],
+      "ranks": [],
+      "disposition": "clarifier",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.023
+    },
+    {
+      "id": "indéterminée-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [],
+      "ranks": [],
+      "disposition": "source indisponible",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.0
+    },
+    {
+      "id": "indéterminée-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [],
+      "ranks": [],
+      "disposition": "source indisponible",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.0
+    },
+    {
+      "id": "souvenir-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "chasing-reality-2006:254",
+        "scientific-research-1-search-for-system-1967:248",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "treatise-6-epistemology-2-understanding-the-world-1983:33",
+        "scientific-research-2-search-for-truth-1967:53"
+      ],
+      "ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 160.992
+    },
+    {
+      "id": "souvenir-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:40",
+        "between-two-worlds-memoirs-2016:485",
+        "scientific-research-1-search-for-system-1967:11",
+        "between-two-worlds-memoirs-2016:312",
+        "between-two-worlds-memoirs-2016:489"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 10.038
+    },
+    {
+      "id": "souvenir-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "chasing-reality-2006:15",
+        "chasing-reality-2006:18",
+        "chasing-reality-2006:45",
+        "chasing-reality-2006:48",
+        "chasing-reality-2006:278"
+      ],
+      "ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.049
+    },
+    {
+      "id": "souvenir-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "causality-and-modern-science-1959:139",
+        "chasing-reality-2006:61",
+        "between-two-worlds-memoirs-2016:358",
+        "scientific-research-1-search-for-system-1967:239",
+        "political-philosophy-2009:94"
+      ],
+      "ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.944
+    },
+    {
+      "id": "souvenir-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-8-ethics-the-good-and-the-right-1989:39",
+        "mind-body-problem-1980:144",
+        "treatise-4-ontology-2-world-of-systems-1979:173",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:253",
+        "foundations-of-biophilosophy-1997:338"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.894
+    },
+    {
+      "id": "symbole-1",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:361",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:33",
+        "treatise-4-ontology-2-world-of-systems-1979:86",
+        "foundations-of-biophilosophy-1997:113",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362"
+      ],
+      "ranks": [
+        null
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.947
+    },
+    {
+      "id": "symbole-2",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-4-ontology-2-world-of-systems-1979:41",
+        "treatise-4-ontology-2-world-of-systems-1979:42",
+        "treatise-4-ontology-2-world-of-systems-1979:40",
+        "treatise-6-epistemology-2-understanding-the-world-1983:261",
+        "emergence-and-convergence-2003:47"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.873
+    },
+    {
+      "id": "symbole-3",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-1-semantics-1-sense-and-reference-1974:24",
+        "treatise-1-semantics-1-sense-and-reference-1974:197",
+        "treatise-1-semantics-1-sense-and-reference-1974:76",
+        "scientific-research-2-search-for-truth-1967:98",
+        "treatise-1-semantics-1-sense-and-reference-1974:105"
+      ],
+      "ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.307
+    },
+    {
+      "id": "symbole-4",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "causality-and-modern-science-1959:346",
+        "treatise-8-ethics-the-good-and-the-right-1989:94",
+        "scientific-research-1-search-for-system-1967:140",
+        "scientific-research-2-search-for-truth-1967:309",
+        "philosophical-dictionary-2003:239"
+      ],
+      "ranks": [
+        2
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 1.024
+    },
+    {
+      "id": "symbole-5",
+      "profile": "lecteur",
+      "suite": "reserve",
+      "english": null,
+      "ranking": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:130",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "foundations-of-biophilosophy-1997:374",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "mind-body-problem-1980:237"
+      ],
+      "ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "translation_seconds": 0.0,
+      "search_seconds": 0.993
+    }
+  ],
+  "generation_candidats": [
+    {
+      "reason": "citation-validation",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "13",
+      "seconds": 4.6
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "13",
+      "seconds": 12.2
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "13",
+      "seconds": 3.7
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "15",
+      "seconds": 5.9
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "15",
+      "seconds": 2.1
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "15",
+      "seconds": 2.9
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "17",
+      "seconds": 3.5
+    },
+    {
+      "error": "ClientError",
+      "code": 429,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "17",
+      "seconds": 2.4
+    },
+    {
+      "error": "ClientError",
+      "code": 429,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "17",
+      "seconds": 1.8
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "definition",
+      "seconds": 9.4
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "definition",
+      "seconds": 5.0
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "definition",
+      "seconds": 9.2
+    },
+    {
+      "reason": "llm",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "hors-corpus",
+      "seconds": 2.8
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "hors-corpus",
+      "seconds": 4.3
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "hors-corpus",
+      "seconds": 3.8
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.5-flash-lite",
+      "id": "hypothese",
+      "seconds": 7.2
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-3.8-flash",
+      "id": "hypothese",
+      "seconds": 4.4
+    },
+    {
+      "error": "ServerError",
+      "code": 503,
+      "model": "gemini/gemini-4-hydrogen",
+      "id": "hypothese",
+      "seconds": 7.0
+    }
+  ],
+  "arguments_fournisseur": [
+    {
+      "case": "bonheur",
+      "model": "gemini/gemini-3.1-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.36
+    },
+    {
+      "case": "bonheur",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.3
+    },
+    {
+      "case": "bonheur",
+      "model": "gemini/gemini-4-hydrogen",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 9.97
+    },
+    {
+      "case": "devoir",
+      "model": "gemini/gemini-3.1-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.55
+    },
+    {
+      "case": "devoir",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.92
+    },
+    {
+      "case": "devoir",
+      "model": "gemini/gemini-4-hydrogen",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.36
+    },
+    {
+      "case": "existence",
+      "model": "gemini/gemini-3.1-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.43
+    },
+    {
+      "case": "existence",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.37
+    },
+    {
+      "case": "existence",
+      "model": "gemini/gemini-4-hydrogen",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.36
+    },
+    {
+      "case": "ia",
+      "model": "gemini/gemini-3.1-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 1.71
+    },
+    {
+      "case": "ia",
+      "model": "gemini/gemini-3.5-flash-lite",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.35
+    },
+    {
+      "case": "ia",
+      "model": "gemini/gemini-4-hydrogen",
+      "error": "ClientError",
+      "code": 400,
+      "seconds": 0.4
+    }
+  ],
+  "audit_extraits": [
+    {
+      "id": "citation-1",
+      "loci": [
+        "treatise-4-ontology-2-world-of-systems-1979:44",
+        "philosophy-of-psychology-1987:29",
+        "emergence-and-convergence-2003:90",
+        "foundations-of-biophilosophy-1997:202",
+        "treatise-4-ontology-2-world-of-systems-1979:13"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-2",
+      "loci": [
+        "mind-body-problem-1980:165",
+        "philosophical-dictionary-2003:24",
+        "philosophical-dictionary-2003:175",
+        "sociology-philosophy-connection-1999:232",
+        "treatise-6-epistemology-2-understanding-the-world-1983:81"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-3",
+      "loci": [
+        "causality-and-modern-science-1959:135",
+        "scientific-research-1-search-for-system-1967:220",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:137",
+        "foundations-of-biophilosophy-1997:62",
+        "causality-and-modern-science-1959:254"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-4",
+      "loci": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:46",
+        "treatise-4-ontology-2-world-of-systems-1979:171",
+        "treatise-5-epistemology-1-exploring-the-world-1983:59",
+        "treatise-5-epistemology-1-exploring-the-world-1983:51",
+        "philosophy-of-psychology-1987:173"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "citation-5",
+      "loci": [
+        "philosophical-dictionary-2003:284",
+        "philosophical-dictionary-2003:41",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "between-two-worlds-memoirs-2016:273",
+        "scientific-realism-selected-essays-2001:ch32 - (1999)"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-1",
+      "loci": [
+        "chasing-reality-2006:254",
+        "scientific-research-1-search-for-system-1967:248",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "treatise-6-epistemology-2-understanding-the-world-1983:33",
+        "scientific-research-2-search-for-truth-1967:53"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-2",
+      "loci": [
+        "treatise-7b-philosophy-of-science-tech-2-life-social-1985:40",
+        "between-two-worlds-memoirs-2016:485",
+        "scientific-research-1-search-for-system-1967:11",
+        "between-two-worlds-memoirs-2016:312",
+        "between-two-worlds-memoirs-2016:489"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-3",
+      "loci": [
+        "chasing-reality-2006:15",
+        "chasing-reality-2006:18",
+        "chasing-reality-2006:45",
+        "chasing-reality-2006:48",
+        "chasing-reality-2006:278"
+      ],
+      "ranks": [
+        3
+      ],
+      "combined_ranks": [
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-4",
+      "loci": [
+        "causality-and-modern-science-1959:139",
+        "chasing-reality-2006:61",
+        "between-two-worlds-memoirs-2016:358",
+        "scientific-research-1-search-for-system-1967:239",
+        "political-philosophy-2009:94"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "souvenir-5",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:39",
+        "mind-body-problem-1980:144",
+        "treatise-4-ontology-2-world-of-systems-1979:173",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:253",
+        "foundations-of-biophilosophy-1997:338"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-1",
+      "loci": [
+        "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985:93",
+        "scientific-research-1-search-for-system-1967:434",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362",
+        "foundations-of-biophilosophy-1997:117",
+        "treatise-5-epistemology-1-exploring-the-world-1983:361"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-2",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:45",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:59",
+        "treatise-4-ontology-2-world-of-systems-1979:21",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:42"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-3",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:179",
+        "treatise-8-ethics-the-good-and-the-right-1989:190",
+        "political-philosophy-2009:74",
+        "treatise-8-ethics-the-good-and-the-right-1989:372",
+        "causality-and-modern-science-1959:75"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-4",
+      "loci": [
+        "treatise-1-semantics-1-sense-and-reference-1974:71",
+        "treatise-1-semantics-1-sense-and-reference-1974:156",
+        "scientific-materialism-1981:152",
+        "treatise-1-semantics-1-sense-and-reference-1974:69",
+        "treatise-5-epistemology-1-exploring-the-world-1983:350"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "définition-5",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:68",
+        "treatise-1-semantics-1-sense-and-reference-1974:158",
+        "philosophical-dictionary-2003:136",
+        "treatise-8-ethics-the-good-and-the-right-1989:71",
+        "treatise-8-ethics-the-good-and-the-right-1989:128"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-1",
+      "loci": [
+        "treatise-5-epistemology-1-exploring-the-world-1983:361",
+        "treatise-2-semantics-2-interpretation-and-truth-1974:33",
+        "treatise-4-ontology-2-world-of-systems-1979:86",
+        "foundations-of-biophilosophy-1997:113",
+        "treatise-5-epistemology-1-exploring-the-world-1983:362"
+      ],
+      "ranks": [
+        null
+      ],
+      "combined_ranks": [
+        null
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-2",
+      "loci": [
+        "treatise-4-ontology-2-world-of-systems-1979:41",
+        "treatise-4-ontology-2-world-of-systems-1979:42",
+        "treatise-4-ontology-2-world-of-systems-1979:40",
+        "treatise-6-epistemology-2-understanding-the-world-1983:261",
+        "emergence-and-convergence-2003:47"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-3",
+      "loci": [
+        "treatise-1-semantics-1-sense-and-reference-1974:24",
+        "treatise-1-semantics-1-sense-and-reference-1974:197",
+        "treatise-1-semantics-1-sense-and-reference-1974:76",
+        "scientific-research-2-search-for-truth-1967:98",
+        "treatise-1-semantics-1-sense-and-reference-1974:105"
+      ],
+      "ranks": [
+        1
+      ],
+      "combined_ranks": [
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-4",
+      "loci": [
+        "causality-and-modern-science-1959:346",
+        "treatise-8-ethics-the-good-and-the-right-1989:94",
+        "scientific-research-1-search-for-system-1967:140",
+        "scientific-research-2-search-for-truth-1967:309",
+        "philosophical-dictionary-2003:239"
+      ],
+      "ranks": [
+        2
+      ],
+      "combined_ranks": [
+        2
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "symbole-5",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:130",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:47",
+        "foundations-of-biophilosophy-1997:374",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "mind-body-problem-1980:237"
+      ],
+      "ranks": [
+        4
+      ],
+      "combined_ranks": [
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-1",
+      "loci": [
+        "treatise-3-ontology-1-furniture-of-the-world-1977:50",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:49",
+        "treatise-3-ontology-1-furniture-of-the-world-1977:132",
+        "mind-body-problem-1980:171",
+        "foundations-of-biophilosophy-1997:107"
+      ],
+      "ranks": [
+        null,
+        2,
+        1
+      ],
+      "combined_ranks": [
+        7,
+        2,
+        1
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-2",
+      "loci": [
+        "treatise-8-ethics-the-good-and-the-right-1989:299",
+        "treatise-8-ethics-the-good-and-the-right-1989:57",
+        "sociology-philosophy-connection-1999:62",
+        "scientific-research-2-search-for-truth-1967:47",
+        "scientific-research-1-search-for-system-1967:151"
+      ],
+      "ranks": [
+        null,
+        2
+      ],
+      "combined_ranks": [
+        null,
+        2
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-3",
+      "loci": [
+        "mind-body-problem-1980:260",
+        "mind-body-problem-1980:164",
+        "mind-body-problem-1980:165",
+        "treatise-5-epistemology-1-exploring-the-world-1983:70",
+        "mind-body-problem-1980:52"
+      ],
+      "ranks": [
+        2,
+        3
+      ],
+      "combined_ranks": [
+        2,
+        3
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-4",
+      "loci": [
+        "chasing-reality-2006:254",
+        "causality-and-modern-science-1959:342",
+        "causality-and-modern-science-1959:333",
+        "treatise-6-epistemology-2-understanding-the-world-1983:32",
+        "chasing-reality-2006:149"
+      ],
+      "ranks": [
+        null,
+        4
+      ],
+      "combined_ranks": [
+        7,
+        4
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "argument-5",
+      "loci": [
+        "causality-and-modern-science-1959:135",
+        "causality-and-modern-science-1959:29",
+        "causality-and-modern-science-1959:150",
+        "causality-and-modern-science-1959:401",
+        "causality-and-modern-science-1959:385"
+      ],
+      "ranks": [
+        1,
+        null
+      ],
+      "combined_ranks": [
+        1,
+        null
+      ],
+      "disposition": "localiser",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-1",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-2",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-3",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "clarifier",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-4",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    },
+    {
+      "id": "indéterminée-5",
+      "loci": [],
+      "ranks": [],
+      "combined_ranks": [],
+      "disposition": "source indisponible",
+      "bad_anchors": []
+    }
+  ],
+  "catalogue_version_recette": "2026-11-26.2"
+}

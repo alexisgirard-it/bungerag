@@ -93,7 +93,10 @@ RESEARCH_40X6 = RAGConfig(
 PUBLIC_V2 = replace(PUBLIC_V1, name="public_v2", generation_backend="gemini/gemini-3.1-flash-lite",
                     router_backend="gemini/gemini-3.1-flash-lite", translator_backend="gemini/gemini-3.1-flash-lite", verification_backend="gemini/gemini-3.1-flash-lite")
 
+PUBLIC_V3 = replace(PUBLIC_V2, name="public_v3", k_candidates=24)
+
 PROFILES = {
+    PUBLIC_V3.name: PUBLIC_V3,
     PUBLIC_V2.name: PUBLIC_V2,
     PUBLIC_V1.name: PUBLIC_V1,
     RESEARCH_40X6.name: RESEARCH_40X6,

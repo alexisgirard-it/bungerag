@@ -9,6 +9,28 @@
 
 [Feuille de route du projet](FEUILLE-DE-ROUTE.md) · [Plan du volet Rechercher](PLAN-RECHERCHE.md)
 
+## Consulter la bibliothèque V3 en local
+
+La recherche affiche un court extrait et la pagination de l’édition indexée. L’atlas donne accès
+aux fiches sourcées, aux comparaisons entre éditions et aux repères détectés dans le *Traité*.
+L’atelier permet de suspendre une prémisse et de lire les conséquences sur ses justifications.
+Le cadre philosophique indique où les thèses centrales prennent appui dans les textes.
+
+Construire la base paginée à partir du corpus privé et de la concordance V2, puis démarrer le site.
+
+```sh
+.venv/bin/python src/build_library.py
+.venv/bin/python space/app.py
+```
+
+La recherche et les dossiers édités fonctionnent après téléchargement des modèles locaux.
+La rédaction sur une question libre utilise le profil configuré. Sur le Mac, le lancement
+avec `LLM_BACKEND=ollama` permet aussi de demander une rédaction locale.
+
+Les fichiers de la bibliothèque restent dans `index/`. Le Space reçoit un bundle de code
+sur liste blanche et lit une révision épinglée du dataset privé. `src/push_space.py` vérifie
+la concordance et publie les fichiers V3 après la recette locale.
+
 | Faithfulness | Context precision | Context recall | Abstention (pièges) |
 |:---:|:---:|:---:|:---:|
 | **0,935** | **0,893** | **0,848** | **8 / 10** |

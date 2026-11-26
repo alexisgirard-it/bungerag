@@ -29,3 +29,4 @@ langchain-community==0.3.31   # >=0.4 casse l'import de ragas 0.4.3
 
 # Déploiement de l'index privé et du Space
 huggingface_hub==1.22.0
+sentencepiece==0.2.1

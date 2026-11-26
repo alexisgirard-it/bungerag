@@ -1,0 +1,893 @@
+{
+  "version": "2026-11-26.3",
+  "core": [
+    "materialisme",
+    "systemisme",
+    "mecanisme",
+    "realisme",
+    "raison",
+    "etre-devoir"
+  ],
+  "nodes": {
+    "materialisme": {
+      "title": "Matérialisme",
+      "domain": "Ontologie",
+      "kind": "Thèse",
+      "text": "Bunge caractérise le noyau commun des matérialismes par la matérialité de tout ce qui existe réellement.",
+      "tags": [
+        "matériel",
+        "matière",
+        "materialism"
+      ],
+      "source": {
+        "book": "scientific-materialism-1981",
+        "page": 29,
+        "folio": "17",
+        "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
+        "quote": "everything that exists really is material"
+      }
+    },
+    "changement": {
+      "title": "Matérialité et changement",
+      "domain": "Ontologie",
+      "kind": "Théorème 1.1",
+      "text": "Dans Chasing Reality, Bunge énonce une équivalence entre matérialité et capacité de changer.",
+      "tags": [
+        "matérialisme",
+        "changeable",
+        "mutable"
+      ],
+      "source": {
+        "book": "chasing-reality-2006",
+        "page": 43,
+        "folio": "29",
+        "edition": "05ccdb41c19672af95e122279fe759401cadead8c33eeb9cfb190b69ee0889a1",
+        "quote": "All changeable items are material and conversely"
+      }
+    },
+    "systemisme": {
+      "title": "Systémisme",
+      "domain": "Ontologie",
+      "kind": "Thèse",
+      "text": "Bunge reconnaît aux totalités des propriétés propres et incorpore cette idée à son systémisme.",
+      "tags": [
+        "système",
+        "holisme",
+        "systemism"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 57,
+        "folio": "41",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "there are totalities, that they have properties of their own"
+      }
+    },
+    "eau": {
+      "title": "De la molécule à l’eau",
+      "domain": "Ontologie",
+      "kind": "Exemple",
+      "text": "La transparence et le pouvoir diélectrique de l’eau illustrent des propriétés du système qui manquent à ses composants isolés.",
+      "tags": [
+        "émergence",
+        "eau",
+        "composant"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 57,
+        "folio": "41",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "has properties that none of its components has"
+      }
+    },
+    "monde": {
+      "title": "Le monde comme agrégation",
+      "domain": "Ontologie",
+      "kind": "Théorème 1.2",
+      "text": "Le monde est l’agrégation de tous les individus.",
+      "tags": [
+        "ontologie",
+        "monde",
+        "agrégation"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 49,
+        "folio": "33",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "The world is the aggregation of all individuals"
+      }
+    },
+    "unique": {
+      "title": "Unicité du monde",
+      "domain": "Ontologie",
+      "kind": "Théorème 1.5",
+      "text": "Bunge propose deux preuves qu’il y a un seul monde.",
+      "tags": [
+        "univers",
+        "unicité",
+        "monde"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 50,
+        "folio": "34",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "There is just one world"
+      }
+    },
+    "supremum": {
+      "title": "Existence du supremum",
+      "domain": "Ontologie",
+      "kind": "Postulat 1.3",
+      "text": "L’argument ontologique utilise le supremum d’un ensemble d’individus substantiels.",
+      "tags": [
+        "borne supérieure",
+        "supremum"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 48,
+        "folio": "32",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "of substantial individuals has a supremum"
+      }
+    },
+    "bonheur": {
+      "title": "Bonheur complet",
+      "domain": "Éthique",
+      "kind": "Définition 2.2",
+      "text": "Se sentir complètement heureux revient ici à croire qu’on peut et qu’on a l’occasion de satisfaire tous ses besoins et désirs.",
+      "tags": [
+        "bonheur",
+        "désirs",
+        "happiness"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 59,
+        "folio": "46",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "the ability and opportunity of meeting all of its needs and wants"
+      }
+    },
+    "incompatibilite": {
+      "title": "Incompatibilité des valeurs",
+      "domain": "Éthique",
+      "kind": "Postulat 2.1",
+      "text": "La pleine réalisation d’une valeur donnée est incompatible avec celle de certaines autres valeurs.",
+      "tags": [
+        "bonheur",
+        "valeurs",
+        "postulat"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 61,
+        "folio": "48",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "The full realization of any given value is incompatible with that of some other values"
+      }
+    },
+    "theoreme-bonheur": {
+      "title": "Une limite au bonheur complet",
+      "domain": "Éthique",
+      "kind": "Théorème 2.1",
+      "text": "Bunge conclut que personne ne peut être complètement heureux. Il présente cette conclusion comme issue de la définition 2.2 et du postulat 2.1.",
+      "tags": [
+        "bonheur",
+        "hédonisme",
+        "théorème"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 61,
+        "folio": "48",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "The conjunction of this assumption with Definition 2.2 entails"
+      }
+    },
+    "besoin": {
+      "title": "Besoins primaires et secondaires",
+      "domain": "Éthique",
+      "kind": "Définition 1.12",
+      "text": "Bunge rattache les besoins primaires à la survie et les besoins secondaires à la conservation ou au rétablissement de la santé dans une société donnée.",
+      "tags": [
+        "besoin",
+        "santé",
+        "need"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 48,
+        "folio": "35",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "meeting x is necessary for b to keep or regain health"
+      }
+    },
+    "valeur": {
+      "title": "Valeur primaire",
+      "domain": "Éthique",
+      "kind": "Définition 1.14",
+      "text": "La valeur primaire est reliée à la contribution à la satisfaction d’un besoin primaire humain dans les circonstances considérées.",
+      "tags": [
+        "valeur",
+        "axiologie",
+        "besoin"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 49,
+        "folio": "36",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "contributes to satisfying at least one primary need"
+      }
+    },
+    "droit": {
+      "title": "Droits moraux",
+      "domain": "Éthique",
+      "kind": "Proposition normative",
+      "text": "Dans sa formulation axiologique, Bunge rattache les droits moraux à la réalisation de valeurs primaires, secondaires ou tertiaires.",
+      "tags": [
+        "droits",
+        "right",
+        "morale"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 109,
+        "folio": "97",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "Moral rights are rights to realize primary, secondary or tertiary values"
+      }
+    },
+    "devoir": {
+      "title": "Devoir moral exigible",
+      "domain": "Éthique",
+      "kind": "Proposition normative",
+      "text": "Bunge propose de comprendre le devoir moral exigible comme celui d’aider autrui à exercer ses droits moraux légitimes.",
+      "tags": [
+        "obligation",
+        "devoir",
+        "besoin",
+        "éthique"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 109,
+        "folio": "97",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "a duty to help someone else exercise her legitimate moral rights"
+      }
+    },
+    "restriction": {
+      "title": "Droits et bien-être d’autrui",
+      "domain": "Éthique",
+      "kind": "Norme 4.1, clause i",
+      "text": "Le droit moral de base inclut une condition qui tient compte des autres personnes du groupe.",
+      "tags": [
+        "restriction",
+        "droit",
+        "obligation"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 110,
+        "folio": "98",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "without hindering anyone else"
+      }
+    },
+    "psychon": {
+      "title": "Psychon",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Définition 7",
+      "text": "Un psychon est un système neuronal plastique.",
+      "tags": [
+        "psychon",
+        "plasticité"
+      ],
+      "source": {
+        "book": "scientific-materialism-1981",
+        "page": 78,
+        "folio": "70",
+        "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
+        "quote": "Any plastic neural system is called a psychon"
+      }
+    },
+    "plasticite": {
+      "title": "Plasticité neuronale",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Définition 6",
+      "text": "La plasticité d’un système neuronal dépend, dans cette définition, de la variabilité de sa connectivité pendant la vie de l’animal.",
+      "tags": [
+        "plasticité",
+        "neurone"
+      ],
+      "source": {
+        "book": "scientific-materialism-1981",
+        "page": 78,
+        "folio": "70",
+        "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
+        "quote": "A neuronal system is plastic"
+      }
+    },
+    "acquisition": {
+      "title": "Acquisition de biofonctions",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Postulat",
+      "text": "Bunge postule que les animaux dotés de psychons peuvent acquérir de nouvelles biofonctions.",
+      "tags": [
+        "psychon",
+        "hypothèse"
+      ],
+      "source": {
+        "book": "scientific-materialism-1981",
+        "page": 78,
+        "folio": "70",
+        "edition": "d351baf839c78b77cd1dacede9b4a0eadfec3378f951050b298cb81286570a81",
+        "quote": "is capable of acquiring new biofunctions"
+      }
+    },
+    "cerveau": {
+      "title": "Pensée et systèmes neuronaux",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Thèse",
+      "text": "Dans sa discussion du dualisme, Bunge attribue la pensée à des systèmes neuronaux.",
+      "tags": [
+        "esprit",
+        "comprendre",
+        "compréhension",
+        "intelligence",
+        "penser",
+        "cognition"
+      ],
+      "source": {
+        "book": "mind-body-problem-1980",
+        "page": 34,
+        "folio": "22",
+        "edition": "af17a5b67f8fa96ecc02c0f9e54abe8d298bd54549ccb00a8b2bd141a3741767",
+        "quote": "the neural systems that do the thinking"
+      }
+    },
+    "analogie": {
+      "title": "Limites de l’analogie informatique",
+      "domain": "Philosophie de l’esprit",
+      "kind": "Objection",
+      "text": "Bunge critique l’impression de comprendre produite par une analogie informatique lorsque les mécanismes restent largement inconnus.",
+      "tags": [
+        "calcul",
+        "ordinateur",
+        "modèle de langage",
+        "mécanisme"
+      ],
+      "source": {
+        "book": "chasing-reality-2006",
+        "page": 158,
+        "folio": "144",
+        "edition": "05ccdb41c19672af95e122279fe759401cadead8c33eeb9cfb190b69ee0889a1",
+        "quote": "even though the corresponding mechanisms are largely unknown"
+      }
+    },
+    "mecanisme": {
+      "title": "Explication et mécanisme",
+      "domain": "Épistémologie",
+      "kind": "Exemple",
+      "text": "À propos de la réfraction, Bunge distingue la subsomption sous une loi descriptive d’une explication par mécanisme.",
+      "tags": [
+        "mécanisme",
+        "expliquer",
+        "réfraction",
+        "snell"
+      ],
+      "source": {
+        "book": "treatise-6-epistemology-2-understanding-the-world-1983",
+        "page": 32,
+        "folio": "20",
+        "edition": "53c4c70abcf496ce41a6f1e09dc7120b12f72ce025ca5abe5f5484c0ff644da3",
+        "quote": "nothing gets properly explained in this way"
+      }
+    },
+    "perception": {
+      "title": "Apprentissage perceptif",
+      "domain": "Épistémologie",
+      "kind": "Thèse",
+      "text": "La discussion de l’apprentissage perceptif relie la sélection des entrées sensorielles à l’activité motrice.",
+      "tags": [
+        "perception",
+        "apprentissage"
+      ],
+      "source": {
+        "book": "treatise-5-epistemology-1-exploring-the-world-1983",
+        "page": 46,
+        "folio": "32",
+        "edition": "1d774bb53558a317be6ff9038dc6304b8fa5cee0563de88df7dfc9f287692467",
+        "quote": "there is no perceptual learning without motor activity"
+      }
+    },
+    "reference": {
+      "title": "Coréférence",
+      "domain": "Sémantique",
+      "kind": "Définition 2.16",
+      "text": "La collection des coréférentiels d’un construit est définie relativement à un contexte.",
+      "tags": [
+        "référence",
+        "coréférentiel",
+        "sémantique"
+      ],
+      "source": {
+        "book": "treatise-1-semantics-1-sense-and-reference-1974",
+        "page": 71,
+        "folio": "58",
+        "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+        "quote": "of a given construct"
+      }
+    },
+    "verite": {
+      "title": "Vérité partielle",
+      "domain": "Sémantique",
+      "kind": "Réexamen",
+      "text": "Bunge précise que sa précédente théorie de la vérité partielle préservait la logique ordinaire et reconnaît des défauts de cette théorie.",
+      "tags": [
+        "vérité",
+        "logique",
+        "révision"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 118,
+        "folio": "106",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "it leaves ordinary logic intact"
+      }
+    },
+    "modele": {
+      "title": "Modèle factuel",
+      "domain": "Philosophie des sciences",
+      "kind": "Définition 1.2",
+      "text": "Un modèle factuel porte sur un domaine, un formalisme et une interprétation.",
+      "tags": [
+        "modèle",
+        "notation",
+        "formule"
+      ],
+      "source": {
+        "book": "treatise-7a-philosophy-of-science-tech-1-formal-physical-1985",
+        "page": 93,
+        "folio": "82",
+        "edition": "aa6cc1926d7fbb4f8911d566971ad3f626c12403c509b734063f27b1b6fcc675",
+        "quote": "the domain or reference class"
+      },
+      "notation": {
+        "formula": "ℳ = ⟨D, F, I⟩",
+        "gloss": "D désigne le domaine des objets ou processus concrets, F le formalisme et I la fonction partielle qui interprète le formalisme sur ce domaine.",
+        "status": "Notation originale, définition 1.2, collationnée sur la page."
+      }
+    },
+    "psychologie": {
+      "title": "Psychologie et sciences de la vie",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse",
+      "text": "Bunge situe la psychologie parmi les sciences de la vie tout en reconnaissant son chevauchement partiel avec les sciences sociales.",
+      "tags": [
+        "psychologie",
+        "sciences sociales"
+      ],
+      "source": {
+        "book": "treatise-7b-philosophy-of-science-tech-2-life-social-1985",
+        "page": 14,
+        "folio": "3",
+        "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+        "quote": "psychology as a life science that overlaps partially with social science"
+      }
+    },
+    "existence-conceptuelle": {
+      "title": "Existence conceptuelle",
+      "domain": "Sémantique",
+      "kind": "Distinction sémantique",
+      "text": "Bunge précise ici le sens du quantificateur existentiel à propos des construits et distingue existence conceptuelle et existence physique.",
+      "tags": [
+        "existence",
+        "conceptuel",
+        "constructs"
+      ],
+      "source": {
+        "book": "treatise-1-semantics-1-sense-and-reference-1974",
+        "page": 41,
+        "folio": "28",
+        "edition": "4f3e8490b3ca48be6838f98bb24589bc32ddff0d70b4a3edb154fbd575d73250",
+        "quote": "conceptual existence not physical existence"
+      }
+    },
+    "existence-dictionnaire": {
+      "title": "Exister dans une théorie",
+      "domain": "Sémantique",
+      "kind": "Définition",
+      "text": "Dans le dictionnaire, l’existence conceptuelle est relative à un ensemble d’idées, par exemple à une théorie.",
+      "tags": [
+        "existence",
+        "idéal",
+        "théorie"
+      ],
+      "source": {
+        "book": "philosophical-dictionary-2003",
+        "page": 99,
+        "folio": "97",
+        "edition": "33d1ff1e9326c1291b7093ab3f0eb6679fe1c03786ba49eb5b4847fe14da6233",
+        "quote": "if it belongs in some conceptual body"
+      }
+    },
+    "autre-preuve": {
+      "title": "Preuve par le sous-monde",
+      "domain": "Ontologie",
+      "kind": "Preuve alternative",
+      "text": "Un autre monde substantiel appartiendrait au monde et serait donc un sous-monde dans la preuve alternative de Bunge.",
+      "tags": [
+        "monde",
+        "sous-monde",
+        "alternative"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 50,
+        "folio": "34",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "since every substantial individual is part of"
+      }
+    },
+    "unicite-sup": {
+      "title": "Unicité de la borne supérieure",
+      "domain": "Ontologie",
+      "kind": "Appui de la preuve",
+      "text": "Bunge invoque l’unicité du supremum pour achever sa première preuve.",
+      "tags": [
+        "monde",
+        "supremum",
+        "preuve"
+      ],
+      "source": {
+        "book": "treatise-3-ontology-1-furniture-of-the-world-1977",
+        "page": 50,
+        "folio": "34",
+        "edition": "9c20aaa7cd35976cfc23eaaa197df8b9cbaa4f4a3782e666529d985a18b4d065",
+        "quote": "And all suprema are unique"
+      }
+    },
+    "realisme": {
+      "title": "Réalisme scientifique",
+      "domain": "Épistémologie",
+      "kind": "Postulat 1.4, thèse 1",
+      "text": "Bunge pose l’existence du monde extérieur indépendamment du sujet connaissant. Il présente cette thèse comme l’une des composantes de son réalisme scientifique.",
+      "tags": [
+        "réalisme",
+        "sujet",
+        "monde"
+      ],
+      "source": {
+        "book": "chasing-reality-2006",
+        "page": 43,
+        "folio": "29",
+        "edition": "05ccdb41c19672af95e122279fe759401cadead8c33eeb9cfb190b69ee0889a1",
+        "quote": "The external world exists independently of the knowing subject"
+      }
+    },
+    "societe": {
+      "title": "Société et interactions",
+      "domain": "Philosophie des sciences",
+      "kind": "Thèse OS1",
+      "text": "Bunge conçoit une société comme un système concret d’individus reliés entre eux. Ce cadre motive sa distinction entre propriétés résultantes ou agrégées et propriétés émergentes.",
+      "tags": [
+        "société",
+        "social",
+        "individus",
+        "émergence"
+      ],
+      "source": {
+        "book": "treatise-7b-philosophy-of-science-tech-2-life-social-1985",
+        "page": 126,
+        "folio": "115",
+        "edition": "97a82f570f3136c58ed37fa9bb9795f1f9ba15567d585653cc2fd446c6edb356",
+        "quote": "it is a concrete system of interconnected individuals"
+      }
+    },
+    "biosystemisme": {
+      "title": "Biosystémisme",
+      "domain": "Ontologie",
+      "kind": "Thèse",
+      "text": "Bunge reconnaît le vivant comme un niveau émergent enraciné dans le niveau chimique.",
+      "tags": [
+        "vie",
+        "biologie",
+        "chimie",
+        "émergence"
+      ],
+      "source": {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": 135,
+        "folio": "119",
+        "edition": "b2cac1de7d37551282093e9b5fbb31b6d834e76aa0e5bfeaa529002b1a63bfdd",
+        "quote": "Biosystemism recognizes the bios as an emergent level rooted to the chemical one"
+      }
+    },
+    "etre-devoir": {
+      "title": "De l’être au devoir-être",
+      "domain": "Éthique",
+      "kind": "Argument",
+      "text": "Bunge admet l’écart entre l’être et le devoir-être. Dans les cas complexes il envisage des jugements de valeur et des normes de niveau supérieur pour dériver une norme particulière.",
+      "tags": [
+        "être",
+        "devoir-être",
+        "norme",
+        "obligation",
+        "is-ought"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 315,
+        "folio": "305",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "we may need not only value judgments but also higher level moral norms"
+      }
+    },
+    "raison": {
+      "title": "Vérité de raison",
+      "domain": "Sémantique",
+      "kind": "Distinction",
+      "text": "Bunge distingue la vérité de raison, que la raison seule peut établir, de la vérité de fait.",
+      "tags": [
+        "raison",
+        "vérité",
+        "logique",
+        "preuve"
+      ],
+      "source": {
+        "book": "treatise-2-semantics-2-interpretation-and-truth-1974",
+        "page": 102,
+        "folio": "90",
+        "edition": "a0a63502a9f504704adfcf0f3828b1bf1fbe533967be4c98e3f92503ddf6381f",
+        "quote": "one that can be established by reason alone"
+      }
+    },
+    "deficit": {
+      "title": "Les besoins comme déficits",
+      "domain": "Éthique",
+      "kind": "Définition 1.12, début",
+      "text": "Bunge part d’un déficit biologique, psychologique ou social chez une personne dans une circonstance donnée. La définition se poursuit sur la page suivante.",
+      "tags": [
+        "besoins",
+        "nécessité",
+        "déficit",
+        "biopsychosocial"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 47,
+        "folio": "34",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "a biological, psychological or social deficit of a human being"
+      }
+    },
+    "bien-etre": {
+      "title": "Bien-être",
+      "domain": "Éthique",
+      "kind": "Définition 2.1",
+      "text": "Le bien-être d’un animal correspond à la satisfaction de tous ses besoins de base. Bunge renvoie expressément à sa définition des besoins.",
+      "tags": [
+        "bien-être",
+        "welfare",
+        "besoin",
+        "santé"
+      ],
+      "source": {
+        "book": "treatise-8-ethics-the-good-and-the-right-1989",
+        "page": 57,
+        "folio": "44",
+        "edition": "18fd2648dc178635219bf6af37ad85252e5464386663063ce995db010da7e9cb",
+        "quote": "if and only if it has met all of its basic needs"
+      }
+    }
+  },
+  "relations": [
+    {
+      "id": "bonheur--theoreme-bonheur",
+      "origin": "bonheur",
+      "verb": "sert de prémisse à",
+      "target": "theoreme-bonheur",
+      "witness": "theoreme-bonheur",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "incompatibilite--theoreme-bonheur",
+      "origin": "incompatibilite",
+      "verb": "sert de prémisse à",
+      "target": "theoreme-bonheur",
+      "witness": "theoreme-bonheur",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "besoin--valeur",
+      "origin": "besoin",
+      "verb": "intervient dans la définition de",
+      "target": "valeur",
+      "witness": "valeur",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "valeur--droit",
+      "origin": "valeur",
+      "verb": "est invoquée pour caractériser",
+      "target": "droit",
+      "witness": "droit",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "droit--devoir",
+      "origin": "droit",
+      "verb": "intervient dans la définition du",
+      "target": "devoir",
+      "witness": "devoir",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "restriction--droit",
+      "origin": "restriction",
+      "verb": "précise une condition du",
+      "target": "droit",
+      "witness": "restriction",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "systemisme--eau",
+      "origin": "systemisme",
+      "verb": "est illustré par",
+      "target": "eau",
+      "witness": "eau",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "plasticite--psychon",
+      "origin": "plasticite",
+      "verb": "entre dans la définition du",
+      "target": "psychon",
+      "witness": "psychon",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "psychon--acquisition",
+      "origin": "psychon",
+      "verb": "intervient dans le postulat sur",
+      "target": "acquisition",
+      "witness": "acquisition",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "cerveau--analogie",
+      "origin": "cerveau",
+      "verb": "éclaire la portée de la critique de",
+      "target": "analogie",
+      "witness": "analogie",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "materialisme--changement",
+      "origin": "materialisme",
+      "verb": "se compare à la formulation de",
+      "target": "changement",
+      "witness": "changement",
+      "kind": "Comparaison entre ouvrages"
+    },
+    {
+      "id": "mecanisme--analogie",
+      "origin": "mecanisme",
+      "verb": "éclaire la critique de",
+      "target": "analogie",
+      "witness": "analogie",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "monde--unique",
+      "origin": "monde",
+      "verb": "est invoqué dans la preuve de",
+      "target": "unique",
+      "witness": "unique",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "supremum--unique",
+      "origin": "supremum",
+      "verb": "est invoqué dans la preuve de",
+      "target": "unique",
+      "witness": "unique",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "existence-conceptuelle--materialisme",
+      "origin": "existence-conceptuelle",
+      "target": "materialisme",
+      "witness": "existence-conceptuelle",
+      "verb": "permet de préciser la portée du",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "existence-conceptuelle--existence-dictionnaire",
+      "origin": "existence-conceptuelle",
+      "target": "existence-dictionnaire",
+      "witness": "existence-dictionnaire",
+      "verb": "se compare avec",
+      "kind": "Comparaison entre ouvrages"
+    },
+    {
+      "id": "autre-preuve--unique",
+      "origin": "autre-preuve",
+      "target": "unique",
+      "witness": "autre-preuve",
+      "verb": "justifie autrement",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "unicite-sup--unique",
+      "origin": "unicite-sup",
+      "target": "unique",
+      "witness": "unicite-sup",
+      "verb": "est invoquée dans",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "systemisme--societe",
+      "origin": "systemisme",
+      "verb": "est formulé à propos de la",
+      "target": "societe",
+      "witness": "societe",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "systemisme--biosystemisme",
+      "origin": "systemisme",
+      "verb": "est appliqué au vivant dans le",
+      "target": "biosystemisme",
+      "witness": "biosystemisme",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "etre-devoir--devoir",
+      "origin": "etre-devoir",
+      "verb": "éclaire les conditions d’attribution d’un",
+      "target": "devoir",
+      "witness": "etre-devoir",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "raison--verite",
+      "origin": "raison",
+      "verb": "est à distinguer de la mesure de",
+      "target": "verite",
+      "witness": "raison",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "realisme--mecanisme",
+      "origin": "realisme",
+      "verb": "oriente la recherche du",
+      "target": "mecanisme",
+      "witness": "mecanisme",
+      "kind": "Rapprochement éditorial"
+    },
+    {
+      "id": "deficit--besoin",
+      "origin": "deficit",
+      "target": "besoin",
+      "witness": "besoin",
+      "verb": "est précisé par les critères des",
+      "kind": "Lien explicite"
+    },
+    {
+      "id": "besoin--bien-etre",
+      "origin": "besoin",
+      "target": "bien-etre",
+      "witness": "bien-etre",
+      "verb": "entre dans la définition du",
+      "kind": "Lien explicite"
+    }
+  ]
+}

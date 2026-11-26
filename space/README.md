@@ -13,9 +13,9 @@ short_description: Interroger l'œuvre de Mario Bunge et vérifier les sources
 
 # BungeRAG — édition numérique expérimentale
 
-Posez une question en français sur l’œuvre de Mario Bunge. La réponse est
-accompagnée de renvois vers les courts extraits utilisés, ou remplacée par une
-abstention lorsque le corpus ne permet pas de répondre.
+Retrouvez un passage à partir d’une citation, d’une formule ou d’un souvenir de lecture.
+L’Atlas des concepts donne accès aux sources et à leurs liens. L’Atelier philosophique
+permet d’examiner ce qui dépend d’une prémisse en reprenant les textes de Bunge.
 
 Cette page reste volontairement centrée sur la consultation. L’architecture,
 les évaluations, les choix techniques et les limites sont documentés ailleurs :

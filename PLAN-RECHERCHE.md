@@ -1,6 +1,6 @@
 # Volet 1 · retrouver un passage et déplier son argument
 
-**État au 25 novembre 2026.** Plan d’exécution proposé pour la prochaine version. Premier lot à réaliser : établir les cas de lecture et mesurer le chemin jusqu’au bon passage. Ce document détaille le volet 1 de la [feuille de route](FEUILLE-DE-ROUTE.md).
+**État au 25 novembre 2026.** Plan d’exécution proposé pour la prochaine version. Les 30 cas de lecture sont figés au commit `c5047b1`. Le diagnostic de la V2 situe 14 pertes à la récupération et 6 au reclassement. La comparaison et le développement sont en cours. Ce document détaille le volet 1 de la [feuille de route](FEUILLE-DE-ROUTE.md).
 
 ## Point de départ et résultat attendu
 

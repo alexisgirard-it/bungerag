@@ -1,6 +1,6 @@
 # BungeRAG · feuille de route du projet
 
-**Révision du 25 novembre 2026.** La V2 publique est le point de départ. Les trois volets ci-dessous sont la direction retenue. La prochaine étape est le lot 1 du [plan de recherche](PLAN-RECHERCHE.md). Les mesures acquises figurent dans le [bilan de la V2](eval/RESULTATS-V2.md).
+**Révision du 26 novembre 2026.** La V2 est en ligne. La V3 relie les trois volets dans l’interface locale. La recette publique reste à effectuer après contrôle des extraits, comparaison complète sur les 30 questions réservées et validation des parcours. Étendre la couverture éditoriale et la relecture des arguments du *Traité* reste dans le périmètre du projet. [Plan de recherche](PLAN-RECHERCHE.md) · [Mesures V3](eval/RESULTATS-V3.md)
 
 ## À qui sert le site
 
@@ -52,3 +52,5 @@ Relire cette feuille et le plan du volet actif à chaque reprise. Lorsqu’un ch
 | Date | Décision et raison | Conséquence |
 |---|---|---|
 | 25 novembre 2026 | Vision retenue avec le porteur du projet. Un site en trois volets, un cadre philosophique commun et une priorité à la recherche de passages. | Le volet 1 fournit la première chaîne documentaire réutilisable par l’atlas puis par l’atelier. Comparer les options gratuites sur le corpus avant de remplacer les modèles de la V2. |
+| 25 novembre 2026 | Sur les 20 références V2 manquées, 14 disparaissent à la récupération et 6 au reclassement. Le corpus réservé est figé avant sélection. | Comparer les deux étages séparément et évaluer un premier affichage de pages autonome. [Diagnostic](eval/diagnostic-recherche-v2.json) · [Cas réservés](eval/lecture-reservee.jsonl) |
+| 26 novembre 2026 | Le profil V3 passe au reclasseur Horizon avec 24 candidats. Sur l’index complet, Granite et Qwen donnent chacun 9/30 en recherche dense. Qwen reste en place. Les API de rédaction candidates ont échoué en accès ou en validation. | La recherche par page et les dossiers édités restent utilisables sans requête de génération. Le cadre sourcé, l’Atlas et l’Atelier sont reliés au parcours de recherche. [Mesures V3](eval/RESULTATS-V3.md) |

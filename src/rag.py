@@ -117,10 +117,13 @@ def _validate_generated_answer(answer, contexts):
 
 
 def ranked_hits(question, english, cfg, k, keep):
+    if cfg.name == "public_v3":
+        from retrieve import rank_v3
+        return rank_v3(question,english,cfg.table,k,keep)
     hits = search(mode="hybrid", k=k, table=cfg.table, dense_query=question,
                   text_query=english)
     preferred = []
-    if cfg.name == "public_v2":
+    if cfg.name in ("public_v2", "public_v3"):
         hits, preferred = candidates(question, english, hits, search, cfg.table)
     if not hits:
         return []
@@ -178,7 +181,7 @@ def ask(question, verbose=False, config: str | RAGConfig | None = None, *, quest
             config_id=cfg.config_id,
         )
 
-    if cfg.name == "public_v2":
+    if cfg.name in ("public_v2", "public_v3"):
         return grounded_result(question, hits, cfg, started, translate_time, "direct",
                                question_en=question_en, sous_questions=[])
 
@@ -251,7 +254,7 @@ def ask_decomposed(
             config_id=cfg.config_id,
         )
 
-    if cfg.name == "public_v2":
+    if cfg.name in ("public_v2", "public_v3"):
         return grounded_result(question, pool, cfg, started, 0, "panoramique",
                                question_en=None, sous_questions=[x["fr"] for x in sous_questions])
 
@@ -303,7 +306,7 @@ def ask_smart(
     from decompose import analyse
 
     cfg = get_config(config)
-    if cfg.name == "public_v2":
+    if cfg.name in ("public_v2", "public_v3"):
         decision = analyse(question, backend=cfg.router_backend, translate_direct=True)
         if decision.get("mode") == "direct" and decision.get("en"):
             return ask(question, config=cfg, question_en=decision["en"])

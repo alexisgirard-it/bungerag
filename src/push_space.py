@@ -13,7 +13,10 @@ ce script.
 
 from __future__ import annotations
 
+import hashlib
 import os
+import sqlite3
+from contextlib import closing
 import json
 import shutil
 import tempfile
@@ -34,12 +37,16 @@ SPACE_FILES = (
     "README.md",
     "requirements.txt",
     "presenter.py",
+    "reader.py",
     "runtime.py",
     "theme.py",
     "styles.css",
 )
 MODULES = (
     "search.py",
+    "library.py",
+    "referentiel.json",
+    "workshop.py",
     "definitions.py",
     "evidence.py",
     "rerank.py",
@@ -100,105 +107,148 @@ def validate_local_index() -> None:
     manifest = json.loads(manifest_path.read_text())
     required = {"table", "filtered", "exclusions_sha256", "embedding_revision"}
     missing = sorted(required - manifest.keys())
-    if missing or manifest.get("table") != "bunge_512" or manifest.get("filtered") is not True:
+    if (
+        missing
+        or manifest.get("table") != "bunge_512"
+        or manifest.get("filtered") is not True
+    ):
         detail = f"champs absents {missing}" if missing else "état incohérent"
         raise RuntimeError(f"manifeste d'index invalide : {detail}")
 
 
-def main() -> None:
-    from huggingface_hub import HfApi
+def sha256(path: Path) -> str:
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
 
-    # Tout ce qui peut échouer localement est validé avant le premier appel réseau.
-    secrets = {
-        name: required_secret(name)
-        for name in (
-            "HF_WRITE_TOKEN", "HF_READ_TOKEN", "GEMINI_API_KEY", "CEREBRAS_API_KEY"
-        )
-    }
-    write_token = secrets["HF_WRITE_TOKEN"]
-    read_token = secrets["HF_READ_TOKEN"]
-    if write_token == read_token:
+
+def git_blob(path: Path) -> str:
+    content = path.read_bytes()
+    header = f"blob {len(content)}".encode() + bytes(1)
+    return hashlib.sha1(header + content).hexdigest()
+
+
+def validate_library(index_dir: Path) -> Path:
+    library = index_dir / "lecture.sqlite"
+    with closing(
+        sqlite3.connect(library.resolve().as_uri() + "?mode=ro", uri=True)
+    ) as db:
+        check = db.execute("PRAGMA quick_check").fetchone()
+        source = db.execute("SELECT value FROM meta WHERE key='provenance'").fetchone()
+        db.execute("SELECT uid FROM labels LIMIT 1").fetchone()
+        db.execute("SELECT origin FROM mentions LIMIT 1").fetchone()
+    if check != ("ok",) or source != (sha256(index_dir / "provenance-512.sqlite"),):
         raise RuntimeError(
-            "HF_WRITE_TOKEN et HF_READ_TOKEN doivent être deux jetons distincts"
+            "L’index de lecture ne correspond pas à la concordance locale"
         )
+    return library
+
+
+def main() -> None:
+    from huggingface_hub import CommitOperationAdd, HfApi
+
+    write_token = required_secret("HF_WRITE_TOKEN")
+    read_token = required_secret("HF_READ_TOKEN")
+    if write_token == read_token:
+        raise RuntimeError("Les jetons de lecture et d’écriture doivent être distincts")
 
     validate_local_index()
+    index_dir = ROOT / "index"
+    library = validate_library(index_dir)
     with tempfile.TemporaryDirectory() as tmp:
         bundle = Path(tmp)
         copied = build_space_bundle(bundle)
-
         api = HfApi(token=write_token)
-        who = api.whoami()
-        print(f"connecté en tant que : {who['name']}")
-
-        # 1. L'index reste dans un dataset privé. Le commit obtenu est épinglé
-        # dans le Space pour que le runtime ne télécharge jamais un état mouvant.
-        api.create_repo(DATASET, repo_type="dataset", private=True, exist_ok=True)
-        api.upload_folder(
-            folder_path=ROOT / "index",
-            path_in_repo=".",
-            repo_id=DATASET,
-            repo_type="dataset",
-            ignore_patterns=["*.lock", "*.tmp"],
-        )
-        index_revision = api.repo_info(DATASET, repo_type="dataset").sha
-        read_api = HfApi(token=read_token)
-        readable = read_api.repo_info(
-            DATASET,
-            repo_type="dataset",
-            revision=index_revision,
-        )
-        if readable.sha != index_revision:
-            raise RuntimeError("le jeton de lecture ne voit pas la révision publiée")
-        print(f"index privé publié : {DATASET}@{index_revision[:12]}")
-
-        # 2. L'application publique est synchronisée exactement avec la liste
-        # blanche : les anciens fichiers distants hors bundle sont supprimés.
-        # Le jeton d'écriture est volontairement limité aux dépôts existants.
-        # Vérifier le Space évite aussi l'endpoint de création, qui peut exiger
-        # un abonnement même lorsque le dépôt cible existe déjà.
-        api.repo_info(SPACE, repo_type="space")
-        remote_before = api.list_repo_files(SPACE, repo_type="space")
-        stale = stale_remote_files(remote_before, copied)
-        if stale:
-            api.delete_files(
-                SPACE,
-                stale,
-                repo_type="space",
-                commit_message="security: remove files outside public allowlist",
-            )
-
-        # Installer le jeton read-only et la révision avant de déclencher le
-        # build du nouveau code évite tout démarrage avec l'ancien secret HF.
-        api.add_space_secret(SPACE, "HF_TOKEN", read_token)
-        for name in ("GEMINI_API_KEY", "CEREBRAS_API_KEY"):
-            api.add_space_secret(SPACE, name, secrets[name])
-        api.add_space_variable(SPACE, "INDEX_REVISION", index_revision)
-        api.add_space_variable(SPACE, "RAG_PROFILE", "public_v2")
-        api.add_space_variable(
-            SPACE,
-            "GEMINI_MODELS",
-            os.environ.get(
-                "GEMINI_MODELS",
-                "gemini-3.5-flash,gemini-2.5-flash,gemini-3-flash-preview,"
-                "gemini-2.5-flash-lite,gemini-3.1-flash-lite",
-            ),
-        )
-        api.upload_folder(folder_path=bundle, repo_id=SPACE, repo_type="space")
-        remote_after = set(api.list_repo_files(SPACE, repo_type="space"))
-        expected = set(copied) | ({".gitattributes"} & remote_after)
-        if remote_after != expected:
-            unexpected = sorted(remote_after - expected)
-            missing = sorted(set(copied) - remote_after)
+        reader = HfApi(token=read_token)
+        state = api.dataset_info(DATASET, files_metadata=True)
+        if not state.private:
+            raise RuntimeError("Le dataset d’index doit être privé")
+        indexed = {file.rfilename: file for file in state.siblings}
+        manifest = "manifest-bunge_512.json"
+        if indexed[manifest].blob_id != git_blob(index_dir / manifest):
             raise RuntimeError(
-                f"bundle distant incohérent : extras={unexpected}, absents={missing}"
+                "Le manifeste du dataset ne correspond pas à l’index local"
             )
-        print(
-            f"bundle public ({len(copied)} fichiers) -> "
-            f"https://huggingface.co/spaces/{SPACE}"
-        )
+        provenance = "provenance-512.sqlite"
+        if indexed[provenance].lfs.sha256 != sha256(index_dir / provenance):
+            raise RuntimeError(
+                "La concordance distante ne correspond pas à la version locale"
+            )
 
-        print("secrets minimaux et révision d'index configurés ; build du Space lancé")
+        live = api.space_info(SPACE, files_metadata=True)
+        before = {file.rfilename: file.blob_id for file in live.siblings}
+        stale = stale_remote_files(list(before), copied)
+        if stale:
+            raise RuntimeError(f"Fichiers publics hors liste blanche : {stale}")
+
+        index_revision = state.sha
+        digest = sha256(library)
+        stored = indexed.get(library.name)
+        if not stored or not stored.lfs or stored.lfs.sha256 != digest:
+            commit = api.create_commit(
+                DATASET,
+                repo_type="dataset",
+                parent_commit=state.sha,
+                operations=[
+                    CommitOperationAdd(
+                        path_in_repo=library.name, path_or_fileobj=library
+                    )
+                ],
+                commit_message="Indexer la bibliothèque par page et les renvois du Traité",
+            )
+            index_revision = commit.oid
+        readable = reader.dataset_info(
+            DATASET, revision=index_revision, files_metadata=True
+        )
+        published = next(
+            file for file in readable.siblings if file.rfilename == library.name
+        )
+        if not readable.private or published.lfs.sha256 != digest:
+            raise RuntimeError("La révision privée attendue est illisible")
+
+        variables = api.get_space_variables(SPACE)
+        if (
+            "INDEX_REVISION" not in variables
+            or variables["INDEX_REVISION"].value != index_revision
+        ):
+            api.add_space_variable(SPACE, "INDEX_REVISION", index_revision)
+        expected = {name: git_blob(bundle / name) for name in copied}
+        operations = [
+            CommitOperationAdd(path_in_repo=name, path_or_fileobj=bundle / name)
+            for name, digest in expected.items()
+            if before.get(name) != digest
+        ]
+        space_revision = live.sha
+        if operations:
+            commit = api.create_commit(
+                SPACE,
+                repo_type="space",
+                parent_commit=live.sha,
+                operations=operations,
+                commit_message="Publier BungeRAG V3 avec la recherche, l’atlas et l’atelier",
+            )
+            space_revision = commit.oid
+        actual = api.space_info(SPACE, revision=space_revision, files_metadata=True)
+        if {
+            file.rfilename: file.blob_id
+            for file in actual.siblings
+            if file.rfilename != ".gitattributes"
+        } != expected:
+            raise RuntimeError("Le bundle public ne correspond pas à la liste blanche")
+        if (
+            "RAG_PROFILE" not in variables
+            or variables["RAG_PROFILE"].value != "public_v3"
+        ):
+            api.add_space_variable(SPACE, "RAG_PROFILE", "public_v3")
+        print(
+            json.dumps(
+                {
+                    "space": space_revision,
+                    "index": index_revision,
+                    "previous_space": live.sha,
+                    "previous_index": state.sha,
+                }
+            )
+        )
 
 
 if __name__ == "__main__":
