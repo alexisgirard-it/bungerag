@@ -844,6 +844,15 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   margin: 0;
 }
 
+/* Hide empty Gradio HTML slots cleanly so zero blank bars appear */
+#page-shell .html-container:empty,
+#page-shell .block:has(> .html-container:empty),
+#page-shell .hide-container:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* AI synthesis card inside Rechercher */
 #ai-answer-card {
   background: rgba(255, 255, 255, 0.80) !important;

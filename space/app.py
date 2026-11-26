@@ -361,7 +361,7 @@ def legacy_controls(question, submit_btn):
 
     def answer_and_reveal(q_text, request: gr.Request):
         for res in answer_question(q_text, request):
-            yield (gr.Column(visible=True), *res)
+            yield (gr.update(visible=True), *res)
 
     submit_btn.click(
         answer_and_reveal,

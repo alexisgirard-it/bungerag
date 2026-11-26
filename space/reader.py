@@ -148,7 +148,7 @@ def atlas_view(key, local):
         if not found:
             return (
                 "<p>Choisissez une notion ou un repère dans la bibliothèque.</p>",
-                gr.Dropdown(choices=[], value=None),
+                gr.Dropdown(choices=[], value=None, render=False),
                 "",
             )
         title, source, edges = found
@@ -165,6 +165,7 @@ def atlas_view(key, local):
                 choices=choices,
                 value=choices[0][1] if choices else None,
                 interactive=bool(choices),
+                render=False,
             ),
             "",
         )
@@ -233,6 +234,7 @@ def atlas_view(key, local):
             choices=choices,
             value=choices[0][1] if choices else None,
             interactive=bool(choices),
+            render=False,
         ),
         compare or "<p>Aucune comparaison éditée pour cette notion.</p>",
     )
@@ -690,7 +692,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 "<p>Saisissez une recherche entre 3 et "
                 + str(max_chars)
                 + " caractères.</p>",
-                gr.Row(visible=False),
+                gr.update(visible=False),
                 "",
                 {},
             )
@@ -701,7 +703,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 [],
                 question,
                 "<p>" + esc(message) + "</p>",
-                gr.Row(visible=False),
+                gr.update(visible=False),
                 "",
                 {},
             )
@@ -710,7 +712,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             [],
             question,
             '<div class="bunge-loading-bar" aria-label="Recherche en cours"></div>',
-            gr.Row(visible=False),
+            gr.update(visible=False),
             "",
             {},
         )
@@ -731,7 +733,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 related,
                 question,
                 "".join(card(source, local) for source in related),
-                gr.Row(visible=bool(related)),
+                gr.update(visible=bool(related)),
                 dossier_view(dossier_obj, {}, local),
                 dossier_obj,
             )
@@ -740,14 +742,14 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         rendered = (
             "".join(card(s, local) for s in result) or "<p>Passage non retrouvé.</p>"
         )
-        yield result, question, rendered, gr.Row(visible=bool(result)), "", {}
+        yield result, question, rendered, gr.update(visible=bool(result)), "", {}
         if wants_proof:
             d = get_dossier(question, None, result, request)
             yield (
                 result,
                 question,
                 rendered,
-                gr.Row(visible=True),
+                gr.update(visible=True),
                 dossier_view(d, {}, local),
                 d,
             )
