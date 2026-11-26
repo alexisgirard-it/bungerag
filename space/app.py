@@ -101,9 +101,15 @@ MASTHEAD = """
 
 HERO = """
 <section id="hero" aria-labelledby="hero-title">
-  <div class="hero-kicker">Bibliothèque de Mario Bunge</div>
-  <h1 id="hero-title">Questionner les textes.<br>Remonter aux sources.</h1>
-  <p>Retrouvez un passage, suivez un argument à travers les ouvrages et mettez ses prémisses à l’épreuve.</p>
+  <div class="hero-kicker">✦ Bibliothèque critique de Mario Bunge</div>
+  <h1 id="hero-title">Questionner les textes.<br><span class="hero-accent">Remonter aux sources.</span></h1>
+  <p>Retrouvez un passage vérifié à la page près, explorez la carte interactive du système et mettez ses prémisses à l’épreuve.</p>
+  <div class="hero-stats" aria-label="Repères du corpus">
+    <span class="hero-stat"><strong>25</strong> ouvrages indexés</span>
+    <span class="hero-stat"><strong>54/54</strong> chapitres du Traité</span>
+    <span class="hero-stat"><strong>113</strong> notions · <strong>16</strong> symboles</span>
+    <span class="hero-stat"><strong>21</strong> dossiers d’Atelier</span>
+  </div>
 </section>
 """
 

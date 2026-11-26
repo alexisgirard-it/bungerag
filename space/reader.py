@@ -394,11 +394,11 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 )
                 go = gr.Button("Rechercher les passages", variant="primary")
                 hits = gr.HTML()
-                with gr.Row():
+                with gr.Row(elem_classes=["action-bar"]):
                     expand = gr.Button("Déplier l’argument")
                     locate = gr.Button("Situer cette idée dans le système")
+                    discuss = gr.Button("Contester une prémisse dans l’Atelier")
                 inline = gr.HTML()
-                discuss = gr.Button("Contester une prémisse dans l’Atelier")
                 legacy(q)
         with gr.Tab("Atlas des concepts", id="atlas"):
             with gr.Accordion(
@@ -457,18 +457,49 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 open_marker = gr.Button("Examiner ce repère")
             back = gr.Button("Revenir à ma recherche")
         with gr.Tab("Atelier philosophique", id="work"):
-            work_q = gr.Textbox(
-                label="Quelle thèse voulez-vous examiner ?",
-                placeholder="Un modèle de langage peut-il comprendre ?",
-            )
-            work_go = gr.Button("Ouvrir le dossier", variant="primary")
+            with gr.Column(elem_classes=["glass-panel"]):
+                with gr.Row(equal_height=True):
+                    work_q = gr.Textbox(
+                        label="Quelle thèse voulez-vous examiner ?",
+                        placeholder="Un modèle de langage peut-il comprendre ?",
+                        scale=4,
+                    )
+                    work_go = gr.Button("Ouvrir le dossier", variant="primary", scale=1)
+                shortcuts = gr.Dropdown(
+                    [
+                        ("Éthique · Bonheur complet (T8)", "bonheur"),
+                        ("Éthique · Besoin et obligation (T8)", "devoir"),
+                        ("IA · Compréhension et modèles de langage (T4)", "ia"),
+                        ("Ontologie · Unicité du monde (T3)", "monde"),
+                        ("Sémantique · Existence des construits (T1)", "existence"),
+                        ("Épistémologie · Explication et réfraction (T6)", "mecanisme"),
+                        ("Causalité · Causalité et fatalisme", "fatalisme"),
+                        ("IA · Contexte long et compréhension (T6)", "contexte"),
+                        ("Ontologie · Systémisme et émergence (T4)", "systemisme"),
+                        ("Technologie & Éthique · Efficacité, vérité et rectitude (T6–T8)", "efficacite"),
+                        ("Sémantique · Sens, référence et synonymie (T1–T2)", "signification"),
+                        ("Épistémologie · Conjecture, inférence et théorie (T5)", "conjecture"),
+                        ("Sciences · Modèle factuel et physique (T7/I)", "modele_factuel"),
+                        ("Sémantique · Référence, interprétation et vérité partielle (T1–T2)", "semantique_verite"),
+                        ("Ontologie · Propriétés, choses, changement et espace-temps (T3)", "ontologie_choses"),
+                        ("Ontologie · Niveaux chimique, biologique et social (T4)", "niveaux_systemes"),
+                        ("Épistémologie · Cognition, perception et enquête sociale (T5)", "cognition_enquete"),
+                        ("Épistémologie · Évaluation et évolution du savoir (T6)", "evolution_savoir"),
+                        ("Sciences · Psychologie et sciences sociales (T7/II)", "sciences_vie_societe"),
+                        ("Éthique · Valeurs, cas moraux et évolution des mœurs (T8)", "ethique_normes"),
+                        ("Éthique · Métaéthique, philosophie sociale et survie (T8)", "metaethique_survie"),
+                    ],
+                    value=None,
+                    label="Dossiers de lecture (21 dossiers · 54/54 chapitres du Traité)",
+                )
             with gr.Accordion("Ajouter un fait contemporain au dossier", open=False):
                 with gr.Row():
                     fact_lookup = gr.Textbox(
                         label="Pré-remplir depuis une URL HTTPS publique ou un sujet",
                         placeholder="https://… ou ex. Llama 3.1, AlphaFold, GPT-4",
+                        scale=3,
                     )
-                    fact_fetch = gr.Button("Pré-remplir une source datée")
+                    fact_fetch = gr.Button("Pré-remplir une source datée", scale=1)
                 fact_status = gr.HTML()
                 supplied_fact = gr.Textbox(label="Fait à examiner", lines=2)
                 with gr.Row():
@@ -476,48 +507,22 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     supplied_date = gr.Textbox(
                         label="Date de publication", placeholder="AAAA-MM-JJ"
                     )
-            shortcuts = gr.Dropdown(
-                [
-                    ("Éthique · Bonheur complet (T8)", "bonheur"),
-                    ("Éthique · Besoin et obligation (T8)", "devoir"),
-                    ("IA · Compréhension et modèles de langage (T4)", "ia"),
-                    ("Ontologie · Unicité du monde (T3)", "monde"),
-                    ("Sémantique · Existence des construits (T1)", "existence"),
-                    ("Épistémologie · Explication et réfraction (T6)", "mecanisme"),
-                    ("Causalité · Causalité et fatalisme", "fatalisme"),
-                    ("IA · Contexte long et compréhension (T6)", "contexte"),
-                    ("Ontologie · Systémisme et émergence (T4)", "systemisme"),
-                    ("Technologie & Éthique · Efficacité, vérité et rectitude (T6–T8)", "efficacite"),
-                    ("Sémantique · Sens, référence et synonymie (T1–T2)", "signification"),
-                    ("Épistémologie · Conjecture, inférence et théorie (T5)", "conjecture"),
-                    ("Sciences · Modèle factuel et physique (T7/I)", "modele_factuel"),
-                    ("Sémantique · Référence, interprétation et vérité partielle (T1–T2)", "semantique_verite"),
-                    ("Ontologie · Propriétés, choses, changement et espace-temps (T3)", "ontologie_choses"),
-                    ("Ontologie · Niveaux chimique, biologique et social (T4)", "niveaux_systemes"),
-                    ("Épistémologie · Cognition, perception et enquête sociale (T5)", "cognition_enquete"),
-                    ("Épistémologie · Évaluation et évolution du savoir (T6)", "evolution_savoir"),
-                    ("Sciences · Psychologie et sciences sociales (T7/II)", "sciences_vie_societe"),
-                    ("Éthique · Valeurs, cas moraux et évolution des mœurs (T8)", "ethique_normes"),
-                    ("Éthique · Métaéthique, philosophie sociale et survie (T8)", "metaethique_survie"),
-                ],
-                value=None,
-                label="Dossiers de lecture (21 dossiers · 54/54 chapitres du Traité)",
-            )
             work_text = gr.HTML()
-            with gr.Row():
-                premise = gr.Dropdown(label="Prémisse à contester", choices=[])
-                action = gr.Radio(
-                    ["Suspendre", "Remplacer", "Rétablir"],
-                    value="Suspendre",
-                    label="Modification",
+            with gr.Column(elem_classes=["glass-panel"]):
+                with gr.Row():
+                    premise = gr.Dropdown(label="Prémisse à contester", choices=[])
+                    action = gr.Radio(
+                        ["Suspendre", "Remplacer", "Rétablir"],
+                        value="Suspendre",
+                        label="Modification",
+                    )
+                replacement = gr.Textbox(
+                    label="Prémisse de remplacement",
+                    placeholder="Votre hypothèse de travail",
                 )
-            replacement = gr.Textbox(
-                label="Prémisse de remplacement",
-                placeholder="Votre hypothèse de travail",
-            )
-            with gr.Row():
-                apply = gr.Button("Voir les conséquences")
-                reset = gr.Button("Revenir à l’argument initial")
+                with gr.Row(elem_classes=["action-bar"]):
+                    apply = gr.Button("Voir les conséquences", variant="primary")
+                    reset = gr.Button("Revenir à l’argument initial")
             with gr.Accordion("Débattre autour de ce dossier (multi-tours)", open=False):
                 debate_view = gr.HTML(render_debate([], local))
                 debate_input = gr.Textbox(
