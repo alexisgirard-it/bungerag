@@ -18,7 +18,6 @@ def test_public_page_is_a_consultation_interface_not_a_project_report() -> None:
         'elem_id="chat-shell"',
         "Réponse sourcée (IA)",
         "Sources citées",
-        "ÉTUDE DE CAS",
     )
     forbidden = (
         "Fidélité historique",

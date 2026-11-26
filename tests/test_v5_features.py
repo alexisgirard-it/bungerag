@@ -7,9 +7,15 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "space") not in sys.path:
     sys.path.insert(0, str(ROOT / "space"))
 
+from deductive_tree import TREE_BRANCHES, all_tree_node_ids, render_deductive_tree  # noqa: E402
 from library import DATABASE, NODES, read_page_content  # noqa: E402
 from presenter import render_answer_html  # noqa: E402
-from wiki_concepts import CONCEPT_ALIASES, annotate_concepts, render_concept_wiki  # noqa: E402
+from wiki_concepts import (  # noqa: E402
+    CONCEPTS,
+    annotate_concepts,
+    find_concept_for_query,
+    render_concept_wiki,
+)
 from workshop import choose_dossier, order_argument_steps, step  # noqa: E402
 
 
@@ -32,24 +38,40 @@ def test_emergence_question_routes_to_systemism_dossier():
     assert choose_dossier("Qu’est-ce que l’émergence ?") == "systemisme"
 
 
-def test_annotate_concepts_adds_blue_wiki_links_and_preserves_html_and_tags():
-    assert all(k in NODES for k in CONCEPT_ALIASES)
+def test_concepts_catalog_is_complete_coherent_and_all_links_valid():
+    assert len(CONCEPTS) >= 60
+    for cid, c in CONCEPTS.items():
+        assert c["status"] in ("bunge", "standard")
+        assert c["definition"].strip() and c["bunge_view"].strip()
+        for rel in c.get("related_concepts", ()):
+            assert rel in CONCEPTS, f"{cid} -> missing related concept {rel}"
+        for nid in c.get("nodes", ()):
+            assert nid in NODES, f"{cid} -> missing node {nid}"
+
+
+def test_deductive_tree_covers_100_percent_of_all_113_propositions_without_duplicates():
+    flat = [nid for branches in TREE_BRANCHES.values() for _, ids in branches for nid in ids]
+    assert len(flat) == len(set(flat)), "Duplicate node in TREE_BRANCHES"
+    assert all_tree_node_ids() == set(NODES)
+    assert len(flat) == 113
+
+
+def test_annotate_concepts_underlines_philosophie_systemes_and_preserves_html():
     html_in = (
-        "<p>Pour Bunge, le matérialisme émergentiste s’oppose au holisme "
-        "et repose sur le systémisme. Voir <a href='#source-1'>[1]</a> et "
+        "<p>Le systémisme est la philosophie qui sous-tend la théorie générale "
+        "des systèmes, face au holisme. Voir <a href='#source-1'>[1]</a> et "
         "<code>systémisme</code>.</p>"
     )
     out = annotate_concepts(html_in)
-    assert 'class="wiki-link"' in out
-    assert 'data-wiki-concept="cadre-emergentiste"' in out
-    assert 'data-wiki-concept="ni-holisme-ni-atomisme"' in out
     assert 'data-wiki-concept="systemisme"' in out
-    # Ne pas casser les liens existants ni les blocs <code>
+    assert 'data-wiki-concept="philosophie"' in out
+    assert 'data-wiki-concept="systeme"' in out
+    assert 'data-wiki-concept="holisme"' in out
     assert "<a href='#source-1'>[1]</a>" in out
     assert "<code>systémisme</code>" in out
-    # Exclure la notion courante sur sa propre page Wikipédia
     excluded = annotate_concepts("<p>Le systémisme est central.</p>", exclude_key="systemisme")
     assert 'data-wiki-concept="systemisme"' not in excluded
+    assert find_concept_for_query("Qu'est-ce que l'émergence pour Bunge ?") == "emergence"
 
 
 def test_render_answer_html_links_citations_and_concepts():
@@ -59,11 +81,11 @@ def test_render_answer_html_links_citations_and_concepts():
     )
     assert 'href="#source-1"' in out
     assert 'class="cite-badge"' in out
-    assert 'class="wiki-link"' in out
-    assert 'data-wiki-concept="postulat-emergence"' in out
+    assert 'data-wiki-concept="emergence"' in out
+    assert 'data-wiki-concept="systeme"' in out
 
 
-def test_render_concept_wiki_builds_infobox_and_structured_relations(monkeypatch):
+def test_render_concept_and_proposition_pages_and_deductive_tree(monkeypatch):
     def fake_node_source(key):
         src = NODES[key]["source"]
         return {
@@ -83,14 +105,33 @@ def test_render_concept_wiki_builds_infobox_and_structured_relations(monkeypatch
         }
 
     monkeypatch.setattr("wiki_concepts.node_source", fake_node_source)
+    monkeypatch.setattr("deductive_tree.node_source", fake_node_source)
     monkeypatch.setattr("workshop.node_source", fake_node_source)
     monkeypatch.setattr("wiki_concepts.chapter_formal_markers", lambda *a, **k: [])
-    wiki = render_concept_wiki("systemisme")
-    assert 'class="wiki-article"' in wiki
-    assert 'class="wiki-infobox"' in wiki
-    assert "Lire dans le livre" in wiki
-    assert 'class="wiki-link"' in wiki
-    assert "Dossiers d’Atelier associés" in wiki
+
+    # Page concept défini par Bunge
+    sys_page = render_concept_wiki("systemisme")
+    assert "Défini / thématisé par Mario Bunge" in sys_page
+    assert 'data-wiki-concept="philosophie"' in sys_page
+    assert "Définitions, postulats, thèses et théorèmes associés" in sys_page
+
+    # Page concept standard cohérent avec Bunge
+    phil_page = render_concept_wiki("philosophie")
+    assert "Sens philosophique / scientifique usuel (cohérent avec Bunge)" in phil_page
+    assert "Chez Mario Bunge" in phil_page
+
+    # Page proposition formelle (postulat / théorème)
+    prop_page = render_concept_wiki("postulat-emergence")
+    assert 'class="wiki-article"' in prop_page
+    assert 'class="wiki-infobox"' in prop_page
+
+    # Arbre déductif complet + filtres
+    full_tree = render_deductive_tree()
+    assert "113 proposition(s) affichée(s)" in full_tree
+    assert "Ontologie" in full_tree and "Éthique" in full_tree
+    ont_postulates = render_deductive_tree("Ontologie", "postulat")
+    assert "Postulat 1.5" in ont_postulates
+    assert "Éthique" not in ont_postulates
 
 
 @pytest.mark.skipif(not DATABASE.is_file(), reason="lecture.sqlite absente en CI")

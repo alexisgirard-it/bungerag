@@ -122,14 +122,6 @@ APPARATUS_HEADING = """
 <p>Édition, pagination indexée et extrait associé.</p></div>
 """
 
-FOOTER = """
-<footer id="custom-footer"><p>Lecture assistée, pas imitation. Les œuvres restent la propriété de leurs ayants droit.</p>
-<nav aria-label="En savoir plus">
-  <a href="https://alexis-girard-ai-portfolio.alexis-girard709451.chatgpt.site/work/bungerag" target="_blank" rel="noopener noreferrer">ÉTUDE DE CAS ↗</a>
-  <a href="https://github.com/alexisgirard-it/bungerag" target="_blank" rel="noopener noreferrer">CODE ↗</a>
-</nav></footer>
-"""
-
 EXAMPLES = (
     "Qu'est-ce que l'émergence pour Bunge ?",
     "Quelle différence entre causalité et déterminisme ?",
@@ -420,7 +412,6 @@ with gr.Blocks(title="BungeRAG — bibliothèque de Mario Bunge", fill_width=Tru
             MAX_QUESTION_CHARS,
             run_debate=debate_for_reader,
         )
-        gr.HTML(FOOTER)
 
 demo.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 

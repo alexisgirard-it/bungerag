@@ -9,12 +9,14 @@ from urllib.parse import quote
 import gradio as gr
 
 from atlas_graph import (
+    DOMAIN_ORDER,
     MINDMAP_CSS,
     MINDMAP_JS,
     render_mindmap,
     render_symbol_lexicon,
 )
 from contemporary import fetch_contemporary_fact
+from deductive_tree import ROLE_CATEGORIES, render_deductive_tree
 from formal_logic import FOL_VERIFIERS
 from library import (
     CATALOG,
@@ -33,7 +35,12 @@ from library import (
     search_library,
     suggested_nodes,
 )
-from wiki_concepts import annotate_concepts, render_concept_wiki
+from wiki_concepts import (
+    CONCEPTS,
+    annotate_concepts,
+    find_concept_for_query,
+    render_concept_wiki,
+)
 from workshop import (
     DOSSIERS,
     assess,
@@ -470,11 +477,15 @@ def render_debate(history, local, notice=""):
 
 
 def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
-    options = sorted(
+    concept_options = sorted(
+        ((c["title"], cid) for cid, c in CONCEPTS.items()), key=lambda x: fold(x[0])
+    )
+    node_options = sorted(
         ((n["title"], k) for k, n in NODES.items()), key=lambda x: fold(x[0])
     )
     coverage_html, book_options, first_book = coverage()
     initial_wiki_html = render_concept_wiki("systemisme", local)
+    initial_tree_html = render_deductive_tree("Tous les domaines", "ALL", "", local)
     initial_dossier = DOSSIERS["ia"]()
     initial_steps = [(s["title"], s["id"]) for s in initial_dossier["steps"]]
     research = gr.State([])
@@ -574,14 +585,38 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             with gr.Column(elem_classes=["glass-panel"]):
                 with gr.Row(elem_classes=["inline-submit-row"]):
                     concept = gr.Dropdown(
-                        options,
+                        concept_options,
                         value="systemisme",
-                        label="Sélectionner une notion (113 fiches)",
+                        label=f"Sélectionner un concept philosophique ou scientifique ({len(concept_options)} concepts)",
                         scale=3,
                     )
                     to_work = gr.Button("Ouvrir dans l’Atelier", scale=1)
                 wiki_view = gr.HTML(initial_wiki_html)
-            with gr.Accordion("Carte des relations (6 domaines · 113 notions)", open=True):
+            with gr.Column(elem_classes=["glass-panel"]):
+                gr.HTML(
+                    '<div class="section-heading"><h3>Arbre déductif du système (113 propositions)</h3>'
+                    "<p>Définitions, postulats, thèses, théorèmes et corollaires classés par domaine et par dépendance logique.</p></div>"
+                )
+                with gr.Row(elem_classes=["tree-filter-row"]):
+                    tree_domain = gr.Dropdown(
+                        ["Tous les domaines", *DOMAIN_ORDER],
+                        value="Tous les domaines",
+                        label="Domaine",
+                        scale=2,
+                    )
+                    tree_role = gr.Dropdown(
+                        list(ROLE_CATEGORIES),
+                        value="ALL",
+                        label="Nature",
+                        scale=2,
+                    )
+                    tree_search = gr.Textbox(
+                        label="Filtrer l’arbre",
+                        placeholder="Ex. postulat 1.5, théorème, bonheur, synonymie",
+                        scale=2,
+                    )
+                tree_view = gr.HTML(initial_tree_html)
+            with gr.Accordion("Carte visuelle des relations (6 domaines · 113 propositions)", open=False):
                 mindmap = gr.HTML(
                     render_mindmap("systemisme"),
                     css_template=MINDMAP_CSS,
@@ -596,8 +631,8 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             with gr.Accordion("Ouvrages indexés et comparaison entre éditions (25 livres)", open=False):
                 with gr.Row(elem_classes=["inline-submit-row"]):
                     paired = gr.Dropdown(
-                        options,
-                        label="Comparer la notion active avec une autre",
+                        node_options,
+                        label="Comparer avec une autre proposition",
                         value=None,
                         scale=3,
                     )
@@ -695,9 +730,18 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             show_progress="hidden",
         )
 
-    def atlas_change(key):
+    def _mindmap_key(key):
         if key in NODES:
-            return render_concept_wiki(key, local), render_mindmap(key)
+            return key
+        if key in CONCEPTS and CONCEPTS[key].get("nodes"):
+            first = CONCEPTS[key]["nodes"][0]
+            if first in NODES:
+                return first
+        return "systemisme"
+
+    def atlas_change(key):
+        if key in CONCEPTS or key in NODES:
+            return render_concept_wiki(key, local), render_mindmap(_mindmap_key(key))
         view_html, _, _ = atlas_view(key, local)
         return view_html, render_mindmap("systemisme")
 
@@ -708,6 +752,19 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         api_name=False,
         show_progress="hidden",
     )
+
+    def update_tree(dom, role_val, query_txt):
+        return render_deductive_tree(dom, role_val, query_txt, local)
+
+    for ev in (tree_domain.change, tree_role.change, tree_search.input):
+        ev(
+            update_tree,
+            [tree_domain, tree_role, tree_search],
+            tree_view,
+            api_name=False,
+            show_progress="hidden",
+        )
+
     symbol_filter.input(
         render_symbol_lexicon,
         symbol_filter,
@@ -719,28 +776,29 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     def select_concept(key):
         if not key:
             return gr.skip()
-        extras = []
-        if key not in NODES:
-            record = read_marker(key)
-            if not record:
-                return gr.skip()
-            extras = [(record[0], key)]
-        return gr.Dropdown(choices=options + extras, value=key)
+        if key in CONCEPTS:
+            return gr.Dropdown(choices=concept_options, value=key)
+        if key in NODES:
+            return gr.Dropdown(choices=concept_options + [(NODES[key]["title"], key)], value=key)
+        record = read_marker(key)
+        if not record:
+            return gr.skip()
+        return gr.Dropdown(choices=concept_options + [(record[0], key)], value=key)
 
     open_marker.click(
         select_concept, marker, concept, api_name=False, show_progress="hidden"
     )
 
-    # Navigation Wikipédia au clic sur n'importe quel mot souligné en bleu (.wiki-link)
+    # Navigation au clic sur n'importe quel concept souligné en bleu ou lien vers une proposition
     def open_wiki_from_link(payload):
         raw = (payload or "").split("::", 1)[0].strip()
-        if not raw or raw not in NODES:
+        if not raw or (raw not in CONCEPTS and raw not in NODES):
             return gr.skip(), gr.skip(), gr.skip(), gr.skip()
         return (
             gr.Tabs(selected="atlas"),
-            gr.Dropdown(choices=options, value=raw),
+            select_concept(raw),
             render_concept_wiki(raw, local),
-            render_mindmap(raw),
+            render_mindmap(_mindmap_key(raw)),
         )
 
     wiki_bridge.change(
@@ -853,9 +911,10 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
 
     def paired_cards(left, right):
         if not left or not right:
-            return "<p>Choisissez une seconde notion à comparer.</p>"
+            return "<p>Choisissez une seconde proposition à comparer.</p>"
+        left_key = _mindmap_key(left) if left in CONCEPTS else left
         sources = [
-            node_source(k) if k in NODES else read_marker(k)[1] for k in (left, right)
+            node_source(k) if k in NODES else read_marker(k)[1] for k in (left_key, right)
         ]
         return (
             '<div class="compare-grid">'
@@ -1060,15 +1119,10 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     )
 
     def focus(q_text, saved, rs):
-        from wiki_concepts import CONCEPT_ALIASES
-
-        qf = fold(q_text or "")
-        alias_hits = [
-            k
-            for k, aliases in CONCEPT_ALIASES.items()
-            if k in NODES and any(fold(a) in qf for a in aliases)
-        ]
-        nodeids = alias_hits or suggested_nodes(q_text) or [
+        cid = find_concept_for_query(q_text)
+        if cid:
+            return gr.Tabs(selected="atlas"), select_concept(cid), *atlas_change(cid)
+        nodeids = suggested_nodes(q_text) or [
             k for p in resolve(q_text, saved, rs) for k in on_page(p["book"], p["page"])
         ]
         if not nodeids:
@@ -1080,7 +1134,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         if not nodeids:
             return (
                 gr.Tabs(selected="atlas"),
-                gr.Dropdown(choices=options, value="systemisme"),
+                gr.Dropdown(choices=concept_options, value="systemisme"),
                 initial_wiki_html,
                 render_mindmap("systemisme"),
             )
@@ -1112,6 +1166,13 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     )
 
     def from_atlas(key, request: gr.Request):
+        if key in CONCEPTS:
+            c = CONCEPTS[key]
+            node_keys = [nk for nk in c.get("nodes", ()) if nk in NODES]
+            first_node = node_keys[0] if node_keys else None
+            sources = [node_source(nk) for nk in node_keys[:3]]
+            d = get_dossier(c["title"], first_node, sources, request)
+            return gr.Tabs(selected="work"), c["title"], *ready(d), [], render_debate([], local)
         if key in NODES:
             title, source = NODES[key]["title"], node_source(key)
         else:

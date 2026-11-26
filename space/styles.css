@@ -759,39 +759,6 @@ body {
 .concept-map li { position: relative; padding: 0.34rem 0; }
 .concept-map li::before { content: ""; position: absolute; left: -1.25rem; top: 50%; width: 1rem; border-top: 1.5px solid var(--bunge-hairline-strong); }
 
-/* Footer */
-#custom-footer {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid var(--bunge-glass-border);
-  border-radius: 18px;
-  box-shadow: var(--bunge-shadow-sm);
-  display: flex;
-  justify-content: space-between;
-  margin-top: 32px;
-  padding: 15px 22px;
-}
-#custom-footer p { color: var(--bunge-muted) !important; font-size: 0.74rem; line-height: 1.5; margin: 0; max-width: 580px; }
-#custom-footer nav { display: flex; gap: 10px; }
-#custom-footer a {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--bunge-hairline);
-  border-radius: 999px;
-  color: var(--bunge-blue-deep) !important;
-  font-family: var(--bunge-mono);
-  font-size: 0.67rem;
-  font-weight: 600;
-  padding: 6px 13px;
-  text-decoration: none;
-  transition: all 150ms ease;
-}
-#custom-footer a:hover {
-  background: #ffffff;
-  border-color: rgba(37, 99, 235, 0.32);
-  color: var(--bunge-blue-dark) !important;
-}
 footer[aria-label="Gradio footer navigation"] { display: none !important; }
 
 button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--bunge-blue) !important; outline-offset: 2px !important; }
@@ -1392,6 +1359,248 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
 }
 .wiki-muted { color: var(--bunge-muted) !important; font-size: 0.78rem; }
 .wiki-editorial-note { color: var(--bunge-graphite) !important; font-size: 0.86rem; margin: 8px 0 0; }
+
+/* Concept Encyclopedia status badges, Bunge view & Deductive Tree */
+.concept-status-pill {
+  border-radius: 999px;
+  font-family: var(--bunge-mono);
+  font-size: 0.67rem;
+  font-weight: 600;
+  padding: 4px 12px;
+}
+.concept-status-bunge {
+  background: var(--bunge-green-soft);
+  border: 1px solid rgba(15, 118, 110, 0.24);
+  color: var(--bunge-green) !important;
+}
+.concept-status-standard {
+  background: var(--bunge-blue-soft);
+  border: 1px solid rgba(37, 99, 235, 0.24);
+  color: var(--bunge-blue-deep) !important;
+}
+.wiki-bunge-box {
+  background: rgba(248, 250, 252, 0.85);
+  border: 1px solid var(--bunge-hairline);
+  border-left: 3px solid var(--bunge-blue);
+  border-radius: 0 12px 12px 0;
+  margin: 12px 0 16px;
+  padding: 11px 14px;
+}
+.wiki-bunge-box strong {
+  color: var(--bunge-blue-deep) !important;
+  display: block;
+  font-family: var(--bunge-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.wiki-bunge-box p {
+  color: var(--bunge-graphite) !important;
+  font-size: 0.9rem;
+  line-height: 1.58;
+  margin: 0;
+}
+.wiki-infobox-related {
+  border-top: 1px solid var(--bunge-hairline);
+  padding: 10px 14px;
+}
+.wiki-infobox-related dt {
+  color: var(--bunge-muted) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.wiki-concept-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.wiki-concept-chip {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin: 0 !important;
+  padding: 3px 10px !important;
+  text-decoration: none !important;
+}
+.wiki-concept-chip:hover {
+  background: var(--bunge-blue-soft);
+}
+
+/* Complete Hierarchical Deductive Tree */
+.tree-filter-row {
+  align-items: flex-end !important;
+  gap: 10px !important;
+  margin-bottom: 6px !important;
+}
+.dtree-root {
+  display: grid;
+  gap: 18px;
+  margin-top: 6px;
+}
+.dtree-legend {
+  align-items: center;
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid var(--bunge-hairline);
+  border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 9px 12px;
+}
+.dtree-total {
+  color: var(--bunge-muted) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.68rem;
+  margin-left: auto;
+}
+.dtree-domain {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--bunge-hairline);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.dtree-domain-head {
+  align-items: center;
+  border-left: 4px solid var(--bunge-blue);
+  display: flex;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding-left: 10px;
+}
+.dtree-domain-head h3 {
+  color: var(--bunge-ink) !important;
+  font-family: var(--bunge-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+.dtree-domain-head small {
+  color: var(--bunge-muted) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.68rem;
+  margin-left: auto;
+}
+.dtree-branch {
+  margin-top: 12px;
+}
+.dtree-branch-title {
+  color: var(--bunge-graphite) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+.dtree-branch-title small { color: var(--bunge-muted) !important; font-weight: 500; }
+.dtree-list { display: grid; gap: 7px; }
+.dtree-node {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--bunge-hairline);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.dtree-summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 9px;
+  list-style: none;
+  padding: 9px 13px;
+}
+.dtree-summary::-webkit-details-marker { display: none; }
+.dtree-summary:hover { background: rgba(37, 99, 235, 0.04); }
+.dtree-title {
+  color: var(--bunge-ink) !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.dtree-ref {
+  color: var(--bunge-muted) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.66rem;
+  margin-left: auto;
+}
+.dtree-children-count {
+  background: rgba(15, 23, 42, 0.06);
+  border-radius: 999px;
+  color: var(--bunge-graphite) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.63rem;
+  padding: 2px 8px;
+}
+.dtree-role {
+  border-radius: 999px;
+  font-family: var(--bunge-mono);
+  font-size: 0.63rem;
+  font-weight: 650;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.dtree-role-definition { background: rgba(37, 99, 235, 0.11); color: #1d4ed8 !important; }
+.dtree-role-postulat { background: rgba(124, 58, 237, 0.11); color: #6d28d9 !important; }
+.dtree-role-these { background: rgba(15, 118, 110, 0.11); color: #0f766e !important; }
+.dtree-role-theoreme { background: rgba(180, 83, 9, 0.12); color: #b45309 !important; }
+.dtree-role-exemple { background: rgba(100, 116, 139, 0.12); color: #475569 !important; }
+.dtree-body {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 10px 14px 12px;
+}
+.dtree-via {
+  color: var(--bunge-blue-dark) !important;
+  display: inline-block;
+  font-size: 0.76rem;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+.dtree-text {
+  color: var(--bunge-ink) !important;
+  font-size: 0.88rem;
+  line-height: 1.56;
+  margin: 0 0 8px;
+}
+.dtree-formula {
+  background: rgba(239, 246, 255, 0.65);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  margin: 6px 0 8px;
+  padding: 6px 10px;
+}
+.dtree-quote {
+  border-left: 2px solid var(--bunge-blue);
+  color: var(--bunge-graphite) !important;
+  font-family: var(--bunge-serif);
+  font-size: 0.86rem;
+  margin: 0 0 8px;
+  padding-left: 10px;
+}
+.dtree-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.dtree-fiche-link { font-size: 0.8rem; font-weight: 560; }
+.dtree-cross {
+  color: var(--bunge-muted) !important;
+  font-size: 0.78rem;
+  margin: 6px 0 2px;
+}
+.dtree-children {
+  border-left: 2px solid rgba(37, 99, 235, 0.22);
+  display: grid;
+  gap: 7px;
+  margin: 10px 0 2px 8px;
+  padding-left: 14px;
+}
 
 @media (max-width: 820px) {
   .wiki-grid { grid-template-columns: 1fr; }

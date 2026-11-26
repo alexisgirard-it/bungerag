@@ -35,6 +35,7 @@ SPACE = f"{USER}/bungerag"
 SPACE_FILES = (
     "app.py",
     "atlas_graph.py",
+    "deductive_tree.py",
     "wiki_concepts.py",
     "README.md",
     "requirements.txt",
@@ -49,6 +50,7 @@ MODULES = (
     "library.py",
     "formal_logic.py",
     "contemporary.py",
+    "concepts.json",
     "referentiel.json",
     "workshop.py",
     "definitions.py",
