@@ -29,8 +29,8 @@
       "domain": "Ontologie",
       "status": "bunge",
       "aliases": ["système", "systèmes", "système concret", "systèmes concrets", "systémique"],
-      "definition": "Objet complexe dont les composants sont reliés entre eux par des liens ou interactions effectifs, et non simplement juxtaposés comme dans un agrégat. Un système concret se caractérise par sa composition, son environnement, sa structure (ensemble de liens) et ses mécanismes.",
-      "bunge_view": "Défini explicitement par Bunge au tome IV du Treatise (modèle CESM : composition, environnement, structure, mécanisme). Tout objet matériel réel est soit un système, soit un composant d’un système.",
+      "definition": "Objet complexe dont les composants sont reliés entre eux par des liens ou interactions effectifs, et non simplement juxtaposés comme dans un agrégat. Un système concret se caractérise par sa composition (C), son environnement (E), sa structure (S, ensemble de liens) et, dans les formulations ultérieures, ses mécanismes (M).",
+      "bunge_view": "Formalisé par Bunge au tome IV du Treatise (1979) par le triplet CES σ(x) = ⟨C(x), E(x), S(x)⟩, puis enrichi ultérieurement en modèle CESM ⟨C, E, S, M⟩ (Philosophical Dictionary, p. 39 ; Chasing Reality, p. 126) en explicitant les mécanismes. Tout objet matériel réel est soit un système, soit un composant d’un système.",
       "related_concepts": ["agregat", "systemisme", "emergence", "mecanisme", "chose"],
       "nodes": ["agregat-et-systeme", "postulat-emergence", "dynamique", "chimie"]
     },
@@ -256,12 +256,12 @@
     },
     {
       "id": "sens",
-      "title": "Sens (intension)",
+      "title": "Sens (purport, import et intension)",
       "domain": "Sémantique",
       "status": "bunge",
-      "aliases": ["intension", "sens sémantique"],
-      "definition": "Ensemble des construits qui impliquent un construit donné ou qui en découlent logiquement dans un contexte théorique (son « sens » ou contenu logique S(c)).",
-      "bunge_view": "Défini dans Treatise 1 et 2 : le sens dépend du réseau d’inférences dans une théorie et se distingue nettement de la référence (les objets visés). Bunge rejette l’identification frégéenne de la référence d’une proposition à sa valeur de vérité.",
+      "aliases": ["intension", "sens complet", "sens sémantique", "purport", "import logique"],
+      "definition": "Dans un contexte théorique fermé C, le sens complet d’un construit x est l’union de son purport (sens ascendant : les prémisses dont x dépend) et de son import (sens descendant : les conséquences qui découlent de x). L’intension (chapitre 4 du tome I) n’est pas synonyme de sens complet : elle convient aux construits hors système fermé, reste incluse dans le sens complet et ne coïncide avec lui que pour un construit basique non défini.",
+      "bunge_view": "Distinction explicite de Treatise 1 (p. 140 et Définition 5.18, p. 166–170) : le sens complet est contextuel et circule de haut en bas (des axiomes aux conséquences) dans une théorie ; il se distingue de la référence (les objets visés) et de la simple intension isolée.",
       "related_concepts": ["reference", "signification", "synonymie", "construit", "theorie"],
       "nodes": ["intension", "purport", "couple-signification", "sens-reference-distincts"]
     },
@@ -305,7 +305,7 @@
       "status": "bunge",
       "aliases": ["vérité", "verite", "vérité partielle", "verite partielle", "vérité factuelle", "vrai"],
       "definition": "Adéquation d’une proposition factuelle aux faits qu’elle décrit. En science factuelle, la vérité est généralement approchée et graduée (vérité partielle), jamais absolue ni définitive.",
-      "bunge_view": "Dans Treatise 2 (p. 102) et Treatise 6 (p. 56), Bunge formalise la vérité partielle v(p) ∈ [−1, 1] pour les propositions factuelles, la distingue de la vérité formelle (de raison) et la sépare strictement de l’efficacité pratique d’une règle technique.",
+      "bunge_view": "Dans Treatise 2 (ch. 8, Définition 8.1, p. 108–110) et Treatise 6 (p. 56), Bunge formalise la vérité partielle par une valuation à valeurs dans l’intervalle unité [0, 1] (0 pour la fausseté complète / contradiction, 1 pour la vérité complète / tautologie), la distingue de la vérité formelle (de raison) et la sépare strictement de l’efficacité pratique d’une règle technique.",
       "related_concepts": ["proposition", "verite-formelle", "realisme-scientifique", "verifiabilite", "regle-technologique"],
       "nodes": ["verite", "raison", "verite-efficacite", "evaluation"]
     },
