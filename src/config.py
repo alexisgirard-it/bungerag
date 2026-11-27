@@ -109,6 +109,7 @@ PUBLIC_V3 = replace(
     PUBLIC_V2,
     name="public_v3",
     k_candidates=24,
+    k_final=8,
     generation_backend=GEMINI_REASONING_CASCADE,
     verification_backend=GEMINI_REASONING_CASCADE,
     translator_backend=GEMINI_FAST_CASCADE,

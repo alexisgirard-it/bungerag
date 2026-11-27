@@ -167,3 +167,63 @@ def test_verifier_rejects_unsupported_claim_and_publishes_only_selected_quote(mo
     assert reason is None
     assert text == 'Bunge donne un exemple. [1]'
     assert [s['extrait'] for s in sources] == ['One precise example']
+
+
+def test_safe_subwindow_anchors_verbatim_long_quote_and_rejects_invented(tmp_path):
+    from evidence import _resolve_alias_safe
+
+    long_sentence = (
+        "P is a global property of a concrete system of kind K none of whose components "
+        "or environmental precursors possesses P before assembly."
+    )
+    path = tmp_path / "long.sqlite"
+    with sqlite3.connect(path) as db:
+        db.execute("CREATE TABLE pages(book,page,folio,lines)")
+        db.execute(
+            "INSERT INTO pages VALUES(?,?,?,?)",
+            (
+                "book",
+                "25",
+                "25",
+                gzip.compress(json.dumps([[[0, 0, 100, 20], long_sentence]]).encode()),
+            ),
+        )
+    shared = {"P1": passage("25", long_sentence)}
+
+    # Une phrase littérale > 20 mots est ancrée proprement sur une fenêtre exacte <= 20 mots.
+    resolved = _resolve_alias_safe({"id": "P1", "quote": long_sentence}, shared, path)
+    assert resolved is not None
+    assert len(resolved["extrait"].split()) <= 20
+    assert resolved["extrait"] in long_sentence
+
+    # Une citation longue inventée reste strictement rejetée.
+    fake = "This long invented quote does not exist anywhere in the passage and has well over twenty words in total right here."
+    assert _resolve_alias_safe({"id": "P1", "quote": fake}, shared, path) is None
+
+
+def test_draft_claims_keeps_valid_evidence_when_second_alias_fails(monkeypatch):
+    import evidence
+
+    source = passage("ch01", "Emergence is qualitative novelty in concrete systems.")
+    passages = {"P1": source}
+
+    def gen(prompt, system, backend, max_tokens):
+        return json.dumps(
+            {
+                "claims": [
+                    {
+                        "text": "L'émergence correspond à une nouveauté qualitative des systèmes concrets.",
+                        "evidence": [
+                            {"id": "P1", "quote": "Emergence is qualitative novelty"},
+                            {"id": "P1", "quote": "this quote does not exist"},
+                        ],
+                    }
+                ]
+            }
+        )
+
+    supported, reason = evidence.draft_claims("Q", passages, None, gen, "mock")
+    assert reason is None
+    assert len(supported) == 1
+    assert len(supported[0][1]) == 1
+    assert supported[0][1][0][0]["extrait"] == "Emergence is qualitative novelty"
