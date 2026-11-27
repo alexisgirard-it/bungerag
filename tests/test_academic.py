@@ -25,10 +25,13 @@ def test_should_search_academic_smart_trigger():
     assert should_search_academic("Quelle est la définition du systémisme ?")[0] is False
     assert should_search_academic("La causalité entraîne-t-elle le fatalisme ?")[0] is False
 
-    # Sujet contemporain / empirique -> OUI déclenché
+    # Sujet contemporain / empirique / vérification factuelle -> OUI déclenché
     assert should_search_academic("Un modèle de langage peut-il comprendre ?")[0] is True
     assert should_search_academic("La psychanalyse aide pourtant certains patients en clinique")[0] is True
     assert should_search_academic("Quelles études récentes portent sur les neurosciences ?")[0] is True
+    assert should_search_academic("mais est ce vrai que c'est un echec le neoliberalisme ?")[0] is True
+    assert should_search_academic("L'austérité réduit-elle vraiment la dette publique ?")[0] is True
+    assert should_search_academic("Est-ce vrai que les antidépresseurs sont efficaces dans les faits ?")[0] is True
 
     # Mode explicite off / force
     assert should_search_academic("Un LLM peut-il comprendre ?", mode="off")[0] is False
