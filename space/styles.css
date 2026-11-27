@@ -1693,6 +1693,56 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   font-weight: 600;
   margin-top: 6px;
 }
+.debate-academic-sources {
+  border-top: 1px dashed rgba(180, 83, 9, 0.22);
+  margin-top: 8px;
+  padding-top: 6px;
+}
+.debate-academic-sources summary {
+  color: #9a3412 !important;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.academic-card {
+  background: rgba(255, 251, 235, 0.78);
+  border: 1px solid rgba(217, 119, 6, 0.22);
+  border-left: 3px solid var(--bunge-ochre);
+  border-radius: 0 12px 12px 0;
+  margin-top: 8px;
+  padding: 10px 13px;
+}
+.academic-card-title {
+  color: #7c2d12 !important;
+  font-size: 0.88rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+.academic-card-title:hover { text-decoration: underline; }
+.academic-card-meta {
+  color: var(--bunge-muted) !important;
+  font-size: 0.76rem !important;
+  margin: 3px 0 5px !important;
+}
+.academic-card-abstract {
+  color: var(--bunge-graphite) !important;
+  font-size: 0.83rem !important;
+  line-height: 1.52 !important;
+  margin: 0 !important;
+}
+.academic-pill {
+  background: rgba(217, 119, 6, 0.12);
+  border-radius: 999px;
+  color: #9a3412;
+  font-family: var(--bunge-mono);
+  font-size: 0.66rem;
+  padding: 1px 7px;
+  margin-left: 6px;
+}
+.debate-academic-toggle {
+  margin-top: -2px !important;
+  margin-bottom: 4px !important;
+}
 .external-source-item {
   background: var(--bunge-ochre-soft);
   border-left: 3px solid var(--bunge-ochre);

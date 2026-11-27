@@ -1157,13 +1157,16 @@ DEBATE_SYSTEM = (
     "consacre-lui un point explicite qui distingue (a) ce que le corpus de Bunge ne tranche pas empiriquement, et "
     "(b) la distinction conceptuelle de Bunge qui éclaire ce point. "
     "5. Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
-    "Si une `source_externe_datee_hors_bunge` est fournie, distingue-la explicitement des textes de Bunge. "
+    "Si `source_externe_datee_hors_bunge` ou `etudes_scientifiques_externes_hors_bunge` sont fournis, distingue-les "
+    "EXPLICITEMENT des textes de Bunge (en mentionnant l’auteur et l’année comme étude scientifique externe hors Bunge, "
+    "uniquement si l’étude est réellement pertinente pour le point discuté) et ne les attribue JAMAIS à Mario Bunge. "
     "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : résume quelle prémisse du lecteur tient face "
     "à Bunge et laquelle reste contestée ou non démontrée. "
     "7. `question_suivante` (1 question courte et incisive) : pose le test ou l’objection décisive sur le vrai point de tension. "
     'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1","c2"],"impact_premisses":"...","question_suivante":"..."}. '
-    "Mets les identifiants de `preuves` (ex. c1, modele, analogie) UNIQUEMENT dans le tableau `appuis`, JAMAIS entre parenthèses "
-    "ni entre crochets dans le texte de `reponse` ou `impact_premisses` (au moins un identifiant dans `appuis`)."
+    "Mets les identifiants de `preuves` (ex. c1, modele, analogie — uniquement issus de `preuves`, jamais ext1/ext2) "
+    "UNIQUEMENT dans le tableau `appuis`, JAMAIS entre parenthèses ni entre crochets dans le texte de `reponse` ou "
+    "`impact_premisses` (au moins un identifiant dans `appuis`)."
 )
 
 _AI_DEBATE_RE = re.compile(
@@ -1339,8 +1342,11 @@ def debate_turn(
     search_fn=None,
     generate=None,
     external=None,
+    academic_mode="auto",
+    academic_search_fn=None,
 ):
     """Conduit un tour de débat philosophique sourcé (sur dossier existant ou libre)."""
+    from academic import search_academic_papers, should_search_academic
     from library import question_scope, search_library
 
     clean = " ".join((objection or "").split())[:800]
@@ -1373,6 +1379,8 @@ def debate_turn(
             "next_question": "",
             "sources": [],
             "external": external,
+            "academic_sources": [],
+            "academic_reason": "",
             "active_changes": dict(changes or {}),
             "mode": "scope-guard",
         }
@@ -1386,6 +1394,20 @@ def debate_turn(
         retriever,
         custom_retriever=search_fn is not None,
     )
+
+    # Recherche académique externe (OpenAlex / Europe PMC) activée intelligemment hors tests mockés.
+    academic_papers = []
+    academic_reason = ""
+    if academic_search_fn is not None or search_fn is None:
+        should_fetch, academic_reason = should_search_academic(clean, turns, mode=academic_mode)
+        if should_fetch:
+            fetcher = academic_search_fn or search_academic_papers
+            try:
+                academic_papers = list(fetcher(clean, turns)[:3])
+            except Exception:
+                academic_papers = []
+            if not academic_papers:
+                academic_reason = ""
     steps = active_dossier.get("steps") or []
     states = assess(steps, changes or {}) if steps else {}
 
@@ -1459,6 +1481,8 @@ def debate_turn(
             "next_question": active_dossier.get("open", ""),
             "sources": fresh,
             "external": external,
+            "academic_sources": academic_papers,
+            "academic_reason": academic_reason,
             "active_changes": dict(changes or {}),
             "mode": "retrieval-only",
         }
@@ -1478,6 +1502,20 @@ def debate_turn(
     }
     if external:
         prompt_data["source_externe_datee_hors_bunge"] = external
+    if academic_papers:
+        prompt_data["etudes_scientifiques_externes_hors_bunge"] = [
+            {
+                "id": p.get("id", f"ext{i}"),
+                "titre": p.get("title", ""),
+                "auteurs": p.get("authors", ""),
+                "annee": p.get("year"),
+                "revue": p.get("venue", ""),
+                "resume": p.get("abstract", ""),
+                "url": p.get("url", ""),
+                "source_catalogue": p.get("provider", ""),
+            }
+            for i, p in enumerate(academic_papers, 1)
+        ]
     prompt = json.dumps(prompt_data, ensure_ascii=False)
     from evidence import parse_object
 
@@ -1492,9 +1530,12 @@ def debate_turn(
         if isinstance(ids, list)
         else []
     )
+    all_internal_keys = set(evidence_payload.keys()) | {
+        p.get("id", f"ext{i}") for i, p in enumerate(academic_papers, 1)
+    }
     answer_text = _strip_internal_refs(
         (parsed.get("reponse") or "").strip() if isinstance(parsed, dict) else "",
-        evidence_payload.keys(),
+        all_internal_keys,
     )
     if not answer_text or not valid_ids:
         entry = {
@@ -1505,6 +1546,8 @@ def debate_turn(
             "next_question": active_dossier.get("open", ""),
             "sources": fresh,
             "external": external,
+            "academic_sources": academic_papers,
+            "academic_reason": academic_reason,
             "active_changes": dict(changes or {}),
             "mode": "citation-fallback",
         }
@@ -1515,11 +1558,13 @@ def debate_turn(
         "user": clean,
         "answer": answer_text[:3200],
         "impact": _strip_internal_refs(
-            (parsed.get("impact_premisses") or "").strip(), evidence_payload.keys()
+            (parsed.get("impact_premisses") or "").strip(), all_internal_keys
         )[:500],
         "next_question": (parsed.get("question_suivante") or "").strip()[:300],
         "sources": [evidence_sources[k] for k in valid_ids[:6]],
         "external": external,
+        "academic_sources": academic_papers,
+        "academic_reason": academic_reason,
         "active_changes": dict(changes or {}),
         "mode": "verified-debate",
     }

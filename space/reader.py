@@ -500,6 +500,32 @@ def _render_debate_body(text: str) -> str:
     return "".join(out)
 
 
+def _render_academic_card(paper: dict) -> str:
+    title = esc(paper.get("title") or "Étude scientifique")
+    url = esc(paper.get("url") or "", quote=True)
+    authors = esc(paper.get("authors") or "")
+    year = str(paper.get("year") or "")
+    venue = esc(paper.get("venue") or "")
+    provider = esc(paper.get("provider") or "Source académique")
+    cited = int(paper.get("cited_by") or 0)
+    meta_parts = [p for p in (authors, year, venue) if p]
+    cited_pill = f'<span class="academic-pill">{cited} cit.</span>' if cited > 0 else ""
+    prov_pill = f'<span class="academic-pill">{provider}</span>'
+    abstract = esc(paper.get("abstract") or "")
+    title_html = (
+        f'<a class="academic-card-title" href="{url}" target="_blank" rel="noopener">{title} ↗</a>'
+        if url
+        else f'<span class="academic-card-title">{title}</span>'
+    )
+    return (
+        f'<div class="academic-card">'
+        f"<div>{title_html}{prov_pill}{cited_pill}</div>"
+        + (f'<p class="academic-card-meta">{" · ".join(meta_parts)}</p>' if meta_parts else "")
+        + (f'<p class="academic-card-abstract">{abstract}</p>' if abstract else "")
+        + "</div>"
+    )
+
+
 def render_debate(history, local, notice=""):
     if not history and not notice:
         return (
@@ -510,6 +536,8 @@ def render_debate(history, local, notice=""):
     for item in history or []:
         src_list = item.get("sources") or []
         src_html = "".join(card(s, local) for s in src_list)
+        acad_list = item.get("academic_sources") or []
+        acad_html = "".join(_render_academic_card(p) for p in acad_list)
         ext = item.get("external")
         ext_html = (
             f'<p class="debate-external-badge"><strong>Source externe datée (hors Bunge) :</strong> '
@@ -536,6 +564,11 @@ def render_debate(history, local, notice=""):
             + (
                 f"<details class='debate-sources'><summary>Passages de Bunge cités ({len(src_list)})</summary>{src_html}</details>"
                 if src_html
+                else ""
+            )
+            + (
+                f"<details class='debate-academic-sources'><summary>Études scientifiques externes · hors Bunge ({len(acad_list)})</summary>{acad_html}</details>"
+                if acad_html
                 else ""
             )
             + "</article></div>"
@@ -722,6 +755,11 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 with gr.Row(elem_classes=["action-bar"]):
                     debate_send = gr.Button("Envoyer", variant="primary", scale=2)
                     debate_clear = gr.Button("Nouveau débat", scale=1)
+                academic_toggle = gr.Checkbox(
+                    value=True,
+                    label="Études scientifiques récentes (automatique si pertinent · OpenAlex / Europe PMC, hors Bunge)",
+                    elem_classes=["debate-academic-toggle"],
+                )
                 with gr.Accordion("Joindre une source externe datée (optionnel, hors Bunge)", open=False):
                     with gr.Row(elem_classes=["inline-submit-row"]):
                         fact_lookup = gr.Textbox(
@@ -1166,7 +1204,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         show_progress="hidden",
     )
 
-    def _send_debate_core(hist, text, fact, link, published, request: gr.Request):
+    def _send_debate_core(hist, text, fact, link, published, use_academic, request: gr.Request):
         clean_text = " ".join((text or "").split())
         if len(clean_text) < 3:
             yield hist, render_debate(hist, local, "Saisissez une thèse ou une question d’au moins 3 caractères."), text
@@ -1182,20 +1220,27 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             + '<div class="bunge-loading-bar" aria-label="Recherche dans Bunge"></div>',
             clean_text,
         )
+        acad_mode = "auto" if use_academic else "off"
         if run_debate is not None:
-            new_hist, notice = run_debate(None, {}, hist, clean_text, request, external=external)
+            new_hist, notice = run_debate(
+                None, {}, hist, clean_text, request, external=external, academic_mode=acad_mode
+            )
         else:
-            new_hist, notice = debate_turn(None, {}, hist, clean_text, external=external)
+            new_hist, notice = debate_turn(
+                None, {}, hist, clean_text, external=external, academic_mode=acad_mode
+            )
         yield new_hist, render_debate(new_hist, local, notice), "" if not notice else clean_text
 
-    def from_search_to_debate(q_text, hist, fact, link, published, request: gr.Request):
+    def from_search_to_debate(q_text, hist, fact, link, published, use_academic, request: gr.Request):
         prompt_q = (q_text or "").strip() or "Qu’apporte le systémisme de Bunge ?"
-        for new_hist, html_out, inp in _send_debate_core(hist, prompt_q, fact, link, published, request):
+        for new_hist, html_out, inp in _send_debate_core(
+            hist, prompt_q, fact, link, published, use_academic, request
+        ):
             yield gr.Tabs(selected="work"), new_hist, html_out, inp
 
     discuss.click(
         from_search_to_debate,
-        [q, debate_history, supplied_fact, supplied_link, supplied_date],
+        [q, debate_history, supplied_fact, supplied_link, supplied_date, academic_toggle],
         [tabs, debate_history, debate_view, debate_input],
         api_name=False,
         show_progress="hidden",
@@ -1203,19 +1248,21 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         concurrency_limit=1,
     )
 
-    def from_concepts_to_debate(key, hist, fact, link, published, request: gr.Request):
+    def from_concepts_to_debate(key, hist, fact, link, published, use_academic, request: gr.Request):
         if key in CONCEPTS:
             topic = f"Que vaut la position de Bunge sur le concept de {CONCEPTS[key]['title']} ?"
         elif key in NODES:
             topic = f"Peut-on contester « {NODES[key]['title']} » chez Bunge ?"
         else:
             topic = "Qu’apporte le systémisme de Bunge ?"
-        for new_hist, html_out, inp in _send_debate_core(hist, topic, fact, link, published, request):
+        for new_hist, html_out, inp in _send_debate_core(
+            hist, topic, fact, link, published, use_academic, request
+        ):
             yield gr.Tabs(selected="work"), new_hist, html_out, inp
 
     to_work.click(
         from_concepts_to_debate,
-        [concept, debate_history, supplied_fact, supplied_link, supplied_date],
+        [concept, debate_history, supplied_fact, supplied_link, supplied_date, academic_toggle],
         [tabs, debate_history, debate_view, debate_input],
         api_name=False,
         show_progress="hidden",
@@ -1251,7 +1298,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     for event in (debate_send.click, debate_input.submit):
         event(
             _send_debate_core,
-            [debate_history, debate_input, supplied_fact, supplied_link, supplied_date],
+            [debate_history, debate_input, supplied_fact, supplied_link, supplied_date, academic_toggle],
             [debate_history, debate_view, debate_input],
             api_name=False,
             show_progress="hidden",
@@ -1260,13 +1307,15 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         )
 
     for btn, starter_text in debate_starter_buttons:
-        def _run_starter(hist, fact, link, published, request: gr.Request, text=starter_text):
-            for step_out in _send_debate_core(hist, text, fact, link, published, request):
+        def _run_starter(hist, fact, link, published, use_academic, request: gr.Request, text=starter_text):
+            for step_out in _send_debate_core(
+                hist, text, fact, link, published, use_academic, request
+            ):
                 yield step_out
 
         btn.click(
             _run_starter,
-            [debate_history, supplied_fact, supplied_link, supplied_date],
+            [debate_history, supplied_fact, supplied_link, supplied_date, academic_toggle],
             [debate_history, debate_view, debate_input],
             api_name=False,
             show_progress="hidden",

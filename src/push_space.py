@@ -50,6 +50,7 @@ MODULES = (
     "library.py",
     "formal_logic.py",
     "contemporary.py",
+    "academic.py",
     "concepts.json",
     "referentiel.json",
     "workshop.py",

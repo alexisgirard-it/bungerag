@@ -316,11 +316,21 @@ def dossier_for_reader(question, request, passages=None, *, external=None):
         return dossier
 
 
-def debate_for_reader(dossier, changes, history, objection, request, *, external=None):
+def debate_for_reader(
+    dossier, changes, history, objection, request, *, external=None, academic_mode="auto"
+):
     try:
         reservation = QUOTAS.reserve(client_id(request))
     except QuotaExceeded:
-        return debate_turn(dossier, changes, history, objection, generate=None, external=external)
+        return debate_turn(
+            dossier,
+            changes,
+            history,
+            objection,
+            generate=None,
+            external=external,
+            academic_mode=academic_mode,
+        )
     try:
         from config import get_config
         from generate import generate_json
@@ -331,14 +341,28 @@ def debate_for_reader(dossier, changes, history, objection, request, *, external
             return generate_json(prompt, system, cfg.generation_backend, 2400)
 
         new_history, notice = debate_turn(
-            dossier, changes, history, objection, generate=write, external=external
+            dossier,
+            changes,
+            history,
+            objection,
+            generate=write,
+            external=external,
+            academic_mode=academic_mode,
         )
         QUOTAS.commit(reservation)
         return new_history, notice
     except Exception:
         QUOTAS.release(reservation)
         LOGGER.exception("debat_atelier_indisponible")
-        return debate_turn(dossier, changes, history, objection, generate=None, external=external)
+        return debate_turn(
+            dossier,
+            changes,
+            history,
+            objection,
+            generate=None,
+            external=external,
+            academic_mode=academic_mode,
+        )
 
 
 def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):
