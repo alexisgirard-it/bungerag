@@ -12,8 +12,8 @@ def test_public_page_is_a_consultation_interface_not_a_project_report() -> None:
     required = (
         "Questionner les textes.",
         "Rechercher les passages",
-        "Atlas des concepts",
-        "Atelier philosophique",
+        "Concepts",
+        "Débat",
         "Déplier l’argument",
         'elem_id="chat-shell"',
         "Réponse sourcée (IA)",

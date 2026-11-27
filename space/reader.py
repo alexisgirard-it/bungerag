@@ -52,7 +52,6 @@ from workshop import (
     formal_rights,
     formal_systemism,
     formal_world,
-    open_question,
     order_argument_steps,
 )
 
@@ -345,9 +344,20 @@ def dossier_view(dossier, changes, local):
     title_by_id = {s["id"]: s["title"] for s in ordered_steps}
     for idx, s in enumerate(ordered_steps, 1):
         state = states[s["id"]]
-        sources = "".join(card(r, local) for r in s["sources"])
-        for f in s.get("external", []):
-            sources += f'<p><a href="{esc(f["url"], quote=True)}" target="_blank" rel="noopener">{esc(f["title"])}</a></p>'
+        has_bunge = bool(s.get("sources"))
+        has_ext = bool(s.get("external"))
+        sources = "".join(card(r, local) for r in s.get("sources") or ())
+        for f in s.get("external") or ():
+            sources += (
+                f'<p class="external-source-item"><strong>Source externe datée (hors Bunge) :</strong> '
+                f'<a href="{esc(f["url"], quote=True)}" target="_blank" rel="noopener">{esc(f["title"])}</a></p>'
+            )
+        if has_bunge and has_ext:
+            src_summary = "Voir les sources (Bunge et source externe datée)"
+        elif has_ext:
+            src_summary = "Voir la source externe datée"
+        else:
+            src_summary = "Voir la source dans Bunge"
         supports = []
         for group in s["supports"]:
             names = " et ".join(title_by_id[p] for p in group if p in title_by_id)
@@ -384,7 +394,7 @@ def dossier_view(dossier, changes, local):
             )
             + ("<p><small>Dépend de :</small></p><ul>" + "".join(supports) + "</ul>" if supports else "")
             + (
-                f"<details><summary>Voir la source dans Bunge</summary>{sources}</details>"
+                f"<details><summary>{src_summary}</summary>{sources}</details>"
                 if sources
                 else ""
             )
@@ -448,29 +458,45 @@ def dossier_view(dossier, changes, local):
 
 def render_debate(history, local, notice=""):
     if not history and not notice:
-        return ""
-    blocks = []
-    for item in history or []:
-        mods = item.get("active_changes") or {}
-        mod_note = (
-            f"<small>Hypothèses actives du lecteur ({len(mods)} prémisse(s) modifiée(s))</small>"
-            if mods
-            else "<small>Argument initial actif</small>"
+        return (
+            '<div class="debate-empty"><p>Aucun échange en cours. '
+            "Choisissez une question ci-dessus ou écrivez votre thèse ou objection ci-dessous.</p></div>"
         )
-        src_html = "".join(card(s, local) for s in item.get("sources") or [])
-        impact = f"<p><strong>Effet sur les prémisses :</strong> {annotate_concepts(esc(item['impact']))}</p>" if item.get("impact") else ""
-        follow_q = f"<p><small>Piste de poursuite : {esc(item['next_question'])}</small></p>" if item.get("next_question") else ""
+    blocks = ['<div class="debate-thread">']
+    for item in history or []:
+        src_list = item.get("sources") or []
+        src_html = "".join(card(s, local) for s in src_list)
+        ext = item.get("external")
+        ext_html = (
+            f'<p class="debate-external-badge"><strong>Source externe datée (hors Bunge) :</strong> '
+            f'<a href="{esc(ext["url"], quote=True)}" target="_blank" rel="noopener">{esc(ext["title"])}</a></p>'
+            if ext and ext.get("url")
+            else ""
+        )
+        impact = (
+            f'<p class="debate-impact"><strong>Point logique :</strong> {annotate_concepts(esc(item["impact"]))}</p>'
+            if item.get("impact")
+            else ""
+        )
+        follow_q = (
+            f'<p class="debate-followup"><small>Piste de discussion : {esc(item["next_question"])}</small></p>'
+            if item.get("next_question")
+            else ""
+        )
         blocks.append(
-            f'<article class="argument-step"><small>Tour {int(item["turn"])} · {esc(item.get("mode", "débat"))}</small>'
-            f"<h4>Objection : {esc(item['user'])}</h4>{mod_note}"
+            f'<div class="debate-turn">'
+            f'<div class="debate-user-bubble"><span class="debate-role-tag">Vous · Tour {int(item["turn"])}</span>'
+            f"<p>{esc(item['user'])}</p>{ext_html}</div>"
+            f'<article class="debate-bot-card"><span class="debate-role-tag">BungeRAG · Réponse sourcée</span>'
             f"<p>{annotate_concepts(esc(item['answer']))}</p>{impact}{follow_q}"
             + (
-                f"<details><summary>Appuis sourcés de ce tour ({len(item['sources'])})</summary>{src_html}</details>"
+                f"<details class='debate-sources'><summary>Passages de Bunge cités ({len(src_list)})</summary>{src_html}</details>"
                 if src_html
                 else ""
             )
-            + "</article>"
+            + "</article></div>"
         )
+    blocks.append("</div>")
     if notice:
         blocks.append(f'<p role="status">{esc(notice)}</p>')
     return "".join(blocks)
@@ -486,19 +512,15 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
     coverage_html, book_options, first_book = coverage()
     initial_wiki_html = render_concept_wiki("systemisme", local)
     initial_tree_html = render_deductive_tree("Tous les domaines", "ALL", "", local)
-    initial_dossier = DOSSIERS["ia"]()
-    initial_steps = [(s["title"], s["id"]) for s in initial_dossier["steps"]]
     research = gr.State([])
     saved_question = gr.State("")
     inline_dossier = gr.State({})
     reader_state = gr.State({"book": "", "page": "", "highlight": ""})
-    dossier = gr.State(initial_dossier)
-    changes = gr.State({})
     debate_history = gr.State([])
     sections = (
         ("Rechercher", "search"),
-        ("Atlas des concepts", "atlas"),
-        ("Atelier philosophique", "work"),
+        ("Concepts", "atlas"),
+        ("Débat", "work"),
     )
     suggestions = (
         ("L’émergence", "Qu'est-ce que l'émergence pour Bunge ?"),
@@ -506,30 +528,13 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         ("Un LLM peut-il comprendre ?", "Un modèle de langage peut-il comprendre ?"),
         ("Bonheur complet ?", "Peut-on être complètement heureux selon Bunge ?"),
     )
-    dossier_choices = [
-        ("IA · Un modèle de langage peut-il comprendre ? (T4)", "ia"),
-        ("Éthique · Peut-on être complètement heureux ? (T8)", "bonheur"),
-        ("Ontologie · Systémisme et émergence (T4)", "systemisme"),
-        ("Ontologie · Pourquoi le monde est-il unique ? (T3)", "monde"),
-        ("Épistémologie · Explication et mécanisme (T6)", "mecanisme"),
-        ("Causalité · Causalité et fatalisme", "fatalisme"),
-        ("Éthique · Besoin et obligation morale (T8)", "devoir"),
-        ("Sémantique · Existence des idées et construits (T1)", "existence"),
-        ("IA · Grande fenêtre de contexte et compréhension (T6)", "contexte"),
-        ("Technologie · Efficacité, vérité et morale (T6–T8)", "efficacite"),
-        ("Sémantique · Sens, référence et synonymie (T1–T2)", "signification"),
-        ("Épistémologie · Conjecture, inférence et théorie (T5)", "conjecture"),
-        ("Sciences · Modèle factuel et physique (T7/I)", "modele_factuel"),
-        ("Sémantique · Interprétation et vérité partielle (T1–T2)", "semantique_verite"),
-        ("Ontologie · Propriétés, choses et espace-temps (T3)", "ontologie_choses"),
-        ("Ontologie · Niveaux chimique, biologique et social (T4)", "niveaux_systemes"),
-        ("Épistémologie · Cognition, perception et enquête (T5)", "cognition_enquete"),
-        ("Épistémologie · Évaluation et évolution du savoir (T6)", "evolution_savoir"),
-        ("Sciences · Psychologie et sciences sociales (T7/II)", "sciences_vie_societe"),
-        ("Éthique · Valeurs, cas moraux et mœurs (T8)", "ethique_normes"),
-        ("Éthique · Métaéthique, société et survie (T8)", "metaethique_survie"),
-    ]
-    # Ponts JS → Gradio invisibles pour ouvrir une page Wikipédia de concept ou la liseuse depuis n'importe quel lien bleu/bouton.
+    debate_starters = (
+        ("Un LLM peut-il comprendre ?", "Un modèle de langage peut-il comprendre selon le cadre de Bunge ?"),
+        ("Holisme vs systémisme", "Le holisme n’est-il pas plus pertinent que le systémisme ?"),
+        ("Bonheur complet ?", "Peut-on atteindre un bonheur complet selon Bunge ?"),
+        ("Causalité et fatalisme", "La causalité implique-t-elle le fatalisme ?"),
+    )
+    # Ponts JS → Gradio invisibles pour ouvrir une fiche de concept ou la liseuse depuis n'importe quel lien bleu/bouton.
     wiki_bridge = gr.Textbox(value="", elem_id="wiki-bridge", elem_classes=["sr-bridge"], show_label=False)
     reader_bridge = gr.Textbox(value="", elem_id="reader-bridge", elem_classes=["sr-bridge"], show_label=False)
 
@@ -558,7 +563,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                 with gr.Row(elem_classes=["action-bar", "followup-bar"]):
                     expand = gr.Button("Déplier l’argument", visible=False)
                     locate = gr.Button("Fiche du concept", visible=False)
-                    discuss = gr.Button("Examiner dans l’Atelier", visible=False)
+                    discuss = gr.Button("En débattre", visible=False)
                 legacy_fn, legacy_outputs = legacy(
                     q,
                     ai_go,
@@ -581,7 +586,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     reader_close = gr.Button("Fermer la liseuse", size="sm", visible=False)
                 reader_view = gr.HTML("")
 
-        with gr.Tab("Atlas des concepts", id="atlas"):
+        with gr.Tab("Concepts", id="atlas"):
             with gr.Column(elem_classes=["glass-panel"]):
                 with gr.Row(elem_classes=["inline-submit-row"]):
                     concept = gr.Dropdown(
@@ -590,7 +595,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         label=f"Sélectionner un concept philosophique ou scientifique ({len(concept_options)} concepts)",
                         scale=3,
                     )
-                    to_work = gr.Button("Ouvrir dans l’Atelier", scale=1)
+                    to_work = gr.Button("En débattre →", scale=1)
                 wiki_view = gr.HTML(initial_wiki_html)
             with gr.Column(elem_classes=["glass-panel"]):
                 gr.HTML(
@@ -653,24 +658,30 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                     )
                     open_marker = gr.Button("Ouvrir ce repère", scale=1)
 
-        with gr.Tab("Atelier philosophique", id="work"):
+        with gr.Tab("Débat", id="work"):
             with gr.Column(elem_classes=["glass-panel"]):
-                shortcuts = gr.Dropdown(
-                    dossier_choices,
-                    value="ia",
-                    label="Dossier d’argumentation (21 dossiers · 54/54 chapitres du Traité)",
+                gr.HTML(
+                    '<div class="section-heading"><h3>Débat philosophique sourcé</h3>'
+                    "<p>Soumettez une thèse, une objection ou un cas contemporain. Chaque réponse s’appuie sur des passages vérifiés de Mario Bunge et distingue ses textes de vos hypothèses.</p></div>"
                 )
-                with gr.Accordion("Examiner une autre thèse ou joindre une source datée", open=False):
-                    with gr.Row(elem_classes=["inline-submit-row"]):
-                        work_q = gr.Textbox(
-                            label="Thèse ou question à examiner",
-                            placeholder="Ex. Un algorithme prédictif explique-t-il un phénomène ?",
-                            scale=3,
-                        )
-                        work_go = gr.Button("Ouvrir", variant="primary", scale=1)
+                with gr.Row(elem_classes=["suggestion-row"]):
+                    debate_starter_buttons = [
+                        (gr.Button(short, size="sm"), full)
+                        for short, full in debate_starters
+                    ]
+                debate_view = gr.HTML(render_debate([], local))
+                debate_input = gr.Textbox(
+                    label="Votre thèse, objection ou réponse",
+                    placeholder="Ex. Un modèle de langage manipule des symboles sans cerveau biologique : peut-on parler de compréhension ?",
+                    lines=2,
+                )
+                with gr.Row(elem_classes=["action-bar"]):
+                    debate_send = gr.Button("Envoyer", variant="primary", scale=2)
+                    debate_clear = gr.Button("Nouveau débat", scale=1)
+                with gr.Accordion("Joindre une source externe datée (optionnel, hors Bunge)", open=False):
                     with gr.Row(elem_classes=["inline-submit-row"]):
                         fact_lookup = gr.Textbox(
-                            label="Source datée optionnelle (URL HTTPS ou notice Wikipédia)",
+                            label="URL HTTPS publique ou sujet Wikipédia",
                             placeholder="https://… ou ex. AlphaFold, Llama 3.1",
                             scale=3,
                         )
@@ -682,44 +693,6 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         supplied_date = gr.Textbox(
                             label="Date", placeholder="AAAA-MM-JJ"
                         )
-            work_text = gr.HTML(dossier_view(initial_dossier, {}, local))
-            with gr.Column(elem_classes=["glass-panel"]):
-                gr.HTML(
-                    '<div class="section-heading"><h3>Modifier une prémisse</h3>'
-                    "<p>Suspendre ou remplacer une étape indique quelles conclusions cessent d’être justifiées dans ce dossier.</p></div>"
-                )
-                with gr.Row():
-                    premise = gr.Dropdown(
-                        label="Étape à modifier",
-                        choices=initial_steps,
-                        value=initial_steps[0][1] if initial_steps else None,
-                    )
-                    action = gr.Radio(
-                        [("Suspendre", "Suspendre"), ("Remplacer", "Remplacer")],
-                        value="Suspendre",
-                        label="Modification",
-                    )
-                replacement = gr.Textbox(
-                    label="Prémisse de remplacement (si « Remplacer »)",
-                    placeholder="Hypothèse de travail",
-                )
-                with gr.Row(elem_classes=["action-bar"]):
-                    apply = gr.Button("Appliquer", variant="primary")
-                    reset = gr.Button("Réinitialiser")
-            with gr.Column(elem_classes=["glass-panel"]):
-                gr.HTML(
-                    '<div class="section-heading"><h3>Discussion sur ce dossier</h3>'
-                    "<p>Les modifications de prémisses restent actives d’un tour à l’autre. Chaque réponse cite des passages indexés.</p></div>"
-                )
-                debate_view = gr.HTML(render_debate([], local))
-                debate_input = gr.Textbox(
-                    label="Objection ou question de suivi",
-                    placeholder="Ex. Si cette prémisse est suspendue, quel passage de Bunge répond à cette objection ?",
-                    lines=2,
-                )
-                with gr.Row(elem_classes=["action-bar"]):
-                    debate_send = gr.Button("Envoyer", variant="primary")
-                    debate_clear = gr.Button("Effacer")
 
     for button, section in mobile_navigation:
         button.click(
@@ -1149,52 +1122,61 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         show_progress="hidden",
     )
 
-    def from_search(q_text, saved, rs, previous, request: gr.Request):
-        d = (
-            previous
-            if previous and q_text.strip() == saved
-            else get_dossier(q_text, None, resolve(q_text, saved, rs), request)
+    def _send_debate_core(hist, text, fact, link, published, request: gr.Request):
+        clean_text = " ".join((text or "").split())
+        if len(clean_text) < 3:
+            yield hist, render_debate(hist, local, "Saisissez une thèse ou une question d’au moins 3 caractères."), text
+            return
+        try:
+            external = contemporary_claim(fact, link, published)
+        except ValueError as exc:
+            yield hist, render_debate(hist, local, str(exc)), text
+            return
+        yield (
+            hist,
+            render_debate(hist, local)
+            + '<div class="bunge-loading-bar" aria-label="Recherche dans Bunge"></div>',
+            clean_text,
         )
-        return gr.Tabs(selected="work"), q_text, *ready(d), [], render_debate([], local)
+        if run_debate is not None:
+            new_hist, notice = run_debate(None, {}, hist, clean_text, request, external=external)
+        else:
+            new_hist, notice = debate_turn(None, {}, hist, clean_text, external=external)
+        yield new_hist, render_debate(new_hist, local, notice), "" if not notice else clean_text
+
+    def from_search_to_debate(q_text, hist, fact, link, published, request: gr.Request):
+        prompt_q = (q_text or "").strip() or "Qu’apporte le systémisme de Bunge ?"
+        for new_hist, html_out, inp in _send_debate_core(hist, prompt_q, fact, link, published, request):
+            yield gr.Tabs(selected="work"), new_hist, html_out, inp
 
     discuss.click(
-        from_search,
-        [q, saved_question, research, inline_dossier],
-        [tabs, work_q, dossier, changes, work_text, premise, debate_history, debate_view],
+        from_search_to_debate,
+        [q, debate_history, supplied_fact, supplied_link, supplied_date],
+        [tabs, debate_history, debate_view, debate_input],
         api_name=False,
         show_progress="hidden",
+        concurrency_id="reader",
+        concurrency_limit=1,
     )
 
-    def from_atlas(key, request: gr.Request):
+    def from_concepts_to_debate(key, hist, fact, link, published, request: gr.Request):
         if key in CONCEPTS:
-            c = CONCEPTS[key]
-            node_keys = [nk for nk in c.get("nodes", ()) if nk in NODES]
-            first_node = node_keys[0] if node_keys else None
-            sources = [node_source(nk) for nk in node_keys[:3]]
-            d = get_dossier(c["title"], first_node, sources, request)
-            return gr.Tabs(selected="work"), c["title"], *ready(d), [], render_debate([], local)
-        if key in NODES:
-            title, source = NODES[key]["title"], node_source(key)
+            topic = f"Que vaut la position de Bunge sur le concept de {CONCEPTS[key]['title']} ?"
+        elif key in NODES:
+            topic = f"Peut-on contester « {NODES[key]['title']} » chez Bunge ?"
         else:
-            record = read_marker(key)
-            if not record:
-                return (
-                    gr.Tabs(selected="work"),
-                    "",
-                    *ready(open_question("Choisissez une question.", [])),
-                    [],
-                    render_debate([], local),
-                )
-            title, source, _ = record
-        d = get_dossier(title, key, [source], request)
-        return gr.Tabs(selected="work"), title, *ready(d), [], render_debate([], local)
+            topic = "Qu’apporte le systémisme de Bunge ?"
+        for new_hist, html_out, inp in _send_debate_core(hist, topic, fact, link, published, request):
+            yield gr.Tabs(selected="work"), new_hist, html_out, inp
 
     to_work.click(
-        from_atlas,
-        concept,
-        [tabs, work_q, dossier, changes, work_text, premise, debate_history, debate_view],
+        from_concepts_to_debate,
+        [concept, debate_history, supplied_fact, supplied_link, supplied_date],
+        [tabs, debate_history, debate_view, debate_input],
         api_name=False,
         show_progress="hidden",
+        concurrency_id="reader",
+        concurrency_limit=1,
     )
 
     def prefill_fact(query_or_url):
@@ -1211,7 +1193,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
             item["text"],
             item["url"],
             item["published"],
-            f'<p role="status">Source pré-remplie ({esc(item["title"])}) — relisez avant d’analyser.</p>',
+            f'<p role="status">Source externe pré-remplie ({esc(item["title"])}) — distincte des textes de Bunge.</p>',
         )
 
     fact_fetch.click(
@@ -1222,126 +1204,35 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         show_progress="hidden",
     )
 
-    def example(key):
-        if not key or key not in DOSSIERS:
-            return gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
-        d = DOSSIERS[key]()
-        return *ready(d), [], render_debate([], local)
-
-    shortcuts.change(
-        example,
-        shortcuts,
-        [dossier, changes, work_text, premise, debate_history, debate_view],
-        api_name=False,
-        show_progress="hidden",
-    )
-
-    def custom(question, fact, link, published, request: gr.Request):
-        question = " ".join((question or "").split())
-        if not 3 <= len(question) <= max_chars:
-            yield (
-                {},
-                {},
-                "<p>Précisez la thèse à examiner.</p>",
-                gr.Dropdown(choices=[], value=None),
-                [],
-                render_debate([], local),
-            )
-            return
-        try:
-            external = contemporary_claim(fact, link, published)
-        except ValueError as exc:
-            yield (
-                {},
-                {},
-                f'<p role="alert">{esc(str(exc))}</p>',
-                gr.Dropdown(choices=[], value=None),
-                [],
-                render_debate([], local),
-            )
-            return
-        yield (
-            gr.skip(),
-            {},
-            '<div class="bunge-loading-bar" aria-label="Analyse en cours"></div>',
-            gr.skip(),
-            [],
-            render_debate([], local),
-        )
-        key = choose_dossier(question) if not external else None
-        d = (
-            DOSSIERS[key]()
-            if key
-            else create_dossier(question, request, external=external)
-        )
-        yield *ready(d), [], render_debate([], local)
-
-    for event in (work_go.click, work_q.submit):
-        event(
-            custom,
-            [work_q, supplied_fact, supplied_link, supplied_date],
-            [dossier, changes, work_text, premise, debate_history, debate_view],
-            api_name=False,
-            show_progress="hidden",
-            concurrency_id="reader",
-            concurrency_limit=1,
-        )
-
-    def send_debate(d, ch, hist, text, request: gr.Request):
-        yield (
-            hist,
-            render_debate(hist, local)
-            + '<div class="bunge-loading-bar" aria-label="Recherche dans Bunge"></div>',
-            text,
-        )
-        if run_debate is not None:
-            new_hist, notice = run_debate(d, ch, hist, text, request)
-        else:
-            new_hist, notice = debate_turn(d, ch, hist, text)
-        yield new_hist, render_debate(new_hist, local, notice), "" if not notice else text
-
     for event in (debate_send.click, debate_input.submit):
         event(
-            send_debate,
-            [dossier, changes, debate_history, debate_input],
+            _send_debate_core,
+            [debate_history, debate_input, supplied_fact, supplied_link, supplied_date],
             [debate_history, debate_view, debate_input],
             api_name=False,
             show_progress="hidden",
             concurrency_id="reader",
             concurrency_limit=1,
         )
+
+    for btn, starter_text in debate_starter_buttons:
+        def _run_starter(hist, fact, link, published, request: gr.Request, text=starter_text):
+            for step_out in _send_debate_core(hist, text, fact, link, published, request):
+                yield step_out
+
+        btn.click(
+            _run_starter,
+            [debate_history, supplied_fact, supplied_link, supplied_date],
+            [debate_history, debate_view, debate_input],
+            api_name=False,
+            show_progress="hidden",
+            concurrency_id="reader",
+            concurrency_limit=1,
+        )
+
     debate_clear.click(
-        lambda: ([], render_debate([], local), ""),
-        outputs=[debate_history, debate_view, debate_input],
-        api_name=False,
-        show_progress="hidden",
-    )
-
-    def change(d, old, key, operation, new):
-        updated = dict(old)
-        if key not in {s["id"] for s in d.get("steps", [])}:
-            return old, dossier_view(d, old, local)
-        if operation == "Remplacer" and not new.strip():
-            return old, dossier_view(
-                d, old, local
-            ) + "<p>Indiquez votre hypothèse de remplacement.</p>"
-        if operation == "Rétablir":
-            updated.pop(key, None)
-        else:
-            updated[key] = new.strip()[:max_chars] if operation == "Remplacer" else ""
-        return updated, dossier_view(d, updated, local)
-
-    apply.click(
-        change,
-        [dossier, changes, premise, action, replacement],
-        [changes, work_text],
-        api_name=False,
-        show_progress="hidden",
-    )
-    reset.click(
-        lambda d: ({}, dossier_view(d, {}, local)),
-        dossier,
-        [changes, work_text],
+        lambda: ([], render_debate([], local), "", "", "", "", ""),
+        outputs=[debate_history, debate_view, debate_input, supplied_fact, supplied_link, supplied_date, fact_status],
         api_name=False,
         show_progress="hidden",
     )

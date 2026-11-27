@@ -103,7 +103,7 @@ HERO = """
 <section id="hero" aria-labelledby="hero-title">
   <div class="hero-kicker">25 ouvrages indexés · éditions anglaises de référence</div>
   <h1 id="hero-title">Questionner les textes.</h1>
-  <p>Consultation de passages sourcés, fiches de concepts et examen d’arguments sur l’œuvre de Mario Bunge.</p>
+  <p>Recherche de passages sourcés, répertoire de concepts et débat philosophique sur l’œuvre de Mario Bunge.</p>
 </section>
 """
 
@@ -316,11 +316,11 @@ def dossier_for_reader(question, request, passages=None, *, external=None):
         return dossier
 
 
-def debate_for_reader(dossier, changes, history, objection, request):
+def debate_for_reader(dossier, changes, history, objection, request, *, external=None):
     try:
         reservation = QUOTAS.reserve(client_id(request))
     except QuotaExceeded:
-        return debate_turn(dossier, changes, history, objection, generate=None)
+        return debate_turn(dossier, changes, history, objection, generate=None, external=external)
     try:
         from config import get_config
         from generate import generate_json
@@ -331,14 +331,14 @@ def debate_for_reader(dossier, changes, history, objection, request):
             return generate_json(prompt, system, cfg.generation_backend, 1400)
 
         new_history, notice = debate_turn(
-            dossier, changes, history, objection, generate=write
+            dossier, changes, history, objection, generate=write, external=external
         )
         QUOTAS.commit(reservation)
         return new_history, notice
     except Exception:
         QUOTAS.release(reservation)
         LOGGER.exception("debat_atelier_indisponible")
-        return debate_turn(dossier, changes, history, objection, generate=None)
+        return debate_turn(dossier, changes, history, objection, generate=None, external=external)
 
 
 def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):

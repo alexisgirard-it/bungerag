@@ -290,14 +290,14 @@ def _render_concept_page(cid: str, local: Path | None = None) -> str:
     if dossiers:
         d_chips = "".join(f'<span class="wiki-dossier-chip">{esc(title)}</span>' for _, title in dossiers)
         dossiers_html = (
-            f'<section class="wiki-section"><h3>Dossiers d’Atelier associés</h3>'
+            f'<section class="wiki-section"><h3>Questions associées</h3>'
             f'<div class="wiki-dossier-list">{d_chips}</div></section>'
         )
 
     return (
         f'<article class="wiki-article" data-concept-key="{esc(cid)}">'
         f'<nav class="wiki-breadcrumb" aria-label="Fil d’Ariane">'
-        f'<span>Atlas</span> › <span>Concepts</span> › <span style="color:{color};font-weight:600;">{esc(c["domain"])}</span> › <span>{esc(c["title"])}</span></nav>'
+        f'<span>Concepts</span> › <span style="color:{color};font-weight:600;">{esc(c["domain"])}</span> › <span>{esc(c["title"])}</span></nav>'
         f'<header class="wiki-title-bar"><h2>{esc(c["title"])}</h2>'
         f'<span class="concept-status-pill {status_cls}">{esc(status_label)}</span></header>'
         f'<div class="wiki-grid">'
@@ -482,14 +482,14 @@ def render_concept_wiki(key: str, local: Path | None = None) -> str:
     if linked_dossiers:
         d_chips = "".join(f'<span class="wiki-dossier-chip">{esc(title)}</span>' for _, title in linked_dossiers)
         dossiers_html = (
-            f'<section class="wiki-section"><h3>Dossiers d’Atelier associés</h3>'
+            f'<section class="wiki-section"><h3>Questions associées</h3>'
             f'<div class="wiki-dossier-list">{d_chips}</div></section>'
         )
 
     return (
         f'<article class="wiki-article" data-concept-key="{esc(key)}">'
         f'<nav class="wiki-breadcrumb" aria-label="Fil d’Ariane">'
-        f'<span>Atlas</span> › <span>Arbre déductif</span> › <span style="color:{color};font-weight:600;">{esc(node["domain"])}</span> › <span>{esc(node["title"])}</span></nav>'
+        f'<span>Concepts</span> › <span>Arbre déductif</span> › <span style="color:{color};font-weight:600;">{esc(node["domain"])}</span> › <span>{esc(node["title"])}</span></nav>'
         f'<header class="wiki-title-bar"><h2>{esc(node["title"])}</h2>'
         f'<span class="wiki-kind-pill" style="border-color:{color};color:{color};">{esc(node["kind"])}</span></header>'
         f'<div class="wiki-grid">'

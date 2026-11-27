@@ -1129,16 +1129,29 @@ def open_question(question, research, *, generate=None, external=None):
     return dossier
 
 
-def debate_turn(dossier, changes, history, objection, *, search_fn=None, generate=None):
-    """Conduit un tour de débat philosophique en conservant l’état des prémisses contestées."""
+def debate_turn(
+    dossier,
+    changes,
+    history,
+    objection,
+    *,
+    search_fn=None,
+    generate=None,
+    external=None,
+):
+    """Conduit un tour de débat philosophique sourcé (sur dossier existant ou libre)."""
     from library import question_scope, search_library
 
     clean = " ".join((objection or "").split())[:800]
     turns = list(history or [])
     if len(clean) < 3:
-        return turns, "Formulez une objection ou une question d’au moins 3 caractères."
-    if not dossier or not dossier.get("steps"):
-        return turns, "Ouvrez d’abord un dossier dans l’Atelier avant de lancer le débat."
+        return turns, "Formulez une thèse, une objection ou une question d’au moins 3 caractères."
+
+    # En mode débat libre (sans dossier pré-ouvert), utiliser automatiquement un dossier correspondant si disponible.
+    active_dossier = dossier if (dossier and dossier.get("steps")) else None
+    if active_dossier is None:
+        matched = choose_dossier(clean)
+        active_dossier = DOSSIERS[matched]() if matched else {"title": clean, "steps": [], "open": ""}
 
     disposition, message = question_scope(clean)
     if disposition != "localiser":
@@ -1146,9 +1159,10 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
             "turn": len(turns) + 1,
             "user": clean,
             "answer": message,
-            "impact": "Aucune prémisse du référentiel modifiée.",
+            "impact": "",
             "next_question": "",
             "sources": [],
+            "external": external,
             "active_changes": dict(changes or {}),
             "mode": "scope-guard",
         }
@@ -1156,11 +1170,12 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
 
     retriever = search_fn or search_library
     fresh = retriever(clean)[:4]
-    states = assess(dossier["steps"], changes or {})
+    steps = active_dossier.get("steps") or []
+    states = assess(steps, changes or {}) if steps else {}
 
     evidence_sources = {}
     evidence_payload = {}
-    for s in dossier["steps"]:
+    for s in steps:
         sid = s["id"]
         evidence_payload[sid] = {
             "titre": s["title"],
@@ -1183,7 +1198,7 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
             evidence_payload[key] = {
                 "titre": NODES[key]["title"],
                 "role": NODES[key]["kind"],
-                "etat_dans_le_debat": "contre-appui retrouvé",
+                "etat_dans_le_debat": "appui retrouvé",
                 "texte": NODES[key]["text"],
                 "extrait": src["excerpt"],
                 "pages": src["pages"],
@@ -1194,61 +1209,63 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
         evidence_payload[pid] = {
             "titre": hit["title"],
             "role": "Passage retrouvé pour ce tour",
-            "etat_dans_le_debat": "contre-appui retrouvé",
+            "etat_dans_le_debat": "appui retrouvé",
             "extrait": hit["excerpt"],
             "pages": hit.get("pages", str(hit["page"])),
         }
 
     suspended = [
         f"{s['title']} ({'remplacée par : ' + changes[s['id']] if changes[s['id']] else 'suspendue'})"
-        for s in dossier["steps"]
+        for s in steps
         if s["id"] in (changes or {})
     ]
 
     if generate is None:
         summary = (
-            "Rédaction indisponible (quota ou mode hors-ligne). "
+            "La rédaction IA est momentanément indisponible (quota ou mode hors-ligne). "
             + (
-                "Prémisses actives du lecteur : " + " ; ".join(suspended) + ". "
+                "Prémisses modifiées actives : " + " ; ".join(suspended) + ". "
                 if suspended
-                else "Toutes les prémisses initiales du dossier sont actives. "
+                else ""
             )
-            + f"{len(fresh)} passage(s) de Bunge retrouvé(s) pour examiner votre objection."
+            + f"{len(fresh)} passage(s) de Mario Bunge retrouvé(s) pour nourrir cet échange."
         )
         entry = {
             "turn": len(turns) + 1,
             "user": clean,
             "answer": summary,
-            "impact": " ; ".join(suspended) or "Argument initial intact.",
-            "next_question": dossier.get("open", ""),
+            "impact": " ; ".join(suspended),
+            "next_question": active_dossier.get("open", ""),
             "sources": fresh,
+            "external": external,
             "active_changes": dict(changes or {}),
             "mode": "retrieval-only",
         }
         return turns + [entry], ""
 
     system = (
-        "Tu participes à un débat philosophique rigoureux sur Mario Bunge. "
-        "Respecte strictement l’état des prémisses contestées (suspendues ou remplacées par le lecteur) : "
-        "une prémisse suspendue ou remplacée est une hypothèse de travail du lecteur, jamais une thèse attribuée à Bunge. "
-        "N’attribue jamais d’avis posthume à Bunge. Appuie chaque point sur les identifiants fournis dans `preuves`. "
+        "Tu conduis un débat philosophique rigoureux et clair à partir de l’œuvre de Mario Bunge. "
+        "Réponds directement à la thèse ou à l’objection de l’utilisateur en confrontant ses arguments aux textes de Bunge. "
+        "Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
+        "Si une source externe datée (fait contemporain) est fournie, distingue-la explicitement des textes de Bunge et n’attribue jamais d’avis posthume à Bunge. "
+        "Appuie chaque point sur les identifiants fournis dans `preuves`. "
         'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1"],"impact_premisses":"...","question_suivante":"..."}. '
         "Cite au moins un identifiant sourcé existant dans `preuves`."
     )
-    prompt = json.dumps(
-        {
-            "dossier": dossier["title"],
-            "cadre": core_context(),
-            "premisses_modifiees_par_lecteur": suspended,
-            "historique_recent": [
-                {"tour": t["turn"], "lecteur": t["user"], "reponse": t["answer"]}
-                for t in turns[-6:]
-            ],
-            "objection_actuelle": clean,
-            "preuves": evidence_payload,
-        },
-        ensure_ascii=False,
-    )
+    prompt_data = {
+        "sujet": active_dossier["title"],
+        "cadre": core_context(),
+        "premisses_modifiees_par_lecteur": suspended,
+        "historique_recent": [
+            {"tour": t["turn"], "lecteur": t["user"], "reponse": t["answer"]}
+            for t in turns[-6:]
+        ],
+        "message_actuel": clean,
+        "preuves": evidence_payload,
+    }
+    if external:
+        prompt_data["source_externe_datee_hors_bunge"] = external
+    prompt = json.dumps(prompt_data, ensure_ascii=False)
     from evidence import parse_object
 
     parsed = parse_object(generate(prompt, system))
@@ -1268,9 +1285,10 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
             "turn": len(turns) + 1,
             "user": clean,
             "answer": "La réponse générée n’a pas cité d’appui vérifiable dans les sources. Consultez les passages retrouvés ci-dessous.",
-            "impact": " ; ".join(suspended) or "Argument initial intact.",
-            "next_question": dossier.get("open", ""),
+            "impact": " ; ".join(suspended),
+            "next_question": active_dossier.get("open", ""),
             "sources": fresh,
+            "external": external,
             "active_changes": dict(changes or {}),
             "mode": "citation-fallback",
         }
@@ -1283,6 +1301,7 @@ def debate_turn(dossier, changes, history, objection, *, search_fn=None, generat
         "impact": (parsed.get("impact_premisses") or "").strip()[:400],
         "next_question": (parsed.get("question_suivante") or "").strip()[:300],
         "sources": [evidence_sources[k] for k in valid_ids[:5]],
+        "external": external,
         "active_changes": dict(changes or {}),
         "mode": "verified-debate",
     }

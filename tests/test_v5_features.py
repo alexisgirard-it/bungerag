@@ -143,3 +143,96 @@ def test_read_page_content_returns_full_page_and_chapter_navigation():
     assert data["next_page"] == "47"
     assert len(data["chapter_pages"]) >= 10
     assert data["chapter"] == "System"
+
+
+def test_external_step_does_not_say_source_dans_bunge(monkeypatch):
+    import importlib
+    import types
+
+    if "gradio" not in sys.modules:
+        fake_gr = types.SimpleNamespace(
+            Dropdown=lambda *a, **k: dict(args=a, kwargs=k),
+            Tabs=lambda **k: k,
+        )
+        monkeypatch.setitem(sys.modules, "gradio", fake_gr)
+    reader = sys.modules.get("reader") or importlib.import_module("reader")
+    fake_src = {
+        "book": "b",
+        "page": "1",
+        "title": "Treatise",
+        "year": 1979,
+        "authors": "Mario Bunge",
+        "file": "",
+        "pages": "p. 1",
+        "excerpt": "Excerpt.",
+    }
+    monkeypatch.setattr(reader, "node_source", lambda _k: fake_src)
+
+    ext_step = step("ext1", "Modèle Llama", "Fait daté", "Fait contemporain daté")
+    ext_step["external"] = [{"title": "Llama 3.1", "url": "https://example.org/llama"}]
+    html_out = reader.dossier_view(
+        {"title": "Test", "steps": [ext_step], "objection": "Obj", "open": "Q?"},
+        {},
+        local=None,
+    )
+    assert "Voir la source externe datée" in html_out
+    assert "Voir la source dans Bunge" not in html_out
+
+    both_step = step("both1", "Fait hybride", "Texte", "Thèse")
+    both_step["sources"] = [fake_src]
+    both_step["external"] = [{"title": "Llama 3.1", "url": "https://example.org/llama"}]
+    html_both = reader.dossier_view(
+        {"title": "Test", "steps": [both_step], "objection": "Obj", "open": "Q?"},
+        {},
+        local=None,
+    )
+    assert "Voir les sources (Bunge et source externe datée)" in html_both
+
+
+def test_free_form_debate_turn_without_dossier_and_with_external_source(monkeypatch):
+    import json
+    from workshop import debate_turn
+
+    source = {
+        "book": "treatise-4-ontology-2-world-of-systems-1979",
+        "page": "46",
+        "folio": "30",
+        "title": "Treatise 4",
+        "year": 1979,
+        "authors": "Bunge",
+        "file": "t4.pdf",
+        "edition": "ed",
+        "excerpt": "Every assembly process is accompanied by the emergence of some properties",
+        "pages": "p. 30 du livre · PDF p. 46",
+    }
+    monkeypatch.setattr("workshop.suggested_nodes", lambda *a, **k: [])
+    monkeypatch.setattr("workshop.on_page", lambda *a, **k: [])
+    monkeypatch.setattr("workshop.core_context", lambda: "Cadre sourcé")
+    monkeypatch.setattr("workshop.choose_dossier", lambda *a, **k: None)
+
+    def fake_gen(prompt, system):
+        payload = json.loads(prompt)
+        assert "source_externe_datee_hors_bunge" in payload
+        return json.dumps(
+            {
+                "reponse": "Selon Bunge, les propriétés émergentes apparaissent par assemblage.",
+                "appuis": ["c1"],
+                "impact_premisses": "La source externe reste distincte des textes de Bunge.",
+                "question_suivante": "Quel mécanisme biologique ou technique invoquez-vous ?",
+            }
+        )
+
+    ext = {"title": "Rapport externe", "url": "https://example.org/r", "text": "Fait récent"}
+    hist, notice = debate_turn(
+        None,
+        {},
+        [],
+        "Est-ce que l’émergence explique tout ?",
+        search_fn=lambda _q: [source],
+        generate=fake_gen,
+        external=ext,
+    )
+    assert not notice and len(hist) == 1
+    assert hist[0]["mode"] == "verified-debate"
+    assert hist[0]["external"] == ext
+    assert len(hist[0]["sources"]) == 1
