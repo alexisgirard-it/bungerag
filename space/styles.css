@@ -1668,8 +1668,9 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   margin-top: 10px;
 }
 .debate-points {
+  list-style-type: disc;
   margin: 6px 0 12px;
-  padding-left: 18px;
+  padding-left: 20px;
 }
 .debate-points li {
   color: var(--bunge-ink) !important;

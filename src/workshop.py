@@ -1162,7 +1162,8 @@ DEBATE_SYSTEM = (
     "à Bunge et laquelle reste contestée ou non démontrée. "
     "7. `question_suivante` (1 question courte et incisive) : pose le test ou l’objection décisive sur le vrai point de tension. "
     'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1","c2"],"impact_premisses":"...","question_suivante":"..."}. '
-    "Cite uniquement les identifiants de `preuves` réellement utilisés dans ta réponse (au moins un)."
+    "Mets les identifiants de `preuves` (ex. c1, modele, analogie) UNIQUEMENT dans le tableau `appuis`, JAMAIS entre parenthèses "
+    "ni entre crochets dans le texte de `reponse` ou `impact_premisses` (au moins un identifiant dans `appuis`)."
 )
 
 _AI_DEBATE_RE = re.compile(
@@ -1211,6 +1212,27 @@ def _split_debate_clauses(text, max_clauses=3):
         if len(out) >= max_clauses:
             break
     return out
+
+
+def _strip_internal_refs(text: str, keys) -> str:
+    """Retire d’éventuels identifiants techniques de `preuves` (ex. `(c2)`, `(agir, c3)`) échappés dans la prose."""
+    if not text or not keys:
+        return text
+    valid = {str(k) for k in keys if k}
+    if not valid:
+        return text
+
+    def _replace_group(match):
+        inner = match.group(1)
+        tokens = [t.strip() for t in re.split(r"[,;]+", inner) if t.strip()]
+        if tokens and all(t in valid for t in tokens):
+            return ""
+        return match.group(0)
+
+    cleaned = re.sub(r"\s*[\(\[]([^\(\)\[\]]{1,80})[\)\]]", _replace_group, text)
+    cleaned = re.sub(r"[ \t]+([.,;:])", r"\1", cleaned)
+    cleaned = re.sub(r"[ \t]{2,}", " ", cleaned)
+    return cleaned.strip()
 
 
 def _safe_passage_window(source, limit=700):
@@ -1470,7 +1492,10 @@ def debate_turn(
         if isinstance(ids, list)
         else []
     )
-    answer_text = (parsed.get("reponse") or "").strip() if isinstance(parsed, dict) else ""
+    answer_text = _strip_internal_refs(
+        (parsed.get("reponse") or "").strip() if isinstance(parsed, dict) else "",
+        evidence_payload.keys(),
+    )
     if not answer_text or not valid_ids:
         entry = {
             "turn": len(turns) + 1,
@@ -1489,7 +1514,9 @@ def debate_turn(
         "turn": len(turns) + 1,
         "user": clean,
         "answer": answer_text[:3200],
-        "impact": (parsed.get("impact_premisses") or "").strip()[:500],
+        "impact": _strip_internal_refs(
+            (parsed.get("impact_premisses") or "").strip(), evidence_payload.keys()
+        )[:500],
         "next_question": (parsed.get("question_suivante") or "").strip()[:300],
         "sources": [evidence_sources[k] for k in valid_ids[:6]],
         "external": external,

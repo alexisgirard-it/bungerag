@@ -350,3 +350,13 @@ def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
     assert "psychanalyse" in clauses[0].lower()
     assert "popper" in clauses[1].lower()
     assert "quantique" in clauses[2].lower()
+
+    from workshop import _strip_internal_refs
+
+    cleaned = _strip_internal_refs(
+        "Les maths sont neutres (c2) et les valeurs comptent (agir, c3), contrairement à (autre chose).",
+        {"c2", "c3", "agir"},
+    )
+    assert "(c2)" not in cleaned
+    assert "(agir, c3)" not in cleaned
+    assert "(autre chose)" in cleaned
