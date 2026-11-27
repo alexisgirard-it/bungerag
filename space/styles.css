@@ -1662,7 +1662,20 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   color: var(--bunge-ink) !important;
   font-size: 0.95rem;
   line-height: 1.65;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+}
+.debate-answer-body p + p {
+  margin-top: 10px;
+}
+.debate-points {
+  margin: 6px 0 12px;
+  padding-left: 18px;
+}
+.debate-points li {
+  color: var(--bunge-ink) !important;
+  font-size: 0.94rem;
+  line-height: 1.62;
+  margin-bottom: 8px;
 }
 .debate-impact {
   background: rgba(248, 250, 252, 0.85);

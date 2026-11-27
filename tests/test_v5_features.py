@@ -243,8 +243,8 @@ def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
     from workshop import DEBATE_SYSTEM, _debate_search, debate_turn
 
     assert "Votre observation est cruciale" in DEBATE_SYSTEM
-    assert "Frontière stricte du corpus" in DEBATE_SYSTEM
-    assert "Non" in DEBATE_SYSTEM
+    assert "FRONTIÈRE STRICTE DU CORPUS" in DEBATE_SYSTEM
+    assert "PRINCIPE DE CHARITÉ" in DEBATE_SYSTEM
 
     seen_queries = []
 
@@ -265,14 +265,16 @@ def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
         ]
 
     hits = _debate_search(
-        "ok car materiellement ce n'est pas aussi complexe que le cerveau meme pour les derniers modeles de pointes ?",
+        "c'est des fonctions mathematiques, intelligence faible, utile pour la recherche scientifique et l'ethique",
         [{"turn": 1, "user": "Un modèle de langage peut-il comprendre ?", "answer": "..."}],
         "Un modèle de langage peut-il comprendre ?",
         fake_search,
         custom_retriever=False,
     )
     assert hits
-    assert any("computer artificial intelligence brain" in q for q in seen_queries)
+    assert any("artificial intelligence machine imitate proxy" in q for q in seen_queries)
+    assert any("mathematics semantically neutral" in q for q in seen_queries)
+    assert any("technology efficiency truth moral rightness" in q for q in seen_queries)
 
     # Vérifier qu'une relance multi-tour conserve le sujet du tour 1
     monkeypatch.setattr("workshop.suggested_nodes", lambda *a, **k: [])
@@ -319,3 +321,20 @@ def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
     assert captured["prompt"]["sujet"] == "Un modèle de langage peut-il comprendre ?"
     assert "analogie" in captured["prompt"]["preuves"]
     assert captured["system"] == DEBATE_SYSTEM
+
+    import importlib
+    import types
+
+    if "gradio" not in sys.modules:
+        fake_gr = types.SimpleNamespace(
+            Dropdown=lambda *a, **k: dict(args=a, kwargs=k),
+            Tabs=lambda **k: k,
+        )
+        monkeypatch.setitem(sys.modules, "gradio", fake_gr)
+    reader = sys.modules.get("reader") or importlib.import_module("reader")
+    rendered = reader._render_debate_body(
+        "**Sur l'IA faible :** utile comme outil.\n\n- **Maths :** neutres.\n- **Éthique :** fondée sur les besoins."
+    )
+    assert "<strong>Sur l&#x27;IA faible :</strong>" in rendered
+    assert '<ul class="debate-points">' in rendered
+    assert "<li>" in rendered

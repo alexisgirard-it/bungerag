@@ -456,6 +456,35 @@ def dossier_view(dossier, changes, local):
     return "".join(sections)
 
 
+def _format_debate_inline(text: str) -> str:
+    safe = esc(text)
+    safe = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", safe)
+    return annotate_concepts(safe)
+
+
+def _render_debate_body(text: str) -> str:
+    """Rend proprement les paragraphes et listes d’une réponse de débat structurée."""
+    raw = (text or "").strip()
+    if not raw:
+        return ""
+    blocks = re.split(r"\n{2,}", raw)
+    out = []
+    for block in blocks:
+        lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
+        if not lines:
+            continue
+        if all(re.match(r"^(?:[-•*]|\d+[.)])\s+", ln) for ln in lines):
+            items = "".join(
+                f"<li>{_format_debate_inline(re.sub(r'^(?:[-•*]|\d+[.)])\s+', '', ln))}</li>"
+                for ln in lines
+            )
+            out.append(f'<ul class="debate-points">{items}</ul>')
+        else:
+            joined = " ".join(lines)
+            out.append(f"<p>{_format_debate_inline(joined)}</p>")
+    return "".join(out)
+
+
 def render_debate(history, local, notice=""):
     if not history and not notice:
         return (
@@ -474,7 +503,7 @@ def render_debate(history, local, notice=""):
             else ""
         )
         impact = (
-            f'<p class="debate-impact"><strong>Point logique :</strong> {annotate_concepts(esc(item["impact"]))}</p>'
+            f'<p class="debate-impact"><strong>Point logique :</strong> {_format_debate_inline(item["impact"])}</p>'
             if item.get("impact")
             else ""
         )
@@ -488,7 +517,7 @@ def render_debate(history, local, notice=""):
             f'<div class="debate-user-bubble"><span class="debate-role-tag">Vous · Tour {int(item["turn"])}</span>'
             f"<p>{esc(item['user'])}</p>{ext_html}</div>"
             f'<article class="debate-bot-card"><span class="debate-role-tag">BungeRAG · Réponse sourcée</span>'
-            f"<p>{annotate_concepts(esc(item['answer']))}</p>{impact}{follow_q}"
+            f'<div class="debate-answer-body">{_render_debate_body(item["answer"])}</div>{impact}{follow_q}'
             + (
                 f"<details class='debate-sources'><summary>Passages de Bunge cités ({len(src_list)})</summary>{src_html}</details>"
                 if src_html

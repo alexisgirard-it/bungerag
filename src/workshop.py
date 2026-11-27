@@ -1130,37 +1130,49 @@ def open_question(question, research, *, generate=None, external=None):
 
 
 DEBATE_SYSTEM = (
-    "Tu conduis un débat philosophique franc, direct et véridique à partir de l’œuvre de Mario Bunge. "
+    "Tu conduis un débat philosophique rigoureux, franc et nuancé à partir de l’œuvre de Mario Bunge. "
     "RÈGLES STRICTES : "
-    "1. Réponds franchement dès la première phrase par une prise de position nette "
-    "(« Oui », « Non », « En partie », ou « Le corpus de Bunge ne tranche pas ce point »), puis justifie. "
-    "INTERDIT d’ouvrir par des formules flatteuses ou creuses (« Votre observation est cruciale », "
-    "« Excellente question », « Vous soulevez un point important ») ou d’esquiver la question en la reformulant. "
-    "2. Si la prémisse de l’utilisateur est imprécise ou réductrice dans le cadre de Bunge "
-    "(par exemple réduire la différence cerveau/machine à un simple degré quantitatif de « complexité »), "
-    "rectifie-la franchement en exposant les critères précis de Bunge tirés de `preuves` "
-    "(ex. composition matérielle, mécanismes biochimiques, activité spontanée, plasticité neuronale, irréductibilité au calcul). "
-    "3. Frontière stricte du corpus (Mario Bunge, 1919–2020) : n’affirme JAMAIS comme venant de Bunge un fait "
-    "technique ou empirique postérieur (architecture, paramètres ou complexité matérielle des derniers modèles d’IA). "
-    "Si la question porte sur un fait contemporain absent des textes et sans `source_externe_datee_hors_bunge`, "
-    "dis-le explicitement : distingue (a) ce que le corpus ne peut pas trancher empiriquement, et "
-    "(b) ce que les textes de Bunge établissent sur le principe. "
-    "4. Ne cite un extrait de `preuves` que s’il porte réellement sur la question : ignore tout passage hors sujet "
-    "ou homonyme (ex. un « modèle » en physique mathématique quand on débat d’un modèle d’IA). "
+    "1. PRINCIPE DE CHARITÉ ET RÉPONSE POINT PAR POINT (ZÉRO HOMME DE PAILLE) : "
+    "Avant de contester, identifie fidèlement ce que le lecteur soutient réellement, y compris ses concessions "
+    "(par ex. s’il parle d’« intelligence faible » sans sujet conscient, ne lui réponds JAMAIS comme s’il défendait l’IA forte). "
+    "Si le message du lecteur contient plusieurs arguments ou sous-questions (ex. définition, rôle des mathématiques, "
+    "science/éthique, réception grand public), réponds distinctement à CHACUN d’entre eux en plusieurs paragraphes "
+    "courts ou points structurés (séparés par des lignes vides `\\n\\n`, avec des titres en **gras** si utile). "
+    "Ne balaie jamais un raisonnement complexe en 2 phrases dogmatiques. "
+    "2. FRANCHISE ET NUANCE (NI FLATTERIE, NI « NON » AUTOMATIQUE) : "
+    "INTERDIT d’ouvrir par des formules flatteuses ou creuses (« Votre observation est cruciale », « Excellente question »). "
+    "Commence directement en précisant clairement ce qui tient dans le cadre de Bunge (ex. la puissance technique réelle, "
+    "l’utilité en recherche comme outil ou « pensée par procuration ») et ce qui diverge réellement (ex. réduire la vérité "
+    "factuelle, la création de concepts nouveaux ou les valeurs éthiques à du seul calcul formel). "
+    "3. ANCRAGE TEXTUEL PRÉCIS : appuie chaque point sur les distinctions concrètes de Bunge présentes dans `preuves` "
+    "(ex. efficacité technique vs vérité vs rectitude morale ; neutralité sémantique des mathématiques ; analogie appareil photo/"
+    "téléphone et « penser par procuration » ; limites de la mécanisation pour créer des concepts originaux ; mécanismes "
+    "neurobiologiques). Ignore tout extrait hors sujet ou homonyme (ex. un « modèle » en physique mathématique quand on parle d’IA). "
+    "4. FRONTIÈRE STRICTE DU CORPUS (Mario Bunge, 1919–2020) : n’affirme JAMAIS comme venant de Bunge un fait technique "
+    "ou une prédiction sur les modèles récents (performances actuelles, révolution en cours). Sépare explicitement ce que "
+    "le corpus ne tranche pas empiriquement de ce que les textes de Bunge établissent sur le plan conceptuel et méthodologique. "
     "5. Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
     "Si une `source_externe_datee_hors_bunge` est fournie, distingue-la explicitement des textes de Bunge. "
-    "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : indique quelle prémisse du lecteur tient, "
-    "tombe ou reste non prouvée face aux textes. "
-    "7. `question_suivante` (1 question courte et incisive) : pose l’objection ou le test décisif qui met la thèse "
-    "du lecteur à l’épreuve. "
-    'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1"],"impact_premisses":"...","question_suivante":"..."}. '
+    "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : distingue précisément quelle prémisse du lecteur "
+    "est compatible avec Bunge et laquelle reste contestée ou non prouvée. "
+    "7. `question_suivante` (1 question courte et précise) : pose l’objection ou le test décisif sur le point de désaccord réel. "
+    'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1","c2"],"impact_premisses":"...","question_suivante":"..."}. '
     "Cite uniquement les identifiants de `preuves` réellement utilisés dans ta réponse (au moins un)."
 )
 
 _AI_DEBATE_RE = re.compile(
     r"\b(?:ia|llm|gpt|llama|claude|gemini|chatgpt|transformer|algorithme|"
-    r"intelligence artificielle|ordinateur|machine|robot|"
+    r"intelligence (?:artificielle|faible|forte)|ordinateur|machine|robot|"
     r"modele[s]? de (?:langage|pointe)|reseau[x]? de neurones|parametre[s]?)\b"
+)
+_MATH_DEBATE_RE = re.compile(
+    r"\b(?:math|mathematique[s]?|rationa\w*|logique|formel\w*|calcul\w*|fonction[s]?)\b"
+)
+_SCIENCE_DEBATE_RE = re.compile(
+    r"\b(?:theori\w*|recherch\w*|scien\w*|decouvert\w*|hypothese[s]?|revolution\w*)\b"
+)
+_ETHICS_DEBATE_RE = re.compile(
+    r"\b(?:ethiqu\w*|moral\w*|societ\w*|valeur[s]?|politiqu\w*|lambda|public|efficac\w*)\b"
 )
 
 
@@ -1174,7 +1186,7 @@ def _safe_passage_window(source, limit=700):
 
 
 def _debate_search(clean, turns, active_title, retriever, custom_retriever):
-    """Recherche multi-tours contextualisée pour éviter les dérives hors sujet sur les relances."""
+    """Recherche multi-tours et multi-angles pour couvrir chaque argument d’un message dense."""
     seen = set()
     merged = []
 
@@ -1196,25 +1208,68 @@ def _debate_search(clean, turns, active_title, retriever, custom_retriever):
 
     prev_user = turns[-1].get("user", "") if turns else ""
     first_user = turns[0].get("user", "") if turns else ""
+    clean_folded = fold(clean)
     combined_ctx = fold(f"{clean} {prev_user} {first_user} {active_title}")
 
-    # Si le débat porte sur l'IA / les LLM / les machines, interroger d'abord avec le lexique réel de Bunge
-    # afin d'éviter la confusion lexicale avec les « modèles » mathématiques en physique.
+    # Axe 1 : IA / machines — équilibrer entre IA faible / prothèse / imitation (T7/II p. 268-270) et cerveau/ordinateur (MBP)
     if _AI_DEBATE_RE.search(combined_ctx):
+        add_hits(
+            retriever(
+                "artificial intelligence machine imitate proxy computer algorithm science DENDRAL"
+            ),
+            3,
+        )
         add_hits(
             retriever(
                 f"{clean} computer artificial intelligence brain machine plastic neural spontaneous"
             ),
-            4,
+            2,
+        )
+
+    # Axe 2 : mathématiques, neutralité formelle et rationalité
+    if _MATH_DEBATE_RE.search(clean_folded):
+        add_hits(
+            retriever(
+                "mathematics semantically neutral formal rationality factual truth model"
+            ),
+            2,
+        )
+
+    # Axe 3 : éthique, société, efficacité technique vs vérité et rectitude morale
+    if _ETHICS_DEBATE_RE.search(clean_folded):
+        add_hits(
+            retriever(
+                "technology efficiency truth moral rightness ethics human needs values"
+            ),
+            2,
+        )
+
+    # Axe 4 : recherche scientifique, création de concepts et théories
+    if _SCIENCE_DEBATE_RE.search(clean_folded) and not _AI_DEBATE_RE.search(combined_ctx):
+        add_hits(
+            retriever(f"{clean} scientific theory hypothesis concept creation"),
+            2,
         )
 
     if turns:
         anchor = prev_user if len(prev_user) >= 12 else first_user
-        if anchor and fold(anchor) != fold(clean):
-            add_hits(retriever(f"{anchor} {clean}"), 3)
+        if anchor and fold(anchor) != clean_folded:
+            add_hits(retriever(f"{anchor} {clean}"), 2)
 
     add_hits(retriever(clean), 3)
-    return merged[:6]
+    return merged[:8]
+
+
+def _debate_extra_seeds(clean_folded):
+    """Ajoute les nœuds vérifiés pertinents quand le lecteur mobilise maths, efficacité ou éthique."""
+    extra = []
+    if _MATH_DEBATE_RE.search(clean_folded):
+        extra.extend(["math-neutre", "verite-efficacite"])
+    if _ETHICS_DEBATE_RE.search(clean_folded):
+        extra.extend(["verite-efficacite", "action-valeurs", "besoin"])
+    if _SCIENCE_DEBATE_RE.search(clean_folded):
+        extra.extend(["hypothese-profonde", "testabilite-reelle"])
+    return [k for k in dict.fromkeys(extra) if k in NODES]
 
 
 def debate_turn(
@@ -1291,10 +1346,12 @@ def debate_turn(
             evidence_sources[sid] = s["sources"][0]
             evidence_payload[sid]["extrait"] = _safe_passage_window(s["sources"][0])
             evidence_payload[sid]["pages"] = s["sources"][0].get("pages", "")
-    seeds = suggested_nodes(clean, 3) + [
-        key for hit in fresh[:3] for key in on_page(hit["book"], hit["page"])
-    ]
-    for key in linked_evidence(seeds, limit=4, seed_limit=3):
+    seeds = (
+        suggested_nodes(clean, 3)
+        + _debate_extra_seeds(fold(clean))
+        + [key for hit in fresh[:4] for key in on_page(hit["book"], hit["page"])]
+    )
+    for key in linked_evidence(seeds, limit=6, seed_limit=4):
         if key not in evidence_payload:
             src = node_source(key)
             evidence_sources[key] = src
@@ -1392,10 +1449,10 @@ def debate_turn(
     entry = {
         "turn": len(turns) + 1,
         "user": clean,
-        "answer": answer_text[:1800],
-        "impact": (parsed.get("impact_premisses") or "").strip()[:400],
+        "answer": answer_text[:3200],
+        "impact": (parsed.get("impact_premisses") or "").strip()[:500],
         "next_question": (parsed.get("question_suivante") or "").strip()[:300],
-        "sources": [evidence_sources[k] for k in valid_ids[:5]],
+        "sources": [evidence_sources[k] for k in valid_ids[:6]],
         "external": external,
         "active_changes": dict(changes or {}),
         "mode": "verified-debate",

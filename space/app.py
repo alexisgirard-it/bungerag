@@ -328,7 +328,7 @@ def debate_for_reader(dossier, changes, history, objection, request, *, external
         cfg = get_config()
 
         def write(prompt, system):
-            return generate_json(prompt, system, cfg.generation_backend, 1400)
+            return generate_json(prompt, system, cfg.generation_backend, 2400)
 
         new_history, notice = debate_turn(
             dossier, changes, history, objection, generate=write, external=external
