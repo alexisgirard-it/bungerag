@@ -333,8 +333,20 @@ def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
         monkeypatch.setitem(sys.modules, "gradio", fake_gr)
     reader = sys.modules.get("reader") or importlib.import_module("reader")
     rendered = reader._render_debate_body(
-        "**Sur l'IA faible :** utile comme outil.\n\n- **Maths :** neutres.\n- **Éthique :** fondée sur les besoins."
+        "Synthèse :\n- **Sur l'IA faible :** utile comme outil.\n- **Sur les maths :** neutres.\n\n- **Sur l'éthique :** fondée sur les besoins."
     )
+    assert "<p>Synthèse :</p>" in rendered
     assert "<strong>Sur l&#x27;IA faible :</strong>" in rendered
     assert '<ul class="debate-points">' in rendered
-    assert "<li>" in rendered
+    assert rendered.count("<li>") == 3
+
+    # Vérifier le découpage universel multi-clauses sur un sujet hors IA (ex. psychanalyse + Popper + quantique)
+    from workshop import _split_debate_clauses
+
+    clauses = _split_debate_clauses(
+        "La psychanalyse aide pourtant certains patients en clinique mais Popper avait tort sur la démarcation alors que même la physique quantique est probabiliste ?"
+    )
+    assert len(clauses) == 3
+    assert "psychanalyse" in clauses[0].lower()
+    assert "popper" in clauses[1].lower()
+    assert "quantique" in clauses[2].lower()

@@ -463,25 +463,40 @@ def _format_debate_inline(text: str) -> str:
 
 
 def _render_debate_body(text: str) -> str:
-    """Rend proprement les paragraphes et listes d’une réponse de débat structurée."""
+    """Rend proprement paragraphes et listes à puces (même mêlés sans ligne vide)."""
     raw = (text or "").strip()
     if not raw:
         return ""
-    blocks = re.split(r"\n{2,}", raw)
+    bullet_re = re.compile(r"^(?:[-•*]|\d+[.)])\s+")
     out = []
-    for block in blocks:
-        lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
-        if not lines:
-            continue
-        if all(re.match(r"^(?:[-•*]|\d+[.)])\s+", ln) for ln in lines):
-            items = "".join(
-                f"<li>{_format_debate_inline(re.sub(r'^(?:[-•*]|\d+[.)])\s+', '', ln))}</li>"
-                for ln in lines
-            )
+    para_lines = []
+    list_items = []
+
+    def flush_para():
+        if para_lines:
+            out.append(f"<p>{_format_debate_inline(' '.join(para_lines))}</p>")
+            para_lines.clear()
+
+    def flush_list():
+        if list_items:
+            items = "".join(f"<li>{_format_debate_inline(item)}</li>" for item in list_items)
             out.append(f'<ul class="debate-points">{items}</ul>')
+            list_items.clear()
+
+    for line in raw.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            flush_para()
+            flush_list()
+            continue
+        if bullet_re.match(stripped):
+            flush_para()
+            list_items.append(bullet_re.sub("", stripped))
         else:
-            joined = " ".join(lines)
-            out.append(f"<p>{_format_debate_inline(joined)}</p>")
+            flush_list()
+            para_lines.append(stripped)
+    flush_para()
+    flush_list()
     return "".join(out)
 
 

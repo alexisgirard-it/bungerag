@@ -1130,32 +1130,37 @@ def open_question(question, research, *, generate=None, external=None):
 
 
 DEBATE_SYSTEM = (
-    "Tu conduis un débat philosophique rigoureux, franc et nuancé à partir de l’œuvre de Mario Bunge. "
+    "Tu conduis un débat philosophique rigoureux, équitable et franc à partir de l’œuvre de Mario Bunge. "
     "RÈGLES STRICTES : "
-    "1. PRINCIPE DE CHARITÉ ET RÉPONSE POINT PAR POINT (ZÉRO HOMME DE PAILLE) : "
-    "Avant de contester, identifie fidèlement ce que le lecteur soutient réellement, y compris ses concessions "
+    "1. PRINCIPE DE CHARITÉ ET INVENTAIRE COMPLET (ZÉRO HOMME DE PAILLE) : "
+    "Identifie fidèlement ce que le lecteur soutient réellement, y compris ses concessions "
     "(par ex. s’il parle d’« intelligence faible » sans sujet conscient, ne lui réponds JAMAIS comme s’il défendait l’IA forte). "
-    "Si le message du lecteur contient plusieurs arguments ou sous-questions (ex. définition, rôle des mathématiques, "
-    "science/éthique, réception grand public), réponds distinctement à CHACUN d’entre eux en plusieurs paragraphes "
-    "courts ou points structurés (séparés par des lignes vides `\\n\\n`, avec des titres en **gras** si utile). "
-    "Ne balaie jamais un raisonnement complexe en 2 phrases dogmatiques. "
-    "2. FRANCHISE ET NUANCE (NI FLATTERIE, NI « NON » AUTOMATIQUE) : "
-    "INTERDIT d’ouvrir par des formules flatteuses ou creuses (« Votre observation est cruciale », « Excellente question »). "
-    "Commence directement en précisant clairement ce qui tient dans le cadre de Bunge (ex. la puissance technique réelle, "
-    "l’utilité en recherche comme outil ou « pensée par procuration ») et ce qui diverge réellement (ex. réduire la vérité "
-    "factuelle, la création de concepts nouveaux ou les valeurs éthiques à du seul calcul formel). "
-    "3. ANCRAGE TEXTUEL PRÉCIS : appuie chaque point sur les distinctions concrètes de Bunge présentes dans `preuves` "
+    "Ne commence JAMAIS par des formules flatteuses (« Excellente question », « Votre observation est cruciale ») "
+    "ni par une accusation sèche (« Votre argument repose sur une confusion ») sans avoir d’abord distingué ce qui tient "
+    "de ce qui diverge. "
+    "2. FORMAT ADAPTÉ À LA COMPLEXITÉ DU MESSAGE : "
+    "- Si le message du lecteur ne contient qu’une seule question courte, réponds directement en 1 à 2 paragraphes nets. "
+    "- Si le message du lecteur contient plusieurs arguments, objections ou sous-questions (2 ou plus), "
+    "réponds OBLIGATOIREMENT point par point sous forme de liste à puces : "
+    "`- **Sur [reprise fidèle du point] :** ...` (un item par argument distinct du lecteur, SANS EN SAUTER UN SEUL, "
+    "y compris les remarques sur le vocabulaire, la réception grand public ou la portée pratique). "
+    "Dans chaque point, commence par préciser ce qui est compatible ou juste dans le cadre de Bunge, puis indique exactement "
+    "où Bunge nuance, limite ou conteste. "
+    "3. ANCRAGE TEXTUEL PRÉCIS : appuie tes points sur les distinctions concrètes de Bunge présentes dans `preuves` "
     "(ex. efficacité technique vs vérité vs rectitude morale ; neutralité sémantique des mathématiques ; analogie appareil photo/"
-    "téléphone et « penser par procuration » ; limites de la mécanisation pour créer des concepts originaux ; mécanismes "
-    "neurobiologiques). Ignore tout extrait hors sujet ou homonyme (ex. un « modèle » en physique mathématique quand on parle d’IA). "
+    "téléphone/voiture et « penser par procuration » ; limites de la mécanisation pour créer des concepts originaux ; critères "
+    "de scientificité, mécanismes matériels, émergence). Ignore tout extrait hors sujet ou homonyme (ex. un « modèle » en "
+    "physique mathématique quand on parle d’IA). "
     "4. FRONTIÈRE STRICTE DU CORPUS (Mario Bunge, 1919–2020) : n’affirme JAMAIS comme venant de Bunge un fait technique "
-    "ou une prédiction sur les modèles récents (performances actuelles, révolution en cours). Sépare explicitement ce que "
-    "le corpus ne tranche pas empiriquement de ce que les textes de Bunge établissent sur le plan conceptuel et méthodologique. "
+    "ou une prédiction sur des technologies ou événements postérieurs à 2020. Si un point du lecteur porte sur un fait "
+    "contemporain ou un usage grand public absent des textes (et sans `source_externe_datee_hors_bunge`), ne l’esquive pas : "
+    "consacre-lui un point explicite qui distingue (a) ce que le corpus de Bunge ne tranche pas empiriquement, et "
+    "(b) la distinction conceptuelle de Bunge qui éclaire ce point. "
     "5. Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
     "Si une `source_externe_datee_hors_bunge` est fournie, distingue-la explicitement des textes de Bunge. "
-    "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : distingue précisément quelle prémisse du lecteur "
-    "est compatible avec Bunge et laquelle reste contestée ou non prouvée. "
-    "7. `question_suivante` (1 question courte et précise) : pose l’objection ou le test décisif sur le point de désaccord réel. "
+    "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : résume quelle prémisse du lecteur tient face "
+    "à Bunge et laquelle reste contestée ou non démontrée. "
+    "7. `question_suivante` (1 question courte et incisive) : pose le test ou l’objection décisive sur le vrai point de tension. "
     'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1","c2"],"impact_premisses":"...","question_suivante":"..."}. '
     "Cite uniquement les identifiants de `preuves` réellement utilisés dans ta réponse (au moins un)."
 )
@@ -1174,6 +1179,38 @@ _SCIENCE_DEBATE_RE = re.compile(
 _ETHICS_DEBATE_RE = re.compile(
     r"\b(?:ethiqu\w*|moral\w*|societ\w*|valeur[s]?|politiqu\w*|lambda|public|efficac\w*)\b"
 )
+_CLAUSE_SPLIT_RE = re.compile(
+    r"(?:[?;!]+|\s+(?:mais|alors que|tandis que|en plus|de plus|par ailleurs|enfin)\s+)",
+    re.IGNORECASE,
+)
+
+
+def _split_debate_clauses(text, max_clauses=3):
+    """Découpe un message long en sous-arguments distincts pour la recherche multi-angles."""
+    if len(text) < 110:
+        return []
+    raw_parts = [p.strip(" ,.:;—-") for p in _CLAUSE_SPLIT_RE.split(text) if p and p.strip()]
+    clauses = [p for p in raw_parts if len(p) >= 24]
+    if len(clauses) < 2:
+        # Repli par découpage sur les virgules ou en deux moitiés équilibrées
+        comma_parts = [p.strip() for p in text.split(",") if len(p.strip()) >= 28]
+        if len(comma_parts) >= 2:
+            clauses = comma_parts
+        else:
+            words_list = text.split()
+            mid = len(words_list) // 2
+            clauses = [" ".join(words_list[:mid]), " ".join(words_list[mid:])]
+    # Garder jusqu'à max_clauses segments les plus informatifs sans doublons
+    out = []
+    seen = set()
+    for part in clauses:
+        key = fold(part)[:40]
+        if key not in seen:
+            seen.add(key)
+            out.append(part[:220])
+        if len(out) >= max_clauses:
+            break
+    return out
 
 
 def _safe_passage_window(source, limit=700):
@@ -1186,7 +1223,7 @@ def _safe_passage_window(source, limit=700):
 
 
 def _debate_search(clean, turns, active_title, retriever, custom_retriever):
-    """Recherche multi-tours et multi-angles pour couvrir chaque argument d’un message dense."""
+    """Recherche multi-tours et multi-angles (budget borné à 4 requêtes) pour tous les sujets."""
     seen = set()
     merged = []
 
@@ -1211,57 +1248,50 @@ def _debate_search(clean, turns, active_title, retriever, custom_retriever):
     clean_folded = fold(clean)
     combined_ctx = fold(f"{clean} {prev_user} {first_user} {active_title}")
 
-    # Axe 1 : IA / machines — équilibrer entre IA faible / prothèse / imitation (T7/II p. 268-270) et cerveau/ordinateur (MBP)
+    planned = []  # liste de (query, cap)
+
+    # 1. Pont lexical pour les faux-amis IA/modèle dans le corpus anglais de Bunge
     if _AI_DEBATE_RE.search(combined_ctx):
-        add_hits(
-            retriever(
-                "artificial intelligence machine imitate proxy computer algorithm science DENDRAL"
-            ),
-            3,
-        )
-        add_hits(
-            retriever(
-                f"{clean} computer artificial intelligence brain machine plastic neural spontaneous"
-            ),
-            2,
+        planned.append(
+            ("artificial intelligence machine imitate proxy computer algorithm science DENDRAL", 3)
         )
 
-    # Axe 2 : mathématiques, neutralité formelle et rationalité
+    # 2. Axes philosophiques transversaux explicitement mobilisés
     if _MATH_DEBATE_RE.search(clean_folded):
-        add_hits(
-            retriever(
-                "mathematics semantically neutral formal rationality factual truth model"
-            ),
-            2,
-        )
-
-    # Axe 3 : éthique, société, efficacité technique vs vérité et rectitude morale
+        planned.append(("mathematics semantically neutral formal rationality factual truth", 2))
     if _ETHICS_DEBATE_RE.search(clean_folded):
-        add_hits(
-            retriever(
-                "technology efficiency truth moral rightness ethics human needs values"
-            ),
-            2,
-        )
+        planned.append(("technology efficiency truth moral rightness ethics human needs values", 2))
 
-    # Axe 4 : recherche scientifique, création de concepts et théories
-    if _SCIENCE_DEBATE_RE.search(clean_folded) and not _AI_DEBATE_RE.search(combined_ctx):
-        add_hits(
-            retriever(f"{clean} scientific theory hypothesis concept creation"),
-            2,
-        )
+    # 3. Découpage universel par sous-arguments pour TOUT message dense (quel que soit le thème)
+    clauses = _split_debate_clauses(clean, max_clauses=3)
+    if clauses and len(planned) < 3:
+        for clause in clauses:
+            if len(planned) >= 3:
+                break
+            planned.append((clause, 2))
 
-    if turns:
+    # 4. Ancrage du tour précédent pour les relances courtes ou anaphoriques
+    if turns and len(planned) < 3:
         anchor = prev_user if len(prev_user) >= 12 else first_user
         if anchor and fold(anchor) != clean_folded:
-            add_hits(retriever(f"{anchor} {clean}"), 2)
+            planned.append((f"{anchor} {clean}", 2))
 
-    add_hits(retriever(clean), 3)
+    # Toujours interroger aussi le message complet (dans la limite de 4 appels au total)
+    planned = planned[:3] + [(clean, 3)]
+
+    seen_q = set()
+    for query, cap in planned:
+        q_key = fold(query)
+        if not q_key or q_key in seen_q:
+            continue
+        seen_q.add(q_key)
+        add_hits(retriever(query), cap)
+
     return merged[:8]
 
 
 def _debate_extra_seeds(clean_folded):
-    """Ajoute les nœuds vérifiés pertinents quand le lecteur mobilise maths, efficacité ou éthique."""
+    """Ajoute les nœuds vérifiés pertinents sur les grands axes philosophiques mobilisés."""
     extra = []
     if _MATH_DEBATE_RE.search(clean_folded):
         extra.extend(["math-neutre", "verite-efficacite"])
@@ -1269,6 +1299,12 @@ def _debate_extra_seeds(clean_folded):
         extra.extend(["verite-efficacite", "action-valeurs", "besoin"])
     if _SCIENCE_DEBATE_RE.search(clean_folded):
         extra.extend(["hypothese-profonde", "testabilite-reelle"])
+    if re.search(r"\b(?:emergen\w*|holis\w*|reduct\w*|system\w*)\b", clean_folded):
+        extra.extend(["postulat-emergence", "ni-holisme-ni-atomisme", "systemisme"])
+    if re.search(r"\b(?:causa\w*|determin\w*|fatal\w*|hasard|probabil\w*|quantiqu\w*)\b", clean_folded):
+        extra.extend(["causalite", "determinisme"])
+    if re.search(r"\b(?:verit\w*|sens|referen\w*|signific\w*|langage)\b", clean_folded):
+        extra.extend(["couple-signification", "sens-reference-distincts"])
     return [k for k in dict.fromkeys(extra) if k in NODES]
 
 
@@ -1348,12 +1384,15 @@ def debate_turn(
             evidence_payload[sid]["pages"] = s["sources"][0].get("pages", "")
     seeds = (
         suggested_nodes(clean, 3)
-        + _debate_extra_seeds(fold(clean))
+        + ([] if search_fn is not None else _debate_extra_seeds(fold(clean)))
         + [key for hit in fresh[:4] for key in on_page(hit["book"], hit["page"])]
     )
     for key in linked_evidence(seeds, limit=6, seed_limit=4):
         if key not in evidence_payload:
-            src = node_source(key)
+            try:
+                src = node_source(key)
+            except Exception:
+                continue
             evidence_sources[key] = src
             evidence_payload[key] = {
                 "titre": NODES[key]["title"],
