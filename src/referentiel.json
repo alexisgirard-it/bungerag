@@ -469,8 +469,8 @@
         "quote": "it leaves ordinary logic intact"
       },
       "notation": {
-        "formula": "V(p) ∈ [−1, 1]",
-        "gloss": "La valeur de vérité partielle V(p) d’une proposition factuelle prend ses valeurs dans l’intervalle réel [−1, 1] sans altérer la logique ordinaire.",
+        "formula": "V(p) ∈ [0, 1]",
+        "gloss": "Dans le Traité II (ch. 8, Définition 8.1, p. 108–110), la valuation de vérité partielle V(p) d’une proposition factuelle prend ses valeurs dans l’intervalle unité [0, 1] (0 pour une contradiction, 1 pour une tautologie) sans altérer la logique ordinaire.",
         "status": "Notation collationnée sur le Traité II, ch. 8 (Vérité partielle)."
       }
     },
