@@ -52,9 +52,13 @@ def test_space_readme_routes_technical_detail_away_from_the_demo() -> None:
 
 
 def test_sourced_answer_button_provides_visible_loading_feedback() -> None:
+    import re
+
     assert "Recherche en cours…" in APP
     assert "bunge-loading-bar" in APP
     assert "@keyframes bunge-spin" in CSS
     assert 'elem_id="submit-button"' in READER
     # La carte de réponse/chargement doit apparaître directement sous le bouton, avant la barre de suivi.
     assert READER.index("legacy_fn, legacy_outputs = legacy(") < READER.index("followup-bar")
+    # Gradio's CSS scoper splits on commas inside :has(...) / :is(...), breaking descendant selectors.
+    assert not re.search(r":(?:has|is)\([^)]*,", CSS)

@@ -580,7 +580,14 @@ body {
 
 #answer-copy { color: var(--bunge-ink) !important; }
 #answer-copy:empty { min-height: 0 !important; }
-#answer-copy :is(p, li, blockquote, strong, em, h1, h2, h3) { color: var(--bunge-ink) !important; }
+#answer-copy p,
+#answer-copy li,
+#answer-copy blockquote,
+#answer-copy strong,
+#answer-copy em,
+#answer-copy h1,
+#answer-copy h2,
+#answer-copy h3 { color: var(--bunge-ink) !important; }
 #answer-copy .prose { color: var(--bunge-ink) !important; font-family: var(--bunge-serif); font-size: 1.06rem; line-height: 1.75; max-width: 72ch; }
 #answer-copy .prose a { color: var(--bunge-blue-dark) !important; font-family: var(--bunge-mono); font-size: 0.78em; font-weight: 700; text-decoration: none; }
 #answer-copy .prose a:hover { text-decoration: underline; }
@@ -904,7 +911,7 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
 #page-shell .block:has(> .html-container:empty),
 #page-shell .hide-container:empty,
 #page-shell .followup-bar:not(:has(button)),
-#ai-answer-card:not(:has(.answer-prose, .system-status, .reading-card, .system-message, .bunge-loading-bar)),
+#ai-answer-card:not(:has(.answer-prose)):not(:has(.system-status)):not(:has(.reading-card)):not(:has(.system-message)):not(:has(.bunge-loading-bar)),
 #book-reader-panel:not(:has(.book-reader-card)) {
   display: none !important;
   margin: 0 !important;
