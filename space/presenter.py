@@ -286,13 +286,16 @@ def link_citations(markdown: str, source_count: int) -> str:
 def render_status(state: str, elapsed_seconds: float = 0.0, detail: str = "") -> str:
     labels = {
         "ready": ("Prêt", "Une question libre peut prendre environ une minute sur le serveur de démonstration."),
-        "working": ("Traitement en cours", "Recherche des passages et rédaction de la réponse."),
+        "working": ("Recherche et rédaction sourcée en cours…", "Interrogation des 25 ouvrages de Mario Bunge et vérification des citations."),
         "complete": ("Réponse produite", "La réponse et ses sources sont disponibles."),
         "cached": ("Réponse en cache", "Cette réponse a été retrouvée sans nouveau calcul."),
         "error": ("Requête interrompue", detail or "Aucun résultat n'a été produit."),
     }
     label, message = labels.get(state, labels["ready"])
-    elapsed = f"<span class=\"status-time\">{elapsed_seconds:.0f} s</span>" if elapsed_seconds else ""
+    if state == "working":
+        elapsed = f'<span class="status-time">{elapsed_seconds:.0f} s</span>'
+    else:
+        elapsed = f'<span class="status-time">{elapsed_seconds:.0f} s</span>' if elapsed_seconds else ""
     return (
         f'<div class="system-status status-{html.escape(state)}" role="status" aria-live="polite">'
         f'<span class="status-dot" aria-hidden="true"></span>'

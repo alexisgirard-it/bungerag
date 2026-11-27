@@ -54,7 +54,7 @@ DAILY_LIMIT = env_int("DAILY_LIMIT", 80, 1, 10_000)
 CLIENT_LIMIT = env_int("IP_LIMIT", 10, 1, 1_000)
 CACHE_SIZE = env_int("CACHE_SIZE", 96, 4, 1_000)
 QUEUE_SIZE = env_int("QUEUE_SIZE", 12, 1, 200)
-POLL_SECONDS = 1.5
+POLL_SECONDS = 1.0
 
 logging.basicConfig(
     level=os.environ.get("LOG_LEVEL", "INFO").upper(),
@@ -379,30 +379,44 @@ def legacy_controls(question, submit_btn, triggers=(), followup_buttons=()):
         from reader import card as render_card
 
         show_follow = tuple(gr.update(visible=False) for _ in followup_buttons)
-        last_res = None
-        for res in answer_question(q_text, request):
-            last_res = res
-            pub = res[0] if isinstance(res[0], dict) else {}
-            is_done = pub.get("status") not in (None, "processing")
-            has_src = bool(res[4]) and "Aucune source" not in str(res[4])
-            head_html = APPARATUS_HEADING if (is_done and has_src) else ""
-            # En cas de quota, erreur fournisseur ou réponse non vérifiée sans sources, afficher immédiatement les passages sourcés hors quota.
-            if is_done and pub.get("status") in ("quota_rejected", "provider_error", "internal_error", "unverified"):
-                fallback_hits = search_library(q_text)
-                if fallback_hits:
-                    fallback_html = (
-                        '<div class="prose answer-prose"><p><strong>Passages directs vérifiés dans la bibliothèque</strong> '
-                        "(la synthèse IA n’a pas pu être validée sur cet essai ; voici les textes exacts correspondants) :</p></div>"
-                        + "".join(render_card(s, LOCAL_BOOKS) for s in fallback_hits)
-                    )
-                    res = (res[0], res[1], "", fallback_html, "", res[5])
-                    head_html = ""
-            btns = tuple(gr.update(visible=is_done) for _ in followup_buttons) if is_done else show_follow
-            yield (*res[:4], head_html, res[4], res[5], *btns)
-        if last_res is None:
-            yield (None, "", "", "", "", "", "", *show_follow)
+        btn_busy = gr.update(value="Recherche en cours…", interactive=False)
+        btn_ready = gr.update(value="Réponse sourcée (IA)", interactive=True)
+        # Retour visuel immédiat dès le clic avant même l'initialisation du pool/quota.
+        if len(" ".join(str(q_text or "").split())) >= 8:
+            loading_html = (
+                '<div class="bunge-loading-bar" aria-label="Recherche en cours"></div>'
+                + render_status("working", 0.0)
+            )
+            yield (processing_payload(0.0), loading_html, "", "", "", "", "", *show_follow, btn_busy)
 
-    outputs = [payload, status, meta, answer, sources_head, sources, notice, *followup_buttons]
+        completed = False
+        try:
+            for res in answer_question(q_text, request):
+                pub = res[0] if isinstance(res[0], dict) else {}
+                is_done = pub.get("status") not in (None, "processing")
+                has_src = bool(res[4]) and "Aucune source" not in str(res[4])
+                head_html = APPARATUS_HEADING if (is_done and has_src) else ""
+                # En cas de quota, erreur fournisseur ou réponse non vérifiée sans sources, afficher immédiatement les passages sourcés hors quota.
+                if is_done and pub.get("status") in ("quota_rejected", "provider_error", "internal_error", "unverified"):
+                    fallback_hits = search_library(q_text)
+                    if fallback_hits:
+                        fallback_html = (
+                            '<div class="prose answer-prose"><p><strong>Passages directs vérifiés dans la bibliothèque</strong> '
+                            "(la synthèse IA n’a pas pu être validée sur cet essai ; voici les textes exacts correspondants) :</p></div>"
+                            + "".join(render_card(s, LOCAL_BOOKS) for s in fallback_hits)
+                        )
+                        res = (res[0], res[1], "", fallback_html, "", res[5])
+                        head_html = ""
+                btns = tuple(gr.update(visible=is_done) for _ in followup_buttons) if is_done else show_follow
+                btn_state = btn_ready if is_done else btn_busy
+                if is_done:
+                    completed = True
+                yield (*res[:4], head_html, res[4], res[5], *btns, btn_state)
+        finally:
+            if not completed:
+                yield (None, "", "", "", "", "", "", *show_follow, btn_ready)
+
+    outputs = [payload, status, meta, answer, sources_head, sources, notice, *followup_buttons, submit_btn]
     submit_btn.click(
         answer_and_reveal,
         inputs=question,

@@ -387,6 +387,13 @@ body {
 #submit-button:active {
   transform: translateY(0);
 }
+#page-shell button.primary:disabled,
+#submit-button:disabled {
+  cursor: wait !important;
+  filter: saturate(0.85);
+  opacity: 0.78 !important;
+  transform: none !important;
+}
 
 #page-shell button.secondary {
   background: rgba(255, 255, 255, 0.58) !important;
@@ -530,11 +537,26 @@ body {
 .system-status strong { color: var(--bunge-ink) !important; font-size: 0.82rem; }
 .system-status small { color: var(--bunge-muted) !important; font-size: 0.72rem; line-height: 1.35; }
 .status-dot { background: #10b981; border-radius: 50%; flex: 0 0 auto; height: 8px; width: 8px; }
-.status-working { border-left-color: var(--bunge-blue); }
-.status-working .status-dot { background: var(--bunge-blue); box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.16); }
+@keyframes bunge-spin {
+  to { transform: rotate(360deg); }
+}
+.status-working {
+  background: rgba(239, 246, 255, 0.88);
+  border-color: rgba(37, 99, 235, 0.22);
+  border-left-color: var(--bunge-blue);
+}
+.status-working .status-dot {
+  animation: bunge-spin 0.85s linear infinite;
+  background: transparent;
+  border: 2.5px solid rgba(37, 99, 235, 0.22);
+  border-top-color: var(--bunge-blue);
+  box-shadow: none;
+  height: 16px;
+  width: 16px;
+}
 .status-error { border-left-color: var(--bunge-red); }
 .status-error .status-dot { background: var(--bunge-red); }
-.status-time { color: var(--bunge-blue-dark) !important; font-family: var(--bunge-mono); font-size: 0.7rem; margin-left: auto; }
+.status-time { color: var(--bunge-blue-dark) !important; font-family: var(--bunge-mono); font-size: 0.72rem; font-weight: 600; margin-left: auto; }
 
 .answer-meta {
   border-bottom: 1px solid var(--bunge-hairline);
@@ -556,7 +578,8 @@ body {
 .answer-meta .meta-ok { background: var(--bunge-green-soft); color: var(--bunge-green) !important; }
 .answer-meta .meta-warn { background: var(--bunge-ochre-soft); color: var(--bunge-ochre) !important; }
 
-#answer-copy { color: var(--bunge-ink) !important; min-height: 110px; }
+#answer-copy { color: var(--bunge-ink) !important; }
+#answer-copy:empty { min-height: 0 !important; }
 #answer-copy :is(p, li, blockquote, strong, em, h1, h2, h3) { color: var(--bunge-ink) !important; }
 #answer-copy .prose { color: var(--bunge-ink) !important; font-family: var(--bunge-serif); font-size: 1.06rem; line-height: 1.75; max-width: 72ch; }
 #answer-copy .prose a { color: var(--bunge-blue-dark) !important; font-family: var(--bunge-mono); font-size: 0.78em; font-weight: 700; text-decoration: none; }
@@ -790,13 +813,13 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   100% { background-position: -200% 0; }
 }
 .bunge-loading-bar {
-  background: linear-gradient(90deg, rgba(37, 99, 235, 0.08) 20%, rgba(37, 99, 235, 0.45) 50%, rgba(37, 99, 235, 0.08) 80%);
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.14) 15%, rgba(37, 99, 235, 0.78) 50%, rgba(37, 99, 235, 0.14) 85%);
   background-size: 200% 100%;
-  animation: bunge-shimmer 1.35s ease-in-out infinite;
+  animation: bunge-shimmer 1.15s ease-in-out infinite;
   border-radius: 999px;
-  height: 3px;
+  height: 4px;
   width: 100%;
-  margin: 6px 0 12px;
+  margin: 4px 0 12px;
 }
 
 /* Quick suggestion chips on Rechercher */

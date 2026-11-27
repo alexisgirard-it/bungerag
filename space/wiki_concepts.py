@@ -534,6 +534,19 @@ if (!window.__bungeBridgeInstalled) {
           document.querySelector('#book-reader-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 120);
       }
+      return;
+    }
+    const aiTrigger = e.target.closest('#submit-button, #chat-shell .suggestion-row button');
+    if (aiTrigger) {
+      setTimeout(() => {
+        const card = document.querySelector('#ai-answer-card');
+        if (card) {
+          const rect = card.getBoundingClientRect();
+          if (rect.height > 0 && rect.top > window.innerHeight - 160) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }
+      }, 320);
     }
   });
 }

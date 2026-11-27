@@ -49,3 +49,12 @@ def test_space_readme_routes_technical_detail_away_from_the_demo() -> None:
     assert "Code, méthode et résultats" in SPACE_README
     assert "0,935" not in SPACE_README
     assert "12 → 5" not in SPACE_README
+
+
+def test_sourced_answer_button_provides_visible_loading_feedback() -> None:
+    assert "Recherche en cours…" in APP
+    assert "bunge-loading-bar" in APP
+    assert "@keyframes bunge-spin" in CSS
+    assert 'elem_id="submit-button"' in READER
+    # La carte de réponse/chargement doit apparaître directement sous le bouton, avant la barre de suivi.
+    assert READER.index("legacy_fn, legacy_outputs = legacy(") < READER.index("followup-bar")

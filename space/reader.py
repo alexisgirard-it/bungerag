@@ -635,18 +635,21 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         for short, full in suggestions
                     ]
                 with gr.Row(elem_classes=["action-bar"]):
-                    ai_go = gr.Button("Réponse sourcée (IA)", variant="primary", scale=2)
+                    ai_go = gr.Button("Réponse sourcée (IA)", variant="primary", scale=2, elem_id="submit-button")
                     go = gr.Button("Rechercher les passages", variant="secondary", scale=1)
-                with gr.Row(elem_classes=["action-bar", "followup-bar"]):
-                    expand = gr.Button("Déplier l’argument", visible=False)
-                    locate = gr.Button("Fiche du concept", visible=False)
-                    discuss = gr.Button("En débattre", visible=False)
+                expand = gr.Button("Déplier l’argument", visible=False, render=False)
+                locate = gr.Button("Fiche du concept", visible=False, render=False)
+                discuss = gr.Button("En débattre", visible=False, render=False)
                 legacy_fn, legacy_outputs = legacy(
                     q,
                     ai_go,
                     triggers=(q.submit,),
                     followup_buttons=(expand, locate, discuss),
                 )
+                with gr.Row(elem_classes=["action-bar", "followup-bar"]):
+                    expand.render()
+                    locate.render()
+                    discuss.render()
                 hits = gr.HTML()
                 inline = gr.HTML()
             with gr.Column(elem_id="book-reader-panel", elem_classes=["glass-panel", "book-reader-shell"]):
