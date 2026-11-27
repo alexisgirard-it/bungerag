@@ -196,7 +196,7 @@ body {
   margin-bottom: 18px !important;
   padding: 5px !important;
   width: 100% !important;
-  max-width: 560px !important;
+  max-width: 620px !important;
 }
 #reader-tabs > .tab-wrapper button,
 #reader-tabs > .tab-nav button {
@@ -1794,6 +1794,51 @@ button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px sol
   box-shadow: var(--bunge-shadow-sm) !important;
   margin-top: 8px !important;
   padding: 20px 22px !important;
+}
+
+/* Discrete factual À propos tab */
+.about-spec-list {
+  display: grid;
+  gap: 0;
+  margin: 8px 0 0;
+}
+.about-spec-row {
+  border-top: 1px solid var(--bunge-hairline);
+  display: grid;
+  gap: 6px 18px;
+  grid-template-columns: 185px 1fr;
+  padding: 12px 2px;
+}
+.about-spec-row:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+.about-spec-row dt {
+  color: var(--bunge-muted) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding-top: 2px;
+  text-transform: uppercase;
+}
+.about-spec-row dd {
+  color: var(--bunge-ink) !important;
+  font-size: 0.9rem;
+  line-height: 1.58;
+  margin: 0;
+}
+.about-spec-row code {
+  background: rgba(15, 23, 42, 0.055);
+  border-radius: 5px;
+  color: var(--bunge-blue-deep) !important;
+  font-family: var(--bunge-mono);
+  font-size: 0.8rem;
+  padding: 1px 6px;
+}
+@media (max-width: 720px) {
+  .about-spec-row { grid-template-columns: 1fr; gap: 4px; }
 }
 
 /* Responsive */

@@ -598,6 +598,7 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
         ("Rechercher", "search"),
         ("Concepts", "atlas"),
         ("Débat", "work"),
+        ("À propos", "about"),
     )
     suggestions = (
         ("L’émergence", "Qu'est-ce que l'émergence pour Bunge ?"),
@@ -778,6 +779,47 @@ def build_reader(legacy, local, create_dossier, max_chars, run_debate=None):
                         supplied_date = gr.Textbox(
                             label="Date", placeholder="AAAA-MM-JJ"
                         )
+
+        with gr.Tab("À propos", id="about"):
+            with gr.Column(elem_classes=["glass-panel", "about-panel"]):
+                gr.HTML(
+                    '<div class="section-heading"><h3>Fiche technique · BungeRAG</h3>'
+                    "<p>Repères factuels sur le corpus indexé, les modèles employés et le contrôle des citations.</p></div>"
+                    '<dl class="about-spec-list">'
+                    '<div class="about-spec-row"><dt>Corpus indexé</dt>'
+                    "<dd><strong>25 ouvrages</strong> de Mario Bunge (éditions anglaises de référence, dont les 8 volumes du "
+                    "<em>Treatise on Basic Philosophy</em>) · 8&nbsp;293 pages · 11&nbsp;249 passages · 63 fiches de concepts · "
+                    "113 propositions reliées dans l’arbre déductif · 1&nbsp;266 repères formels détectés.</dd></div>"
+                    '<div class="about-spec-row"><dt>Index &amp; provenance</dt>'
+                    "<dd>Base vectorielle et lexicale <code>LanceDB</code> (table <code>bunge_512</code>, combinaison RRF) couplée à deux "
+                    "bases <code>SQLite</code> en lecture seule (<code>lecture.sqlite</code> et <code>provenance-512.sqlite</code>) "
+                    "contrôlant les empreintes SHA-256 des éditions et la pagination imprimée/PDF.</dd></div>"
+                    '<div class="about-spec-row"><dt>Embeddings</dt>'
+                    "<dd><code>Qwen/Qwen3-Embedding-0.6B</code></dd></div>"
+                    '<div class="about-spec-row"><dt>Reclassement</dt>'
+                    "<dd><code>Horizon-Labs/multilingual-reranker-small</code> (cross-encodeur multilingue, 24 candidats → 8 passages retenus).</dd></div>"
+                    '<div class="about-spec-row"><dt>Traduction FR → EN</dt>'
+                    "<dd><code>Helsinki-NLP/opus-mt-fr-en</code> (modèle local pour l’interrogation lexicale et les requêtes académiques).</dd></div>"
+                    '<div class="about-spec-row"><dt>Rédaction &amp; vérification</dt>'
+                    "<dd>Double passe (rédaction JSON avec ancrages littéraux courts ≤&nbsp;20 mots, puis vérification indépendante sur le contexte complet) "
+                    "sur cascade <strong>Gemini</strong> (<code>gemini-4-hydrogen</code>, <code>gemini-3.8-flash</code>, "
+                    "<code>gemini-2.5-flash</code>, <code>gemini-3.1-flash-lite</code>, <code>gemini-3.5-flash-lite</code>) "
+                    "avec repli <strong>Groq</strong> (<code>llama-3.3-70b-versatile</code>) et <strong>Mistral</strong> "
+                    "(<code>mistral-small-latest</code>).</dd></div>"
+                    '<div class="about-spec-row"><dt>Sources scientifiques externes</dt>'
+                    "<dd>Interrogation automatique (désactivable dans l’onglet <em>Débat</em>) des API publiques "
+                    "<strong>OpenAlex</strong> et <strong>Europe PMC</strong> pour les questions empiriques, contemporaines ou de sciences sociales "
+                    "(revues systématiques, méta-analyses, articles évalués par les pairs). Ces études sont toujours affichées dans un tiroir distinct, "
+                    "strictement séparé des textes de Mario Bunge (1919–2020).</dd></div>"
+                    '<div class="about-spec-row"><dt>Garde-fous &amp; limites</dt>'
+                    "<dd>Aucun passage long du corpus n’est exposé hors liseuse contrôlée ; toute citation non retrouvée littéralement sur la page imprimée "
+                    "est écartée ; abstention explicite hors corpus. L’instance publique tourne sur CPU gratuit Hugging Face (temps de réponse IA typique : "
+                    "15 à 45&nbsp;s hors cache).</dd></div>"
+                    '<div class="about-spec-row"><dt>Code source</dt>'
+                    '<dd><a class="wiki-link" href="https://github.com/alexisgirard-it/bungerag" target="_blank" rel="noopener">'
+                    "github.com/alexisgirard-it/bungerag ↗</a> · Interface <code>Gradio</code> / Python.</dd></div>"
+                    "</dl>"
+                )
 
     for button, section in mobile_navigation:
         button.click(

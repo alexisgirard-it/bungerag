@@ -62,3 +62,11 @@ def test_sourced_answer_button_provides_visible_loading_feedback() -> None:
     assert READER.index("legacy_fn, legacy_outputs = legacy(") < READER.index("followup-bar")
     # Gradio's CSS scoper splits on commas inside :has(...) / :is(...), breaking descendant selectors.
     assert not re.search(r":(?:has|is)\([^)]*,", CSS)
+
+
+def test_about_tab_lists_factual_models_without_benchmark_clutter() -> None:
+    assert 'gr.Tab("À propos", id="about")' in READER
+    assert "Qwen/Qwen3-Embedding-0.6B" in READER
+    assert "Horizon-Labs/multilingual-reranker-small" in READER
+    assert "Helsinki-NLP/opus-mt-fr-en" in READER
+    assert "OpenAlex" in READER and "Europe PMC" in READER
