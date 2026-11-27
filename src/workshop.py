@@ -1129,6 +1129,94 @@ def open_question(question, research, *, generate=None, external=None):
     return dossier
 
 
+DEBATE_SYSTEM = (
+    "Tu conduis un débat philosophique franc, direct et véridique à partir de l’œuvre de Mario Bunge. "
+    "RÈGLES STRICTES : "
+    "1. Réponds franchement dès la première phrase par une prise de position nette "
+    "(« Oui », « Non », « En partie », ou « Le corpus de Bunge ne tranche pas ce point »), puis justifie. "
+    "INTERDIT d’ouvrir par des formules flatteuses ou creuses (« Votre observation est cruciale », "
+    "« Excellente question », « Vous soulevez un point important ») ou d’esquiver la question en la reformulant. "
+    "2. Si la prémisse de l’utilisateur est imprécise ou réductrice dans le cadre de Bunge "
+    "(par exemple réduire la différence cerveau/machine à un simple degré quantitatif de « complexité »), "
+    "rectifie-la franchement en exposant les critères précis de Bunge tirés de `preuves` "
+    "(ex. composition matérielle, mécanismes biochimiques, activité spontanée, plasticité neuronale, irréductibilité au calcul). "
+    "3. Frontière stricte du corpus (Mario Bunge, 1919–2020) : n’affirme JAMAIS comme venant de Bunge un fait "
+    "technique ou empirique postérieur (architecture, paramètres ou complexité matérielle des derniers modèles d’IA). "
+    "Si la question porte sur un fait contemporain absent des textes et sans `source_externe_datee_hors_bunge`, "
+    "dis-le explicitement : distingue (a) ce que le corpus ne peut pas trancher empiriquement, et "
+    "(b) ce que les textes de Bunge établissent sur le principe. "
+    "4. Ne cite un extrait de `preuves` que s’il porte réellement sur la question : ignore tout passage hors sujet "
+    "ou homonyme (ex. un « modèle » en physique mathématique quand on débat d’un modèle d’IA). "
+    "5. Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
+    "Si une `source_externe_datee_hors_bunge` est fournie, distingue-la explicitement des textes de Bunge. "
+    "6. `impact_premisses` (1 à 2 phrases sèches, sans répéter `reponse`) : indique quelle prémisse du lecteur tient, "
+    "tombe ou reste non prouvée face aux textes. "
+    "7. `question_suivante` (1 question courte et incisive) : pose l’objection ou le test décisif qui met la thèse "
+    "du lecteur à l’épreuve. "
+    'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1"],"impact_premisses":"...","question_suivante":"..."}. '
+    "Cite uniquement les identifiants de `preuves` réellement utilisés dans ta réponse (au moins un)."
+)
+
+_AI_DEBATE_RE = re.compile(
+    r"\b(?:ia|llm|gpt|llama|claude|gemini|chatgpt|transformer|algorithme|"
+    r"intelligence artificielle|ordinateur|machine|robot|"
+    r"modele[s]? de (?:langage|pointe)|reseau[x]? de neurones|parametre[s]?)\b"
+)
+
+
+def _safe_passage_window(source, limit=700):
+    excerpt = (source.get("excerpt") or "").strip()
+    try:
+        full = " ".join((passage_context(source) or "").split())
+    except Exception:
+        return excerpt
+    return (full[:limit].rstrip() + "…") if len(full) > limit else (full or excerpt)
+
+
+def _debate_search(clean, turns, active_title, retriever, custom_retriever):
+    """Recherche multi-tours contextualisée pour éviter les dérives hors sujet sur les relances."""
+    seen = set()
+    merged = []
+
+    def add_hits(hits, cap):
+        added = 0
+        for hit in hits or ():
+            key = (hit.get("book"), str(hit.get("page")))
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append(hit)
+            added += 1
+            if added >= cap:
+                break
+
+    if custom_retriever:
+        add_hits(retriever(clean), 4)
+        return merged
+
+    prev_user = turns[-1].get("user", "") if turns else ""
+    first_user = turns[0].get("user", "") if turns else ""
+    combined_ctx = fold(f"{clean} {prev_user} {first_user} {active_title}")
+
+    # Si le débat porte sur l'IA / les LLM / les machines, interroger d'abord avec le lexique réel de Bunge
+    # afin d'éviter la confusion lexicale avec les « modèles » mathématiques en physique.
+    if _AI_DEBATE_RE.search(combined_ctx):
+        add_hits(
+            retriever(
+                f"{clean} computer artificial intelligence brain machine plastic neural spontaneous"
+            ),
+            4,
+        )
+
+    if turns:
+        anchor = prev_user if len(prev_user) >= 12 else first_user
+        if anchor and fold(anchor) != fold(clean):
+            add_hits(retriever(f"{anchor} {clean}"), 3)
+
+    add_hits(retriever(clean), 3)
+    return merged[:6]
+
+
 def debate_turn(
     dossier,
     changes,
@@ -1147,11 +1235,20 @@ def debate_turn(
     if len(clean) < 3:
         return turns, "Formulez une thèse, une objection ou une question d’au moins 3 caractères."
 
-    # En mode débat libre (sans dossier pré-ouvert), utiliser automatiquement un dossier correspondant si disponible.
+    # En mode débat libre, conserver le dossier thématique du fil sur les relances multi-tours.
     active_dossier = dossier if (dossier and dossier.get("steps")) else None
     if active_dossier is None:
         matched = choose_dossier(clean)
-        active_dossier = DOSSIERS[matched]() if matched else {"title": clean, "steps": [], "open": ""}
+        if not matched and turns:
+            for prev in reversed(turns):
+                matched = choose_dossier(prev.get("user", ""))
+                if matched:
+                    break
+        active_dossier = (
+            DOSSIERS[matched]()
+            if matched
+            else {"title": (turns[0]["user"] if turns else clean), "steps": [], "open": ""}
+        )
 
     disposition, message = question_scope(clean)
     if disposition != "localiser":
@@ -1169,7 +1266,13 @@ def debate_turn(
         return turns + [entry], ""
 
     retriever = search_fn or search_library
-    fresh = retriever(clean)[:4]
+    fresh = _debate_search(
+        clean,
+        turns,
+        active_dossier.get("title", ""),
+        retriever,
+        custom_retriever=search_fn is not None,
+    )
     steps = active_dossier.get("steps") or []
     states = assess(steps, changes or {}) if steps else {}
 
@@ -1186,7 +1289,7 @@ def debate_turn(
         }
         if s["sources"]:
             evidence_sources[sid] = s["sources"][0]
-            evidence_payload[sid]["extrait"] = s["sources"][0]["excerpt"]
+            evidence_payload[sid]["extrait"] = _safe_passage_window(s["sources"][0])
             evidence_payload[sid]["pages"] = s["sources"][0].get("pages", "")
     seeds = suggested_nodes(clean, 3) + [
         key for hit in fresh[:3] for key in on_page(hit["book"], hit["page"])
@@ -1200,7 +1303,7 @@ def debate_turn(
                 "role": NODES[key]["kind"],
                 "etat_dans_le_debat": "appui retrouvé",
                 "texte": NODES[key]["text"],
-                "extrait": src["excerpt"],
+                "extrait": _safe_passage_window(src),
                 "pages": src["pages"],
             }
     for i, hit in enumerate(fresh, 1):
@@ -1210,7 +1313,7 @@ def debate_turn(
             "titre": hit["title"],
             "role": "Passage retrouvé pour ce tour",
             "etat_dans_le_debat": "appui retrouvé",
-            "extrait": hit["excerpt"],
+            "extrait": _safe_passage_window(hit),
             "pages": hit.get("pages", str(hit["page"])),
         }
 
@@ -1243,15 +1346,7 @@ def debate_turn(
         }
         return turns + [entry], ""
 
-    system = (
-        "Tu conduis un débat philosophique rigoureux et clair à partir de l’œuvre de Mario Bunge. "
-        "Réponds directement à la thèse ou à l’objection de l’utilisateur en confrontant ses arguments aux textes de Bunge. "
-        "Respecte strictement les hypothèses ou prémisses modifiées par le lecteur sans jamais les attribuer à Bunge. "
-        "Si une source externe datée (fait contemporain) est fournie, distingue-la explicitement des textes de Bunge et n’attribue jamais d’avis posthume à Bunge. "
-        "Appuie chaque point sur les identifiants fournis dans `preuves`. "
-        'Réponds uniquement en JSON : {"reponse":"...","appuis":["c1"],"impact_premisses":"...","question_suivante":"..."}. '
-        "Cite au moins un identifiant sourcé existant dans `preuves`."
-    )
+    system = DEBATE_SYSTEM
     prompt_data = {
         "sujet": active_dossier["title"],
         "cadre": core_context(),

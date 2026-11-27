@@ -459,7 +459,7 @@ def question_scope(question):
     ):
         return (
             "source indisponible",
-            "Aucun témoignage de Bunge sur ce modèle dans le corpus. L’Atelier permet d’examiner une transposition conditionnelle.",
+            "Aucun témoignage de Bunge sur ce modèle dans le corpus. L’onglet Débat permet d’examiner une transposition conditionnelle.",
         )
     ref = form_match(q)
     if ref:

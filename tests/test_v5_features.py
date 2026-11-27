@@ -236,3 +236,86 @@ def test_free_form_debate_turn_without_dossier_and_with_external_source(monkeypa
     assert hist[0]["mode"] == "verified-debate"
     assert hist[0]["external"] == ext
     assert len(hist[0]["sources"]) == 1
+
+
+def test_debate_preserves_topic_and_forbids_sycophancy(monkeypatch):
+    import json
+    from workshop import DEBATE_SYSTEM, _debate_search, debate_turn
+
+    assert "Votre observation est cruciale" in DEBATE_SYSTEM
+    assert "Frontière stricte du corpus" in DEBATE_SYSTEM
+    assert "Non" in DEBATE_SYSTEM
+
+    seen_queries = []
+
+    def fake_search(q):
+        seen_queries.append(q)
+        return [
+            {
+                "book": "mind-body-problem-1980",
+                "page": str(26 + len(seen_queries)),
+                "title": "The Mind-Body Problem",
+                "year": 1980,
+                "authors": "Mario Bunge",
+                "file": "mbp.pdf",
+                "edition": "ed",
+                "excerpt": "The disanalogies between brains and computers are at least as obvious as the analogies.",
+                "pages": "p. 14 du livre · PDF p. 26",
+            }
+        ]
+
+    hits = _debate_search(
+        "ok car materiellement ce n'est pas aussi complexe que le cerveau meme pour les derniers modeles de pointes ?",
+        [{"turn": 1, "user": "Un modèle de langage peut-il comprendre ?", "answer": "..."}],
+        "Un modèle de langage peut-il comprendre ?",
+        fake_search,
+        custom_retriever=False,
+    )
+    assert hits
+    assert any("computer artificial intelligence brain" in q for q in seen_queries)
+
+    # Vérifier qu'une relance multi-tour conserve le sujet du tour 1
+    monkeypatch.setattr("workshop.suggested_nodes", lambda *a, **k: [])
+    monkeypatch.setattr("workshop.on_page", lambda *a, **k: [])
+    monkeypatch.setattr("workshop.core_context", lambda: "Cadre sourcé")
+    monkeypatch.setattr("workshop.choose_dossier", lambda q: "ia" if "langage" in q.lower() else None)
+    monkeypatch.setattr(
+        "workshop.node_source",
+        lambda _k: {
+            "book": "mind-body-problem-1980",
+            "page": "26",
+            "title": "The Mind-Body Problem",
+            "year": 1980,
+            "authors": "Mario Bunge",
+            "file": "",
+            "pages": "p. 14",
+            "excerpt": "The disanalogies between brains and computers...",
+        },
+    )
+
+    captured = {}
+
+    def fake_gen(prompt, system):
+        captured["prompt"] = json.loads(prompt)
+        captured["system"] = system
+        return json.dumps(
+            {
+                "reponse": "Non, pour Bunge le problème ne se réduit pas à la complexité matérielle.",
+                "appuis": ["analogie"],
+                "impact_premisses": "Réduire l’écart à la seule complexité manque la critique de Bunge.",
+                "question_suivante": "Quel mécanisme non algorithmique invoqueriez-vous ?",
+            }
+        )
+
+    hist, notice = debate_turn(
+        None,
+        {},
+        [{"turn": 1, "user": "Un modèle de langage peut-il comprendre ?", "answer": "..."}],
+        "ok car materiellement ce n'est pas aussi complexe que le cerveau ?",
+        search_fn=fake_search,
+        generate=fake_gen,
+    )
+    assert not notice and len(hist) == 2
+    assert captured["prompt"]["sujet"] == "Un modèle de langage peut-il comprendre ?"
+    assert "analogie" in captured["prompt"]["preuves"]
+    assert captured["system"] == DEBATE_SYSTEM
